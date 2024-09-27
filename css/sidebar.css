@@ -1,0 +1,62 @@
+.sidebar {
+    width: 200px; /* Breite der Sidebar */
+    background-color: #f8f9fa; /* Hintergrundfarbe der Sidebar */
+    display: flex;
+    flex-direction: column; /* Anordnung der Elemente von oben nach unten */
+    height: calc(100vh - 132px); /* Höhe der Sidebar auf volle Bildschirmhöhe */
+    padding: 16px; /* Innenabstand */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Schatten für die Sidebar */
+    overflow: hidden; /* Verhindert Scrollbars in der Sidebar */
+}
+
+.sidebar-logo img {
+    width: 100%; /* Logo nimmt volle Breite ein */
+    margin-bottom: 16px; /* Abstand nach unten */
+}
+
+.sidebar-nav {
+    flex: 1; /* Füllt den verfügbaren Platz */
+    display: flex;
+    gap: 15px;
+    flex-direction: column; /* Buttons untereinander anordnen */
+    overflow: hidden; /* Verhindert Scrollbars in der Navigationsleiste */
+}
+
+.sidebar-button {
+    display: flex; /* Flexbox für die Buttons */
+    align-items: center; /* Vertikale Zentrierung */
+    background: none; /* Kein Hintergrund */
+    border: none; /* Kein Rand */
+    border-radius: 8px;
+    padding: 8px 30px; /* Innenabstand für die Buttons */
+    cursor: pointer; /* Zeigt, dass es klickbar ist */
+    transition: background-color 0.2s; /* Sanfte Übergangsanimation */
+}
+
+.active {
+    background-color: #D2E3FF;
+}
+
+.sidebar-button:hover {
+    background-color: #e0e0e0; /* Hover-Effekt */
+}
+
+.sidebar-icon {
+    width: 20px; /* Breite der Icons */
+    height: 20px; /* Höhe der Icons */
+    margin-right: 8px; /* Abstand zwischen Icon und Text */
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Platziert den Footer am Ende der Sidebar */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 48px;
+}
+
+.footer-text {
+    margin: 8px 0; /* Abstand zwischen den Fußzeilentexten */
+    font-size: 14px; /* Schriftgröße */
+    color: #6c757d; /* Graue Farbe für den Fußzeilentext */
+}
