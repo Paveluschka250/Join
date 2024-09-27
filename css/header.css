@@ -1,0 +1,48 @@
+header {
+  background-color: #4589ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  width: 32px;
+  padding: 16px;
+  margin-left: 16px;
+}
+
+header .profile {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+  margin-right: 16px;
+}
+
+header .profile .company-name {
+  color: white;
+}
+
+header .profile .help-icon {
+  cursor: pointer; /* Ändert den Mauszeiger zu einem Pointer */
+  transition: transform 0.2s ease; /* Sanfte Animation für den Hover-Effekt */
+}
+
+header .profile .help-icon:hover {
+  transform: scale(1.1); /* Vergrößert das Icon leicht beim Hover */
+}
+
+header .profile .user-name {
+  color: #4589ff; /* Blauer Buchstabe "G" */
+  background-color: white; /* Weißer Kreis */
+  border: 2px solid #4589ff; /* Blauer Rand um den weißen Kreis */
+  border-radius: 50%; /* Kreisform */
+  width: 32px; /* Breite des Kreises */
+  height: 32px; /* Höhe des Kreises */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold; /* Fettschrift */
+  font-size: 16px; /* Schriftgröße */
+  box-shadow: 0 0 0 3px white; /* Weißer Rand um den blauen Rand */
+}
