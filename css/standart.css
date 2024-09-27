@@ -5,3 +5,7 @@ body {
 .main-container {
     display: flex;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
