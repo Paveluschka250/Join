@@ -1,4 +1,5 @@
 .body-addTask {
+    
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     display: flex;
@@ -8,6 +9,7 @@
 }
 
 .container-addTask {
+    overflow-y: scroll;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -32,7 +34,7 @@ form {
 
 .input-addTask {
     width: 100%;
-    padding: 10px;
+    padding: 10px 0px;
     border-radius: 5px;
     font-size: 14px;
 }
@@ -50,7 +52,7 @@ label {
 
 .priority-addTask {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin-top: 5px;
 }
 
@@ -71,12 +73,20 @@ label {
 }
 
 .urgent-addTask:hover {
-    border-bottom: solid red 1px;
+    border-bottom: solid red 2px;
 }
 
 .medium-addTask {
-    background-color: #ffcc00;
-    color: white;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.medium-addTask:hover {
+    border-bottom: solid #ffcc00 2px;
+}
+
+#medium-prio-icon {
+    filter: invert(59%) sepia(19%) saturate(6235%) hue-rotate(0deg) brightness(104%) contrast(102%);
 }
 
 .low-addTask {
@@ -85,7 +95,12 @@ label {
 }
 
 .low-addTask:hover {
-    border-bottom: solid green 1px;
+    border-bottom: solid green 2px;
+}
+
+.buttons-row {
+    display: flex;
+    flex-direction: row;
 }
 
 .center-button {
@@ -103,13 +118,17 @@ label {
 }
 
 .form-actions-addTask {
+    display: flex;
     position: fixed;
     bottom: 16px;
     right: 16px;
     width: 250px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .clear-btn-addTask {
+    display: flex;
     background-color: transparent;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -130,6 +149,10 @@ label {
 }
 
 .submit-btn-addTask {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     background-color: #007bff;
     color: white;
     padding: 10px 15px;

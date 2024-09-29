@@ -13,12 +13,14 @@
     <div class="container-addTask">
         <form action="#" method="post">
             <div class="form-group-addTask">
-                <input class="underline-addTask input-addTask" type="text" id="title" name="title" placeholder="Enter a title" required>
+                <input class="underline-addTask input-addTask" type="text" id="title" name="title"
+                    placeholder="Enter a title" required>
             </div>
 
             <div class="form-group-addTask">
                 <label for="description"><b>Description</b> (optional)</label>
-                <textarea class="input-addTask" id="description" name="description" rows="4" placeholder="Enter a Description" required></textarea>
+                <textarea class="input-addTask" id="description" name="description" rows="4"
+                    placeholder="Enter a Description" required></textarea>
             </div>
 
             <div class="form-group-addTask">
@@ -27,10 +29,17 @@
             </div>
 
             <div class="form-group-addTask priority-addTask">
-                <label><b>Priority</b></label><br>
-                <button type="button" class="priority-btn-addTask urgent-addTask center-button">Urgent <img src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
-                <button type="button" class="priority-btn-addTask medium-addTask center-button">Medium <img src="../assets/icons/prio2.svg" alt="priorität mittel"></button>
-                <button type="button" class="priority-btn-addTask low-addTask center-button">Low <img src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+                <div>
+                    <label><b>Priority</b></label>
+                </div>
+                <div class="buttons-row">
+                    <button type="button" class="priority-btn-addTask urgent-addTask center-button">Urgent <img
+                            src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
+                    <button type="button" class="priority-btn-addTask medium-addTask center-button ">Medium <img
+                            src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon"></button>
+                    <button type="button" class="priority-btn-addTask low-addTask center-button">Low <img
+                            src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+                </div>
             </div>
 
             <div class="form-group-addTask">
@@ -51,12 +60,15 @@
 
             <div class="form-group-addTask">
                 <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                <input class="underline-addTask input-addTask add-icon" type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                <input class="underline-addTask input-addTask add-icon" type="text" id="subtasks" name="subtasks"
+                    placeholder="Add new subtask">
             </div>
 
             <div class="form-actions-addTask input-addTask">
-                <button type="reset" class="clear-btn-addTask">Clear <img src="../assets/icons/clearIcon.svg" alt=""></button>
-                <button type="submit" class="submit-btn-addTask">Create Task <img src="../assets/icons/createTaskIcon.svg" alt=""></button>
+                <button type="reset" class="clear-btn-addTask">Clear <img src="../assets/icons/clearIcon.svg"
+                        alt=""></button>
+                <button type="submit" class="submit-btn-addTask">Create Task <img
+                        src="../assets/icons/createTaskIcon.svg" alt=""></button>
             </div>
         </form>
     </div>
