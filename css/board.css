@@ -1,14 +1,15 @@
-body {
+.board-main {
     margin: 32px;
+    width: 100%;
 }
 
-.search-container {
+.search-container-board {
     display:flex;
     flex-direction: row;
     margin-bottom:24px;
 }
 
-.input-container {
+.input-container-board {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,39 +20,39 @@ body {
     padding: 0 8px;
 }
 
-.input-container:hover {
+.input-container-board:hover {
     cursor: pointer;
     border-color: rgb(69, 137, 255);
 }
 
-.input-container img {
+.input-container-board img {
     height: 24px;
 }
 
-.input-container img:hover {
+.input-container-board img:hover {
     background-color: rgb(210, 227, 255);
     border-radius: 8px;
 }
 
-input {
+.input-board {
     border: none;
 }
 
-button {
+.button-board {
     background-color: rgb(69, 137, 255);
     border: none;
     border-radius: 8px;
     color: white;
 }
 
-button:hover {
+.button-board:hover {
     cursor: pointer;
     background-color: rgb(26, 94, 212);
     box-shadow: #b9a9a9 1px 1px;
 }
 
 .tasks {
-    width: 25%;
+    width: 15vw;
     display:flex;
     justify-content: space-between;
     flex-direction: column;
@@ -68,11 +69,10 @@ button:hover {
 
 .task-container {
     display:flex;
-    flex-direction: row;
     justify-content: space-around;
 }
 
-.headlines {
+.task-headlines {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -81,7 +81,7 @@ button:hover {
     height: 56px;
 }
 
-.content {
+.board-content {
     background-color: lightgray;
     border-radius: 8px;
     height: 32px;
@@ -89,6 +89,7 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 10px;
     color: #b9a9a9;
 }
 
