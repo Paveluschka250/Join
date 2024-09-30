@@ -1,29 +1,40 @@
 #help-content {
-    display: flex;
-    justify-content: center;
-} 
+  display: flex;
+  justify-content: center;
+}
 #help-content .container {
-    width: 85%;
+  width: 85%;
 }
 #help-content .blue {
-    color: #4589ff;
+  color: #4589ff;
 }
 #help-content .darkblue {
-    color: #005DFF;
+  color: #005dff;
 }
 #help-content .how-to-use {
-    display: flex;
-    gap: 32px;
+  display: flex;
+  gap: 32px;
 }
 #help-content h4 {
-    margin: 0px;
+  margin: 0px;
 }
 #help-content .how-to-use div p {
-    margin: 0px;
+  margin: 0px;
 }
 #help-content .how-to-use h3 {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 #help-content .blue-text {
-    color: #005DFF;
+  color: #005dff;
+}
+#help-content .container .help-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#help-content .container .help-title img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#help-content .container .help-title img:hover {
+  transform: scale(1.2); /* Vergrößert das Bild leicht */
 }
