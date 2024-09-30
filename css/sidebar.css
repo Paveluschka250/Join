@@ -7,6 +7,8 @@
     padding: 16px; /* Innenabstand */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Schatten für die Sidebar */
     overflow: hidden; /* Verhindert Scrollbars in der Sidebar */
+    position: fixed;
+    margin-top: 100px;
 }
 
 .sidebar-logo img {

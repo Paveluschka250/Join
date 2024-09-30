@@ -1,0 +1,29 @@
+#help-content {
+    display: flex;
+    justify-content: center;
+} 
+#help-content .container {
+    width: 85%;
+}
+#help-content .blue {
+    color: #4589ff;
+}
+#help-content .darkblue {
+    color: #005DFF;
+}
+#help-content .how-to-use {
+    display: flex;
+    gap: 32px;
+}
+#help-content h4 {
+    margin: 0px;
+}
+#help-content .how-to-use div p {
+    margin: 0px;
+}
+#help-content .how-to-use h3 {
+    margin-top: 0px;
+}
+#help-content .blue-text {
+    color: #005DFF;
+}

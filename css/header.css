@@ -1,17 +1,20 @@
-header {
+#header header {
   background-color: #4589ff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
 }
 
-header .logo {
+#header header .logo {
   width: 32px;
   padding: 16px;
   margin-left: 16px;
 }
 
-header .profile {
+#header header .profile {
   display: flex;
   align-items: center;
   padding: 16px;
@@ -19,20 +22,21 @@ header .profile {
   margin-right: 16px;
 }
 
-header .profile .company-name {
+#header header .profile p {
   color: white;
 }
 
-header .profile .help-icon {
+#header header .profile .help-icon {
   cursor: pointer; /* Ändert den Mauszeiger zu einem Pointer */
   transition: transform 0.2s ease; /* Sanfte Animation für den Hover-Effekt */
+  cursor: pointer;
 }
 
-header .profile .help-icon:hover {
+#header header .profile .help-icon:hover {
   transform: scale(1.1); /* Vergrößert das Icon leicht beim Hover */
 }
 
-header .profile .user-name {
+#header header .profile h4 {
   color: #4589ff; /* Blauer Buchstabe "G" */
   background-color: white; /* Weißer Kreis */
   border: 2px solid #4589ff; /* Blauer Rand um den weißen Kreis */
@@ -43,6 +47,6 @@ header .profile .user-name {
   justify-content: center;
   align-items: center;
   font-weight: bold; /* Fettschrift */
-  font-size: 16px; /* Schriftgröße */
   box-shadow: 0 0 0 3px white; /* Weißer Rand um den blauen Rand */
+  margin: 16px 0;
 }

@@ -64,4 +64,19 @@ function removeActive(idArray) {
   });
 }
 
+async function loadHelp() {
+  try {
+    const response = await fetch("/pages/help.html");
+    if (!response.ok) {
+      console.error("keine Datai namen help.html gefunden");
+    }
+    const data = await response.text();
+    document.getElementById("main").innerHTML = data;
+    document.getElementById("summary").classList.add("active");
+    removeActive(["summary", "addTask", "board", "contacts"]);
+  } catch (error) {
+    console.error("Error in load_help: ", error);
+  }
+}
+
 loadSummary();

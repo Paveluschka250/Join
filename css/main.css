@@ -1,3 +1,5 @@
 main {
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    margin-left: 232px;
+    margin-top: 100px;
 }
