@@ -34,6 +34,7 @@
 }
 #help-content .container .help-title img {
   transition: transform 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
 }
 #help-content .container .help-title img:hover {
   transform: scale(1.2); /* Vergrößert das Bild leicht */
