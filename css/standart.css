@@ -28,3 +28,9 @@ h4 {
 p {
     font-size: 16px;
 }
+.blue-text {
+    color: #4589ff;
+}
+.darkblue-text {
+    color: #005dff;
+}

@@ -1,0 +1,18 @@
+#legal-notice-content {
+  display: flex;
+  justify-content: center;
+}
+#legal-notice-content .container {
+  width: 85%;
+}
+#legal-notice-content .legal-notice-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#legal-notice-content .container h4 {
+    margin-bottom: 0px;
+}
+#legal-notice-content .container p{
+    margin-top: 0px;
+}

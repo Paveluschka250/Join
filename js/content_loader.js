@@ -99,6 +99,44 @@ async function loadHelp() {
   }
 }
 
+async function loadPrivacyPolicy() {
+  try {
+    const response = await fetch("/pages/privacy_policy.html");
+    if (!response.ok) {
+      console.error("keine Datei namens privacy_policy.html gefunden");
+    }
+    const data = await response.text();
+    document.getElementById("main").innerHTML = data;
+    removeActive(["summary", "addTask", "board", "contacts"]);
+    sessionStorage.setItem(
+      "previousPage",
+      sessionStorage.getItem("currentPage")
+    );
+    sessionStorage.setItem("currentPage", "privacy_policy");
+  } catch (error) {
+    console.error("Error in loadPrivacyPolicy: ", error);
+  }
+}
+
+async function loadLegalNotice() {
+  try {
+    const response = await fetch("/pages/legal_notice.html");
+    if (!response.ok) {
+      console.error("keine Datei namens legal_notice.html gefunden");
+    }
+    const data = await response.text();
+    document.getElementById("main").innerHTML = data;
+    removeActive(["summary", "addTask", "board", "contacts"]);
+    sessionStorage.setItem(
+      "previousPage",
+      sessionStorage.getItem("currentPage")
+    );
+    sessionStorage.setItem("currentPage", "legal_notice");
+  } catch (error) {
+    console.error("Error in loadLegalNotice: ", error);
+  }
+}
+
 function removeActive(idArray) {
   idArray.forEach((id) => {
     document.getElementById(id).classList.remove("active");

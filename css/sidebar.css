@@ -61,4 +61,9 @@
     margin: 8px 0; /* Abstand zwischen den Fußzeilentexten */
     font-size: 14px; /* Schriftgröße */
     color: #6c757d; /* Graue Farbe für den Fußzeilentext */
+    cursor: pointer;
+}
+
+.footer-text:hover {
+    color: #4589ff;
 }

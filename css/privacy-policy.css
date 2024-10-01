@@ -1,0 +1,12 @@
+#privacy-policy-content {
+  display: flex;
+  justify-content: center;
+}
+#privacy-policy-content .container {
+  width: 85%;
+}
+#privacy-policy-content .privacy-policy-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
