@@ -33,6 +33,7 @@
     padding: 8px 30px; /* Innenabstand für die Buttons */
     cursor: pointer; /* Zeigt, dass es klickbar ist */
     transition: background-color 0.2s; /* Sanfte Übergangsanimation */
+    padding-left: 50px;
 }
 
 .active {
@@ -40,7 +41,11 @@
 }
 
 .sidebar-button:hover {
-    background-color: #e0e0e0; /* Hover-Effekt */
+    background-color: rgba(210, 227, 255, 0.5);
+}
+
+.sidebar-button.active:hover {
+    background-color: #D2E3FF; /* Gleiche Farbe wie .active, kein Hover-Effekt */
 }
 
 .sidebar-icon {
@@ -58,12 +63,23 @@
 }
 
 .footer-text {
-    margin: 8px 0; /* Abstand zwischen den Fußzeilentexten */
-    font-size: 14px; /* Schriftgröße */
-    color: #6c757d; /* Graue Farbe für den Fußzeilentext */
+    margin: 8px 0;
+    font-size: 14px;
+    color: #6c757d;
     cursor: pointer;
+    text-decoration: none;
+    padding: 8px;
+    width: max-content;
 }
 
 .footer-text:hover {
     color: #4589ff;
 }
+
+/* Hinzufügen der aktiven Klasse für hervorgehobene Links */
+.footer-text.active {
+    color: white;
+    background-color: #4589ff; /* Blaues Padding */
+    border-radius: 4px;
+}
+
