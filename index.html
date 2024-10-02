@@ -10,18 +10,48 @@
     <link rel="stylesheet" href="./css/standart.css" />
     <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="./css/sidebar.css" />
-    <link rel="stylesheet" href="./css/help.css">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/board.css">
-    <link rel="stylesheet" href="./css/privacy-policy.css">
-    <link rel="stylesheet" href="./css/legal-notice.css">
+    <link rel="stylesheet" href="./css/help.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/board.css" />
+    <link rel="stylesheet" href="./css/privacy-policy.css" />
+    <link rel="stylesheet" href="./css/legal-notice.css" />
   </head>
   <body>
     <div id="header"></div>
     <article class="main-container">
       <aside class="sidebar" id="sidebar"></aside>
-      <main id="main"></main>
+      <main id="main">
+        <h1>login</h1>
+      </main>
     </article>
   </body>
-  <script src="./js/load_layout.js"></script><script src="./js/content_loader.js"></script>
+  <script>
+    async function loadHeader() {
+      try {
+        const response = await fetch("./patials/header.html");
+        if (!response.ok) {
+          console.error("keine Datai namen header.html gefunden");
+        }
+        const data = await response.text();
+        document.getElementById("header").innerHTML = data;
+      } catch (error) {
+        console.error("Error in load_header: ", error);
+      }
+    }
+    loadHeader();
+
+    async function loadSidebar() {
+      try {
+        const response = await fetch("./patials/sidebar.html");
+        if (!response.ok) {
+          console.error("keine Datai namen sidebar.html gefunden");
+        }
+        const data = await response.text();
+        document.getElementById("sidebar").innerHTML = data;
+      } catch (error) {
+        console.error("Error in load_sidebar: ", error);
+      }
+    }
+    loadSidebar();
+  </script>
 </html>

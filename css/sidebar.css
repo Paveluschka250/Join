@@ -24,6 +24,11 @@
     overflow: hidden; /* Verhindert Scrollbars in der Navigationsleiste */
 }
 
+.sidebar-button.active {
+    background-color: #D2E3FF; /* Aktive Hintergrundfarbe */
+}
+
+
 .sidebar-button {
     display: flex; /* Flexbox für die Buttons */
     align-items: center; /* Vertikale Zentrierung */
@@ -36,16 +41,17 @@
     padding-left: 50px;
 }
 
-.active {
-    background-color: #D2E3FF;
-}
-
 .sidebar-button:hover {
     background-color: rgba(210, 227, 255, 0.5);
 }
 
 .sidebar-button.active:hover {
     background-color: #D2E3FF; /* Gleiche Farbe wie .active, kein Hover-Effekt */
+}
+
+.sidebar-button.active:hover {
+    background-color: #D2E3FF; /* Keine Änderung der Hintergrundfarbe beim Hover für aktive Schaltfläche */
+    cursor: default; /* Zeigt, dass die Schaltfläche nicht klickbar ist */
 }
 
 .sidebar-icon {
