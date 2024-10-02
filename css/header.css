@@ -5,7 +5,9 @@
   align-items: center;
   position: fixed;
   width: 100%;
+  height: 100px;
   z-index: 999;
+  
 }
 
 #header header .logo {
@@ -24,6 +26,12 @@
 
 #header header .profile p {
   color: white;
+}
+
+#header header #none {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 #header header .profile .help-icon {
