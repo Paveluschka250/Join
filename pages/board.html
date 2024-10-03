@@ -4,50 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/standart.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/board.css">
-
+    <script src="/js/board.js"></script>
     <title>Board</title>
 </head>
 
 <body>
-    <main class="board-main">
-        <div class="search-container-board">
-            <span class="input-container-board">
-                <input class="input-board" type="search" required placeholder="Find Task">
-                <img src="..\assets\icons\search.svg" alt="">
-            </span>
-            <button class="button-board">Add task +</button>
-        </div>
-
-        <div class="task-container">
-            <div class="tasks">
-                <div class="task-headlines">
-                    <p>To Do</p>
-                    <img src="../assets/icons/plus-button.svg" alt="">
+  
+    <div id="header"></div>
+    <article class="main-container">
+      <aside class="sidebar" id="sidebar"></aside>
+      <main id="main">
+        <main class="board-main">
+            <div class="search-container-board">
+                <span class="input-container-board">
+                    <input class="input-board" type="search" required placeholder="Find Task">
+                    <img src="..\assets\icons\search.svg" alt="">
+                </span>
+                <button class="button-board">Add task +</button>
+            </div>
+    
+            <div class="task-container">
+                <div class="tasks">
+                    <div class="task-headlines">
+                        <p>To Do</p>
+                        <img src="../assets/icons/plus-button.svg" alt="">
+                    </div>
+                    <div class="board-content">No tasks To do</div>
                 </div>
-                <div class="board-content">No tasks To do</div>
-            </div>
-            <div class="tasks">
-                <div class="task-headlines">
-                    <p>In progress</p>
-                    <img src="../assets/icons/plus-button.svg" alt="">
+                <div class="tasks">
+                    <div class="task-headlines">
+                        <p>In progress</p>
+                        <img src="../assets/icons/plus-button.svg" alt="">
+                    </div>
+                    <div class="board-content">No tasks To do</div>
                 </div>
-                <div class="board-content">No tasks To do</div>
-            </div>
-            <div class="tasks">
-                <div class="task-headlines">
-                    <p>Await feedback</p>
-                    <img src="../assets/icons/plus-button.svg" alt="">
+                <div class="tasks">
+                    <div class="task-headlines">
+                        <p>Await feedback</p>
+                        <img src="../assets/icons/plus-button.svg" alt="">
+                    </div>
+                    <div class="board-content">No tasks To do</div>
                 </div>
-                <div class="board-content">No tasks To do</div>
+                <div class="tasks margin-none">
+                    <div class="task-headlines">Done</div>
+                    <div class="board-content">No tasks To do</div>
+                </div>
             </div>
-            <div class="tasks margin-none">
-                <div class="task-headlines">Done</div>
-                <div class="board-content">No tasks To do</div>
-            </div>
-        </div>
-
-    </main>
+    
+        </main>
+      </main>
+    </article>
 </body>
 
+<script src="../js/load_layout.js"></script>
 </html>
