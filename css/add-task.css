@@ -1,18 +1,22 @@
+body {
+    overflow: hidden;
+}
+
 .body-addTask {
-    
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .container-addTask {
     overflow-y: scroll;
+    height: 100vh;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
+    height: calc(100vh - 140px);
 }
 
 form {
@@ -35,7 +39,6 @@ form {
 .input-addTask {
     width: 100%;
     padding: 10px 0px;
-    border-radius: 5px;
     font-size: 14px;
 }
 
@@ -122,7 +125,7 @@ label {
     position: fixed;
     bottom: 16px;
     right: 16px;
-    width: 250px;
+    width: 240px;
     justify-content: space-between;
     align-items: center;
 }
@@ -178,4 +181,59 @@ label {
     border-radius: 50%;
     cursor: pointer;
     margin-left: 5px;
+}
+
+/*add Task Sidebar*/
+
+.add-task-sidebar{
+    transform: translateX(400px);
+    transition: transform 0.5s;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1px solid black;
+    border-radius: 16px;
+}
+
+.open-add-task-sidebar {
+    transform:translateX(0px);
+    transition: transform 0.5s;
+}
+
+.close-btn-addTask {
+    height: 38px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    height: 32px;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.close-btn-addTask:hover {
+    background-color: #0056b3;
+}
+
+.add-task-sb {
+display: flex;
+position: fixed;
+bottom: 16px;
+right: 16px;
+width: 90%;
+justify-content: space-between;
+align-items: center;
+}
+
+.container-addTask-sb {
+    border-top-left-radius: 16px !important;
+}
+
+.d-none {
+    display: none;
 }
