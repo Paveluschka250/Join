@@ -185,17 +185,6 @@ body {
 
 /*add Task Sidebar*/
 
-.add-task-sidebar{
-    transform: translateX(400px);
-    transition: transform 0.5s;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 1px solid black;
-    border-radius: 16px;
-}
-
 .open-add-task-sidebar {
     transform:translateX(0px);
     transition: transform 0.5s;
@@ -221,13 +210,26 @@ body {
 }
 
 .add-task-sb {
-display: flex;
-position: fixed;
-bottom: 16px;
-right: 16px;
-width: 90%;
-justify-content: space-between;
-align-items: center;
+    display: flex;
+    position: fixed;
+    right: 0px;
+    width: 340px;
+    justify-content: space-between;
+    z-index: 1000;
+    height: 95vh !important;
+    border: solid lightgray 2px;
+}
+
+.add-task-sb-headline {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.add-task-sb-close-icon {
+    position:absolute;
+    right:16px;
+    filter: invert(52%) sepia(47%) saturate(4550%) hue-rotate(202deg) brightness(100%) contrast(104%);
 }
 
 .container-addTask-sb {
