@@ -74,13 +74,18 @@ function initializeOverlay() {
   function toggleOverlay(show) {
     const overlay = document.getElementById("overlay");
     overlay.style.display = show ? "block" : "none";
-    // Blockiere die Interaktionen auf der restlichen Seite
-    document.body.style.overflow = show ? "hidden" : "auto";
   }
 
   // Event-Listener für das Klicken auf das p- oder h4-Tag
   document.querySelectorAll("#trigger-overlay").forEach(function (element) {
     element.addEventListener("click", function (event) {
+      const clickedElement = event.target;
+
+      // Überprüfe, ob das Help-Icon angeklickt wurde
+      if (clickedElement.closest('.help-icon')) {
+        return; // Breche das Event ab, damit das Overlay nicht angezeigt wird
+      }
+
       toggleOverlay(true);
       event.stopPropagation(); // Verhindert, dass das Overlay sofort geschlossen wird
     });
@@ -103,13 +108,11 @@ function initializeOverlay() {
 
   // Füge Event-Listener für die Links im Overlay hinzu
   document.querySelectorAll('.overlay-content a').forEach(link => {
-    link.addEventListener('click', function (event) {
-      // Hier kannst du das Overlay schließen, wenn du es nicht mehr benötigst
-      toggleOverlay(false);
+    link.addEventListener('click', function () {
+      toggleOverlay(false); // Schließt das Overlay beim Klicken auf einen Link
     });
   });
 }
 
 // Starte die Overlay-Initialisierung
 initializeOverlay();
-
