@@ -7,7 +7,6 @@
   width: 100%;
   height: 100px;
   z-index: 999;
-  
 }
 
 #header header .logo {
@@ -26,6 +25,7 @@
 
 #header header .profile p {
   color: white;
+  cursor: pointer;
 }
 
 #header header #none {
@@ -57,4 +57,48 @@
   font-weight: bold; /* Fettschrift */
   box-shadow: 0 0 0 3px white; /* Weißer Rand um den blauen Rand */
   margin: 16px 0;
+  cursor: pointer;
+}
+
+/* Overlay Style */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Transparenter Hintergrund */
+  z-index: 9999;
+  pointer-events: auto; /* Ermöglicht die Interaktion mit dem Overlay */
+}
+
+.overlay-content {
+  position: absolute;
+  top: 108px;
+  right: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: right; /* Ändert die Textausrichtung auf rechts */
+  width: auto;
+  pointer-events: auto; /* Macht die Interaktion mit dem Inhalt möglich */
+  box-shadow: 
+    4px 4px 10px rgba(0, 0, 0, 0.4), /* Stärkerer Schatten unten */
+    -2px 0 4px rgba(0, 0, 0, 0.2); /* Leichterer Schatten links */
+}
+
+.overlay-content a {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  padding: 8px 0; /* Padding nach oben und unten */
+  border-radius: 8px;
+  transition: transform 0.2s ease; /* Sanfte Animation für den Hover-Effekt */
+  text-align: right; /* Optionale weitere Ausrichtung für die Links */
+}
+
+.overlay-content a:hover {
+  background-color: #d2e3ff; /* Hintergrundfarbe beim Hover */
+  transform: scale(1.05); /* Minimal größer beim Hover */
 }

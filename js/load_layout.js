@@ -10,6 +10,9 @@ async function loadHeader() {
 
     // Nach dem Laden des Headers Anpassungen vornehmen
     adjustHeaderForLegalPages();
+
+    // Füge die Overlay-Logik hinzu, nachdem der Header geladen wurde
+    initializeOverlay();
   } catch (error) {
     console.error("Error in loadHeader: ", error);
   }
@@ -62,7 +65,51 @@ async function loadSidebar() {
       }
     });
   } catch (error) {
-    console.error("Error in load_sidebar: ", error);
+    console.error("Error in loadSidebar: ", error);
   }
 }
 loadSidebar();
+
+function initializeOverlay() {
+  function toggleOverlay(show) {
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = show ? "block" : "none";
+    // Blockiere die Interaktionen auf der restlichen Seite
+    document.body.style.overflow = show ? "hidden" : "auto";
+  }
+
+  // Event-Listener für das Klicken auf das p- oder h4-Tag
+  document.querySelectorAll("#trigger-overlay").forEach(function (element) {
+    element.addEventListener("click", function (event) {
+      toggleOverlay(true);
+      event.stopPropagation(); // Verhindert, dass das Overlay sofort geschlossen wird
+    });
+  });
+
+  // Schließe das Overlay, wenn außerhalb des Overlay-Inhalts geklickt wird
+  document.getElementById("overlay").addEventListener("click", function (event) {
+    const overlayContent = document.querySelector(".overlay-content");
+
+    // Überprüfen, ob der Klick NICHT innerhalb des Overlay-Inhalts ist
+    if (!overlayContent.contains(event.target)) {
+      toggleOverlay(false);
+    }
+  });
+
+  // Verhindere, dass ein Klick innerhalb des Overlay-Inhalts das Overlay schließt
+  document.querySelector(".overlay-content").addEventListener("click", function (event) {
+    event.stopPropagation(); // Verhindert das Schließen des Overlays, wenn im Inhalt geklickt wird
+  });
+
+  // Füge Event-Listener für die Links im Overlay hinzu
+  document.querySelectorAll('.overlay-content a').forEach(link => {
+    link.addEventListener('click', function (event) {
+      // Hier kannst du das Overlay schließen, wenn du es nicht mehr benötigst
+      toggleOverlay(false);
+    });
+  });
+}
+
+// Starte die Overlay-Initialisierung
+initializeOverlay();
+
