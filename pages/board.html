@@ -26,7 +26,7 @@
                         <input class="input-board" type="search" required placeholder="Find Task">
                         <img src="..\assets\icons\search.svg" alt="">
                     </span>
-                    <button onclick="openAddTaskSidebar()" class="button-board">Add task +</button>
+                    <button onclick="toggleHamburgerMenu()" class="button-board">Add task +</button>
                 </div>
 
                 <div class="task-container">
@@ -59,62 +59,68 @@
             </div>
         </main>
 
-        <div id="addtask-content" class="container-addTask add-task-sb">
+        <div id="addtask-content" class="container-addTask add-task-sb hamburger-menu">
             <form class="form-add-task" action="#" method="post">
-                <div class="add-task-sb-headline"><h3>Add Task</h3><img  class="add-task-sb-close-icon" src="../assets/icons/clearIcon.svg"></div>
-                <div class="form-group-addTask">
-                    <input class="underline-addTask input-addTask" type="text" id="title" name="title"
-                        placeholder="Enter a title" required>
+                <div class="add-task-sb-headline">
+                    <h3 class="headline-add-task-sb">Add Task</h3><img class="add-task-sb-close-icon" onclick="toggleHamburgerMenu()"
+                        src="../assets/icons/clearIcon.svg">
                 </div>
-
-                <div class="form-group-addTask">
-                    <label for="description"><b>Description</b> (optional)</label>
-                    <textarea class="input-addTask" id="description" name="description" rows="4"
-                        placeholder="Enter a Description" required></textarea>
-                </div>
-
-                <div class="form-group-addTask">
-                    <label for="due-date"><b>Due date</b></label>
-                    <input class="underline-addTask input-addTask" type="date" id="due-date" name="due-date">
-                </div>
-
-                <div class="form-group-addTask priority-addTask">
-                    <div>
-                        <label><b>Priority</b></label>
+                <div class="scroll-input">
+                    <div class="form-group-addTask">
+                        <input class="underline-addTask input-addTask" type="text" id="title" name="title"
+                            placeholder="Enter a title" required>
                     </div>
-                    <div class="buttons-row">
-                        <button type="button" class="priority-btn-addTask urgent-addTask center-button">Urgent <img
-                                src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
-                        <button type="button" class="priority-btn-addTask medium-addTask center-button ">Medium <img
-                                src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon"></button>
-                        <button type="button" class="priority-btn-addTask low-addTask center-button">Low <img
-                                src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+
+                    <div class="form-group-addTask">
+                        <label for="description"><b>Description</b> (optional)</label>
+                        <textarea class="input-addTask" id="description" name="description" rows="4"
+                            placeholder="Enter a Description" required></textarea>
+                    </div>
+
+                    <div class="form-group-addTask">
+                        <label for="due-date"><b>Due date</b></label>
+                        <input class="underline-addTask input-addTask" type="date" id="due-date" name="due-date">
+                    </div>
+
+                    <div class="form-group-addTask priority-addTask">
+                        <div>
+                            <label><b>Priority</b></label>
+                        </div>
+                        <div class="buttons-row">
+                            <button type="button" class="priority-btn-addTask urgent-addTask center-button">Urgent <img
+                                    src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
+                            <button type="button" class="priority-btn-addTask medium-addTask center-button ">Medium <img
+                                    src="../assets/icons/prio2.svg" alt="priorität mittel"
+                                    id="medium-prio-icon"></button>
+                            <button type="button" class="priority-btn-addTask low-addTask center-button">Low <img
+                                    src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group-addTask">
+                        <label for="assigned-to"><b>Assigned to</b> (optional)</label>
+                        <select class="underline-addTask input-addTask" id="assigned-to" name="assigned-to">
+                            <option value="">Select contacts to assign</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-addTask">
+                        <label for="category"><b>Category</b></label>
+                        <select class="underline-addTask input-addTask" id="category" name="category">
+                            <option value="">Select task category</option>
+                            <option value="">Technical Task</option>
+                            <option value="">User Story</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-addTask">
+                        <label for="subtasks"><b>Subtasks</b> (optional)</label>
+                        <input class="underline-addTask input-addTask add-icon" type="text" id="subtasks"
+                            name="subtasks" placeholder="Add new subtask">
                     </div>
                 </div>
 
-                <div class="form-group-addTask">
-                    <label for="assigned-to"><b>Assigned to</b> (optional)</label>
-                    <select class="underline-addTask input-addTask" id="assigned-to" name="assigned-to">
-                        <option value="">Select contacts to assign</option>
-                    </select>
-                </div>
-
-                <div class="form-group-addTask">
-                    <label for="category"><b>Category</b></label>
-                    <select class="underline-addTask input-addTask" id="category" name="category">
-                        <option value="">Select task category</option>
-                        <option value="">Technical Task</option>
-                        <option value="">User Story</option>
-                    </select>
-                </div>
-
-                <div class="form-group-addTask">
-                    <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                    <input class="underline-addTask input-addTask add-icon" type="text" id="subtasks" name="subtasks"
-                        placeholder="Add new subtask">
-                </div>
-
-                <div class="form-actions-addTask input-addTask">
+                <div class="form-actions-addTask input-addTask hamburger-menu-add-task-close-btn">
                     <button type="submit" class="submit-btn-addTask">Create Task <img
                             src="../assets/icons/createTaskIcon.svg" alt=""></button>
                 </div>

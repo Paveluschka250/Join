@@ -97,3 +97,30 @@
 .margin-none {
     margin-right: 0 !important;
 }
+
+/* Hamburgermenu */
+
+.hamburger-menu-add-task-close-btn {
+    display: flex !important;
+    position: relative !important;
+    width: 100% !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    flex: 1;
+    padding-bottom: 0px !important;
+}
+
+.headline-add-task-sb {
+    margin: 16px 0;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+.add-task-sb-close-icon:hover {
+    cursor: pointer;
+    border-radius: 4px;
+}
