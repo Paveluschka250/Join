@@ -212,6 +212,7 @@ body {
     z-index: 1000;
     height: calc(100vh - 44px) !important;
     border: solid lightgray 2px;
+    border-radius: 8px 0 0 8px !important;
 }
 
 .add-task-sb-headline {
@@ -237,4 +238,22 @@ body {
 .scroll-input{
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.prio1-color {
+    background-color: red !important;
+    color: white;
+    border-bottom-color: black !important;
+}
+
+.prio2-color {
+    background-color: #ffcc00 !important;
+    color: white;
+    border-bottom-color: black !important;
+}
+
+.prio3-color {
+    background-color: green !important;
+    color: white;
+    border-bottom-color: black !important;
 }
