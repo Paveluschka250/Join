@@ -61,7 +61,6 @@
 }
 
 /* Overlay Style */
-/* Overlay Style */
 .overlay {
   display: none;
   position: fixed;
@@ -84,12 +83,10 @@
   text-align: right;
   width: auto;
   background-color: white;
-  box-shadow: 
-    4px 4px 10px rgba(0, 0, 0, 0.4), /* Stärkerer Schatten unten */
-    -2px 0 4px rgba(0, 0, 0, 0.2); /* Leichterer Schatten links */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4),
+    /* Stärkerer Schatten unten */ -2px 0 4px rgba(0, 0, 0, 0.2); /* Leichterer Schatten links */
   pointer-events: auto; /* Interaktive Elemente im Overlay */
 }
-
 
 .overlay-content a {
   color: black;

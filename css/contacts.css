@@ -1,0 +1,90 @@
+#contacts-content {
+    width: 456px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#contacts-content button{
+    width: 357px;
+    height: 56px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 23px;
+    margin: 32px 24px 16px 24px;
+    transition: background-color 0.3s, transform 0.3s; /* Fügt einen sanften Übergang hinzu */
+    cursor: pointer;
+}
+
+#contacts-content button:hover {
+    background-color: #005dff; /* Farbe beim Hover */
+    transform: scale(1.03);
+}
+
+#contacts-list {
+    width: 352px;
+}
+
+.contact-group {
+    padding: 17px 36px;
+    font-size: 18px;
+    border: none; 
+    border-bottom: 1px solid #D1D1D1;
+}
+
+.contact-group h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+.contact-line {
+    background-color: #D1D1D1;
+    margin: 8px 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 24px;
+    transition: background-color 0.3s, transform 0.3s; /* Fügt einen sanften Übergang hinzu */
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.contact-item:hover {
+    background-color: #D2E3FF; /* Farbe beim Hover */
+    transform: scale(1.03);
+}
+
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #4285f4; /* Default color */
+    color: white;
+    border: solid 2px #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 24px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-details .name {
+    font-size: 19px;
+}
+
+.contact-details .email {
+    font-size: 16px;
+    color: #4589FF;
+}
