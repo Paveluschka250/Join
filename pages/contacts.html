@@ -1,31 +1,63 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacts</title>
-    <link rel="stylesheet" href="../css/standart.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/contacts.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/standart.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/contacts.css" />
+  </head>
+  <body>
     <div id="header"></div>
     <article class="main-container">
-        <aside class="sidebar" id="sidebar"></aside>
-        <main id="main">
-            <article id="contacts-content">
-                <div class="contacts-container">
-                    <div class="sticky-button-wrapper">
-                        <button class="blue">Add new contacts<img src="../assets/icons/person-add.svg"></button>
+      <aside class="sidebar" id="sidebar"></aside>
+      <main id="main">
+        <article id="contacts-content">
+          <div class="contacts-container">
+            <div class="sticky-button-wrapper">
+              <button class="blue">
+                Add new contacts<img src="../assets/icons/person-add.svg" />
+              </button>
+            </div>
+            <div id="contacts-list"></div>
+          </div>
+          <div class="contact-info">
+            <div class="contact-header">
+                <p class="shortname">FL</p>
+                <div class="header-right">
+                    <p class="full-name">Full Name</p>
+                    <div class="action-buttons">
+                        <div class="action edit">
+                            <img src="../assets/icons/edit.svg" alt="Edit Icon" />
+                            <p>Edit</p>
+                        </div>
+                        <div class="action delete">
+                            <img src="../assets/icons/delete.svg" alt="Delete Icon" />
+                            <p>Delete</p>
+                        </div>
                     </div>
-                    <div id="contacts-list"></div>
                 </div>
-            </article>
-        </main>
+            </div>
+            <b class="headline">Contact Information</b>
+            <div class="contact-details">
+                <div class="detail email">
+                    <b>Email</b>
+                    <p class="blue-text">name@example</p>
+                </div>
+                <div class="detail phone">
+                    <b>Phone</b>
+                    <p>+49 123456789</p>
+                </div>
+            </div>
+        </div>
+        
+        </article>
+      </main>
     </article>
-</body>
-<script src="../js/load_layout.js"></script>
-<script src="../js/load_contacts.js"></script>
+  </body>
+  <script src="../js/load_layout.js"></script>
+  <script src="../js/load_contacts.js"></script>
 </html>

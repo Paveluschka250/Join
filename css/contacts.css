@@ -1,3 +1,6 @@
+#contacts-content {
+    display: flex;
+}
 #contacts-content .contacts-container {
     width: 456px;
     height: calc(100vh - 100px);
@@ -92,7 +95,7 @@
 #contacts-content .contact-details {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 22px;
 }
 
 #contacts-content .contact-details .name {
@@ -101,5 +104,105 @@
 
 #contacts-content .contact-details .email {
     font-size: 16px;
-    color: #4589FF;
+}
+
+#contacts-content .contact-info {
+    margin: 68px 0 0 62px;
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.contact-header {
+    display: flex;
+}
+
+.shortname {
+    font-size: 47px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 54px;
+}
+
+.full-name {
+    font-size: 47px;
+    margin: 0;
+}
+
+.header-right .action-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Abstand zwischen Bild und Text */
+    cursor: pointer;
+}
+
+.action p {
+    font-size: 16px;
+    color: black;
+    transition: color 0.3s ease, transform 0.3s ease;
+    transform-origin: left center;
+}
+
+.action img {
+    height: 24px;
+    width: 24px;
+}
+
+.headline {
+    font-size: 23px;
+}
+
+.contact-details {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.detail p {
+    margin: 0;
+}
+
+/* Hover-Effekte */
+.action p {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.action img {
+    transition: fill 0.3s ease; /* Weicher Übergang für die Füllfarbe des SVG */
+}
+
+/* Hover-Effekte für .edit und .delete */
+.action:hover p {
+    color: #005dff; /* Farbe wechselt zu #005dff */
+    transform: scale(1.2); /* Text wird optisch um 20% größer */
+}
+
+.action:hover img path {
+    fill: #005dff; /* SVG-Pfad wird blau */
 }
