@@ -1,5 +1,6 @@
 function toggleHamburgerMenu() {
     document.getElementById("addtask-content").classList.toggle('hamburger-menu');
+    document.getElementById('overlay-add-task-board').classList.toggle('hamburger-menu');
 }
 
 function getPriority(id) {
