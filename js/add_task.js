@@ -1,26 +1,22 @@
-function toggleHamburgerMenu() {
-    document.getElementById("addtask-content").classList.toggle('hamburger-menu');
-}
-
 function getPriority(id) {
-    let buttonRed = document.getElementById('prio1');
-    let buttonOrange = document.getElementById('prio2');
-    let buttonGreen = document.getElementById('prio3');
+    let buttonRed = document.getElementById('priority1');
+    let buttonOrange = document.getElementById('priority2');
+    let buttonGreen = document.getElementById('priority3');
 
-    if (id == 'prio1') {
+    if (id == 'priority1') {
         containsClass('prio1-color', buttonRed, buttonOrange, buttonGreen);
-    } else if (id == 'prio2') {
+    } else if (id == 'priority2') {
         containsClass('prio2-color', buttonRed, buttonOrange, buttonGreen);
-    } else if (id == 'prio3') {
+    } else if (id == 'priority3') {
         containsClass('prio3-color', buttonRed, buttonOrange, buttonGreen);
     }
 }
 
 function containsClass(prioColor, red, orange, green) {
-    let btnIcon1 = document.getElementById('high-prio-icon');
-    let btnIcon2 = document.getElementById('medium-prio-icon');
-    let btnIcon3 = document.getElementById('low-prio-icon');
-    
+    let btnIcon1 = document.getElementById('priority-btn1');
+    let btnIcon2 = document.getElementById('priority-btn2');
+    let btnIcon3 = document.getElementById('priority-btn3');
+
     if (prioColor === 'prio1-color') {
         red.classList.add('prio1-color');
         btnIcon1.classList.add('priotity-btn-filter1');

@@ -257,3 +257,15 @@ body {
     color: white;
     border-bottom-color: black !important;
 }
+
+.priotity-btn-filter1 {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2375%) hue-rotate(297deg) brightness(100%) contrast(100%);
+}
+
+.priotity-btn-filter2 {
+    filter: none !important;
+}
+
+.priotity-btn-filter3 {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2375%) hue-rotate(297deg) brightness(100%) contrast(100%);
+}
