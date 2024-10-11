@@ -40,13 +40,16 @@
                             <label><b>Priority</b></label>
                         </div>
                         <div class="buttons-row">
-                            <button type="button" id="priority1" onclick="getPriority('priority1')" class="priority-btn-addTask urgent-addTask center-button">Urgent <img
-                                    id="priority-btn1" src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
-                            <button type="button" id="priority2" onclick="getPriority('priority2')" class="priority-btn-addTask medium-addTask center-button ">Medium <img
+                            <button type="button" id="priority1" onclick="getPriority('priority1')"
+                                class="priority-btn-addTask urgent-addTask center-button">Urgent <img id="priority-btn1"
+                                    src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
+                            <button type="button" id="priority2" onclick="getPriority('priority2')"
+                                class="priority-btn-addTask medium-addTask center-button ">Medium <img
                                     id="priority-btn2" src="../assets/icons/prio2.svg" alt="priorität mittel"
-                                    id="medium-prio-icon"></button>
-                            <button type="button" id="priority3" onclick="getPriority('priority3')" class="priority-btn-addTask low-addTask center-button">Low <img
-                                    id="priority-btn3" src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+                                    class="medium-prio-icon"></button>
+                            <button type="button" id="priority3" onclick="getPriority('priority3')"
+                                class="priority-btn-addTask low-addTask center-button">Low <img id="priority-btn3"
+                                    src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
                         </div>
                     </div>
 
@@ -70,6 +73,9 @@
                         <label for="subtasks"><b>Subtasks</b> (optional)</label>
                         <input class="underline-addTask input-addTask add-icon" type="text" id="subtasks"
                             name="subtasks" placeholder="Add new subtask">
+                        <div class="subtasks-icons">
+                            <img src="../assets/icons/add.svg">
+                        </div>
                     </div>
 
                     <div class="form-actions-addTask input-addTask">
@@ -86,4 +92,5 @@
 
 <script src="../js/load_layout.js"></script>
 <script src="../js/add_task.js"></script>
+
 </html>

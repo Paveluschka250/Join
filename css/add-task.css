@@ -86,7 +86,7 @@ body {
     border-bottom: solid #ffcc00 2px;
 }
 
-#addtask-content #medium-prio-icon {
+#addtask-content .medium-prio-icon {
     filter: invert(59%) sepia(19%) saturate(6235%) hue-rotate(0deg) brightness(104%) contrast(102%);
 }
 
@@ -267,4 +267,9 @@ body {
 
 .priotity-btn-filter3 {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2375%) hue-rotate(297deg) brightness(100%) contrast(100%);
+}
+
+.subtasks-icons {
+    position:absolute;
+    right: 0;
 }
