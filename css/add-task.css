@@ -27,6 +27,28 @@ body {
     margin-bottom: 15px;
 }
 
+.new-task-btn {
+    position:relative;
+}
+.new-task-btn button{
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    background-color: white; 
+    border: none;
+}
+
+.new-task-btn img {
+    width: 11px;
+    padding: 2px;
+}
+
+.new-task-btn img:hover {
+    background-color: lightblue;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 #addtask-content .underline-addTask {
     border-bottom: solid black 1px;
     border-top: 0 !important;
@@ -237,6 +259,7 @@ body {
 .scroll-input{
     overflow-y: scroll;
     overflow-x: hidden;
+    width: 340px;
 }
 
 .prio1-color {
