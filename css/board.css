@@ -132,3 +132,7 @@
     width: 100%;
     background-color: rgba(0,0,0,0.3);
 }
+
+.hide-scrollbar {
+    overflow-y: auto !important;
+}

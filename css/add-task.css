@@ -23,8 +23,30 @@ body {
     flex-direction: column;
 }
 
+.form-add-task select {
+    width: 99% !important;
+}
+
+.underline-select {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: solid lightgrey 1px;
+}
+
+.underline-select:hover {
+    border-bottom: #4589FF solid 1px;
+}
+
+.form-add-task select:hover {
+    cursor: pointer;
+}
+
 #addtask-content .form-group-addTask {
     margin-bottom: 15px;
+}
+.cursor-pointer:hover {
+    cursor: pointer;
 }
 
 .new-task-btn {
@@ -32,7 +54,7 @@ body {
 }
 .new-task-btn button{
     position: absolute;
-    right: 0;
+    right: 4px;
     bottom: 5px;
     background-color: white; 
     border: none;
@@ -50,7 +72,7 @@ body {
 }
 
 #addtask-content .underline-addTask {
-    border-bottom: solid black 1px;
+    border-bottom: solid lightgray 1px;
     border-top: 0 !important;
     border-left: 0 !important;
     border-right: 0 !important;
@@ -58,8 +80,8 @@ body {
 }
 
 #addtask-content .input-addTask {
-    width: 100%;
-    padding: 10px 0px;
+    width: 93%;
+    padding: 10px 10px;
     font-size: 14px;
 }
 

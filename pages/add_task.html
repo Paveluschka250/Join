@@ -20,19 +20,19 @@
             <div id="addtask-content" class="container-addTask scroll-input">
                 <form class="form-add-task" action="#" method="post">
                     <div class="form-group-addTask">
-                        <input class="underline-addTask input-addTask" type="text" id="title" name="title"
+                        <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title" name="title"
                             placeholder="Enter a title" required>
                     </div>
 
                     <div class="form-group-addTask">
                         <label for="description"><b>Description</b> (optional)</label>
-                        <textarea class="input-addTask" id="description" name="description" rows="4"
+                        <textarea class="input-addTask cursor-pointer" id="description" name="description" rows="4"
                             placeholder="Enter a Description" required></textarea>
                     </div>
 
                     <div class="form-group-addTask">
                         <label for="due-date"><b>Due date</b></label>
-                        <input class="underline-addTask input-addTask" type="date" id="due-date" name="due-date">
+                        <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date" name="due-date">
                     </div>
 
                     <div class="form-group-addTask priority-addTask">
@@ -55,14 +55,14 @@
 
                     <div class="form-group-addTask">
                         <label for="assigned-to"><b>Assigned to</b> (optional)</label>
-                        <select class="underline-addTask input-addTask" id="assigned-to" name="assigned-to">
+                        <select class="underline-select input-addTask" id="assigned-to" name="assigned-to">
                             <option value="">Select contacts to assign</option>
                         </select>
                     </div>
 
                     <div class="form-group-addTask">
                         <label for="category"><b>Category</b></label>
-                        <select class="underline-addTask input-addTask" id="category" name="category">
+                        <select class="underline-select input-addTask" id="category" name="category">
                             <option value="">Select task category</option>
                             <option value="">Technical Task</option>
                             <option value="">User Story</option>
@@ -71,9 +71,10 @@
 
                     <div class="form-group-addTask new-task-btn">
                         <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                        <input class="underline-addTask input-addTask add-icon" type="text" id="subtasks"
+                        <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text" id="subtasks"
                             name="subtasks" placeholder="Add new subtask">
-                        <button class="" onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                        <button onclick="addNewSubTask()"><img src="../assets/icons/add.svg"
+                                alt="add"></button>
                     </div>
 
                     <div class="form-actions-addTask input-addTask">
