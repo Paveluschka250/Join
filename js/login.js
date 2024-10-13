@@ -48,7 +48,7 @@ async function loginUser(email, password) {
             // Speichern des ersten Buchstabens des Benutzernamens im lokalen Speicher (localStorage)
             localStorage.setItem('currentUser', currentUser);
             console.log("Du hast dich erfolgreich eingelogt");
-            window.location.href = 'summary.html?msg=Login erfolgreich';
+            window.location.href = 'pages/summary.html?msg=Login erfolgreich';
         } else {
             console.log("Ungültige E-Mail oder Passwort");
             alert("Ungültige E-Mail oder Passwort");
