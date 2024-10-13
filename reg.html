@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>join</title>
+    <link rel="stylesheet" href="./assets/style/reg.css">
+</head>
+<body >
+   
+    <div class="img-logo">
+        <img src="assets/img/Capa 2 (1).png">
+    </div>
+   
+   <div class="wrapper">
+
+     <div class="form-box-login">
+        <h2>Sign up</h2>
+       <form onsubmit="addUser(); return false;" id="registrationForm"  >
+        <div class="input-box">
+            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+            <input type="text" id="benutzername" required>
+            <label>Username</label>
+        </div>
+        <div class="input-box">
+            <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+               <input type="email" id="email" required>
+               <label>Email</label>
+           </div>
+
+           <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <input type="password" name="password" id="password" required>
+            <label>Password</label>
+           </div>
+           <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <input type="password" name="password" id="passwordConfirm" required>
+            <label>Valid your Password</label>
+           </div>
+
+           <div class="remember-forgot">
+            <label><input type="checkbox">I accept<a href="privacy.html">The Privacy Policy</a></label>
+           </div>
+           <div class="btn">
+            <button id="reg" type="submit"  name="sign in">Sign in</button>
+           
+           </div> 
+           
+        </form>
+    
+    </div>
+
+   </div>
+
+   <footer>
+    <div class="end">
+        <div class="privacy">
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="legal-notice">
+            <a href="legal-Notice.html">Legal Notice</a>
+        </div>
+    </div>
+   </footer>
+  <script src="logic/reg.js"></script>
+    <script src="logic/login.js"></script>
+
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
