@@ -1,4 +1,4 @@
-<!-- index.html -->
+<!-- index.html 
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -19,4 +19,84 @@
   <body>
     <a href="./pages/summary.html">LOGIN</a>
   </body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>join</title>
+   <link rel="stylesheet" href="./assets/style/log.css">
+</head>
+<body>
+
+    <header>
+        <div>
+            <h4>Not a join user?</h4>
+        </div>
+        <nav class="navigation">
+          
+            <div>
+                <button class="btnLogin-popup"><a href="register.html">sign up</a></button>
+           
+            </div>
+        </nav>    
+           
+    </header>
+    <div class="img-logo">
+        <img src="assets/img/Capa 2.png">
+    </div>
+   
+   <div class="wrapper">
+
+     <div class="form-box-login">
+        <h2>Log in</h2>
+       <form onsubmit="loginUser(document.getElementById('email').value, document.getElementById('password').value); return false;">
+           <div class="input-box">
+            <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+            <input type="email" name="email" id="email" required>
+            <label>Email</label>
+           </div>
+
+           <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <input type="password" name="password" id="password" required>
+            <label>Password</label>
+           </div>
+
+           <div class="remember-forgot">
+            <label><input type="checkbox">Remember me</label>
+           </div>
+           <div class="btn">
+            <button id="log" type="submit" onsubmit="login()"  name="login">login</button>
+            <button id="guest" type="submit"  name="login"><a href="summary.html">Guest Login</a></button>
+           </div> 
+           
+        </form>
+    
+    </div>
+
+   </div>
+
+   <footer>
+       <div id="msgBox" >
+
+       </div>
+    <div class="end">
+        <div class="privacy">
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="legal-notice">
+            <a href="legal-Notice.html">Legal Notice</a>
+        </div>
+    </div>
+   </footer>
+  
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="logic/reg.js"></script>
+    <script src="logic/login.js"></script>
+</body>
+
 </html>
