@@ -57,54 +57,74 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function renderContacts(contacts) {
-  const contactsList = document.getElementById('contacts-list');
-  let currentLetter = '';
-  let htmlContent = '';
+    const contactsList = document.getElementById('contacts-list');
+    let currentLetter = '';
+    let htmlContent = '';
 
-  contacts.sort((a, b) => a.name.localeCompare(b.name));
+    contacts.sort((a, b) => a.name.localeCompare(b.name));
 
-  for (let contact of contacts) {
-      const firstLetter = contact.name.charAt(0).toUpperCase();
-      const color = getRandomColor();
+    // Fügen Sie eine Klasse hinzu, um die Ausblend-Animation zu triggern
+    const existingContacts = contactsList.querySelectorAll('.contact-item');
+    existingContacts.forEach(contact => {
+        contact.classList.add('slide-out');
+    });
 
-      if (firstLetter !== currentLetter) {
-          currentLetter = firstLetter;
-          htmlContent += `<div class="contact-group">
-                              <b>${currentLetter}</b>
-                          </div>
-                          <div class="contact-line"></div>`;
-      }
+    // Warten Sie, bis die Ausblend-Animation abgeschlossen ist
+    setTimeout(() => {
+        // Leere die Liste, bevor neue Kontakte hinzugefügt werden
+        contactsList.innerHTML = '';
 
-      htmlContent += `<div class="contact-item" data-name="${contact.name}" data-email="${contact.email}" data-phone="${contact.phoneNumber}" data-color="${color}">
-                          <div class="avatar" style="background-color: ${color};">${contact.name.charAt(0)}</div>
-                          <div class="contact-details">
-                              <span class="name">${contact.name}</span>
-                              <span class="email">${contact.email}</span>
-                          </div>
-                      </div>`;
-  }
+        for (let contact of contacts) {
+            const firstLetter = contact.name.charAt(0).toUpperCase();
+            const color = getRandomColor();
 
-  contactsList.innerHTML = htmlContent;
+            if (firstLetter !== currentLetter) {
+                currentLetter = firstLetter;
+                htmlContent += `<div class="contact-group">
+                                    <b>${currentLetter}</b>
+                                </div>
+                                <div class="contact-line"></div>`;
+            }
 
-  document.querySelectorAll('.contact-item').forEach(item => {
-      item.addEventListener('click', function () {
-          const name = this.getAttribute('data-name');
-          const email = this.getAttribute('data-email');
-          const phone = this.getAttribute('data-phone');
-          const color = this.getAttribute('data-color');
-          updateContactDetails(name, email, phone, color);
+            htmlContent += `<div class="contact-item" data-name="${contact.name}" data-email="${contact.email}" data-phone="${contact.phoneNumber}" data-color="${color}">
+                                <div class="avatar" style="background-color: ${color};">${contact.name.charAt(0)}</div>
+                                <div class="contact-details">
+                                    <span class="name">${contact.name}</span>
+                                    <span class="email">${contact.email}</span>
+                                </div>
+                            </div>`;
+        }
 
-          const contactInfo = document.querySelector('.contact-info');
-          if (!contactInfo.classList.contains('active')) {
-              contactInfo.classList.add('active');
-          } else {
-              contactInfo.classList.remove('active');
-              setTimeout(() => {
-                  contactInfo.classList.add('active');
-              }, 50);
-          }
-      });
-  });
+        // Füge den neuen HTML-Inhalt hinzu
+        contactsList.innerHTML = htmlContent;
+
+        // Füge die Einblend-Animation hinzu, nachdem der neue Inhalt hinzugefügt wurde
+        const newContacts = contactsList.querySelectorAll('.contact-item');
+        newContacts.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Füge Event-Listener hinzu
+        newContacts.forEach(item => {
+            item.addEventListener('click', function () {
+                const name = this.getAttribute('data-name');
+                const email = this.getAttribute('data-email');
+                const phone = this.getAttribute('data-phone');
+                const color = this.getAttribute('data-color');
+                updateContactDetails(name, email, phone, color);
+
+                const contactInfo = document.querySelector('.contact-info');
+                if (!contactInfo.classList.contains('active')) {
+                    contactInfo.classList.add('active');
+                } else {
+                    contactInfo.classList.remove('active');
+                    setTimeout(() => {
+                        contactInfo.classList.add('active');
+                    }, 50);
+                }
+            });
+        });
+    }, 500); // Warten Sie 500ms, bis die Ausblend-Animation abgeschlossen ist
 }
 
 function getRandomColor() {
@@ -128,26 +148,27 @@ function updateContactDetails(name, email, phone, color) {
 }
 
 function deleteContact(name) {
-  const contactItem = document.querySelector(`.contact-item[data-name="${name}"]`);
+    const contactItems = document.querySelectorAll('.contact-item');
+    
+    // Füge allen Kontakten die 'slide-out' Klasse hinzu
+    contactItems.forEach(item => {
+        item.classList.add('slide-out');
+    });
 
-  contactItem.classList.add('fade-out');
+    // Warte, bis die Ausblend-Animation abgeschlossen ist
+    setTimeout(() => {
+        // Entferne den Kontakt aus dem Array
+        contacts = contacts.filter(contact => contact.name !== name);
 
-  setTimeout(() => {
-      // Entferne den Kontakt aus dem Array
-      contacts = contacts.filter(contact => contact.name !== name);
+        // Aktualisiere das localStorage
+        localStorage.setItem('contacts', JSON.stringify(contacts));
 
-      // Aktualisiere das localStorage
-      localStorage.setItem('contacts', JSON.stringify(contacts));
+        // Rendere die Kontakte neu
+        renderContacts(contacts);
 
-      // Entferne das HTML-Element nach der Animation
-      contactItem.remove();
-
-      // Rende die Kontakte neu
-      renderContacts(contacts);
-
-      // Falls das gerade gelöschte Kontakt-Element angezeigt wurde, lösche die Details aus der rechten Info-Box
-      clearContactDetails();
-  }, 500); // Zeit passend zur CSS-Animation
+        // Falls das gerade gelöschte Kontakt-Element angezeigt wurde, lösche die Details aus der rechten Info-Box
+        clearContactDetails();
+    }, 500); // Zeit passend zur CSS-Animation
 }
 
 function clearContactDetails() {
