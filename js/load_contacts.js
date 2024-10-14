@@ -54,6 +54,10 @@ let contacts = JSON.parse(localStorage.getItem('contacts')) || [
 
 document.addEventListener('DOMContentLoaded', function () {
   renderContacts(contacts);
+  
+  // Fügen Sie diese Zeilen hinzu
+  document.querySelector('.sticky-button-wrapper button').onclick = openContactsOverlay;
+  document.getElementById('closeOverlay').onclick = closeContactsOverlay;
 });
 
 function renderContacts(contacts) {
@@ -178,4 +182,36 @@ function clearContactDetails() {
   document.querySelector('.detail.phone p').textContent = '';
 
   document.querySelector('.contact-info').classList.remove('active');
+}
+
+function setupOverlayBackgroundListener() {
+  const background = document.querySelector('.overlay-background');
+  if (background) {
+    background.addEventListener('click', closeContactsOverlay);
+  }
+}
+
+function openContactsOverlay() {
+  const overlay = document.getElementById('contacts-overlay');
+  overlay.classList.remove('inactive');
+  overlay.classList.add('active');
+  document.body.insertAdjacentHTML('beforeend', '<div class="overlay-background"></div>');
+  setTimeout(() => {
+    document.querySelector('.overlay-background').classList.add('active');
+    setupOverlayBackgroundListener(); // Fügen Sie diese Zeile hinzu
+  }, 10);
+}
+
+function closeContactsOverlay() {
+  const overlay = document.getElementById('contacts-overlay');
+  overlay.classList.remove('active');
+  overlay.classList.add('inactive');
+  const background = document.querySelector('.overlay-background');
+  if (background) {
+    background.classList.remove('active');
+    background.removeEventListener('click', closeContactsOverlay); // Entfernen Sie den Event-Listener
+    setTimeout(() => {
+      background.remove();
+    }, 300);
+  }
 }
