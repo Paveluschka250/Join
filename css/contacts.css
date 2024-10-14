@@ -72,11 +72,32 @@
     cursor: pointer;
     border-radius: 10px;
 }
+/* Kontaktinfo initial außerhalb des Sichtbereichs verstecken */
+.contact-info {
+    transform: translateX(100%); /* Verstecke rechts außerhalb des Bildschirms */
+    opacity: 0; /* Unsichtbar machen */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Übergangsanimation */
+    position: relative;
+}
+
+/* Aktiv, wenn die Klasse 'active' hinzugefügt wird */
+.contact-info.active {
+    transform: translateX(0); /* Zurück in den sichtbaren Bereich */
+    opacity: 1; /* Sichtbar machen */
+}
+
 
 #contacts-content .contact-item:hover {
     background-color: #D2E3FF;
     transform: scale(1.03);
 }
+/* Animation zum Verblassen und Entfernen eines Kontakts */
+.contact-item.fade-out {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
 
 #contacts-content .avatar {
     width: 42px;
