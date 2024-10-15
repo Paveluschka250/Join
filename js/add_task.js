@@ -40,3 +40,13 @@ function containsClass(prioColor, red, orange, green) {
         btnIcon3.classList.add('priotity-btn-filter3');
     }
 }
+
+function addNewSubTask() {
+    document.getElementById('open-subtask').classList.add('d-none');
+    document.getElementById('subtask-close-and-add').classList.remove('d-none');
+}
+
+function closeNewSubtasksBtn() {
+    document.getElementById('open-subtask').classList.remove('d-none');
+    document.getElementById('subtask-close-and-add').classList.add('d-none');
+}

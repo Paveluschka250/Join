@@ -26,46 +26,81 @@
           </div>
           <div class="contact-info">
             <div class="contact-header">
-                <p class="shortname">FL</p>
-                <div class="header-right">
-                    <p class="full-name">Full Name</p>
-                    <div class="action-buttons">
-                        <div class="action edit">
-                            <img src="../assets/icons/edit.svg" alt="Edit Icon" />
-                            <p>Edit</p>
-                        </div>
-                        <div class="action delete">
-                            <img src="../assets/icons/delete.svg" alt="Delete Icon" />
-                            <p>Delete</p>
-                        </div>
-                    </div>
+              <p class="shortname">FL</p>
+              <div class="header-right">
+                <p class="full-name">Full Name</p>
+                <div class="action-buttons">
+                  <div class="action edit">
+                    <img src="../assets/icons/edit.svg" alt="Edit Icon" />
+                    <p>Edit</p>
+                  </div>
+                  <div class="action delete">
+                    <img src="../assets/icons/delete.svg" alt="Delete Icon" />
+                    <p>Delete</p>
+                  </div>
                 </div>
+              </div>
             </div>
             <b class="headline">Contact Information</b>
             <div class="contact-details">
-                <div class="detail email">
-                    <b>Email</b>
-                    <p class="blue-text">name@example</p>
-                </div>
-                <div class="detail phone">
-                    <b>Phone</b>
-                    <p>+49 123456789</p>
-                </div>
+              <div class="detail email">
+                <b>Email</b>
+                <p class="blue-text">name@example</p>
+              </div>
+              <div class="detail phone">
+                <b>Phone</b>
+                <p>+49 123456789</p>
+              </div>
             </div>
-        </div>
-        
+          </div>
         </article>
       </main>
     </article>
     <!-- Fügen Sie dies direkt vor dem schließenden </body> Tag ein -->
     <div id="contacts-overlay" class="contacts-overlay">
-      <div class="overlay-content">
-        <button id="closeOverlay" class="close-button" onclick="closeContactsOverlay()">×</button>
-        <h2>Neuen Kontakt hinzufügen</h2>
-        <!-- Hier können Sie später Formularfelder hinzufügen -->
+      <div class="overlay-content-header">
+        <button
+          id="closeOverlay"
+          class="close-button"
+          onclick="closeContactsOverlay()"
+        >
+          ×
+        </button>
+        <div>
+          <img src="../assets/img/logo-white.svg" />
+          <h2>Add contact</h2>
+          <p>Tasks are better with a team!</p>
+        </div>
+      </div>
+      <div class="overlay-content-add-contact">
+        <div class="profile-picture">
+          <img src="../assets/icons/profilpic.svg" alt="Default Profile Picture">
+        </div>
+        <form id="addContactForm">
+          <div class="input-wrapper">
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <img src="../assets/icons/person.svg" alt="Name Icon">
+            <span class="error-message" id="name-error"></span>
+          </div>
+          <div class="input-wrapper">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <img src="../assets/icons/mail.svg" alt="Email Icon">
+            <span class="error-message" id="email-error"></span>
+          </div>
+          <div class="input-wrapper">
+            <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+            <img src="../assets/icons/call.svg" alt="Phone Icon">
+            <span class="error-message" id="phone-error"></span>
+          </div>
+          <div class="button-wrapper">
+            <button type="button" class="cancel-btn" onclick="closeContactsOverlay()">Cancel</button>
+            <button type="submit" class="create-btn">Create contact</button>
+          </div>
+        </form>
       </div>
     </div>
   </body>
   <script src="../js/load_layout.js"></script>
   <script src="../js/load_contacts.js"></script>
+  <div></div>
 </html>
