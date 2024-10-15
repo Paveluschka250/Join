@@ -18,7 +18,7 @@
         <article id="contacts-content">
           <div class="contacts-container">
             <div class="sticky-button-wrapper">
-              <button class="blue">
+              <button class="blue" onclick="openContactsOverlay()">
                 Add new contacts<img src="../assets/icons/person-add.svg" />
               </button>
             </div>
@@ -57,6 +57,14 @@
         </article>
       </main>
     </article>
+    <!-- Fügen Sie dies direkt vor dem schließenden </body> Tag ein -->
+    <div id="contacts-overlay" class="contacts-overlay">
+      <div class="overlay-content">
+        <button id="closeOverlay" class="close-button" onclick="closeContactsOverlay()">×</button>
+        <h2>Neuen Kontakt hinzufügen</h2>
+        <!-- Hier können Sie später Formularfelder hinzufügen -->
+      </div>
+    </div>
   </body>
   <script src="../js/load_layout.js"></script>
   <script src="../js/load_contacts.js"></script>

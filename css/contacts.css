@@ -71,11 +71,34 @@
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
     border-radius: 10px;
+    animation: slideInFromLeft 0.3s ease-out forwards;
+    opacity: 0; /* Startet unsichtbar */
+}
+
+/* Kontaktinfo initial außerhalb des Sichtbereichs verstecken */
+.contact-info {
+    transform: translateX(100%); /* Verstecke rechts außerhalb des Bildschirms */
+    opacity: 0; /* Unsichtbar machen */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Übergangsanimation */
+    position: relative;
+}
+
+/* Aktiv, wenn die Klasse 'active' hinzugefügt wird */
+.contact-info.active {
+    transform: translateX(0); /* Zurück in den sichtbaren Bereich */
+    opacity: 1; /* Sichtbar machen */
 }
 
 #contacts-content .contact-item:hover {
     background-color: #D2E3FF;
     transform: scale(1.03);
+}
+
+/* Animation zum Verblassen und Entfernen eines Kontakts */
+.contact-item.fade-out {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 #contacts-content .avatar {
@@ -205,4 +228,124 @@
 
 .action:hover img path {
     fill: #005dff; /* SVG-Pfad wird blau */
+}
+
+/* Animation für das Einblenden der Kontakte */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+#contacts-content .contact-item.slide-out {
+    animation: slideOutToLeft 0.3s ease-out forwards;
+}
+
+/* Verzögerung für jedes Element */
+#contacts-content .contact-item:nth-child(1) { animation-delay: 0.05s; }
+#contacts-content .contact-item:nth-child(2) { animation-delay: 0.1s; }
+#contacts-content .contact-item:nth-child(3) { animation-delay: 0.15s; }
+#contacts-content .contact-item:nth-child(4) { animation-delay: 0.2s; }
+#contacts-content .contact-item:nth-child(5) { animation-delay: 0.25s; }
+#contacts-content .contact-item:nth-child(6) { animation-delay: 0.3s; }
+#contacts-content .contact-item:nth-child(7) { animation-delay: 0.35s; }
+#contacts-content .contact-item:nth-child(8) { animation-delay: 0.4s; }
+#contacts-content .contact-item:nth-child(9) { animation-delay: 0.45s; }
+#contacts-content .contact-item:nth-child(10) { animation-delay: 0.5s; }
+#contacts-content .contact-item:nth-child(11) { animation-delay: 0.55s; }
+#contacts-content .contact-item:nth-child(12) { animation-delay: 0.6s; }
+#contacts-content .contact-item:nth-child(13) { animation-delay: 0.65s; }
+#contacts-content .contact-item:nth-child(14) { animation-delay: 0.7s; }
+#contacts-content .contact-item:nth-child(15) { animation-delay: 0.75s; }
+#contacts-content .contact-item:nth-child(16) { animation-delay: 0.8s; }
+#contacts-content .contact-item:nth-child(17) { animation-delay: 0.85s; }
+#contacts-content .contact-item:nth-child(18) { animation-delay: 0.9s; }
+#contacts-content .contact-item:nth-child(19) { animation-delay: 0.95s; }
+#contacts-content .contact-item:nth-child(20) { animation-delay: 1s; }
+
+
+/* Fügen Sie weitere Verzögerungen hinzu, wenn nötig */
+
+/* Fügen Sie dies am Ende der Datei hinzu */
+.contacts-overlay {
+  position: fixed;
+  top: 0;
+  right: -500px;
+  width: 500px;
+  height: 100%;
+  background-color: white;
+  z-index: 1000;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+.contacts-overlay.active {
+  animation-name: slideIn;
+}
+
+.contacts-overlay.inactive {
+  animation-name: slideOut;
+}
+
+@keyframes slideIn {
+  from {
+    right: -500px;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    right: 0;
+  }
+  to {
+    right: -500px;
+  }
+}
+
+.overlay-content {
+  padding: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay-background.active {
+  display: block;
 }
