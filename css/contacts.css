@@ -472,7 +472,14 @@
   border: none;
   border-bottom: 1px solid #d1d1d1;
   font-size: 20px;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+}
+.input-wrapper input:hover,
+.input-wrapper input:focus {
+  outline: none;
+  border-bottom-color: #005dff;
+  transform: scale(1.05); /* Eingabefeld wird um 5% größer */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schatten unten */
 }
 
 .input-wrapper input:focus {
@@ -510,21 +517,27 @@
   background-color: transparent;
   color: #647188;
   border: 1px solid #647188;
+  transition: all 0.3s ease;
 }
 
 .cancel-btn:hover {
   border-color: #4589ff;
   color: #4589ff;
+  transform: scale(1.05); /* Button wird um 5% größer */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .create-btn {
   background-color: #4589ff;
   color: white;
   border: none;
+  transition: all 0.3s ease;
 }
 
 .create-btn:hover {
   background-color: #005dff;
+  transform: scale(1.05); /* Button wird um 5% größer */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .cancel-btn::after,
