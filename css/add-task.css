@@ -52,7 +52,7 @@ body {
 .new-task-btn {
     position:relative;
 }
-.new-task-btn button{
+.create-new-task{
     position: absolute;
     right: 4px;
     bottom: 5px;
@@ -60,15 +60,42 @@ body {
     border: none;
 }
 
-.new-task-btn img {
+.create-new-task img {
     width: 11px;
     padding: 2px;
 }
 
-.new-task-btn img:hover {
+.create-new-task img:hover {
     background-color: lightblue;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.task-btn-div {
+    position:absolute;
+    right: 0;
+    bottom: 5px;
+}
+
+.task-btn-div img{
+    width: 11px;
+    padding: 2px;
+    filter: invert(52%) sepia(47%) saturate(4550%) hue-rotate(202deg) brightness(100%) contrast(104%);
+}
+
+.task-btn-div img:hover {
+    cursor: pointer;
+    border-radius: 50%;
+    background-color:lightblue;
+}
+
+.d-none {
+    display:none;
+}
+
+.task-btn-div button {
+    border: none;
+    background-color: white;
 }
 
 #addtask-content .underline-addTask {
