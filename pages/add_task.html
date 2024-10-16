@@ -18,7 +18,7 @@
         <aside class="sidebar" id="sidebar"></aside>
         <main class="body-addTask" id="main">
             <div id="addtask-content" class="container-addTask scroll-input">
-                <form class="form-add-task" action="#" method="post">
+                <form onsubmit="getTaskData(event)" class="form-add-task">
                     <div class="form-group-addTask">
                         <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title"
                             name="title" placeholder="Enter a title" required>
@@ -27,7 +27,7 @@
                     <div class="form-group-addTask">
                         <label for="description"><b>Description</b> (optional)</label>
                         <textarea class="input-addTask cursor-pointer" id="description" name="description" rows="4"
-                            placeholder="Enter a Description" required></textarea>
+                            placeholder="Enter a Description"></textarea>
                     </div>
 
                     <div class="form-group-addTask">
@@ -64,9 +64,9 @@
                     <div class="form-group-addTask">
                         <label for="category"><b>Category</b></label>
                         <select class="underline-select input-addTask" id="category" name="category">
-                            <option value="">Select task category</option>
-                            <option value="">Technical Task</option>
-                            <option value="">User Story</option>
+                            <option value="Select task category">Select task category</option>
+                            <option value="Technical Task">Technical Task</option>
+                            <option value="User Story">User Story</option>
                         </select>
                     </div>
 
@@ -74,12 +74,18 @@
                         <label for="subtasks"><b>Subtasks</b> (optional)</label>
                         <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text" id="subtasks"
                             name="subtasks" placeholder="Add new subtask">
-                        <button id="open-subtask" class="create-new-task" onclick="addNewSubTask()"><img src="../assets/icons/add.svg"
-                                alt="add"></button>
+                        <button id="open-subtask" class="create-new-task" onclick="addNewSubTask()" type="button"><img
+                                src="../assets/icons/add.svg" alt="add"></button>
                         <div id="subtask-close-and-add" class="task-btn-div d-none">
-                            <button onclick="closeNewSubtasksBtn()"><img src="../assets/icons/clearIcon.svg" alt="close"></button>|
-                            <button><img src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
+                            <button onclick="closeNewSubtasksBtn()" type="button"><img src="../assets/icons/clearIcon.svg"
+                                    alt="close"></button>|
+                            <button onclick="addSubTask()" type="button"><img src="../assets/icons/createTaskIcon.svg"
+                                    alt="create Task"></button>
                         </div>
+                    </div>
+
+                    <div>
+                        <ul id="subtask-content" class="added-subtasks"></ul>
                     </div>
 
                     <div class="form-actions-addTask input-addTask">

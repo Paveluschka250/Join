@@ -122,7 +122,11 @@
                             <label for="subtasks"><b>Subtasks</b> (optional)</label>
                             <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text" id="subtasks"
                                 name="subtasks" placeholder="Add new subtask">
-                            <button onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                            <button id="add-subtask-btn-sb" class="create-new-task" onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                            <div id="subtask-buttons-sb" class="task-btn-div d-none">
+                                <button onclick="closeNewSubtasksBtn()"><img src="../assets/icons/clearIcon.svg" alt="close"></button>|
+                                <button><img src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
+                            </div>
                         </div>
                     </div>
 
