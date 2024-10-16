@@ -52,6 +52,9 @@ let contacts = JSON.parse(localStorage.getItem('contacts')) || [
   }
 ];
 
+// Fügen Sie diese Variablen am Anfang der Datei hinzu
+let currentEditingContact = null;
+
 document.addEventListener('DOMContentLoaded', function () {
   renderContacts(contacts);
   
@@ -59,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('.sticky-button-wrapper button').onclick = openContactsOverlay;
   document.getElementById('closeOverlay').onclick = closeContactsOverlay;
   document.getElementById('addContactForm').addEventListener('submit', addNewContact);
+  document.getElementById('editContactForm').addEventListener('submit', saveEditedContact);
 });
 
 function renderContacts(contacts) {
@@ -150,6 +154,11 @@ function updateContactDetails(name, email, phone, color) {
   deleteButton.onclick = function () {
       deleteContact(name);
   };
+
+  const editButton = document.querySelector('.action.edit');
+  editButton.onclick = function () {
+    openEditContactsOverlay(name, email, phone, color);
+  };
 }
 
 function deleteContact(name) {
@@ -188,7 +197,10 @@ function clearContactDetails() {
 function setupOverlayBackgroundListener() {
   const background = document.querySelector('.overlay-background');
   if (background) {
-    background.addEventListener('click', closeContactsOverlay);
+    background.addEventListener('click', function() {
+      closeContactsOverlay();
+      closeEditContactsOverlay();
+    });
   }
 }
 
@@ -276,6 +288,117 @@ function validateForm() {
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const phoneInput = document.getElementById('phone');
+  let isValid = true;
+
+  clearError(nameInput);
+  clearError(emailInput);
+  clearError(phoneInput);
+
+  if (nameInput.value.trim() === '') {
+    showError(nameInput, 'Name ist erforderlich');
+    isValid = false;
+  }
+
+  if (!validateEmail(emailInput.value)) {
+    showError(emailInput, 'Ungültige E-Mail-Adresse');
+    isValid = false;
+  }
+
+  if (!validatePhoneStart(phoneInput.value)) {
+    showError(phoneInput, 'Telefonnummer muss mit + oder 0 beginnen');
+    isValid = false;
+  } else if (!validatePhoneLength(phoneInput.value)) {
+    showError(phoneInput, 'Telefonnummer muss zwischen 10 und 14 Ziffern haben');
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+// Fügen Sie diese neuen Funktionen hinzu
+function openEditContactsOverlay(name, email, phone, color) {
+  const overlay = document.getElementById('edit-contact-overlay');
+  overlay.classList.remove('inactive');
+  overlay.classList.add('active');
+  
+  document.getElementById('editName').value = name;
+  document.getElementById('editEmail').value = email;
+  document.getElementById('editPhone').value = phone;
+  
+  const initials = name.split(' ').map(word => word[0]).join('').toUpperCase();
+  const initialsElement = document.getElementById('editContactInitials');
+  initialsElement.textContent = initials;
+  initialsElement.style.backgroundColor = color;
+  
+  currentEditingContact = name;
+  
+  document.body.insertAdjacentHTML('beforeend', '<div class="overlay-background"></div>');
+  setTimeout(() => {
+    document.querySelector('.overlay-background').classList.add('active');
+    setupOverlayBackgroundListener();
+  }, 10);
+}
+
+function closeEditContactsOverlay() {
+  const overlay = document.getElementById('edit-contact-overlay');
+  overlay.classList.remove('active');
+  overlay.classList.add('inactive');
+  const background = document.querySelector('.overlay-background');
+  if (background) {
+    background.classList.remove('active');
+    background.removeEventListener('click', closeEditContactsOverlay);
+    setTimeout(() => {
+      background.remove();
+    }, 300);
+  }
+  currentEditingContact = null;
+}
+
+function deleteContactFromEdit() {
+  if (currentEditingContact) {
+    deleteContact(currentEditingContact);
+    closeEditContactsOverlay();
+  }
+}
+
+// Fügen Sie diesen Event-Listener am Ende der DOMContentLoaded Funktion hinzu
+document.getElementById('editContactForm').addEventListener('submit', saveEditedContact);
+
+// Fügen Sie diese neue Funktion hinzu
+function saveEditedContact(event) {
+  event.preventDefault();
+  
+  if (!validateEditForm()) {
+    return;
+  }
+  
+  const newName = document.getElementById('editName').value;
+  const newEmail = document.getElementById('editEmail').value;
+  const newPhone = document.getElementById('editPhone').value;
+  
+  const contactIndex = contacts.findIndex(contact => contact.name === currentEditingContact);
+  
+  if (contactIndex !== -1) {
+    contacts[contactIndex] = {
+      name: newName,
+      email: newEmail,
+      phoneNumber: newPhone
+    };
+    
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    renderContacts(contacts);
+    closeEditContactsOverlay();
+    
+    // Aktualisiere die Kontaktdetails
+    const color = getRandomColor(); // Sie können auch die ursprüngliche Farbe beibehalten, wenn Sie möchten
+    updateContactDetails(newName, newEmail, newPhone, color);
+  }
+}
+
+function validateEditForm() {
+  const nameInput = document.getElementById('editName');
+  const emailInput = document.getElementById('editEmail');
+  const phoneInput = document.getElementById('editPhone');
   let isValid = true;
 
   clearError(nameInput);
