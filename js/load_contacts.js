@@ -52,7 +52,7 @@ let contacts = JSON.parse(localStorage.getItem('contacts')) || [
   }
 ];
 
-// Fügen Sie diese Variablen am Anfang der Datei hinzu
+// Fügen Sie diese Variable am Anfang der Datei hinzu
 let currentEditingContact = null;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -271,17 +271,25 @@ function validatePhoneLength(phone) {
 }
 
 function showError(inputElement, errorMessage) {
+  if (!inputElement) return;
+  
   inputElement.classList.add('error');
   const errorElement = document.getElementById(`${inputElement.id}-error`);
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('visible');
+  if (errorElement) {
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add('visible');
+  }
 }
 
 function clearError(inputElement) {
+  if (!inputElement) return;
+  
   inputElement.classList.remove('error');
   const errorElement = document.getElementById(`${inputElement.id}-error`);
-  errorElement.textContent = '';
-  errorElement.classList.remove('visible');
+  if (errorElement) {
+    errorElement.textContent = '';
+    errorElement.classList.remove('visible');
+  }
 }
 
 function validateForm() {
@@ -361,13 +369,8 @@ function deleteContactFromEdit() {
   }
 }
 
-// Fügen Sie diesen Event-Listener am Ende der DOMContentLoaded Funktion hinzu
-document.getElementById('editContactForm').addEventListener('submit', saveEditedContact);
-
 // Fügen Sie diese neue Funktion hinzu
-function saveEditedContact(event) {
-  event.preventDefault();
-  
+function saveEditedContact() {
   if (!validateEditForm()) {
     return;
   }
@@ -389,8 +392,8 @@ function saveEditedContact(event) {
     renderContacts(contacts);
     closeEditContactsOverlay();
     
-    // Aktualisiere die Kontaktdetails
-    const color = getRandomColor(); // Sie können auch die ursprüngliche Farbe beibehalten, wenn Sie möchten
+    // Aktualisiere die Kontaktdetails in der Ansicht
+    const color = document.querySelector('.shortname').style.backgroundColor;
     updateContactDetails(newName, newEmail, newPhone, color);
   }
 }
@@ -405,22 +408,24 @@ function validateEditForm() {
   clearError(emailInput);
   clearError(phoneInput);
 
-  if (nameInput.value.trim() === '') {
+  if (nameInput && nameInput.value.trim() === '') {
     showError(nameInput, 'Name ist erforderlich');
     isValid = false;
   }
 
-  if (!validateEmail(emailInput.value)) {
+  if (emailInput && !validateEmail(emailInput.value)) {
     showError(emailInput, 'Ungültige E-Mail-Adresse');
     isValid = false;
   }
 
-  if (!validatePhoneStart(phoneInput.value)) {
-    showError(phoneInput, 'Telefonnummer muss mit + oder 0 beginnen');
-    isValid = false;
-  } else if (!validatePhoneLength(phoneInput.value)) {
-    showError(phoneInput, 'Telefonnummer muss zwischen 10 und 14 Ziffern haben');
-    isValid = false;
+  if (phoneInput) {
+    if (!validatePhoneStart(phoneInput.value)) {
+      showError(phoneInput, 'Telefonnummer muss mit + oder 0 beginnen');
+      isValid = false;
+    } else if (!validatePhoneLength(phoneInput.value)) {
+      showError(phoneInput, 'Telefonnummer muss zwischen 10 und 14 Ziffern haben');
+      isValid = false;
+    }
   }
 
   return isValid;

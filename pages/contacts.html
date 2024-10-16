@@ -56,7 +56,7 @@
         </article>
       </main>
     </article>
-    <!-- Fügen Sie dies direkt vor dem schließenden </body> Tag ein -->
+    
     <div id="contacts-overlay" class="contacts-overlay">
       <div class="overlay-content-header">
         <button
@@ -99,7 +99,7 @@
         </form>
       </div>
     </div>
-    <!-- Fügen Sie dies direkt vor dem schließenden </body> Tag ein, nach dem bestehenden contacts-overlay -->
+
     <div id="edit-contact-overlay" class="contacts-overlay">
       <div class="overlay-content-header">
         <button id="closeEditOverlay" class="close-button" onclick="closeEditContactsOverlay()">
@@ -118,21 +118,21 @@
           <div class="input-wrapper">
             <input type="text" id="editName" name="name" placeholder="Name" required>
             <img src="../assets/icons/person.svg" alt="Name Icon">
-            <span class="error-message" id="edit-name-error"></span>
+            <span class="error-message" id="editName-error"></span>
           </div>
           <div class="input-wrapper">
             <input type="email" id="editEmail" name="email" placeholder="Email" required>
             <img src="../assets/icons/mail.svg" alt="Email Icon">
-            <span class="error-message" id="edit-email-error"></span>
+            <span class="error-message" id="editEmail-error"></span>
           </div>
           <div class="input-wrapper">
             <input type="tel" id="editPhone" name="phone" placeholder="Phone" required>
             <img src="../assets/icons/call.svg" alt="Phone Icon">
-            <span class="error-message" id="edit-phone-error"></span>
+            <span class="error-message" id="editPhone-error"></span>
           </div>
           <div class="button-wrapper">
             <button type="button" class="delete-btn" onclick="deleteContactFromEdit()">Delete</button>
-            <button type="submit" class="save-btn">Save</button>
+            <button type="button" class="save-btn" onclick="saveEditedContact()">Save</button>
           </div>
         </form>
       </div>
