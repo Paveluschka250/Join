@@ -323,13 +323,13 @@
 
 /* Fügen Sie dies am Ende der Datei hinzu */
 .contacts-overlay {
+  border-radius: 30px 0 30px 30px;
   position: fixed;
   top: 0;
-  right: -584px; /* Ändern Sie left zu right */
+  right: -584px; 
   width: 584px;
   height: 100%;
   background-color: white;
-  border-radius: 30px 0 0 30px; /* Ändern Sie die Border-Radius */
   z-index: 1000;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
@@ -393,7 +393,7 @@
 }
 
 .overlay-content-header {
-  border-radius: 0 30px 0 0; /* Ändern Sie den Border-Radius */
+  border-radius: 30px 0 0 0;
   background-color: #005dff;
   display: flex;
   flex-direction: column;
@@ -637,6 +637,8 @@
 .delete-btn:hover {
   border-color: #005dff;
   color: #005dff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 
 .save-btn:hover {
@@ -654,6 +656,9 @@
   background-image: url("../assets/icons/check.svg");
 }
 
+.delete-btn::after {
+  content: none;
+}
 /* Fügen Sie diese Styles am Ende der Datei hinzu oder ersetzen Sie die bestehenden Styles für das Edit-Formular */
 
 #editContactForm {
@@ -706,37 +711,6 @@
   max-width: none;
 }
 
-/* Stellen Sie sicher, dass diese Styles konsistent mit dem Add-Contact-Formular sind */
-.overlay-content-add-contact {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: calc(100vh - 362px);
-  padding: 32px 70px;
-  overflow-y: auto;
-}
-
-/* Ersetzen Sie den bestehenden .delete-btn Style mit diesem: */
-.delete-btn {
-  background-color: transparent;
-  color: #2a3647;
-  border: 1px solid #2a3647;
-}
-
-.delete-btn:hover {
-  border-color: #005dff;
-  color: #005dff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transform: scale(1.05);
-}
-
-/* Entfernen Sie das Bild nach dem Text für den Delete-Button */
-.delete-btn::after {
-  content: none;
-}
-
-/* Fügen Sie diese Regel am Ende der Datei hinzu oder ersetzen Sie die bestehende Regel für #edit-contact-overlay */
 #edit-contact-overlay {
   left: -584px;
   border-radius: 0 30px 30px 30px;
@@ -744,25 +718,6 @@
 
 #edit-contact-overlay.active {
   left: 0;
-}
-
-/* Ändern Sie die allgemeine Regel für .contacts-overlay */
-.contacts-overlay {
-  border-radius: 30px 0 30px 30px;
-  position: fixed;
-  top: 0;
-  right: -584px;
-  width: 584px;
-  height: 100%;
-  background-color: white;
-  z-index: 1000;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-}
-
-/* Anpassen der Kopfzeile für beide Overlays */
-.overlay-content-header {
-  border-radius: 30px 0 0 0;
 }
 
 /* Spezifische Regel für die Kopfzeile des Edit-Contact-Overlays */
