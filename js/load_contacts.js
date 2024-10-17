@@ -7,12 +7,65 @@ let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
 async function initializeContacts() {
   if (contacts.length === 0) {
     contacts = await downloadContactsFromFirebase();
+    logContacts();
   }
 }
 
 initializeContacts();
 
-async function uploadContactsToFirebase(contacts) {
+async function uploadContactsToFirebase() {
+  let contacts = [
+    {
+      name: "Max Mustermann",
+      email: "max.mustermann@example.com",
+      phoneNumber: "+49 171 1234567",
+    },
+    {
+      name: "Erika Musterfrau",
+      email: "erika.musterfrau@example.com",
+      phoneNumber: "+49 171 2345678",
+    },
+    {
+      name: "Hans Meier",
+      email: "hans.meier@example.com",
+      phoneNumber: "+49 171 3456789",
+    },
+    {
+      name: "Anna Schmidt",
+      email: "anna.schmidt@example.com",
+      phoneNumber: "+49 171 4567890",
+    },
+    {
+      name: "Peter Müller",
+      email: "peter.mueller@example.com",
+      phoneNumber: "+49 171 5678901",
+    },
+    {
+      name: "Julia Schneider",
+      email: "julia.schneider@example.com",
+      phoneNumber: "+49 171 6789012",
+    },
+    {
+      name: "Thomas Weber",
+      email: "thomas.weber@example.com",
+      phoneNumber: "+49 171 7890123",
+    },
+    {
+      name: "Sabine Fischer",
+      email: "sabine.fischer@example.com",
+      phoneNumber: "+49 171 8901234",
+    },
+    {
+      name: "Klaus Wagner",
+      email: "klaus.wagner@example.com",
+      phoneNumber: "+49 171 9012345",
+    },
+    {
+      name: "Martina Becker",
+      email: "martina.becker@example.com",
+      phoneNumber: "+49 171 0123456",
+    },
+  ];
   const databaseUrl =
     "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"; // Firebase Realtime Database URL
 
@@ -40,6 +93,7 @@ async function uploadContactsToFirebase(contacts) {
     }
   }
 }
+// uploadContactsToFirebase();
 
 // Funktion zum Abrufen der Kontakte aus Firebase und Speichern in einem Array
 async function downloadContactsFromFirebase() {
@@ -68,6 +122,7 @@ async function downloadContactsFromFirebase() {
           });
         }
       }
+      contacts = contactsArray; // Aktualisieren Sie die globale contacts-Variable
       renderContacts(contactsArray);
       return contactsArray; // Das Array der Kontakte zurückgeben
     } else {
@@ -96,6 +151,16 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("editContactForm")
     .addEventListener("submit", saveEditedContact);
+
+  const saveEditedContactBtn = document.getElementById("saveEditedContactBtn");
+  if (saveEditedContactBtn) {
+    saveEditedContactBtn.addEventListener("click", saveEditedContact);
+  }
+
+  const editContactForm = document.getElementById("editContactForm");
+  if (editContactForm) {
+    editContactForm.addEventListener("submit", saveEditedContact);
+  }
 });
 
 function renderContacts(contacts) {
@@ -211,7 +276,7 @@ function updateContactDetails(name, email, phone, color) {
   };
 }
 
-function deleteContact(name) {
+async function deleteContact(name) {
   const contactItems = document.querySelectorAll(".contact-item");
 
   // Füge allen Kontakten die 'slide-out' Klasse hinzu
@@ -220,18 +285,23 @@ function deleteContact(name) {
   });
 
   // Warte, bis die Ausblend-Animation abgeschlossen ist
-  setTimeout(() => {
-    // Entferne den Kontakt aus dem Array
-    contacts = contacts.filter((contact) => contact.name !== name);
+  setTimeout(async () => {
+    // Finde den Kontakt im Array
+    const contactToDelete = contacts.find((contact) => contact.name === name);
 
-    // Aktualisiere das localStorage
-    localStorage.setItem("contacts", JSON.stringify(contacts));
+    if (contactToDelete) {
+      // Lösche den Kontakt aus Firebase
+      await deleteContactFromFirebase(contactToDelete.id);
 
-    // Rendere die Kontakte neu
-    renderContacts(contacts);
+      // Entferne den Kontakt aus dem Array
+      contacts = contacts.filter((contact) => contact.name !== name);
 
-    // Falls das gerade gelöschte Kontakt-Element angezeigt wurde, lösche die Details aus der rechten Info-Box
-    clearContactDetails();
+      // Rendere die Kontakte neu
+      renderContacts(contacts);
+
+      // Falls das gerade gelöschte Kontakt-Element angezeigt wurde, lösche die Details aus der rechten Info-Box
+      clearContactDetails();
+    }
   }, 500); // Zeit passend zur CSS-Animation
 }
 
@@ -283,7 +353,7 @@ function closeContactsOverlay() {
 }
 
 // Fügen Sie diese Funktion am Ende der Datei hinzu
-function addNewContact(event) {
+async function addNewContact(event) {
   event.preventDefault();
 
   if (!validateForm()) {
@@ -300,14 +370,17 @@ function addNewContact(event) {
     phoneNumber: phone,
   };
 
-  contacts.push(newContact);
-  localStorage.setItem("contacts", JSON.stringify(contacts));
+  // Füge den neuen Kontakt zu Firebase hinzu
+  const addedContact = await addContactToFirebase(newContact);
 
-  renderContacts(contacts);
-  closeContactsOverlay();
+  if (addedContact) {
+    contacts.push(addedContact);
+    renderContacts(contacts);
+    closeContactsOverlay();
 
-  // Formular zurücksetzen
-  document.getElementById("addContactForm").reset();
+    // Formular zurücksetzen
+    document.getElementById("addContactForm").reset();
+  }
 }
 function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -433,7 +506,11 @@ function deleteContactFromEdit() {
 }
 
 // Fügen Sie diese neue Funktion hinzu
-function saveEditedContact() {
+async function saveEditedContact(event) {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+
   if (!validateEditForm()) {
     return;
   }
@@ -442,24 +519,42 @@ function saveEditedContact() {
   const newEmail = document.getElementById("editEmail").value;
   const newPhone = document.getElementById("editPhone").value;
 
-  const contactIndex = contacts.findIndex(
+  const contactToUpdate = contacts.find(
     (contact) => contact.name === currentEditingContact
   );
 
-  if (contactIndex !== -1) {
-    contacts[contactIndex] = {
+  if (contactToUpdate) {
+    const updatedContact = {
       name: newName,
       email: newEmail,
       phoneNumber: newPhone,
     };
 
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-    renderContacts(contacts);
-    closeEditContactsOverlay();
+    console.log("Aktualisiere Kontakt mit ID:", contactToUpdate.id);
 
-    // Aktualisiere die Kontaktdetails in der Ansicht
-    const color = document.querySelector(".shortname").style.backgroundColor;
-    updateContactDetails(newName, newEmail, newPhone, color);
+    try {
+      // Firebase-Update-Funktion aufrufen
+      await updateContactInFirebase(contactToUpdate.id, updatedContact);
+
+      // Lokales Array aktualisieren
+      const index = contacts.findIndex((c) => c.id === contactToUpdate.id);
+      if (index !== -1) {
+        contacts[index] = { ...contacts[index], ...updatedContact };
+      }
+
+      renderContacts(contacts);
+      closeEditContactsOverlay();
+
+      // Aktualisiere die Kontaktdetails in der Ansicht
+      const color = document.querySelector(".shortname").style.backgroundColor;
+      updateContactDetails(newName, newEmail, newPhone, color);
+    } catch (error) {
+      console.error("Fehler beim Speichern des bearbeiteten Kontakts:", error);
+      alert("Es gab einen Fehler beim Speichern des Kontakts. Bitte versuchen Sie es später erneut.");
+    }
+  } else {
+    console.error("Kontakt zum Aktualisieren nicht gefunden");
+    alert("Der zu aktualisierende Kontakt wurde nicht gefunden.");
   }
 }
 
@@ -497,4 +592,82 @@ function validateEditForm() {
   }
 
   return isValid;
+}
+
+async function updateContactInFirebase(contactId, updatedContact) {
+  const databaseUrl = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`;
+
+  try {
+    console.log(`Versuche Kontakt mit ID ${contactId} zu aktualisieren`);
+    console.log('Aktualisierte Kontaktdaten:', JSON.stringify(updatedContact));
+
+    const response = await fetch(databaseUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedContact),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP-Fehler! Status: ${response.status}, Nachricht: ${errorText}`);
+    }
+
+    const responseData = await response.json();
+    console.log("Kontakt erfolgreich in Firebase aktualisiert", responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Kontakts in Firebase:", error);
+    throw error;
+  }
+}
+
+async function deleteContactFromFirebase(contactId) {
+  const databaseUrl = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`;
+
+  try {
+    const response = await fetch(databaseUrl, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    console.log("Kontakt erfolgreich aus Firebase gelöscht");
+  } catch (error) {
+    console.error("Fehler beim Löschen des Kontakts in Firebase:", error);
+    throw error;
+  }
+}
+
+async function addContactToFirebase(newContact) {
+  const databaseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
+
+  try {
+    const response = await fetch(databaseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newContact),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Neuer Kontakt erfolgreich zu Firebase hinzugefügt");
+
+    return { ...newContact, id: data.name };
+  } catch (error) {
+    console.error("Fehler beim Hinzufügen des Kontakts zu Firebase:", error);
+    throw error;
+  }
+}
+
+function logContacts() {
+  console.log("Current contacts:", JSON.stringify(contacts, null, 2));
 }
