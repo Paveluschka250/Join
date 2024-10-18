@@ -89,3 +89,9 @@
     border-radius: 4px;
 }
 
+/* Fügen Sie diese Media Query am Ende der Datei hinzu */
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
+}

@@ -724,3 +724,13 @@
 #edit-contact-overlay .overlay-content-header {
   border-radius: 0 30px 0 0;
 }
+
+@media (max-width: 1440px) {
+  .contact-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .header-right {
+    margin-left: 0;
+  }
+}
