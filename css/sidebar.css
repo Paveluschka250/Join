@@ -115,18 +115,29 @@
     .sidebar-button {
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* Zentriert den Inhalt vertikal */
+        justify-content: center;
         padding: 8px;
-        height: 100%; /* Volle Höhe des Footers nutzen */
-        font-size: 15px; /* Schriftgröße auf 15px gesetzt */
-        gap: 4px; /* Fügt eine Lücke von 4px zwischen Icon und Text hinzu */
+        height: 100%;
+        font-size: 15px;
+        gap: 4px;
+        color: #000000; /* Standardfarbe für inaktive Buttons */
+    }
+
+    .sidebar-button.active {
+        background-color: transparent; /* Entfernt den Hintergrund für aktive Buttons */
+        color: #4589ff; /* Blaue Schriftfarbe für aktive Buttons */
     }
 
     .sidebar-icon {
-        width: 24px; /* Breite der Icons auf 24px geändert */
-        height: 24px; /* Höhe der Icons auf 24px geändert */
+        width: 24px;
+        height: 24px;
         margin-right: 0;
-        margin-bottom: 0; /* Entfernt den unteren Rand, da wir jetzt gap verwenden */
+        margin-bottom: 0;
+    }
+
+    /* Fügen Sie diese neue Regel hinzu, um auch das Icon blau zu färben */
+    .sidebar-button.active .sidebar-icon {
+        filter: invert(40%) sepia(57%) saturate(2532%) hue-rotate(203deg) brightness(103%) contrast(96%);
     }
 
     .sidebar-footer {
