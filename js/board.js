@@ -1,4 +1,13 @@
-let formData = [];
+let tasks= [];
+
+async function getTasks() {
+    let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
+    let responseToJson = await response.json();
+    tasks = responseToJson;
+    console.log(tasks);
+}
+
+getTasks();
 
 function toggleHamburgerMenu() {
 document.getElementById("addtask-content").classList.toggle('hamburger-menu');
@@ -97,8 +106,21 @@ function getFormData(event) {
         subtasks,
         priority
     };
-    clearForm();
-    console.log(formData);
+    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Task successfully added:', data);
+        clearForm();;
+    })
+    .catch(error => {
+        console.error('Error adding task:', error);
+    });
 }
 
 function clearForm() {
