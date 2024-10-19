@@ -62,12 +62,11 @@ function addSubTask() {
 
 function getTaskData(event) {
     event.preventDefault();
+
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let dueDate = document.getElementById('due-date').value;
-    
     let assignedTo = document.getElementById('assigned-to').value;
-
     let category = document.getElementById('category').value;
 
     let priority = '';
@@ -95,10 +94,23 @@ function getTaskData(event) {
         subtasks: subtasks
     };
 
-    resetFormFields();
-
-    console.log(taskData);
+    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(taskData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Task successfully added:', data);
+        resetFormFields();
+    })
+    .catch(error => {
+        console.error('Error adding task:', error);
+    });
 }
+
 
 function resetFormFields() {
     document.getElementById('title').value = '';

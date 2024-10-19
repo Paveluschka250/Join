@@ -86,7 +86,7 @@ body {
 .task-btn-div img:hover {
     cursor: pointer;
     border-radius: 50%;
-    background-color:lightblue;
+    background-color:rgb(100, 215, 250);
 }
 
 .d-none {
