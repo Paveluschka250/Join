@@ -71,8 +71,13 @@ async function loadSidebar() {
 loadSidebar();
 
 function initializeOverlay() {
+  const overlay = document.getElementById("overlay");
+  if (!overlay) {
+    console.error("Overlay-Element nicht gefunden");
+    return;
+  }
+
   function toggleOverlay(show) {
-    const overlay = document.getElementById("overlay");
     overlay.style.display = show ? "block" : "none";
   }
 
@@ -113,6 +118,3 @@ function initializeOverlay() {
     });
   });
 }
-
-// Starte die Overlay-Initialisierung
-initializeOverlay();

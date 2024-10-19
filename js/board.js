@@ -21,7 +21,7 @@ function containsClass(prioColor, red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon');
     let btnIcon2 = document.getElementById('medium-prio-icon');
     let btnIcon3 = document.getElementById('low-prio-icon');
-    
+
     if (prioColor === 'prio1-color') {
         red.classList.add('prio1-color');
         btnIcon1.classList.add('priotity-btn-filter1');
@@ -44,4 +44,76 @@ function containsClass(prioColor, red, orange, green) {
         green.classList.add('prio3-color');
         btnIcon3.classList.add('priotity-btn-filter3');
     }
+}
+
+function addNewSubTask() {
+    document.getElementById('add-subtask-btn-sb').classList.add('d-none');
+    document.getElementById('subtask-buttons-sb').classList.remove('d-none');
+}
+
+function closeNewSubtasksBtn() {
+    document.getElementById('add-subtask-btn-sb').classList.remove('d-none');
+    document.getElementById('subtask-buttons-sb').classList.add('d-none');
+}
+
+function addSubTask() {
+    let subTask = document.getElementById('subtasks');
+    let contentDiv = document.getElementById('subtask-content');
+
+    contentDiv.innerHTML += `<li><p>${subTask.value}<p/></li>`;
+    subTask.value = '';
+    closeNewSubtasksBtn()
+}
+
+function getFormData(event) {
+    event.preventDefault();
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const dueDate = document.getElementById('due-date').value;
+
+    const assignedTo = document.getElementById('assigned-to').value;
+    const category = document.getElementById('category').value;
+
+    const subtaskList = document.querySelectorAll('#subtask-content li');
+    const subtasks = Array.from(subtaskList).map(li => li.textContent);
+
+    let priority = '';
+    if (document.getElementById('prio1').classList.contains('prio1-color')) {
+        priority = 'Urgent';
+    } else if (document.getElementById('prio2').classList.contains('prio2-color')) {
+        priority = 'Medium';
+    } else if (document.getElementById('prio3').classList.contains('prio3-color')) {
+        priority = 'Low';
+    }
+
+    const formData = {
+        title,
+        description,
+        dueDate,
+        assignedTo,
+        category,
+        subtasks,
+        priority
+    };
+    clearForm();
+    console.log(formData);
+}
+
+function clearForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('due-date').value = '';
+    document.getElementById('assigned-to').selectedIndex = 0;
+    document.getElementById('category').selectedIndex = 0;
+    document.getElementById('subtasks').value = '';
+
+    const priorityButtons = document.querySelectorAll('.priority-btn-addTask');
+    priorityButtons.forEach(button => {
+        button.classList.remove('prio1-color', 'prio2-color', 'prio3-color');
+    });
+
+    const subtaskContent = document.getElementById('subtask-content');
+    subtaskContent.innerHTML = '';
+
+    toggleHamburgerMenu();
 }

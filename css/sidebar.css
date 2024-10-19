@@ -55,8 +55,8 @@
 }
 
 .sidebar-icon {
-    width: 20px; /* Breite der Icons */
-    height: 20px; /* Höhe der Icons */
+    width: 24px; /* Breite der Icons auf 24px geändert */
+    height: 24px; /* Höhe der Icons auf 24px geändert */
     margin-right: 8px; /* Abstand zwischen Icon und Text */
 }
 
@@ -89,3 +89,58 @@
     border-radius: 4px;
 }
 
+/* Fügen Sie diese Media Query am Ende der Datei hinzu */
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 76px; /* Geändert auf 76px */
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0; /* Padding entfernt, um die volle Höhe zu nutzen */
+        margin-top: 0;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 100%; /* Volle Höhe des Footers nutzen */
+    }
+
+    .sidebar-button {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        height: 100%;
+        font-size: 15px;
+        gap: 4px;
+        color: #000000; /* Standardfarbe für inaktive Buttons */
+    }
+
+    .sidebar-button.active {
+        background-color: transparent; /* Entfernt den Hintergrund für aktive Buttons */
+        color: #4589ff; /* Blaue Schriftfarbe für aktive Buttons */
+    }
+
+    .sidebar-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    /* Fügen Sie diese neue Regel hinzu, um auch das Icon blau zu färben */
+    .sidebar-button.active .sidebar-icon {
+        filter: invert(40%) sepia(57%) saturate(2532%) hue-rotate(203deg) brightness(103%) contrast(96%);
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+}

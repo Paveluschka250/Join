@@ -5,3 +5,9 @@ main {
     flex-direction: column;
     flex-grow: 1;
 }
+
+@media (max-width: 1024px) {
+    main {
+        margin-left: 0;
+    }
+}

@@ -61,7 +61,7 @@
 
         <div class="hamburger-menu overlay-add-task-board" id="overlay-add-task-board">
             <div id="addtask-content" class="container-addTask add-task-sb hamburger-menu">
-                <form class="form-add-task" action="#" method="post">
+                <form onsubmit="getFormData(event)" class="form-add-task" action="#" method="post">
                     <div class="add-task-sb-headline">
                         <h3 class="headline-add-task-sb">Add Task</h3><img class="add-task-sb-close-icon"
                             onclick="toggleHamburgerMenu()" src="../assets/icons/clearIcon.svg">
@@ -112,9 +112,9 @@
                         <div class="form-group-addTask">
                             <label for="category"><b>Category</b></label>
                             <select class="underline-select input-addTask cursor-pointer" id="category" name="category">
-                                <option value="">Select task category</option>
-                                <option value="">Technical Task</option>
-                                <option value="">User Story</option>
+                                <option value="Select task category">Select task category</option>
+                                <option value="Technical Task">Technical Task</option>
+                                <option value="User Story">User Story</option>
                             </select>
                         </div>
 
@@ -122,8 +122,16 @@
                             <label for="subtasks"><b>Subtasks</b> (optional)</label>
                             <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text" id="subtasks"
                                 name="subtasks" placeholder="Add new subtask">
-                            <button onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                            <button type="button" id="add-subtask-btn-sb" class="create-new-task" onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                            <div id="subtask-buttons-sb" class="task-btn-div d-none">
+                                <button type="button" onclick="closeNewSubtasksBtn()"><img src="../assets/icons/clearIcon.svg" alt="close"></button>|
+                                <button type="button" onclick="addSubTask()"><img src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
+                            </div>
                         </div>
+                    </div>
+
+                    <div>
+                        <ul id="subtask-content" class="added-subtasks"></ul>
                     </div>
 
                     <div class="form-actions-addTask input-addTask hamburger-menu-add-task-close-btn">

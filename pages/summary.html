@@ -1,27 +1,151 @@
-<!-- summary.html -- ist eine der pages in der pages.html -->
 
-<!DOCTYPE html>
-<html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/summary.css" />
-    <link rel="stylesheet" href="../css/standart.css" />
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/sidebar.css" />
-    <link rel="stylesheet" href="../css/header.css">
-    <title>Summary</title>
-  </head>
-  <body>
-    <div id="header"></div>
-    <article class="main-container">
-      <aside class="sidebar" id="sidebar"></aside>
-      <main id="main">
-        <article id="summary-content">
-          <h1>Grosse Baustelle</h1>
-        </article>
-      </main>
-    </article>
-  </body>
-  <script src="../js/load_layout.js"></script>
+<!doctype html>
+<html lang="11">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>join</title>
+    <link rel="stylesheet" href="../css/summary.css"> 
+    <link rel="stylesheet " href="../css/template.css">
+
+
+</head>
+<body>
+
+
+<!--<iframe src="./assets/templates/desktop_template.html" style="width: 100%; height: 740px; border: none;"></iframe> -->
+<header>
+    <div class="img-join">
+        <img id="join" src="../assets/img/logo-white.svg"> 
+
+    </div>
+    <div>
+        <span>Kanbann Project Management Tool</span>
+    </div>
+    <div>
+        <div class="help-icon">
+
+            <a href="https://join-370.developerakademie.net/Join/pages/help.html"><img id="help" src="../assets/icons/help.svg"></a>
+
+        </div>
+
+        <div  id="userCircle" >
+
+            <script>
+                // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
+                function displayCurrentUser() {
+                    // console.log('test')
+                    const currentUser = localStorage.getItem('currentUser');
+                    console.log('currentUser:', currentUser);
+                    if (currentUser) {
+                        const userCircle = document.getElementById('userCircle');
+                        if (userCircle) {
+                            // userCircle.innerText = currentUser;
+                            userCircle.innerHTML = currentUser;
+                        } else {
+                            console.error('Das Element mit der ID "userCircle" wurde nicht gefunden.');
+                        }
+                    } else {
+                        console.error('currentUser existiert nicht im localStorage.');
+                    }
+                }
+
+                // Event-Listener, der aufgerufen wird, wenn die Seite geladen wird
+                document.addEventListener('DOMContentLoaded', displayCurrentUser);
+
+
+            </script>
+        </div>
+
+
+    </div>
+</header>
+<nav>
+    <div class="nav-head">
+
+        <ul>
+            <li><a href="https://join-370.developerakademie.net/Join/pages/summary.html"><img id="summary" src="../assets/icons/summary.png"></a></li>
+            <li><a href="add_task.html"><img id="task" src="../assets/icons/add task.png"></a></li>
+            <li><a href="board.html"><img id="board" src="../assets/icons/Board icon.png"></a></li>
+            <li><a href="contacts.html"><img id="contacts" src="../assets/icons/Contacts.png"></a></li>
+        </ul>
+    </div>
+    <div class="nav-foot">
+        <div class="privacy">
+            <a href="privacy_policy.html">Privacy Policy</a>
+        </div>
+        <div class="legal-notice">
+            <a href="legal_Notice.html">Legal notice</a>
+        </div>
+    </div>
+
+</nav>
+<div class="main-container">
+    <div class="greeting">
+        <div id="myGreet">
+           <span>Good morning, </span>
+        </div>
+        <div id="secPart">
+
+        </div>
+    </div>
+    <div class="second_Part">
+        <div class="tasks-first-Part">
+
+            <div class="inner-tasks"><p><a href="pages/board.html">Tasks Urgent</a></p>
+                <div class="urgent"><img src="../assets/icons/Board (1).png"></div> 
+                <div class="vertical-Line"  ></div>
+
+                <div>Oktober 16, 2022</div>
+            </div>
+            <div class="tasks-second-Par">
+                <div class="task-board">
+                    <img src="assets/img/Board (1).png">
+                </div>
+
+                <div class="task-text"><a href="board.html">Tasks in Board</a></div>
+            </div>
+        </div>
+        <div class="third-Part">
+            <div class="todos"><img src="../assets/icons/Urgent.png"> 
+            </ul>
+                <div class="inner-todos"></div>
+               <div><span>Taskss To-do</span></div>
+            </div>
+            <div class="progress"><img src="assets/img/Frame 61 Kopie.png"></div>
+            <div class="feedback">Awaiting Feedback</div>
+            <div class="done">Tasks Done</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
+    function displayOnlinetUser() {
+        // console.log('test')
+        const onlineUser = localStorage.getItem('onlineUser');
+        console.log('onlineUser:', onlineUser);
+        if (onlineUser) {
+            const userGreeting = document.getElementById('secPart');
+            if (userGreeting) {
+                // userGreeting.innerText = currentUser;
+                userGreeting.innerHTML = onlineUser;
+            } else {
+                console.error('Das Element mit der ID "secPart" wurde nicht gefunden.');
+            }
+        } else {
+            console.error('onlineUser existiert nicht im localStorage.');
+        }
+    }
+
+    // Event-Listener, der aufgerufen wird, wenn die Seite geladen wird
+    document.addEventListener('DOMContentLoaded',  displayOnlinetUser);
+
+
+</script>
+
+</body>
 </html>

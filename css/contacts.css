@@ -323,27 +323,28 @@
 
 /* Fügen Sie dies am Ende der Datei hinzu */
 .contacts-overlay {
+  border-radius: 30px 0 30px 30px;
   position: fixed;
   top: 0;
-  right: -584px;
+  right: -584px; 
   width: 584px;
   height: 100%;
   background-color: white;
-  border-radius: 30px 0 30px 30px;
   z-index: 1000;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
 
 .contacts-overlay.active {
-  animation-name: slideIn;
+  animation-name: slideInRight; /* Ändern Sie den Animationsnamen */
 }
 
 .contacts-overlay.inactive {
-  animation-name: slideOut;
+  animation-name: slideOutRight; /* Ändern Sie den Animationsnamen */
 }
 
-@keyframes slideIn {
+@keyframes slideInRight {
+  /* Ändern Sie die Animation */
   from {
     right: -584px;
   }
@@ -352,7 +353,8 @@
   }
 }
 
-@keyframes slideOut {
+@keyframes slideOutRight {
+  /* Ändern Sie die Animation */
   from {
     right: 0;
   }
@@ -410,6 +412,8 @@
   border-radius: 50%; /* Border-Radius immer auf Kreisform */
   transition: transform 0.3s ease, box-shadow 0.3s ease,
     background-color 0.3s ease, border-radius 0.3s ease; /* Übergang für border-radius hinzugefügt */
+  right: 10px; /* Positionieren Sie den Button rechts */
+  left: auto; /* Entfernen Sie die linke Positionierung */
 }
 
 .overlay-content-header button:hover {
@@ -451,6 +455,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 32px;
+  background-color: transparent;
 }
 
 #addContactForm {
@@ -580,4 +585,157 @@
 
 .error-message.visible {
   display: block;
+}
+
+
+#editContactInitials {
+  width: 120px;
+  height: 120px;
+  font-size: 47px;
+  border: 3px solid white;
+  border-radius: 50%; /* Dies macht das Element rund */
+  background-color: #ff7a00; /* Eine Beispielfarbe, Sie können diese anpassen */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Fügt etwas Abstand unter dem Element hinzu */
+}
+
+.delete-btn,
+.save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 10px;
+  border-radius: 10px;
+  font-size: 23px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete-btn {
+  background-color: white;
+  color: #2a3647;
+  border: 1px solid #2a3647;
+  width: 128px;
+}
+
+.save-btn {
+  background-color: #4589ff;
+  color: white;
+  border: none;
+  width: 143px;
+}
+
+.delete-btn:hover,
+.save-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn:hover {
+  border-color: #005dff;
+  color: #005dff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.save-btn:hover {
+  background-color: #005dff;
+}
+
+.save-btn::after {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-left: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../assets/icons/check.svg");
+}
+
+.delete-btn::after {
+  content: none;
+}
+/* Fügen Sie diese Styles am Ende der Datei hinzu oder ersetzen Sie die bestehenden Styles für das Edit-Formular */
+
+#editContactForm {
+  width: 422px;
+  display: flex;
+  flex-direction: column;
+}
+
+#editContactForm .input-wrapper {
+  position: relative;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+#editContactForm .input-wrapper input {
+  display: block;
+  width: calc(100% - 42px);
+  padding: 12px 21px;
+  border: none;
+  border-bottom: 1px solid #d1d1d1;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+#editContactForm .input-wrapper input:hover,
+#editContactForm .input-wrapper input:focus {
+  outline: none;
+  border-bottom-color: #005dff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#editContactForm .input-wrapper img {
+  position: absolute;
+  right: 21px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#editContactForm .button-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 16px; /* Verringerter Abstand zwischen den Buttons */
+  margin-top: 32px;
+}
+
+/* Fügen Sie diese Styles hinzu, um die Buttons gleich breit zu machen */
+#editContactForm .button-wrapper button {
+  flex: none;
+  max-width: none;
+}
+
+#edit-contact-overlay {
+  left: -584px;
+  border-radius: 0 30px 30px 30px;
+}
+
+#edit-contact-overlay.active {
+  left: 0;
+}
+
+/* Spezifische Regel für die Kopfzeile des Edit-Contact-Overlays */
+#edit-contact-overlay .overlay-content-header {
+  border-radius: 0 30px 0 0;
+}
+
+@media (max-width: 1440px) {
+  .contact-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .header-right {
+    margin-left: 0;
+  }
+}
+@media (max-width: 1024px) {
+  #contacts-content .contacts-container {
+    height: calc(100vh - 176px);
+  }
 }
