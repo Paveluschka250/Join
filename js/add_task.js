@@ -1,3 +1,13 @@
+let contacts = [];
+
+async function getContacts() {
+    let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+    let responseToJson = await response.json();
+    contacts = responseToJson;
+}
+
+getContacts();
+
 function getPriority(id) {
     let buttonRed = document.getElementById('priority1');
     let buttonOrange = document.getElementById('priority2');
@@ -135,4 +145,17 @@ function resetFormFields() {
     document.getElementById('priority-btn3').classList.remove('priotity-btn-filter3');
 
     closeNewSubtasksBtn();
+}
+
+function getUsersToAssignedTo() {
+    const namesArray = Object.values(contacts).map(item => item.name);
+    let assignedTo = document.getElementById('assigned-to');
+    assignedTo.innerHTML = '';
+    for (let i = 0; i < namesArray.length; i++) {
+        const option = document.createElement('option');
+        option.value = namesArray[i];
+        option.textContent = namesArray[i];
+        option.setAttribute('id',`option-${i}`);
+        assignedTo.appendChild(option);
+    }
 }
