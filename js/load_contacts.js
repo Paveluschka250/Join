@@ -161,6 +161,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (editContactForm) {
     editContactForm.addEventListener("submit", saveEditedContact);
   }
+
+  const closeContactInfoButton = document.getElementById('close-contact-info');
+  if (closeContactInfoButton) {
+    closeContactInfoButton.addEventListener('click', closeContactInfo);
+  }
 });
 
 function renderContacts(contacts) {
@@ -274,7 +279,26 @@ function updateContactDetails(name, email, phone, color) {
   editButton.onclick = function () {
     openEditContactsOverlay(name, email, phone, color);
   };
+
+  const contactInfo = document.querySelector(".contact-info");
+  
+  // Entfernen Sie zuerst die "closing" Klasse, falls sie vorhanden ist
+  contactInfo.classList.remove("closing");
+  
+  // Dann aktivieren Sie die Slide-in Animation
+  contactInfo.classList.add("active");
 }
+
+// Füge diese Funktion hinzu, um die Kontaktdetails bei Bildschirmgrößenänderungen anzupassen
+function handleResize() {
+  const contactInfo = document.querySelector(".contact-info");
+  if (window.innerWidth > 768) {
+    contactInfo.classList.remove("active");
+  }
+}
+
+// Füge einen Event-Listener für Bildschirmgrößenänderungen hinzu
+window.addEventListener('resize', handleResize);
 
 async function deleteContact(name) {
   const contactItems = document.querySelectorAll(".contact-item");
@@ -670,4 +694,15 @@ async function addContactToFirebase(newContact) {
 
 function logContacts() {
   console.log("Current contacts:", JSON.stringify(contacts, null, 2));
+}
+
+function closeContactInfo() {
+  const contactInfo = document.querySelector(".contact-info");
+  contactInfo.classList.add("closing");
+  
+  // Warten Sie, bis die Animation abgeschlossen ist, bevor Sie die Klasse "active" entfernen
+  setTimeout(() => {
+    contactInfo.classList.remove("active");
+    contactInfo.classList.remove("closing");
+  }, 300); // Diese Zeit sollte der Dauer der CSS-Transition entsprechen
 }
