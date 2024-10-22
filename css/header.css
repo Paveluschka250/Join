@@ -35,27 +35,26 @@
 }
 
 #header header .profile .help-icon {
-  cursor: pointer; /* Ändert den Mauszeiger zu einem Pointer */
-  transition: transform 0.2s ease; /* Sanfte Animation für den Hover-Effekt */
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 #header header .profile .help-icon:hover {
-  transform: scale(1.1); /* Vergrößert das Icon leicht beim Hover */
+  transform: scale(1.1);
 }
 
 #header header .profile h4 {
-  color: #4589ff; /* Blauer Buchstabe "G" */
-  background-color: white; /* Weißer Kreis */
-  border: 2px solid #4589ff; /* Blauer Rand um den weißen Kreis */
-  border-radius: 50%; /* Kreisform */
-  width: 32px; /* Breite des Kreises */
-  height: 32px; /* Höhe des Kreises */
+  color: #4589ff;
+  background-color: white;
+  border: 2px solid #4589ff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold; /* Fettschrift */
-  box-shadow: 0 0 0 3px white; /* Weißer Rand um den blauen Rand */
+  font-weight: bold;
+  box-shadow: 0 0 0 3px white;
   margin: 16px 0;
   cursor: pointer;
 }
@@ -68,10 +67,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1); /* Transparenter Hintergrund */
+  background-color: rgba(0, 0, 0, 0.1);
   z-index: 9999;
-  pointer-events: auto; /* Overlay bleibt interaktiv */
-  overflow: hidden; /* Wichtige Änderung: Verhindert, dass das Overlay selbst scrollbar wird */
+  pointer-events: auto;
+  overflow: hidden;
 }
 
 .overlay-content {
@@ -85,7 +84,7 @@
   background-color: white;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4),
     /* Stärkerer Schatten unten */ -2px 0 4px rgba(0, 0, 0, 0.2); /* Leichterer Schatten links */
-  pointer-events: auto; /* Interaktive Elemente im Overlay */
+  pointer-events: auto;
 }
 
 .overlay-content a {
@@ -93,13 +92,37 @@
   text-decoration: none;
   font-size: 16px;
   display: block;
-  padding: 8px 0; /* Padding nach oben und unten */
+  padding: 8px 0;
   border-radius: 8px;
-  transition: transform 0.2s ease; /* Sanfte Animation für den Hover-Effekt */
-  text-align: right; /* Optionale weitere Ausrichtung für die Links */
+  transition: transform 0.2s ease;
+  text-align: right;
 }
 
 .overlay-content a:hover {
-  background-color: #d2e3ff; /* Hintergrundfarbe beim Hover */
-  transform: scale(1.05); /* Minimal größer beim Hover */
+  background-color: #d2e3ff;
+  transform: scale(1.05);
+}
+
+.overlay-content a.help {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .overlay-content a.help {
+    display: block;
+  }
+  .overlay-content a {
+    color: #4589ff;
+  }
+  .profile p {
+    display: none;
+  }
+  #header header .profile #none a[href="../pages/help.html"] {
+    display: none;
+  }
+  .overlay-content {
+    border-top-right-radius: 0px;
+    top: 80px;
+    right: 40px;
+  }
 }
