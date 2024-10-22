@@ -166,7 +166,7 @@ function getUsersToAssignedTo() {
 function selectContacts(selectedValue) {
     let selectedContacts = document.getElementById('selected-contacts');
     let assignedTo = document.getElementById('assigned-to');
-    
+
     if (selectedValue) {
         let splitName = selectedValue.split(" ");
         if (splitName.length > 1) {
@@ -176,7 +176,7 @@ function selectContacts(selectedValue) {
 
             selectedContacts.innerHTML += `<div class="contact-initials">${initials}</div>`;
         } else {
-            selectedContacts.innerHTML = `<div class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
+            selectedContacts.innerHTML += `<div class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
         }
     } let optionToDisable = assignedTo.querySelector(`option[value="${selectedValue}"]`);
     if (optionToDisable) {
