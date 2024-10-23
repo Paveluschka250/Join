@@ -450,10 +450,9 @@
 .overlay-content-add-contact {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   height: calc(100vh - 362px);
-  padding: 32px 70px;
   overflow-y: auto;
 }
 
@@ -835,6 +834,48 @@
   .contact-header {
     gap: 21px;
   }
+  .contacts-overlay {
+    border-radius: 30px;
+    right: -584px;
+    width: 396px;
+    height: 760px;
+    top: calc(50% - 380px);
+  }
+  @keyframes slideInRight {
+    /* Ändern Sie die Animation */
+    from {
+      right: -584px;
+    }
+    to {
+      right: calc(50% - 198px);
+    }
+  }
+  .overlay-content-header {
+    border-radius: 30px 30px 0 0;
+  }
+  .overlay-content-header img {
+    display: none;
+  }
+
+  .overlay-content-add-contact {
+    height: auto;
+    padding-top: calc(15px + 67.5px);
+  }
+  .profile-picture {
+    position: absolute;
+    top: calc(280px - 67.5px);
+  }
+  #addContactForm {
+    width: 370px;
+    gap: 15px;
+  }
+  .create-btn{
+    padding: 12px 8px;
+    font-size: 19px;
+  }
+  .cancel-btn {
+    display: none;
+  }
 }
 @media (max-width: 425px) {
   #contacts-content button {
@@ -875,7 +916,18 @@
   #contacts-content .sticky-button-wrapper button p {
     display: none;
   }
-
+  /* .contacts-overlay {
+    width: 310px;
+  }
+  .overlay-content-header h2 {
+    font-size: 32px;
+  }
+  .overlay-content-header p {
+    font-size: 16px;
+  }
+  #addContactForm {
+    width: 290px;
+  } */
 }
 
 /* Für die contact-details in der Kontaktliste */
@@ -908,4 +960,14 @@
 }
 #contacts-content .sticky-button-wrapper button p {
   font-size: 23px;
+}
+@media (max-height: 915px) {
+  .overlay-content-header {
+    height: 280px;
+  }
+  .profile-picture,
+  .input-wrapper,
+  .button-wrapper {
+    margin-bottom: 8px;
+  }
 }
