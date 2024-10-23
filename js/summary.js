@@ -48,7 +48,7 @@ async function getTasksData() {
         console.log(datsArray)
         deadline = datsArray [0]
         console.log(deadline)
-        document.getElementById('uncomming-Deadline').textContent = "ankommendes Datum" +deadline
+        document.getElementById('uncomming-Deadline').innerHTML += `<h4>${deadline}</h4>`
 
     } catch (error) {
         console.error('Error:', error);

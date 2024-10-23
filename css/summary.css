@@ -70,12 +70,30 @@
     align-items: center;
     cursor: pointer;
 }
-.inner-tasks:hover{
-    scale: 1.1;
-    background-color: white;
+
+.inner-tasks:hover{ 
+   scale: (1.1);
+    background-color: white; 
     border-radius: 0px 30px 30px 30px;
     box-shadow: 0px 0px 0px 1px lightgray ;
 }
+.inner-tasks:hover .text h5{
+    color:#4589FF ;
+    scale: (1.1);
+}
+.inner-tasks:hover .text h3{
+    color:#4589FF ;
+    scale: (1.1);
+}
+.inner-tasks:hover #uncomming-Deadline h4{
+    color:#4589FF;
+    scale: (1.1);
+}
+.inner-tasks:hover .vertical-Line{
+    background-color: #4589FF;
+    scale: (1.1);
+}
+
 .tasks-second-Par{
     width: 208px;
     height: 191px;
@@ -166,6 +184,25 @@
 .inner-todos{
     background-color: red;
 }
+#uncomming-Deadline{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+.text {
+   
+    margin-top: 120px;
+}
+
+.text h5, h3{
+    color: white;
+    font-weight: 80;
+}
+#uncomming-Deadline{ 
+    
+   
+}
+
 
 
 
