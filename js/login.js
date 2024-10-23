@@ -31,6 +31,20 @@ async function getUserData() {
         return null;
     }
 }
+let isGuest = false; 
+
+function setGuestMode() {
+    isGuest = true;
+    console.log("Gast-Modus aktiviert:", isGuest);
+    localStorage.setItem('currentUser', 'G');
+    localStorage.setItem('onlineUser', 'Gast');
+    window.location.href = 'summary.html?msg=Login erfolgreich';
+}
+
+// Event-Listener für den Klick auf den Button mit der ID "guest"
+document.getElementById('guest').addEventListener('click', setGuestMode);
+
+
 // Funktion zur Authentifizierung des Benutzers
 async function loginUser(email, password) {
     const users = await getUserData();
@@ -57,8 +71,10 @@ async function loginUser(email, password) {
         console.log("Keine Benutzer gefunden");
         alert("Keine Benutzer gefunden");
     }
-
 }
+
+
+
 
 
 

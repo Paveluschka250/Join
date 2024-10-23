@@ -6,16 +6,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>join</title>
     <link rel="stylesheet" href="../css/summary.css"> 
     <link rel="stylesheet " href="../css/template.css">
 
 
 </head>
-<body>
+<body >
 
 
-<!--<iframe src="./assets/templates/desktop_template.html" style="width: 100%; height: 740px; border: none;"></iframe> -->
 <header>
     <div class="img-join">
         <img id="join" src="../assets/img/logo-white.svg"> 
@@ -32,31 +32,7 @@
         </div>
 
         <div  id="userCircle" >
-
-            <script>
-                // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
-                function displayCurrentUser() {
-                    // console.log('test')
-                    const currentUser = localStorage.getItem('currentUser');
-                    console.log('currentUser:', currentUser);
-                    if (currentUser) {
-                        const userCircle = document.getElementById('userCircle');
-                        if (userCircle) {
-                            // userCircle.innerText = currentUser;
-                            userCircle.innerHTML = currentUser;
-                        } else {
-                            console.error('Das Element mit der ID "userCircle" wurde nicht gefunden.');
-                        }
-                    } else {
-                        console.error('currentUser existiert nicht im localStorage.');
-                    }
-                }
-
-                // Event-Listener, der aufgerufen wird, wenn die Seite geladen wird
-                document.addEventListener('DOMContentLoaded', displayCurrentUser);
-
-
-            </script>
+          
         </div>
 
 
@@ -77,7 +53,7 @@
             <a href="privacy_policy.html">Privacy Policy</a>
         </div>
         <div class="legal-notice">
-            <a href="legal_Notice.html">Legal notice</a>
+            <a href="../pages/legal_notice.html">Legal notice</a>
         </div>
     </div>
 
@@ -98,7 +74,7 @@
                 <div class="urgent"><img src="../assets/icons/icons png.png"></div> 
                 <div class="vertical-Line"  ></div>
 
-                <div>Oktober 16, 2022</div>
+                <div id="uncomming-Deadline" ></div>
             </div>
             <div class="tasks-second-Par">
                 <div class="task-board">
@@ -122,30 +98,13 @@
 
 </div>
 
-<script>
-    // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
-    function displayOnlinetUser() {
-        // console.log('test')
-        const onlineUser = localStorage.getItem('onlineUser');
-        console.log('onlineUser:', onlineUser);
-        if (onlineUser) {
-            const userGreeting = document.getElementById('secPart');
-            if (userGreeting) {
-                // userGreeting.innerText = currentUser;
-                userGreeting.innerHTML = onlineUser;
-            } else {
-                console.error('Das Element mit der ID "secPart" wurde nicht gefunden.');
-            }
-        } else {
-            console.error('onlineUser existiert nicht im localStorage.');
-        }
-    }
-
-    // Event-Listener, der aufgerufen wird, wenn die Seite geladen wird
-    document.addEventListener('DOMContentLoaded',  displayOnlinetUser);
 
 
-</script>
 
+
+
+<script src="../js/summary.js"></script>
 </body>
 </html>
+
+
