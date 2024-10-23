@@ -35,25 +35,25 @@
                             <p>To Do</p>
                             <img src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="board-content">No tasks To do</div>
+                        <div id="to-do" class="board-content">No tasks To do</div>
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
                             <p>In progress</p>
                             <img src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="board-content">No tasks To do</div>
+                        <div id="in-progress" class="board-content">No tasks To do</div>
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
                             <p>Await feedback</p>
                             <img src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="board-content">No tasks To do</div>
+                        <div id="await-feedback" class="board-content">No tasks To do</div>
                     </div>
                     <div class="tasks margin-none">
                         <div class="task-headlines">Done</div>
-                        <div class="board-content">No tasks To do</div>
+                        <div id="done" class="board-content">No tasks To do</div>
                     </div>
                 </div>
             </div>
@@ -88,15 +88,15 @@
                                 <label><b>Priority</b></label>
                             </div>
                             <div class="buttons-row">
-                                <button id="prio1" onclick="getPriority('prio1')" type="button"
+                                <button onclick="getPriority('prio1')" type="button"
                                     class="priority-btn-addTask urgent-addTask center-button">Urgent <img
                                         id="high-prio-icon" src="../assets/icons/prio3.svg"
                                         alt="priorität hoch"></button>
-                                <button id="prio2" onclick="getPriority('prio2')" type="button"
+                                <button onclick="getPriority('prio2')" type="button"
                                     class="priority-btn-addTask medium-addTask center-button">Medium <img
                                         src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon"
                                         class="medium-prio-icon"></button>
-                                <button id="prio3" onclick="getPriority('prio3')" type="button"
+                                <button onclick="getPriority('prio3')" type="button"
                                     class="priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon"
                                         src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
                             </div>
@@ -104,9 +104,10 @@
 
                         <div class="form-group-addTask">
                             <label for="assigned-to"><b>Assigned to</b> (optional)</label>
-                            <select class="underline-select input-addTask cursor-pointer" id="assigned-to" name="assigned-to">
+                            <select onclick="getUsersToAssignedTo()" class="underline-select input-addTask cursor-pointer" id="assigned-to-sb" name="assigned-to">
                                 <option value="">Select contacts to assign</option>
                             </select>
+                            <div id="set-contacts"></div>
                         </div>
 
                         <div class="form-group-addTask">

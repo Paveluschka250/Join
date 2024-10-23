@@ -1,4 +1,5 @@
 let tasks= [];
+let contactsForSidebar = [];
 
 async function getTasks() {
     let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
@@ -7,6 +8,13 @@ async function getTasks() {
     console.log(tasks);
 }
 
+async function getContactsForSidebar() {
+    let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+    let responseToJson = await response.json();
+    contactsForSidebar = responseToJson;
+}
+
+getContactsForSidebar(),
 getTasks();
 
 function toggleHamburgerMenu() {
@@ -140,4 +148,17 @@ function clearForm() {
     subtaskContent.innerHTML = '';
 
     toggleHamburgerMenu();
+}
+
+function getUsersToAssignedTo() {
+    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
+    let assignedTo = document.getElementById('assigned-to-sb');
+    assignedTo.innerHTML = '';
+    for (let i = 0; i < namesArray.length; i++) {
+        const option = document.createElement('option');
+        option.value = namesArray[i];
+        option.textContent = namesArray[i];
+        option.setAttribute('id',`option-${i}`);
+        assignedTo.appendChild(option);
+    }
 }

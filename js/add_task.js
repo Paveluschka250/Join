@@ -1,3 +1,13 @@
+let contacts = [];
+
+async function getContacts() {
+    let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+    let responseToJson = await response.json();
+    contacts = responseToJson;
+}
+
+getContacts();
+
 function getPriority(id) {
     let buttonRed = document.getElementById('priority1');
     let buttonOrange = document.getElementById('priority2');
@@ -54,7 +64,7 @@ function closeNewSubtasksBtn() {
 function addSubTask() {
     let subTask = document.getElementById('subtasks');
     let contentDiv = document.getElementById('subtask-content');
-    
+
     contentDiv.innerHTML += `<li><p>${subTask.value}<p/></li>`;
     subTask.value = '';
     closeNewSubtasksBtn()
@@ -80,7 +90,7 @@ function getTaskData(event) {
 
     let subtasks = [];
     let subtaskElements = document.querySelectorAll('#subtask-content li p');
-    subtaskElements.forEach(function(subtaskElement) {
+    subtaskElements.forEach(function (subtaskElement) {
         subtasks.push(subtaskElement.textContent);
     });
 
@@ -101,14 +111,14 @@ function getTaskData(event) {
         },
         body: JSON.stringify(taskData)
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Task successfully added:', data);
-        resetFormFields();
-    })
-    .catch(error => {
-        console.error('Error adding task:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Task successfully added:', data);
+            resetFormFields();
+        })
+        .catch(error => {
+            console.error('Error adding task:', error);
+        });
 }
 
 
@@ -135,4 +145,41 @@ function resetFormFields() {
     document.getElementById('priority-btn3').classList.remove('priotity-btn-filter3');
 
     closeNewSubtasksBtn();
+}
+
+function getUsersToAssignedTo() {
+    const namesArray = Object.values(contacts).map(item => item.name);
+    let assignedTo = document.getElementById('assigned-to');
+    assignedTo.innerHTML = '';
+    for (let i = 0; i < namesArray.length; i++) {
+        const option = document.createElement('option');
+        option.value = namesArray[i];
+        option.textContent = namesArray[i];
+        option.setAttribute('id', `option-${i}`);
+        assignedTo.appendChild(option);
+    }
+    assignedTo.addEventListener('change', function () {
+        selectContacts(assignedTo.value);
+    });
+}
+
+function selectContacts(selectedValue) {
+    let selectedContacts = document.getElementById('selected-contacts');
+    let assignedTo = document.getElementById('assigned-to');
+
+    if (selectedValue) {
+        let splitName = selectedValue.split(" ");
+        if (splitName.length > 1) {
+            let firstNameInitial = splitName[0][0].toUpperCase();
+            let secondNameInitial = splitName[1][0].toUpperCase();
+            let initials = `${firstNameInitial}${secondNameInitial}`;
+
+            selectedContacts.innerHTML += `<div class="contact-initials">${initials}</div>`;
+        } else {
+            selectedContacts.innerHTML += `<div class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
+        }
+    } let optionToDisable = assignedTo.querySelector(`option[value="${selectedValue}"]`);
+    if (optionToDisable) {
+        optionToDisable.disabled = true;
+    }
 }

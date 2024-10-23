@@ -56,9 +56,10 @@
 
                     <div class="form-group-addTask">
                         <label for="assigned-to"><b>Assigned to</b> (optional)</label>
-                        <select class="underline-select input-addTask" id="assigned-to" name="assigned-to">
+                        <select onfocus="getUsersToAssignedTo()" id="assigned-to" type="checkbox" class="underline-select input-addTask" name="assigned-to">
                             <option value="">Select contacts to assign</option>
                         </select>
+                        <div class="selected-contacts" id="selected-contacts"></div>
                     </div>
 
                     <div class="form-group-addTask">
