@@ -1,4 +1,4 @@
-let tasks= [];
+let tasks = [];
 let contactsForSidebar = [];
 
 async function getTasks() {
@@ -15,11 +15,11 @@ async function getContactsForSidebar() {
 }
 
 getContactsForSidebar(),
-getTasks();
+    getTasks();
 
 function toggleHamburgerMenu() {
-document.getElementById("addtask-content").classList.toggle('hamburger-menu');
-document.getElementById('overlay-add-task-board').classList.toggle('hamburger-menu');
+    document.getElementById("addtask-content").classList.toggle('hamburger-menu');
+    document.getElementById('overlay-add-task-board').classList.toggle('hamburger-menu');
 }
 
 function getPriority(id) {
@@ -89,9 +89,13 @@ function getFormData(event) {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const dueDate = document.getElementById('due-date').value;
-
-    const assignedTo = document.getElementById('assigned-to').value;
     const category = document.getElementById('category').value;
+
+    let selectedContactsDivs = document.querySelectorAll('#selected-contacts-sb .contact-initials-sb');
+    let assignedTo = [];
+    selectedContactsDivs.forEach(function (div) {
+        assignedTo.push(div.textContent);
+    });
 
     const subtaskList = document.querySelectorAll('#subtask-content li');
     const subtasks = Array.from(subtaskList).map(li => li.textContent);
@@ -121,14 +125,14 @@ function getFormData(event) {
         },
         body: JSON.stringify(formData)
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Task successfully added:', data);
-        clearForm();;
-    })
-    .catch(error => {
-        console.error('Error adding task:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Task successfully added:', data);
+            clearForm();;
+        })
+        .catch(error => {
+            console.error('Error adding task:', error);
+        });
 }
 
 function clearForm() {
@@ -152,13 +156,45 @@ function clearForm() {
 
 function getUsersToAssignedTo() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
-    let assignedTo = document.getElementById('assigned-to-sb');
-    assignedTo.innerHTML = '';
+    let assignedToSb = document.getElementById('assigned-to-sb');
+    assignedToSb.innerHTML = '';
+    assignedToSb.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
     for (let i = 0; i < namesArray.length; i++) {
         const option = document.createElement('option');
         option.value = namesArray[i];
         option.textContent = namesArray[i];
-        option.setAttribute('id',`option-${i}`);
-        assignedTo.appendChild(option);
+        option.setAttribute('id', `optionSb-${i}`);
+        assignedToSb.appendChild(option);
+    }
+    assignedToSb.addEventListener('change', function () {
+        selectContactsSb(assignedToSb.value);
+    });
+}
+
+function selectContactsSb(selectedValue) {
+    let selectedContacts = document.getElementById('selected-contacts-sb');
+    let assignedToSb = document.getElementById('assigned-to-sb');
+
+    if (selectedValue) {
+        let splitName = selectedValue.split(" ");
+        let initials;
+
+        if (splitName.length > 1) {
+            let firstNameInitial = splitName[0][0].toUpperCase();
+            let secondNameInitial = splitName[1][0].toUpperCase();
+            initials = `${firstNameInitial}${secondNameInitial}`;
+        } else {
+            initials = splitName[0][0].toUpperCase();
+        }
+
+        if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
+            selectedContacts.innerHTML += `<div class="contact-initials-sb">${initials}</div>`;
+        }
+    }
+
+    let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
+    if (optionToDisable) {
+        optionToDisable.disabled = true;
     }
 }
+

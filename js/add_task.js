@@ -76,8 +76,13 @@ function getTaskData(event) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let dueDate = document.getElementById('due-date').value;
-    let assignedTo = document.getElementById('assigned-to').value;
     let category = document.getElementById('category').value;
+    
+    let selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
+    let assignedTo = [];
+    selectedContactsDivs.forEach(function(div) {
+        assignedTo.push(div.textContent);
+    });
 
     let priority = '';
     if (document.getElementById('priority1').classList.contains('prio1-color')) {
@@ -151,6 +156,7 @@ function getUsersToAssignedTo() {
     const namesArray = Object.values(contacts).map(item => item.name);
     let assignedTo = document.getElementById('assigned-to');
     assignedTo.innerHTML = '';
+    assignedTo.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
     for (let i = 0; i < namesArray.length; i++) {
         const option = document.createElement('option');
         option.value = namesArray[i];
