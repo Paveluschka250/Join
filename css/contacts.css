@@ -838,8 +838,8 @@
     border-radius: 30px;
     right: -584px;
     width: 396px;
-    height: 760px;
-    top: calc(50% - 380px);
+    height: 90%;
+    top: calc(5%);
   }
   @keyframes slideInRight {
     /* Ändern Sie die Animation */
@@ -866,10 +866,10 @@
     top: calc(280px - 67.5px);
   }
   #addContactForm {
-    width: 370px;
+    width: auto;
     gap: 15px;
   }
-  .create-btn{
+  .create-btn {
     padding: 12px 8px;
     font-size: 19px;
   }
@@ -916,18 +916,22 @@
   #contacts-content .sticky-button-wrapper button p {
     display: none;
   }
-  /* .contacts-overlay {
-    width: 310px;
+  @keyframes slideInRight {
+    /* Ändern Sie die Animation */
+    from {
+      right: -584px;
+    }
+    to {
+      right: calc(50% - 45%);
+    }
   }
-  .overlay-content-header h2 {
-    font-size: 32px;
+  .contacts-overlay {
+    width: 90%;
+    height: 90%;
   }
   .overlay-content-header p {
-    font-size: 16px;
+    font-size: 20px;
   }
-  #addContactForm {
-    width: 290px;
-  } */
 }
 
 /* Für die contact-details in der Kontaktliste */
@@ -961,7 +965,7 @@
 #contacts-content .sticky-button-wrapper button p {
   font-size: 23px;
 }
-@media (max-height: 915px) {
+@media (max-height: 932px) {
   .overlay-content-header {
     height: 280px;
   }
@@ -971,3 +975,10 @@
     margin-bottom: 8px;
   }
 }
+
+@media (max-height: 736px) {
+  .profile-picture, .input-wrapper, .button-wrapper {
+    margin: 0;
+}
+}
+
