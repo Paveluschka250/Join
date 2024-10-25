@@ -32,14 +32,15 @@ document.addEventListener('DOMContentLoaded',  displayOnlinetUser);
 
 async function getTasksData() {
     try {
-        const response = await fetch(_URL + "/tasks.json");
+        const response = await fetch(_URL + "/tasks/toDo.json");
         if (!response.ok) {
-            throw new Error('Fehler beim Abrufen der Benutzerdaten');
+            throw new Error('Fehler beim Abrufen der Daten');
         }
         const data = await response.json();
         console.log(data)
          tasks = Object.values(data);
-        console.log(tasks)
+         console.log(tasks.length)
+        
         tasks.forEach(Object=>{
             datsArray.push(Object.dueDate);
         });
@@ -55,8 +56,11 @@ async function getTasksData() {
         alert('Error fetching user data: ' + error.message);
         return null;
     }
+    console.log(tasks.length)
 }
+
 getTasksData()
+
 
 
 
