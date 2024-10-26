@@ -166,6 +166,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (closeContactInfoButton) {
     closeContactInfoButton.addEventListener('click', closeContactInfo);
   }
+
+  // Fügen Sie diesen Event-Listener am Ende der DOMContentLoaded Funktion hinzu
+  document.body.addEventListener('click', function() {
+    hideEditDeleteOverlay();
+  });
 });
 
 function renderContacts(contacts) {
@@ -287,6 +292,23 @@ function updateContactDetails(name, email, phone, color) {
   
   // Dann aktivieren Sie die Slide-in Animation
   contactInfo.classList.add("active");
+
+  const editDeleteButton = document.querySelector(".edit-delete-button");
+  editDeleteButton.onclick = function(event) {
+    event.stopPropagation(); // Verhindert, dass das Klick-Event zum Body propagiert
+    showEditDeleteOverlay();
+  };
+
+  // Fügen Sie Event-Listener für die neuen Overlay-Buttons hinzu
+  document.getElementById('editContactBtn').onclick = function() {
+    hideEditDeleteOverlay();
+    openEditContactsOverlay(name, email, phone, color);
+  };
+
+  document.getElementById('deleteContactBtn').onclick = function() {
+    hideEditDeleteOverlay();
+    deleteContact(name);
+  };
 }
 
 // Füge diese Funktion hinzu, um die Kontaktdetails bei Bildschirmgrößenänderungen anzupassen
@@ -705,4 +727,16 @@ function closeContactInfo() {
     contactInfo.classList.remove("active");
     contactInfo.classList.remove("closing");
   }, 300); // Diese Zeit sollte der Dauer der CSS-Transition entsprechen
+}
+
+// Fügen Sie diese Funktion hinzu
+function showEditDeleteOverlay() {
+  const overlay = document.getElementById('edit-delete-overlay');
+  overlay.style.display = 'block';
+}
+
+// Fügen Sie diese Funktion hinzu
+function hideEditDeleteOverlay() {
+  const overlay = document.getElementById('edit-delete-overlay');
+  overlay.style.display = 'none';
 }
