@@ -54,7 +54,7 @@
 .tasks {
     width: 15vw;
     display:flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
     margin-right: 20px;
 }
@@ -152,4 +152,47 @@
     justify-content: center;
     align-items: center;
     margin-right: 8px;
+}
+
+.prio1-color {
+    background-color: red !important;
+    color: white;
+    border-bottom-color: black !important;
+}
+
+.prio2-color {
+    background-color: #ffcc00 !important;
+    color: white;
+    border-bottom-color: black !important;
+}
+
+.prio3-color {
+    background-color: green !important;
+    color: white;
+    border-bottom-color: black !important;
+}
+
+.to-do-content {
+    width:100%;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.task-user-prioIcon {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#category-to-do {
+    height: 24px;
+    border-radius: 8px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#title-task {
+    color: #4589FF;
 }

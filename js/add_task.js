@@ -109,7 +109,7 @@ function getTaskData(event) {
         subtasks: subtasks
     };
 
-    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', {
+    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
