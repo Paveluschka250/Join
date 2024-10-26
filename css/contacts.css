@@ -236,6 +236,9 @@
 .action:hover img path {
   fill: #005dff; /* SVG-Pfad wird blau */
 }
+#contacts-content .edit-delete-button {
+  display: none;
+}
 
 /* Animation für das Einblenden der Kontakte */
 @keyframes slideInFromLeft {
@@ -400,7 +403,7 @@
 }
 
 .overlay-content-header {
-  border-radius: 30px 0 0 0;
+  border-radius: 30px 0 0 0; /* Für Add Contact */
   background-color: #005dff;
   display: flex;
   flex-direction: column;
@@ -762,7 +765,7 @@
     top: 100px;
     left: 100%;
     width: 100%;
-    height: calc(100vh - 100px - 76px);
+    /* height: calc(100vh - 100px - 76px); */
     background-color: white;
     z-index: 1000;
     transition: transform 0.3s ease-out;
@@ -770,6 +773,7 @@
     padding: 20px;
     box-sizing: border-box;
     margin: 0;
+    height: calc(100vh - 100px - 76px);
   }
 
   #contacts-content .contact-info.active {
@@ -876,7 +880,38 @@
   .cancel-btn {
     display: none;
   }
+  .save-btn,
+  .delete-btn {
+    padding: 12px 8px;
+    font-size: 19px;
+  }
+  #edit-contact-overlay.active {
+    border-radius: 30px;
+    right: -584px;
+    width: 396px;
+    height: 90%;
+    top: calc(5%);
+  }
+  #editContactForm {
+    width: auto;
+  }
+  #editContactForm .input-wrapper {
+    margin: 0;
+  }
+  #edit-contact-overlay.active {
+    left: auto;
+  }
+  #contacts-content .edit-delete-button {
+    display: block;
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    top: auto;
+    bottom: 0px;
+    right: 0px;
+  }
 }
+
 @media (max-width: 425px) {
   #contacts-content button {
     width: 100%;
@@ -932,6 +967,10 @@
   .overlay-content-header p {
     font-size: 20px;
   }
+  #edit-contact-overlay.active {
+    width: 90%;
+    height: 90%;
+  }
 }
 
 /* Für die contact-details in der Kontaktliste */
@@ -946,6 +985,7 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
+  height: 100%;
 }
 
 /* Für die E-Mail in der Kontaktliste */
@@ -977,8 +1017,25 @@
 }
 
 @media (max-height: 736px) {
-  .profile-picture, .input-wrapper, .button-wrapper {
+  .profile-picture,
+  .input-wrapper,
+  .button-wrapper {
     margin: 0;
-}
+  }
 }
 
+/* Neuer Code für Edit Contact */
+#edit-contact-overlay .overlay-content-header {
+  border-radius: 0 30px 0 0; /* Spezifisch für Edit Contact */
+}
+
+/* Angepasster Media Query für Bildschirme mit maximal 768px Breite */
+@media (max-width: 768px) {
+  #edit-contact-overlay {
+    border-radius: 30px; /* Gibt dem gesamten Overlay einen Border-Radius von 30px */
+  }
+
+  #edit-contact-overlay .overlay-content-header {
+    border-radius: 30px 30px 0 0; /* Ändert den Border-Radius für kleinere Bildschirme */
+  }
+}
