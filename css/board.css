@@ -177,6 +177,7 @@
     border: 1px solid black;
     border-radius: 8px;
     padding: 8px;
+    margin-bottom: 8px;
 }
 
 .task-user-prioIcon {
@@ -185,7 +186,7 @@
     justify-content: space-between;
 }
 
-#category-to-do {
+.category-to-do {
     height: 24px;
     border-radius: 8px;
     display:flex;
@@ -193,6 +194,41 @@
     align-items: center;
 }
 
-#title-task {
+.title-task {
     color: #4589FF;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.description-task {
+    margin: 8px 0;
+    color: lightgrey;
+}
+
+.task-prio-icon {
+    height: 8px !important;
+}
+
+/* .to-do-block {
+    height: 80%;
+    overflow-x: hidden;
+    overflow-y: auto;
+} */
+
+
+.subtask-progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0; /* Hintergrund des Containers */
+    border-radius: 5px;
+    margin-top: 5px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.subtask-progress-bar {
+    height: 100%;
+    width: 0%; /* Startbreite des Fortschrittsbalkens */
+    background-color: #4589FF; /* Farbe des Ladebalkens */
+    transition: width 0.3s ease; /* Glatte Animation beim Aktualisieren */
 }

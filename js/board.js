@@ -128,7 +128,7 @@ function getFormData(event) {
         .then(response => response.json())
         .then(data => {
             console.log('Task successfully added:', data);
-            clearForm();;
+            clearForm();
         })
         .catch(error => {
             console.error('Error adding task:', error);
@@ -139,18 +139,13 @@ function clearForm() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
     document.getElementById('due-date').value = '';
-    document.getElementById('assigned-to').selectedIndex = 0;
+    document.getElementById('selected-contacts-sb').innerHTML = '';
     document.getElementById('category').selectedIndex = 0;
-    document.getElementById('subtasks').value = '';
 
-    const priorityButtons = document.querySelectorAll('.priority-btn-addTask');
-    priorityButtons.forEach(button => {
+    document.getElementById('subtask-content').innerHTML = '';
+    document.querySelectorAll('.priority-btn-addTask').forEach(button => {
         button.classList.remove('prio1-color', 'prio2-color', 'prio3-color');
     });
-
-    const subtaskContent = document.getElementById('subtask-content');
-    subtaskContent.innerHTML = '';
-
     toggleHamburgerMenu();
 }
 
@@ -203,49 +198,63 @@ function renderAddTask() {
     let toDoContent = document.getElementById("to-do");
     let toDo = tasks.toDo;
     if (toDo && Object.keys(toDo).length > 0) {
-        toDoBlock.innerHTML = ""; 
+        toDoBlock.innerHTML = "";
 
+        let taskCounter = 0;
         for (let key in toDo) {
             const element = toDo[key];
+            taskCounter++;
 
-            if (element.priority = 'Urgent') {
+            if (element.priority === 'Urgent') {
                 prioIconURL = '../assets/icons/PriorityUrgentRed.png';
-            } else if (element.priority = 'Medium') {
+            } else if (element.priority === 'Medium') {
                 prioIconURL = '../assets/icons/PriorityMediumOrange.png';
-            } else if (element.priority = 'Low') {
-                prioIconURL = '../assets/icons/prio3.svg';
+            } else if (element.priority === 'Low') {
+                prioIconURL = '../assets/icons/prio1.svg';
             }
 
             toDoBlock.innerHTML += `
-                <div class="to-do-content">
-                    <div id="category-to-do">${element.category}</div>
-                    <h4 id="title-task">${element.title}</h4>
-                    <p id="description">${element.description}</p>
-                    <div id="subtasks">${element.subtasks.join(', ')}</div>
+                <div class="to-do-content" id="to-do-content${taskCounter}">
+                    <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
+                    <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
+                    <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
+                     
+                    <div class="subtask-progress-container">
+                        <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}"></div>
+                    </div>
+
                     <div class="task-user-prioIcon">    
                         <div>
-                            <div id="contacts">${element.assignedTo.join(', ')}</div>
+                            <div id="contacts-task${taskCounter}">${element.assignedTo.join(' ')}</div>
                         </div>
                         <div>
-                            <img src="${prioIconURL}" alt="Priority Icon">
+                            <img class="task-prio-icon" src="${prioIconURL}" alt="Priority Icon">
                         </div>
                     </div>    
                 </div>
             `;
+            taskStyle(taskCounter);
+            loadingspinner(taskCounter, element.subtasks);
         }
     } else {
         toDoContent.innerHTML = "No tasks To do";
     }
-    taskStyle();
 }
 
-function taskStyle() {
-    let currentCategory = document.getElementById('category-to-do');
-    if (currentCategory.textContent == 'Technical Task') {
-        currentCategory.style.backgroundColor = '#4589FF';
+function taskStyle(taskCounter) {
+    let currentCategory = document.getElementById(`category-to-do${taskCounter}`);
+    if (currentCategory.textContent === 'Technical Task') {
+        currentCategory.style.backgroundColor = '#0038ff';
         currentCategory.style.color = 'white';
-    } else if (currentCategory.textContent == 'User Story') {
+    } else if (currentCategory.textContent === 'User Story') {
         currentCategory.style.backgroundColor = '#ff7a00';
         currentCategory.style.color = 'white';
     }
+}
+
+function loadingspinner(taskCounter, element) {
+    let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
+    let allSubtasks = progressBar.length;
+    let progressPercentage = 100;  //hier muss noch eine rechnung rein
+    progressBar.style.width = `${progressPercentage}%`;
 }
