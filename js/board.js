@@ -5,7 +5,7 @@ async function getTasks() {
     let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
     let responseToJson = await response.json();
     tasks = responseToJson;
-    console.log(tasks);
+    renderAddTask();
 }
 
 async function getContactsForSidebar() {
@@ -14,8 +14,8 @@ async function getContactsForSidebar() {
     contactsForSidebar = responseToJson;
 }
 
-getContactsForSidebar(),
-    getTasks();
+getContactsForSidebar();
+getTasks();
 
 function toggleHamburgerMenu() {
     document.getElementById("addtask-content").classList.toggle('hamburger-menu');
@@ -118,7 +118,7 @@ function getFormData(event) {
         subtasks,
         priority
     };
-    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', {
+    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -198,3 +198,54 @@ function selectContactsSb(selectedValue) {
     }
 }
 
+function renderAddTask() {
+    let toDoBlock = document.getElementById("to-do-block");
+    let toDoContent = document.getElementById("to-do");
+    let toDo = tasks.toDo;
+    if (toDo && Object.keys(toDo).length > 0) {
+        toDoBlock.innerHTML = ""; 
+
+        for (let key in toDo) {
+            const element = toDo[key];
+
+            if (element.priority = 'Urgent') {
+                prioIconURL = '../assets/icons/PriorityUrgentRed.png';
+            } else if (element.priority = 'Medium') {
+                prioIconURL = '../assets/icons/PriorityMediumOrange.png';
+            } else if (element.priority = 'Low') {
+                prioIconURL = '../assets/icons/prio3.svg';
+            }
+
+            toDoBlock.innerHTML += `
+                <div class="to-do-content">
+                    <div id="category-to-do">${element.category}</div>
+                    <h4 id="title-task">${element.title}</h4>
+                    <p id="description">${element.description}</p>
+                    <div id="subtasks">${element.subtasks.join(', ')}</div>
+                    <div class="task-user-prioIcon">    
+                        <div>
+                            <div id="contacts">${element.assignedTo.join(', ')}</div>
+                        </div>
+                        <div>
+                            <img src="${prioIconURL}" alt="Priority Icon">
+                        </div>
+                    </div>    
+                </div>
+            `;
+        }
+    } else {
+        toDoContent.innerHTML = "No tasks To do";
+    }
+    taskStyle();
+}
+
+function taskStyle() {
+    let currentCategory = document.getElementById('category-to-do');
+    if (currentCategory.textContent == 'Technical Task') {
+        currentCategory.style.backgroundColor = '#4589FF';
+        currentCategory.style.color = 'white';
+    } else if (currentCategory.textContent == 'User Story') {
+        currentCategory.style.backgroundColor = '#ff7a00';
+        currentCategory.style.color = 'white';
+    }
+}

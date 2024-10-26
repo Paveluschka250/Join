@@ -33,21 +33,23 @@
                     <div class="tasks">
                         <div class="task-headlines">
                             <p>To Do</p>
-                            <img src="../assets/icons/plus-button.svg" alt="">
+                            <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div id="to-do" class="board-content">No tasks To do</div>
+                        <div class="to-do-block" id="to-do-block">
+                            <div id="to-do" class="board-content">No tasks To do</div>
+                        </div>
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
                             <p>In progress</p>
-                            <img src="../assets/icons/plus-button.svg" alt="">
+                            <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
                         <div id="in-progress" class="board-content">No tasks To do</div>
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
                             <p>Await feedback</p>
-                            <img src="../assets/icons/plus-button.svg" alt="">
+                            <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
                         <div id="await-feedback" class="board-content">No tasks To do</div>
                     </div>
@@ -68,8 +70,8 @@
                     </div>
                     <div class="scroll-input hide-scrollbar">
                         <div class="form-group-addTask">
-                            <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title" name="title"
-                                placeholder="Enter a title" required>
+                            <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title"
+                                name="title" placeholder="Enter a title" required>
                         </div>
 
                         <div class="form-group-addTask">
@@ -80,7 +82,8 @@
 
                         <div class="form-group-addTask">
                             <label for="due-date"><b>Due date</b></label>
-                            <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date" name="due-date">
+                            <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date"
+                                name="due-date">
                         </div>
 
                         <div class="form-group-addTask priority-addTask">
@@ -88,15 +91,15 @@
                                 <label><b>Priority</b></label>
                             </div>
                             <div class="buttons-row">
-                                <button onclick="getPriority('prio1')" type="button"
+                                <button id="prio1" onclick="getPriority('prio1')" type="button"
                                     class="priority-btn-addTask urgent-addTask center-button">Urgent <img
                                         id="high-prio-icon" src="../assets/icons/prio3.svg"
                                         alt="priorität hoch"></button>
-                                <button onclick="getPriority('prio2')" type="button"
+                                <button id="prio2" onclick="getPriority('prio2')" type="button"
                                     class="priority-btn-addTask medium-addTask center-button">Medium <img
                                         src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon"
                                         class="medium-prio-icon"></button>
-                                <button onclick="getPriority('prio3')" type="button"
+                                <button id="prio3" onclick="getPriority('prio3')" type="button"
                                     class="priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon"
                                         src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
                             </div>
@@ -104,7 +107,9 @@
 
                         <div class="form-group-addTask">
                             <label for="assigned-to-sb"><b>Assigned to</b> (optional)</label>
-                            <select onclick="getUsersToAssignedTo()" class="underline-select input-addTask cursor-pointer" id="assigned-to-sb" name="assigned-to-sb">
+                            <select onclick="getUsersToAssignedTo()"
+                                class="underline-select input-addTask cursor-pointer" id="assigned-to-sb"
+                                name="assigned-to-sb">
                                 <option value="">Select contacts to assign</option>
                             </select>
                             <div class="selected-contacts-sb" id="selected-contacts-sb"></div>
@@ -121,12 +126,15 @@
 
                         <div class="form-group-addTask new-task-btn">
                             <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                            <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text" id="subtasks"
-                                name="subtasks" placeholder="Add new subtask">
-                            <button type="button" id="add-subtask-btn-sb" class="create-new-task" onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                            <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text"
+                                id="subtasks" name="subtasks" placeholder="Add new subtask">
+                            <button type="button" id="add-subtask-btn-sb" class="create-new-task"
+                                onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
                             <div id="subtask-buttons-sb" class="task-btn-div d-none">
-                                <button type="button" onclick="closeNewSubtasksBtn()"><img src="../assets/icons/clearIcon.svg" alt="close"></button>|
-                                <button type="button" onclick="addSubTask()"><img src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
+                                <button type="button" onclick="closeNewSubtasksBtn()"><img
+                                        src="../assets/icons/clearIcon.svg" alt="close"></button>|
+                                <button type="button" onclick="addSubTask()"><img
+                                        src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
                             </div>
                         </div>
                     </div>
