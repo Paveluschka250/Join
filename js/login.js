@@ -31,6 +31,7 @@ async function getUserData() {
         return null;
     }
 }
+
 let isGuest = false; 
 
 function setGuestMode() {
@@ -38,7 +39,9 @@ function setGuestMode() {
     console.log("Gast-Modus aktiviert:", isGuest);
     localStorage.setItem('currentUser', 'G');
     localStorage.setItem('onlineUser', 'Gast');
-    window.location.href = 'summary.html?msg=Login erfolgreich';
+    window.location.href = 'pages/summary.html?msg=Login erfolgreich';
+    window.location.href = 'pages/board.html?msg=Login erfolgreich';
+   
 }
 
 // Event-Listener für den Klick auf den Button mit der ID "guest"
@@ -61,7 +64,7 @@ async function loginUser(email, password) {
             localStorage.setItem('onlineUser', onlineUser);
             // Speichern des ersten Buchstabens des Benutzernamens im lokalen Speicher (localStorage)
             localStorage.setItem('currentUser', currentUser);
-            console.log("Du hast dich erfolgreich eingelogt");
+           
             window.location.href = 'pages/summary.html?msg=Login erfolgreich';
         } else {
             console.log("Ungültige E-Mail oder Passwort");
@@ -73,7 +76,7 @@ async function loginUser(email, password) {
     }
 }
 
-
+document.getElementById('log').addEventListener('click', loginUser);
 
 
 

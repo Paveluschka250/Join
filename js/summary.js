@@ -6,7 +6,7 @@ let deadline ;
 
  // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
  function displayOnlinetUser() {
-    // console.log('test')
+     
     const onlineUser = localStorage.getItem('onlineUser');
     const currentUser = localStorage.getItem('currentUser');
     console.log('onlineUser:', onlineUser);
@@ -16,7 +16,7 @@ let deadline ;
         const userGreeting = document.getElementById('secPart');
         if (userGreeting) {
             userGreeting.innerHTML = onlineUser;
-            y.innerHTML = currentUser;
+            y.innerHTML += `<h4>${currentUser}</h4`
         } else {
             console.error('Das Element mit der ID "secPart" wurde nicht gefunden.');
         }
@@ -49,7 +49,7 @@ async function getTasksData() {
         console.log(datsArray)
         deadline = datsArray [0]
         console.log(deadline)
-        document.getElementById('uncomming-Deadline').innerHTML += `<h4>${deadline}</h4>`
+        document.getElementById('uncomming-Deadline').innerHTML += `<h3>${deadline}</h3>`
 
     } catch (error) {
         console.error('Error:', error);

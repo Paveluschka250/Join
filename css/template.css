@@ -96,21 +96,23 @@ nav{
 }
 #userCircle {
     top: 0;
-    width: 44.12px;
+    width: 50px;
     height: 50px;
     border-radius: 50%;
     background-color: white;
-    color: #4589FF; /* Sicherstellen, dass der Text sichtbar ist */
+    color: #4589FF; 
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px; /* Ausreichende Größe für den Text */
+    font-size: 24px; 
     text-align: center;
-    overflow: hidden; /* Falls der Text abgeschnitten wird */
+    overflow: hidden; 
     margin-top: -50px;
     margin-right: 25px;
     float: right;
-    box-shadow: #4589FF;
+ 
+    box-shadow: 0 0 0 3px white;
+  border: 2px solid #4589ff;
 }
 .urgent{
     width: 76px;
