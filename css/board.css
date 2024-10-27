@@ -206,7 +206,21 @@
 }
 
 .task-prio-icon {
+    width: 12px !important;
     height: 8px !important;
+}
+
+.contacts-task-container {
+    display:flex;
+    flex-direction: row;
+}
+
+.task-initials {
+    margin-right: 8px;
+    background-color:rgb(69, 137, 255);
+    border-radius: 50%;
+    padding: 4px;
+    font-size: 10px;
 }
 
 /* .to-do-block {

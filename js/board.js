@@ -197,6 +197,7 @@ function renderAddTask() {
     let toDoBlock = document.getElementById("to-do-block");
     let toDoContent = document.getElementById("to-do");
     let toDo = tasks.toDo;
+
     if (toDo && Object.keys(toDo).length > 0) {
         toDoBlock.innerHTML = "";
 
@@ -205,13 +206,18 @@ function renderAddTask() {
             const element = toDo[key];
             taskCounter++;
 
+            let prioIconURL;
             if (element.priority === 'Urgent') {
                 prioIconURL = '../assets/icons/PriorityUrgentRed.png';
             } else if (element.priority === 'Medium') {
                 prioIconURL = '../assets/icons/PriorityMediumOrange.png';
             } else if (element.priority === 'Low') {
-                prioIconURL = '../assets/icons/prio1.svg';
+                prioIconURL = '../assets/icons/PriorityLowGreen.png';
             }
+
+            let contactsHTML = element.assignedTo
+                .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                .join('');
 
             toDoBlock.innerHTML += `
                 <div class="to-do-content" id="to-do-content${taskCounter}">
@@ -225,7 +231,7 @@ function renderAddTask() {
 
                     <div class="task-user-prioIcon">    
                         <div>
-                            <div id="contacts-task${taskCounter}">${element.assignedTo.join(' ')}</div>
+                            <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
                         </div>
                         <div>
                             <img class="task-prio-icon" src="${prioIconURL}" alt="Priority Icon">
@@ -257,4 +263,20 @@ function loadingspinner(taskCounter, element) {
     let allSubtasks = progressBar.length;
     let progressPercentage = 100;  //hier muss noch eine rechnung rein
     progressBar.style.width = `${progressPercentage}%`;
+}
+
+function getRandomColor() {
+    const colors = [
+        '#FF5733',
+        '#33FF57',
+        '#3357FF',
+        '#FF33A8',
+        '#FFD133',
+        '#33FFF0',
+        '#8E44AD',
+        '#E74C3C' 
+    ];
+    
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
 }
