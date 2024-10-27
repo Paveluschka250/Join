@@ -220,7 +220,7 @@ function renderAddTask() {
                 .join('');
 
             toDoBlock.innerHTML += `
-                <div class="to-do-content" id="to-do-content${taskCounter}">
+                <div onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
                     <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
                     <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
                     <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
@@ -234,7 +234,7 @@ function renderAddTask() {
                             <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
                         </div>
                         <div>
-                            <img class="task-prio-icon" src="${prioIconURL}" alt="Priority Icon">
+                            <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
                         </div>
                     </div>    
                 </div>
@@ -274,9 +274,87 @@ function getRandomColor() {
         '#FFD133',
         '#33FFF0',
         '#8E44AD',
-        '#E74C3C' 
+        '#E74C3C'
     ];
-    
+
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
+}
+
+function showOverlayTask(taskCounter) {
+    document.getElementById('overlay-show-task').classList.remove('d-none');
+    document.getElementById('overlay-show-task').classList.add('overlay-show-task');
+    extractTaskData(taskCounter);
+}
+
+function renderOverlayTask(taskCounter, currentTask) {
+    let overlayContainer = document.getElementById('current-task');
+ console.log(currentTask);
+
+    let contactsHTML = currentTask[4]
+        .map(initials => `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+        .join('');
+
+    overlayContainer.innerHTML = '';
+    overlayContainer.innerHTML = `
+                <div class="current-to-do-content" id="current-to-do">
+                    <div id="current-category-to-do" class="current-category-to-do">${currentTask[1]}</div>
+                    <h4 id="current-title-task" class="current-title-task">${currentTask[2]}</h4>
+                    <p id="current-description-task" class="current-description-task">${currentTask[3]}</p>
+                     
+                    <div class="current-subtask-progress-container">
+                        <div class="current-subtask-progress-bar" id="current-subtask-progress-bar-${taskCounter}"></div>
+                    </div>
+
+                    <div class="current-task-user-prioIcon">    
+                        <div>
+                            <div id="current-contacts-task${taskCounter}" class="current-contacts-task-container">${contactsHTML}</div>
+                        </div>
+                        <div>
+                            <img class="task-prio-icon" src="${currentTask[5]}" alt="Priority Icon">
+                        </div>
+                    </div>    
+                </div>
+            `;
+}
+
+function extractTaskData(taskCounter) {
+    const taskElement = document.getElementById(`to-do-content${taskCounter}`);
+
+    if (!taskElement) {
+        console.error(`Task mit ID to-do-content${taskCounter} nicht gefunden.`);
+        return null;
+    }
+
+    const categoryElement = taskElement.querySelector(`#category-to-do${taskCounter}`);
+    const titleElement = taskElement.querySelector(`#title-task${taskCounter}`);
+    const descriptionElement = taskElement.querySelector(`#description-task${taskCounter}`);
+    const contactsContainer = taskElement.querySelector(`#contacts-task${taskCounter}`);
+    const prioIconElement = taskElement.querySelector('.task-prio-icon'); // Hier wird das Priority Icon abgerufen
+
+    const category = categoryElement ? categoryElement.textContent.trim() : null;
+    const title = titleElement ? titleElement.textContent.trim() : null;
+    const description = descriptionElement ? descriptionElement.textContent.trim() : null;
+
+    const contactsHTML = [];
+    if (contactsContainer) {
+        const contactDivs = contactsContainer.querySelectorAll('div');
+        contactDivs.forEach(contactDiv => {
+            contactsHTML.push(contactDiv.innerHTML.trim());
+        });
+    }
+
+    const prioIcon = prioIconElement ? prioIconElement.src : null; 
+
+    let currentTask = [];    
+    currentTask.push(
+        taskCounter,
+        category,
+        title,
+        description,
+        contactsHTML,
+        prioIcon
+    );
+    renderOverlayTask(taskCounter, currentTask);
+    console.log(currentTask);
 }
