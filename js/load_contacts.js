@@ -341,14 +341,10 @@ async function deleteContact(name) {
 
       // Entferne den Kontakt aus dem Array
       contacts = contacts.filter((contact) => contact.name !== name);
-
-      // Rendere die Kontakte neu
       renderContacts(contacts);
-
-      // Falls das gerade gelöschte Kontakt-Element angezeigt wurde, lösche die Details aus der rechten Info-Box
       clearContactDetails();
     }
-  }, 500); // Zeit passend zur CSS-Animation
+  }, 500);
 }
 
 function clearContactDetails() {
@@ -380,7 +376,7 @@ function openContactsOverlay() {
   );
   setTimeout(() => {
     document.querySelector(".overlay-background").classList.add("active");
-    setupOverlayBackgroundListener(); // Fügen Sie diese Zeile hinzu
+    setupOverlayBackgroundListener(); 
   }, 10);
 }
 
@@ -391,21 +387,17 @@ function closeContactsOverlay() {
   const background = document.querySelector(".overlay-background");
   if (background) {
     background.classList.remove("active");
-    background.removeEventListener("click", closeContactsOverlay); // Entfernen Sie den Event-Listener
+    background.removeEventListener("click", closeContactsOverlay); 
     setTimeout(() => {
       background.remove();
     }, 300);
   }
 }
-
-// Fügen Sie diese Funktion am Ende der Datei hinzu
 async function addNewContact(event) {
   event.preventDefault();
-
   if (!validateForm()) {
     return;
   }
-
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const phone = document.getElementById("phone").value;
@@ -415,10 +407,7 @@ async function addNewContact(event) {
     email: email,
     phoneNumber: phone,
   };
-
-  // Füge den neuen Kontakt zu Firebase hinzu
   const addedContact = await addContactToFirebase(newContact);
-
   if (addedContact) {
     contacts.push(addedContact);
     renderContacts(contacts);
@@ -455,7 +444,6 @@ function showError(inputElement, errorMessage) {
 
 function clearError(inputElement) {
   if (!inputElement) return;
-
   inputElement.classList.remove("error");
   const errorElement = document.getElementById(`${inputElement.id}-error`);
   if (errorElement) {
@@ -469,21 +457,17 @@ function validateForm() {
   const emailInput = document.getElementById("email");
   const phoneInput = document.getElementById("phone");
   let isValid = true;
-
   clearError(nameInput);
   clearError(emailInput);
   clearError(phoneInput);
-
   if (nameInput.value.trim() === "") {
     showError(nameInput, "Name ist erforderlich");
     isValid = false;
   }
-
   if (!validateEmail(emailInput.value)) {
     showError(emailInput, "Ungültige E-Mail-Adresse");
     isValid = false;
   }
-
   if (!validatePhoneStart(phoneInput.value)) {
     showError(phoneInput, "Telefonnummer muss mit + oder 0 beginnen");
     isValid = false;
@@ -494,11 +478,9 @@ function validateForm() {
     );
     isValid = false;
   }
-
   return isValid;
 }
 
-// Fügen Sie diese neuen Funktionen hinzu
 function openEditContactsOverlay(name, email, phone, color) {
   const overlay = document.getElementById("edit-contact-overlay");
   overlay.classList.remove("inactive");
@@ -528,7 +510,6 @@ function openEditContactsOverlay(name, email, phone, color) {
     setupOverlayBackgroundListener();
   }, 10);
 }
-
 function closeEditContactsOverlay() {
   const overlay = document.getElementById("edit-contact-overlay");
   overlay.classList.remove("active");
@@ -550,48 +531,34 @@ function deleteContactFromEdit() {
     closeEditContactsOverlay();
   }
 }
-
-// Fügen Sie diese neue Funktion hinzu
 async function saveEditedContact(event) {
   if (event && event.preventDefault) {
     event.preventDefault();
   }
-
   if (!validateEditForm()) {
     return;
   }
-
   const newName = document.getElementById("editName").value;
   const newEmail = document.getElementById("editEmail").value;
   const newPhone = document.getElementById("editPhone").value;
-
   const contactToUpdate = contacts.find(
     (contact) => contact.name === currentEditingContact
   );
-
   if (contactToUpdate) {
     const updatedContact = {
       name: newName,
       email: newEmail,
       phoneNumber: newPhone,
     };
-
     console.log("Aktualisiere Kontakt mit ID:", contactToUpdate.id);
-
     try {
-      // Firebase-Update-Funktion aufrufen
       await updateContactInFirebase(contactToUpdate.id, updatedContact);
-
-      // Lokales Array aktualisieren
       const index = contacts.findIndex((c) => c.id === contactToUpdate.id);
       if (index !== -1) {
         contacts[index] = { ...contacts[index], ...updatedContact };
       }
-
       renderContacts(contacts);
       closeEditContactsOverlay();
-
-      // Aktualisiere die Kontaktdetails in der Ansicht
       const color = document.querySelector(".shortname").style.backgroundColor;
       updateContactDetails(newName, newEmail, newPhone, color);
     } catch (error) {
@@ -609,21 +576,17 @@ function validateEditForm() {
   const emailInput = document.getElementById("editEmail");
   const phoneInput = document.getElementById("editPhone");
   let isValid = true;
-
   clearError(nameInput);
   clearError(emailInput);
   clearError(phoneInput);
-
   if (nameInput && nameInput.value.trim() === "") {
     showError(nameInput, "Name ist erforderlich");
     isValid = false;
   }
-
   if (emailInput && !validateEmail(emailInput.value)) {
     showError(emailInput, "Ungültige E-Mail-Adresse");
     isValid = false;
   }
-
   if (phoneInput) {
     if (!validatePhoneStart(phoneInput.value)) {
       showError(phoneInput, "Telefonnummer muss mit + oder 0 beginnen");
@@ -636,17 +599,14 @@ function validateEditForm() {
       isValid = false;
     }
   }
-
   return isValid;
 }
 
 async function updateContactInFirebase(contactId, updatedContact) {
   const databaseUrl = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`;
-
   try {
     console.log(`Versuche Kontakt mit ID ${contactId} zu aktualisieren`);
     console.log('Aktualisierte Kontaktdaten:', JSON.stringify(updatedContact));
-
     const response = await fetch(databaseUrl, {
       method: "PUT",
       headers: {
@@ -654,12 +614,10 @@ async function updateContactInFirebase(contactId, updatedContact) {
       },
       body: JSON.stringify(updatedContact),
     });
-
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`HTTP-Fehler! Status: ${response.status}, Nachricht: ${errorText}`);
     }
-
     const responseData = await response.json();
     console.log("Kontakt erfolgreich in Firebase aktualisiert", responseData);
     return responseData;
@@ -671,16 +629,13 @@ async function updateContactInFirebase(contactId, updatedContact) {
 
 async function deleteContactFromFirebase(contactId) {
   const databaseUrl = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`;
-
   try {
     const response = await fetch(databaseUrl, {
       method: "DELETE"
     });
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     console.log("Kontakt erfolgreich aus Firebase gelöscht");
   } catch (error) {
     console.error("Fehler beim Löschen des Kontakts in Firebase:", error);
@@ -690,7 +645,6 @@ async function deleteContactFromFirebase(contactId) {
 
 async function addContactToFirebase(newContact) {
   const databaseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
-
   try {
     const response = await fetch(databaseUrl, {
       method: "POST",
@@ -699,14 +653,11 @@ async function addContactToFirebase(newContact) {
       },
       body: JSON.stringify(newContact),
     });
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     const data = await response.json();
     console.log("Neuer Kontakt erfolgreich zu Firebase hinzugefügt");
-
     return { ...newContact, id: data.name };
   } catch (error) {
     console.error("Fehler beim Hinzufügen des Kontakts zu Firebase:", error);
@@ -721,22 +672,20 @@ function logContacts() {
 function closeContactInfo() {
   const contactInfo = document.querySelector(".contact-info");
   contactInfo.classList.add("closing");
-  
-  // Warten Sie, bis die Animation abgeschlossen ist, bevor Sie die Klasse "active" entfernen
+
   setTimeout(() => {
     contactInfo.classList.remove("active");
     contactInfo.classList.remove("closing");
-  }, 300); // Diese Zeit sollte der Dauer der CSS-Transition entsprechen
+  }, 300);
 }
 
-// Fügen Sie diese Funktion hinzu
 function showEditDeleteOverlay() {
-  const overlay = document.getElementById('edit-delete-overlay');
-  overlay.style.display = 'block';
+  console.log("show")
+  const overlay = document.querySelector('.edit-delete-overlay');
+  overlay.classList.add('active');
 }
 
-// Fügen Sie diese Funktion hinzu
 function hideEditDeleteOverlay() {
-  const overlay = document.getElementById('edit-delete-overlay');
-  overlay.style.display = 'none';
+  const overlay = document.querySelector('.edit-delete-overlay');
+  overlay.classList.remove('active');
 }
