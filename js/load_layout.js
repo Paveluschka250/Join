@@ -7,11 +7,7 @@ async function loadHeader() {
     }
     const data = await response.text();
     document.getElementById("header").innerHTML = data;
-
-    // Nach dem Laden des Headers Anpassungen vornehmen
     adjustHeaderForLegalPages();
-
-    // Füge die Overlay-Logik hinzu, nachdem der Header geladen wurde
     initializeOverlay();
   } catch (error) {
     console.error("Error in loadHeader: ", error);
@@ -19,18 +15,14 @@ async function loadHeader() {
 }
 
 function adjustHeaderForLegalPages() {
-  // Aktuelle Seite ermitteln
   const currentPage = window.location.pathname.split("/").pop();
-
-  // Nur auf den Seiten "privacy_policy.html" und "legal_notice.html" ausführen
   if (
     currentPage === "privacy_policy.html" ||
     currentPage === "legal_notice.html"
   ) {
-    // Alle Elemente mit der ID "none" leeren
     const elementsToClear = document.querySelectorAll("#none");
     elementsToClear.forEach((element) => {
-      element.innerHTML = ""; // Leert den Inhalt der Elemente
+      element.innerHTML = "";
     });
   }
 }
@@ -45,8 +37,6 @@ async function loadSidebar() {
     }
     const data = await response.text();
     document.getElementById("sidebar").innerHTML = data;
-
-    // Aktive Klasse für Sidebar-Buttons setzen
     const currentPage = window.location.pathname.split("/").pop();
     const buttons = document.querySelectorAll(".sidebar-button");
     buttons.forEach((button) => {
@@ -55,8 +45,6 @@ async function loadSidebar() {
         button.classList.add("active");
       }
     });
-
-    // Aktive Klasse für Footer-Links setzen
     const footerLinks = document.querySelectorAll(".footer-text");
     footerLinks.forEach((link) => {
       const linkPage = link.getAttribute("href").split("/").pop();
@@ -80,41 +68,28 @@ function initializeOverlay() {
   function toggleOverlay(show) {
     overlay.style.display = show ? "block" : "none";
   }
-
-  // Event-Listener für das Klicken auf das p- oder h4-Tag
   document.querySelectorAll("#trigger-overlay").forEach(function (element) {
     element.addEventListener("click", function (event) {
       const clickedElement = event.target;
-
-      // Überprüfe, ob das Help-Icon angeklickt wurde
       if (clickedElement.closest('.help-icon')) {
-        return; // Breche das Event ab, damit das Overlay nicht angezeigt wird
+        return;
       }
-
       toggleOverlay(true);
-      event.stopPropagation(); // Verhindert, dass das Overlay sofort geschlossen wird
+      event.stopPropagation();
     });
   });
-
-  // Schließe das Overlay, wenn außerhalb des Overlay-Inhalts geklickt wird
   document.getElementById("overlay").addEventListener("click", function (event) {
     const overlayContent = document.querySelector(".overlay-content");
-
-    // Überprüfen, ob der Klick NICHT innerhalb des Overlay-Inhalts ist
     if (!overlayContent.contains(event.target)) {
       toggleOverlay(false);
     }
   });
-
-  // Verhindere, dass ein Klick innerhalb des Overlay-Inhalts das Overlay schließt
   document.querySelector(".overlay-content").addEventListener("click", function (event) {
-    event.stopPropagation(); // Verhindert das Schließen des Overlays, wenn im Inhalt geklickt wird
+    event.stopPropagation();
   });
-
-  // Füge Event-Listener für die Links im Overlay hinzu
   document.querySelectorAll('.overlay-content a').forEach(link => {
     link.addEventListener('click', function () {
-      toggleOverlay(false); // Schließt das Overlay beim Klicken auf einen Link
+      toggleOverlay(false);
     });
   });
 }

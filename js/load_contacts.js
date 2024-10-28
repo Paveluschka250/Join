@@ -67,17 +67,16 @@ async function uploadContactsToFirebase() {
     },
   ];
   const databaseUrl =
-    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"; // Firebase Realtime Database URL
+    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
 
-  // Kontakte einzeln hochladen
   for (const contact of contacts) {
     try {
       const response = await fetch(databaseUrl, {
-        method: "POST", // POST für das Hinzufügen von Daten mit einer automatisch generierten ID
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(contact), // Kontakt als JSON-Daten senden
+        body: JSON.stringify(contact),
       });
 
       if (response.ok) {
@@ -93,38 +92,28 @@ async function uploadContactsToFirebase() {
     }
   }
 }
-// uploadContactsToFirebase();
-
-// Funktion zum Abrufen der Kontakte aus Firebase und Speichern in einem Array
 async function downloadContactsFromFirebase() {
   const databaseUrl =
-    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"; // Firebase Realtime Database URL
+    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
 
   try {
-    // GET-Anfrage, um die Kontakte von Firebase zu laden
     const response = await fetch(databaseUrl, {
       method: "GET",
     });
-
     if (response.ok) {
       const contactsData = await response.json();
-
-      // Umwandlung der Daten von Firebase in ein Array
       const contactsArray = [];
-
-      // Prüfen, ob Daten existieren und sie dann in ein Array umwandeln
       if (contactsData) {
         for (const contactId in contactsData) {
-          // Jeden Kontakt in das Array einfügen
           contactsArray.push({
-            id: contactId, // Die automatisch generierte Firebase-ID des Kontakts
-            ...contactsData[contactId], // Die eigentlichen Kontaktinformationen (name, email, phoneNumber)
+            id: contactId, 
+            ...contactsData[contactId],
           });
         }
       }
-      contacts = contactsArray; // Aktualisieren Sie die globale contacts-Variable
+      contacts = contactsArray;
       renderContacts(contactsArray);
-      return contactsArray; // Das Array der Kontakte zurückgeben
+      return contactsArray;
     } else {
       console.error("Fehler beim Abrufen der Kontakte:", response.status);
     }
@@ -132,16 +121,12 @@ async function downloadContactsFromFirebase() {
     console.error("Fehler beim Abrufen der Kontakte:", error);
   }
 }
-
-// Fügen Sie diese Variable am Anfang der Datei hinzu
 let currentEditingContact = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   JSON.parse(localStorage.getItem("contacts"))
     ? renderContacts(contacts)
     : null;
-
-  // Fügen Sie diese Zeilen hinzu
   document.querySelector(".sticky-button-wrapper button").onclick =
     openContactsOverlay;
   document.getElementById("closeOverlay").onclick = closeContactsOverlay;
@@ -151,23 +136,18 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("editContactForm")
     .addEventListener("submit", saveEditedContact);
-
   const saveEditedContactBtn = document.getElementById("saveEditedContactBtn");
   if (saveEditedContactBtn) {
     saveEditedContactBtn.addEventListener("click", saveEditedContact);
   }
-
   const editContactForm = document.getElementById("editContactForm");
   if (editContactForm) {
     editContactForm.addEventListener("submit", saveEditedContact);
   }
-
   const closeContactInfoButton = document.getElementById('close-contact-info');
   if (closeContactInfoButton) {
     closeContactInfoButton.addEventListener('click', closeContactInfo);
   }
-
-  // Fügen Sie diesen Event-Listener am Ende der DOMContentLoaded Funktion hinzu
   document.body.addEventListener('click', function() {
     hideEditDeleteOverlay();
   });
@@ -177,24 +157,16 @@ function renderContacts(contacts) {
   const contactsList = document.getElementById("contacts-list");
   let currentLetter = "";
   let htmlContent = "";
-
   contacts.sort((a, b) => a.name.localeCompare(b.name));
-
-  // Fügen Sie eine Klasse hinzu, um die Ausblend-Animation zu triggern
   const existingContacts = contactsList.querySelectorAll(".contact-item");
   existingContacts.forEach((contact) => {
     contact.classList.add("slide-out");
   });
-
-  // Warten Sie, bis die Ausblend-Animation abgeschlossen ist
   setTimeout(() => {
-    // Leere die Liste, bevor neue Kontakte hinzugefügt werden
     contactsList.innerHTML = "";
-
     for (let contact of contacts) {
       const firstLetter = contact.name.charAt(0).toUpperCase();
       const color = getRandomColor();
-
       if (firstLetter !== currentLetter) {
         currentLetter = firstLetter;
         htmlContent += `<div class="contact-group">
@@ -202,7 +174,6 @@ function renderContacts(contacts) {
                                 </div>
                                 <div class="contact-line"></div>`;
       }
-
       htmlContent += `<div class="contact-item" data-name="${
         contact.name
       }" data-email="${contact.email}" data-phone="${
@@ -217,17 +188,11 @@ function renderContacts(contacts) {
                                 </div>
                             </div>`;
     }
-
-    // Füge den neuen HTML-Inhalt hinzu
     contactsList.innerHTML = htmlContent;
-
-    // Füge die Einblend-Animation hinzu, nachdem der neue Inhalt hinzugefügt wurde
     const newContacts = contactsList.querySelectorAll(".contact-item");
     newContacts.forEach((item, index) => {
       item.style.animationDelay = `${index * 0.1}s`;
     });
-
-    // Füge Event-Listener hinzu
     newContacts.forEach((item) => {
       item.addEventListener("click", function () {
         const name = this.getAttribute("data-name");
@@ -247,7 +212,7 @@ function renderContacts(contacts) {
         }
       });
     });
-  }, 500); // Warten Sie 500ms, bis die Ausblend-Animation abgeschlossen ist
+  }, 500);
 }
 
 function getRandomColor() {
@@ -286,20 +251,14 @@ function updateContactDetails(name, email, phone, color) {
   };
 
   const contactInfo = document.querySelector(".contact-info");
-  
-  // Entfernen Sie zuerst die "closing" Klasse, falls sie vorhanden ist
   contactInfo.classList.remove("closing");
-  
-  // Dann aktivieren Sie die Slide-in Animation
   contactInfo.classList.add("active");
 
   const editDeleteButton = document.querySelector(".edit-delete-button");
   editDeleteButton.onclick = function(event) {
-    event.stopPropagation(); // Verhindert, dass das Klick-Event zum Body propagiert
+    event.stopPropagation();
     showEditDeleteOverlay();
   };
-
-  // Fügen Sie Event-Listener für die neuen Overlay-Buttons hinzu
   document.getElementById('editContactBtn').onclick = function() {
     hideEditDeleteOverlay();
     openEditContactsOverlay(name, email, phone, color);
@@ -310,36 +269,24 @@ function updateContactDetails(name, email, phone, color) {
     deleteContact(name);
   };
 }
-
-// Füge diese Funktion hinzu, um die Kontaktdetails bei Bildschirmgrößenänderungen anzupassen
 function handleResize() {
   const contactInfo = document.querySelector(".contact-info");
   if (window.innerWidth > 768) {
     contactInfo.classList.remove("active");
   }
 }
-
-// Füge einen Event-Listener für Bildschirmgrößenänderungen hinzu
 window.addEventListener('resize', handleResize);
 
 async function deleteContact(name) {
   const contactItems = document.querySelectorAll(".contact-item");
-
-  // Füge allen Kontakten die 'slide-out' Klasse hinzu
   contactItems.forEach((item) => {
     item.classList.add("slide-out");
   });
-
-  // Warte, bis die Ausblend-Animation abgeschlossen ist
   setTimeout(async () => {
-    // Finde den Kontakt im Array
     const contactToDelete = contacts.find((contact) => contact.name === name);
 
     if (contactToDelete) {
-      // Lösche den Kontakt aus Firebase
       await deleteContactFromFirebase(contactToDelete.id);
-
-      // Entferne den Kontakt aus dem Array
       contacts = contacts.filter((contact) => contact.name !== name);
       renderContacts(contacts);
       clearContactDetails();
