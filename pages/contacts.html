@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/sidebar.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/contacts.css" />
-    <link rel="stylesheet" href="../css/contacts-overlay.css">
+    <link rel="stylesheet" href="../css/contacts-overlay.css" />
   </head>
   <body>
     <div id="header"></div>
@@ -217,11 +217,19 @@
     </div>
     <div id="edit-delete-overlay" class="edit-delete-overlay">
       <div class="edit-delete-content">
-        <button id="editContactBtn"> <img src="../assets/icons/edit.svg">Edit</button>
-        <button id="deleteContactBtn"> <img src="..//assets/icons/delete.svg">Delete</button>
+        <button id="editContactBtn">
+          <img src="../assets/icons/edit.svg" />Edit
+        </button>
+        <button id="deleteContactBtn">
+          <img src="..//assets/icons/delete.svg" />Delete
+        </button>
       </div>
     </div>
   </body>
+  <script src="../js/contacts/contacts_utils.js"></script>
+  <script src="../js/contacts/contacts_firebase.js"></script>
+  <script src="../js/contacts/contacts_ui.js"></script>
+  <script src="../js/contacts/contacts_main.js"></script>
   <script src="../js/load_layout.js"></script>
-  <script src="../js/load_contacts.js"></script>
+  <!-- <script src="../js/load_contacts.js"></script> -->
 </html>
