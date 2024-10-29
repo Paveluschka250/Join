@@ -236,9 +236,13 @@ function renderAddTask() {
                         <div>
                             <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
                         </div>
-                    </div>    
+                    </div>
+                    <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
+                    <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
+                    <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div> 
                 </div>
             `;
+            
             taskStyle(taskCounter);
             loadingspinner(taskCounter, element.subtasks);
         }
@@ -301,19 +305,22 @@ function renderOverlayTask(taskCounter, currentTask) {
                     <div id="current-category-to-do" class="current-category-to-do">${currentTask[1]}</div>
                     <h4 id="current-title-task" class="current-title-task">${currentTask[2]}</h4>
                     <p id="current-description-task" class="current-description-task">${currentTask[3]}</p>
-                     
-                    <div class="current-subtask-progress-container">
-                        <div class="current-subtask-progress-bar" id="current-subtask-progress-bar-${taskCounter}"></div>
+                     <div>
+                        <p>Due Date: ${currentTask[6]} </p>
                     </div>
 
-                    <div class="current-task-user-prioIcon">    
+                    <div>    
+                        <div class="current-task-priority">
+                            <p><b>Priority: ${currentTask[8]}</b></p>
+                            <img class="task-prio-icon" src="${currentTask[5]}" alt="Priority Icon">
+                        </div>    
                         <div>
+                            <div><b>Assigned To:</b> </div>
                             <div id="current-contacts-task${taskCounter}" class="current-contacts-task-container">${contactsHTML}</div>
                         </div>
-                        <div>
-                            <img class="task-prio-icon" src="${currentTask[5]}" alt="Priority Icon">
-                        </div>
-                    </div>    
+                    </div>
+                    
+                    <div><b>Subtasks</b></div>
                 </div>
             `;
 }
@@ -331,10 +338,16 @@ function extractTaskData(taskCounter) {
     const descriptionElement = taskElement.querySelector(`#description-task${taskCounter}`);
     const contactsContainer = taskElement.querySelector(`#contacts-task${taskCounter}`);
     const prioIconElement = taskElement.querySelector('.task-prio-icon'); // Hier wird das Priority Icon abgerufen
+    const dueDateElement = taskElement.querySelector(`#set-due-date${taskCounter}`);
+    const fullNameElement = taskElement.querySelector(`#set-full-name${taskCounter}`);
+    const priorityElement = taskElement.querySelector(`#set-priority${taskCounter}`);
 
     const category = categoryElement ? categoryElement.textContent.trim() : null;
     const title = titleElement ? titleElement.textContent.trim() : null;
     const description = descriptionElement ? descriptionElement.textContent.trim() : null;
+    const dueDate = dueDateElement ? dueDateElement.textContent.trim() : null;
+    const fullName = fullNameElement ? fullNameElement.textContent.trim() : null;
+    const priority = priorityElement ? priorityElement.textContent.trim() : null;
 
     const contactsHTML = [];
     if (contactsContainer) {
@@ -353,7 +366,10 @@ function extractTaskData(taskCounter) {
         title,
         description,
         contactsHTML,
-        prioIcon
+        prioIcon,
+        dueDate,
+        fullName,
+        priority
     );
     renderOverlayTask(taskCounter, currentTask);
     console.log(currentTask);

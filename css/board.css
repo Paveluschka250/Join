@@ -247,13 +247,33 @@
     border-radius: 50%;
 }
 
-/* .to-do-block {
-    height: 80%;
-    overflow-x: hidden;
-    overflow-y: auto;
-} */
+.current-to-do-content {
+    margin: 24px;
+}
+
+.current-category-to-do {
+    width: 45%;
+    background-color:#0038ff;
+    text-align: center;
+    color: white;
+    border-radius:4px;
+    padding: 4px;
+}
+
+.current-title-task {
+    font-size: 32px;
+    margin: 16px 0;
+}
+
+.current-task-priority {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
 
 
+/* loading-bar */
 .subtask-progress-container {
     width: 100%;
     height: 10px;
