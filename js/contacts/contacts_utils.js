@@ -52,29 +52,39 @@ function validateForm() {
   const phoneInput = document.getElementById("phone");
   let isValid = true;
   
-  clearError(nameInput);
-  clearError(emailInput);
-  clearError(phoneInput);
-  
-  if (nameInput.value.trim() === "") {
-    showError(nameInput, "Name ist erforderlich");
-    isValid = false;
-  }
-  
-  if (!validateEmail(emailInput.value)) {
-    showError(emailInput, "Ungültige E-Mail-Adresse");
-    isValid = false;
-  }
-  
-  if (!validatePhoneStart(phoneInput.value)) {
-    showError(phoneInput, "Telefonnummer muss mit + oder 0 beginnen");
-    isValid = false;
-  } else if (!validatePhoneLength(phoneInput.value)) {
-    showError(phoneInput, "Telefonnummer muss zwischen 10 und 14 Ziffern haben");
-    isValid = false;
-  }
+  isValid = validateNameInput(nameInput) && isValid;
+  isValid = validateEmailInput(emailInput) && isValid;
+  isValid = validatePhoneInput(phoneInput) && isValid;
   
   return isValid;
 }
 
-// ... Weitere Hilfsfunktionen ... 
+function validateNameInput(nameInput) {
+  clearError(nameInput);
+  if (nameInput.value.trim() === "") {
+    showError(nameInput, "Name ist erforderlich");
+    return false;
+  }
+  return true;
+}
+
+function validateEmailInput(emailInput) {
+  clearError(emailInput);
+  if (!validateEmail(emailInput.value)) {
+    showError(emailInput, "Ungültige E-Mail-Adresse");
+    return false;
+  }
+  return true;
+}
+
+function validatePhoneInput(phoneInput) {
+  clearError(phoneInput);
+  if (!validatePhoneStart(phoneInput.value)) {
+    showError(phoneInput, "Telefonnummer muss mit + oder 0 beginnen");
+    return false;
+  } else if (!validatePhoneLength(phoneInput.value)) {
+    showError(phoneInput, "Telefonnummer muss zwischen 10 und 14 Ziffern haben");
+    return false;
+  }
+  return true;
+}
