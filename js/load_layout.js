@@ -34,27 +34,37 @@ async function loadSidebar() {
     const response = await fetch("../patials/sidebar.html");
     if (!response.ok) {
       console.error("Keine Datei namens sidebar.html gefunden");
+      return;
     }
     const data = await response.text();
     document.getElementById("sidebar").innerHTML = data;
-    const currentPage = window.location.pathname.split("/").pop();
-    const buttons = document.querySelectorAll(".sidebar-button");
-    buttons.forEach((button) => {
-      const link = button.getAttribute("href").split("/").pop();
-      if (currentPage === link) {
-        button.classList.add("active");
-      }
-    });
-    const footerLinks = document.querySelectorAll(".footer-text");
-    footerLinks.forEach((link) => {
-      const linkPage = link.getAttribute("href").split("/").pop();
-      if (currentPage === linkPage) {
-        link.classList.add("active");
-      }
-    });
+    setActiveSidebarButtons();
+    setActiveFooterLinks();
   } catch (error) {
     console.error("Error in loadSidebar: ", error);
   }
+}
+
+function setActiveSidebarButtons() {
+  const currentPage = window.location.pathname.split("/").pop();
+  const buttons = document.querySelectorAll(".sidebar-button");
+  buttons.forEach((button) => {
+    const link = button.getAttribute("href").split("/").pop();
+    if (currentPage === link) {
+      button.classList.add("active");
+    }
+  });
+}
+
+function setActiveFooterLinks() {
+  const currentPage = window.location.pathname.split("/").pop();
+  const footerLinks = document.querySelectorAll(".footer-text");
+  footerLinks.forEach((link) => {
+    const linkPage = link.getAttribute("href").split("/").pop();
+    if (currentPage === linkPage) {
+      link.classList.add("active");
+    }
+  });
 }
 loadSidebar();
 
@@ -64,32 +74,48 @@ function initializeOverlay() {
     console.error("Overlay-Element nicht gefunden");
     return;
   }
+  addEventListenersToTriggerOverlay(overlay);
+  addEventListenersToOverlay(overlay);
+  addEventListenersToOverlayContent(overlay);
+  addEventListenersToOverlayContentLinks(overlay);
+}
 
-  function toggleOverlay(show) {
-    overlay.style.display = show ? "block" : "none";
-  }
+function addEventListenersToTriggerOverlay(overlay) {
   document.querySelectorAll("#trigger-overlay").forEach(function (element) {
     element.addEventListener("click", function (event) {
       const clickedElement = event.target;
       if (clickedElement.closest('.help-icon')) {
         return;
       }
-      toggleOverlay(true);
+      toggleOverlay(true, overlay);
       event.stopPropagation();
     });
   });
-  document.getElementById("overlay").addEventListener("click", function (event) {
+}
+
+function addEventListenersToOverlay(overlay) {
+  overlay.addEventListener("click", function (event) {
     const overlayContent = document.querySelector(".overlay-content");
     if (!overlayContent.contains(event.target)) {
-      toggleOverlay(false);
+      toggleOverlay(false, overlay);
     }
   });
+}
+
+function addEventListenersToOverlayContent(overlay) {
   document.querySelector(".overlay-content").addEventListener("click", function (event) {
     event.stopPropagation();
   });
+}
+
+function addEventListenersToOverlayContentLinks(overlay) {
   document.querySelectorAll('.overlay-content a').forEach(link => {
     link.addEventListener('click', function () {
-      toggleOverlay(false);
+      toggleOverlay(false, overlay);
     });
   });
+}
+
+function toggleOverlay(show, overlay) {
+  overlay.style.display = show ? "block" : "none";
 }
