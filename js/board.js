@@ -239,7 +239,8 @@ function renderAddTask() {
                     </div>
                     <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
                     <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
-                    <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div> 
+                    <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
+                    <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
                 </div>
             `;
             
@@ -293,11 +294,13 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
- console.log(currentTask);
 
     let contactsHTML = currentTask[4]
         .map(initials => `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
         .join('');
+
+console.log(currentTask);
+
 
     overlayContainer.innerHTML = '';
     overlayContainer.innerHTML = `
@@ -306,12 +309,12 @@ function renderOverlayTask(taskCounter, currentTask) {
                     <h4 id="current-title-task" class="current-title-task">${currentTask[2]}</h4>
                     <p id="current-description-task" class="current-description-task">${currentTask[3]}</p>
                      <div>
-                        <p>Due Date: ${currentTask[6]} </p>
+                        <p><b>Due Date: </b>${currentTask[6]} </p>
                     </div>
 
                     <div>    
                         <div class="current-task-priority">
-                            <p><b>Priority: ${currentTask[8]}</b></p>
+                            <p><b>Priority:</b> ${currentTask[8]}</p>
                             <img class="task-prio-icon" src="${currentTask[5]}" alt="Priority Icon">
                         </div>    
                         <div>
@@ -320,7 +323,10 @@ function renderOverlayTask(taskCounter, currentTask) {
                         </div>
                     </div>
                     
-                    <div><b>Subtasks</b></div>
+                    <div>
+                        <b>Subtasks</b>
+                        <div id="current-subtasks-task"></div>
+                    </div>
                 </div>
             `;
 }
@@ -341,6 +347,7 @@ function extractTaskData(taskCounter) {
     const dueDateElement = taskElement.querySelector(`#set-due-date${taskCounter}`);
     const fullNameElement = taskElement.querySelector(`#set-full-name${taskCounter}`);
     const priorityElement = taskElement.querySelector(`#set-priority${taskCounter}`);
+    const subtasksElement = taskElement.querySelector(`#set-subtasks${taskCounter}`)
 
     const category = categoryElement ? categoryElement.textContent.trim() : null;
     const title = titleElement ? titleElement.textContent.trim() : null;
@@ -348,6 +355,7 @@ function extractTaskData(taskCounter) {
     const dueDate = dueDateElement ? dueDateElement.textContent.trim() : null;
     const fullName = fullNameElement ? fullNameElement.textContent.trim() : null;
     const priority = priorityElement ? priorityElement.textContent.trim() : null;
+    const subtasks = subtasksElement ? subtasksElement.textContent.trim() : null;
 
     const contactsHTML = [];
     if (contactsContainer) {
@@ -369,8 +377,18 @@ function extractTaskData(taskCounter) {
         prioIcon,
         dueDate,
         fullName,
-        priority
+        priority, 
+        subtasks
     );
     renderOverlayTask(taskCounter, currentTask);
     console.log(currentTask);
+}
+
+function getKeysFromObject() {
+    let toDo = tasks.toDo;
+
+    for (key in tasks.toDo){
+        console.log(toDo[key]);
+    }
+    
 }

@@ -208,6 +208,7 @@
 .task-prio-icon {
     width: 12px !important;
     height: 8px !important;
+    margin: 8px;
 }
 
 .contacts-task-container {
@@ -245,6 +246,12 @@
 
 .current-task-initials {
     border-radius: 50%;
+    width: 24px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin: 8px;
 }
 
 .current-to-do-content {
