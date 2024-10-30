@@ -1,45 +1,36 @@
 async function uploadContactsToFirebase() {
   const databaseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
-
   for (const contact of contacts) {
-    try {
-      const response = await fetch(databaseUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(contact),
-      });
+    await uploadContact(databaseUrl, contact);
+  }
+}
 
-      if (response.ok) {
-        await response.json();
-      } else {
-        console.error(`Fehler beim Hochladen von ${contact.name}:`, response.status);
-      }
-    } catch (error) {
-      console.error(`Fehler beim Hochladen von ${contact.name}:`, error);
+async function uploadContact(databaseUrl, contact) {
+  try {
+    const response = await fetch(databaseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contact),
+    });
+    if (!response.ok) {
+      throw new Error(`Fehler beim Hochladen von ${contact.name}: ${response.status}`);
     }
+    await response.json();
+  } catch (error) {
+    console.error(`Fehler beim Hochladen von ${contact.name}:`, error);
   }
 }
 
 async function downloadContactsFromFirebase() {
   const databaseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
-
   try {
     const response = await fetch(databaseUrl, {
       method: "GET",
     });
     if (response.ok) {
-      const contactsData = await response.json();
-      const contactsArray = [];
-      if (contactsData) {
-        for (const contactId in contactsData) {
-          contactsArray.push({
-            id: contactId, 
-            ...contactsData[contactId],
-          });
-        }
-      }
+      const contactsArray = await processContactsData(response);
       contacts = contactsArray;
       renderContacts(contactsArray);
       return contactsArray;
@@ -49,6 +40,20 @@ async function downloadContactsFromFirebase() {
   } catch (error) {
     console.error("Fehler beim Abrufen der Kontakte:", error);
   }
+}
+
+async function processContactsData(response) {
+  const contactsData = await response.json();
+  const contactsArray = [];
+  if (contactsData) {
+    for (const contactId in contactsData) {
+      contactsArray.push({
+        id: contactId, 
+        ...contactsData[contactId],
+      });
+    }
+  }
+  return contactsArray;
 }
 
 async function updateContactInFirebase(contactId, updatedContact) {

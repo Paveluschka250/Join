@@ -55,22 +55,29 @@ async function addNewContact(event) {
   if (!validateForm()) {
     return;
   }
+  const contactData = getContactFormData();
+  const addedContact = await addContactToFirebase(contactData);
+  if (addedContact) {
+    processAddedContact(addedContact);
+  }
+}
+
+function getContactFormData() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const phone = document.getElementById("phone").value;
-
-  const newContact = {
+  return {
     name: name,
     email: email,
     phoneNumber: phone,
   };
-  const addedContact = await addContactToFirebase(newContact);
-  if (addedContact) {
-    contacts.push(addedContact);
-    renderContacts(contacts);
-    closeContactsOverlay();
-    document.getElementById("addContactForm").reset();
-  }
+}
+
+async function processAddedContact(addedContact) {
+  contacts.push(addedContact);
+  renderContacts(contacts);
+  closeContactsOverlay();
+  document.getElementById("addContactForm").reset();
 }
 
 async function deleteContact(name) {
@@ -106,32 +113,42 @@ async function saveEditedContact(event) {
   if (!validateEditForm()) {
     return;
   }
-  const newName = document.getElementById("editName").value;
-  const newEmail = document.getElementById("editEmail").value;
-  const newPhone = document.getElementById("editPhone").value;
-  const contactToUpdate = contacts.find(
-    (contact) => contact.name === currentEditingContact
-  );
+  const contactData = getEditedContactData();
+  const contactToUpdate = findContactToUpdate(contactData.name);
   if (contactToUpdate) {
-    const updatedContact = {
-      name: newName,
-      email: newEmail,
-      phoneNumber: newPhone,
-    };
-    try {
-      await updateContactInFirebase(contactToUpdate.id, updatedContact);
-      const index = contacts.findIndex((c) => c.id === contactToUpdate.id);
-      if (index !== -1) {
-        contacts[index] = { ...contacts[index], ...updatedContact };
-      }
-      renderContacts(contacts);
-      closeEditContactsOverlay();
-      const color = document.querySelector(".shortname").style.backgroundColor;
-      updateContactDetails(newName, newEmail, newPhone, color);
-    } catch (error) {
-      console.error("Fehler beim Speichern des bearbeiteten Kontakts:", error);
-      alert("Es gab einen Fehler beim Speichern des Kontakts. Bitte versuchen Sie es später erneut.");
-    }
+    await updateContact(contactToUpdate, contactData);
+    closeEditContactsOverlay();
+    updateContactDetails(contactData.name, contactData.email, contactData.phoneNumber);
+  }
+}
+
+function getEditedContactData() {
+  return {
+    name: document.getElementById("editName").value,
+    email: document.getElementById("editEmail").value,
+    phoneNumber: document.getElementById("editPhone").value,
+  };
+}
+
+function findContactToUpdate(name) {
+  return contacts.find(contact => contact.name === currentEditingContact);
+}
+
+async function updateContact(contactToUpdate, updatedContactData) {
+  try {
+    await updateContactInFirebase(contactToUpdate.id, updatedContactData);
+    updateContactsArray(contactToUpdate.id, updatedContactData);
+    renderContacts(contacts);
+  } catch (error) {
+    console.error("Fehler beim Speichern des bearbeiteten Kontakts:", error);
+    alert("Es gab einen Fehler beim Speichern des Kontakts. Bitte versuchen Sie es später erneut.");
+  }
+}
+
+function updateContactsArray(id, updatedData) {
+  const index = contacts.findIndex(contact => contact.id === id);
+  if (index !== -1) {
+    contacts[index] = { ...contacts[index], ...updatedData };
   }
 }
 
@@ -143,27 +160,42 @@ function validateEditForm() {
   clearError(nameInput);
   clearError(emailInput);
   clearError(phoneInput);
+  isValid = validateNameInput(nameInput) && isValid;
+  isValid = validateEmailInput(emailInput) && isValid;
+  isValid = validatePhoneInput(phoneInput) && isValid;
+  return isValid;
+}
+
+function validateNameInput(nameInput) {
   if (nameInput && nameInput.value.trim() === "") {
     showError(nameInput, "Name ist erforderlich");
-    isValid = false;
+    return false;
   }
+  return true;
+}
+
+function validateEmailInput(emailInput) {
   if (emailInput && !validateEmail(emailInput.value)) {
     showError(emailInput, "Ungültige E-Mail-Adresse");
-    isValid = false;
+    return false;
   }
+  return true;
+}
+
+function validatePhoneInput(phoneInput) {
   if (phoneInput) {
     if (!validatePhoneStart(phoneInput.value)) {
       showError(phoneInput, "Telefonnummer muss mit + oder 0 beginnen");
-      isValid = false;
+      return false;
     } else if (!validatePhoneLength(phoneInput.value)) {
       showError(
         phoneInput,
         "Telefonnummer muss zwischen 10 und 14 Ziffern haben"
       );
-      isValid = false;
+      return false;
     }
   }
-  return isValid;
+  return true;
 }
 
 function deleteContactFromEdit() {
