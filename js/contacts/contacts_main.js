@@ -4,7 +4,6 @@ let currentEditingContact = null;
 async function initializeContacts() {
   if (contacts.length === 0) {
     contacts = await downloadContactsFromFirebase();
-    logContacts();
   }
 }
 
@@ -43,10 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
     hideEditDeleteOverlay();
   });
 });
-
-function logContacts() {
-  console.log("Current contacts:", JSON.stringify(contacts, null, 2));
-}
 
 initializeContacts(); 
 
