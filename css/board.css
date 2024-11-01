@@ -255,7 +255,9 @@
 }
 
 .current-to-do-content {
+    position: relative;
     margin: 24px;
+    height: 100%;
 }
 
 .current-category-to-do {
@@ -278,6 +280,57 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.current-task-close-btn {
+    filter: invert(52%) sepia(47%) saturate(4550%) hue-rotate(202deg) brightness(100%) contrast(104%);
+}
+
+.current-task-close-btn:hover {
+    cursor: pointer;
+}
+
+.current-task-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.delete-and-edit-task {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 140px;
+    height: 24px;
+    position: absolute;
+    bottom: 32px;
+    right: 8px;
+}
+
+.delete-and-edit-task img {
+    width: 12px;
+    margin-right: 8px;
+}
+
+.delete-and-edit-task div{
+    height: 24px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
+    width: 64px;
+    padding: 0 8px;
+    margin:2px;
+}
+
+.delete-and-edit-task div:hover {
+    cursor:pointer;
+    box-shadow: #0038ff 1px 1px;
+    background-color: #0038ff;
+    border-radius: 16px;
+    color: white;
+}
+
 
 
 /* loading-bar */

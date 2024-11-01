@@ -290,6 +290,10 @@ function showOverlayTask(taskCounter) {
     document.getElementById('overlay-show-task').classList.remove('d-none');
     document.getElementById('overlay-show-task').classList.add('overlay-show-task');
     extractTaskData(taskCounter);
+
+    document.getElementById('current-to-do').addEventListener("click", function(event) {
+        event.stopPropagation();
+    })
 }
 
 function renderOverlayTask(taskCounter, currentTask) {
@@ -299,13 +303,22 @@ function renderOverlayTask(taskCounter, currentTask) {
         .map(initials => `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
         .join('');
 
-console.log(currentTask);
+    let currentSubtask = currentTask[9].split(",");
+    console.log(currentTask[9]);
+    let currentSubtasks = currentSubtask
+        .map(subtask => `<li class="current-subtasks-task">${subtask}</li>`)
+        .join('');
+        console.log(currentSubtasks);
+        
 
 
     overlayContainer.innerHTML = '';
     overlayContainer.innerHTML = `
                 <div class="current-to-do-content" id="current-to-do">
-                    <div id="current-category-to-do" class="current-category-to-do">${currentTask[1]}</div>
+                    <div class="current-task-header">
+                        <div id="current-category-to-do" class="current-category-to-do">${currentTask[1]}</div>
+                        <img onclick="closeCurrentTask()" src="../assets/icons/clearIcon.svg" class="current-task-close-btn">
+                    </div>
                     <h4 id="current-title-task" class="current-title-task">${currentTask[2]}</h4>
                     <p id="current-description-task" class="current-description-task">${currentTask[3]}</p>
                      <div>
@@ -325,7 +338,11 @@ console.log(currentTask);
                     
                     <div>
                         <b>Subtasks</b>
-                        <div id="current-subtasks-task"></div>
+                        <ul id="current-subtasks-task${taskCounter}">${currentSubtasks}</ul>
+                    </div>
+
+                    <div class="delete-and-edit-task">
+                        <div class="" onclick=""><img src="../assets/icons/delete.svg"><p>delete</p></div> | <div class="" onclick=""><img src="../assets/icons/edit.svg"><p>edit</p></div>
                     </div>
                 </div>
             `;
@@ -384,11 +401,7 @@ function extractTaskData(taskCounter) {
     console.log(currentTask);
 }
 
-function getKeysFromObject() {
-    let toDo = tasks.toDo;
-
-    for (key in tasks.toDo){
-        console.log(toDo[key]);
+function closeCurrentTask() {
+    document.getElementById('overlay-show-task').classList.remove('overlay-show-task');
+    document.getElementById('overlay-show-task').classList.add('d-none');
     }
-    
-}
