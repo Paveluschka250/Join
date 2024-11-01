@@ -306,7 +306,7 @@ function renderOverlayTask(taskCounter, currentTask) {
     let currentSubtask = currentTask[9].split(",");
     console.log(currentTask[9]);
     let currentSubtasks = currentSubtask
-        .map(subtask => `<li class="current-subtasks-task">${subtask}</li>`)
+        .map(subtask => `<div class="current-subtasks-task"><input type="checkbox">${subtask}</div>`)
         .join('');
         console.log(currentSubtasks);
         

@@ -180,6 +180,10 @@
     margin-bottom: 8px;
 }
 
+.to-do-content:hover {
+    cursor: pointer;
+}
+
 .task-user-prioIcon {
     display:flex;
     flex-direction: row;
@@ -218,10 +222,11 @@
 
 .task-initials {
     margin-right: 4px;
-    background-color:rgb(69, 137, 255);
     border-radius: 50%;
     padding: 4px;
     font-size: 10px;
+    width: 16px;
+    text-align: center;
 }
 
 .overlay-show-task {
@@ -295,6 +300,16 @@
     justify-content: space-between;
 }
 
+.current-subtasks-task {
+    display: flex;
+    align-items: center;
+    margin: 8px;
+}
+
+.current-subtasks-task input:hover {
+    cursor: pointer;
+}
+
 .delete-and-edit-task {
     display:flex;
     flex-direction: row;
@@ -325,10 +340,10 @@
 
 .delete-and-edit-task div:hover {
     cursor:pointer;
-    box-shadow: #0038ff 1px 1px;
-    background-color: #0038ff;
     border-radius: 16px;
-    color: white;
+    color: #0038ff;
+    text-shadow: 1px 1px #0038ff;
+    transition: 0.3s;
 }
 
 
