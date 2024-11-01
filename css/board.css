@@ -49,6 +49,8 @@
     cursor: pointer;
     background-color: rgb(26, 94, 212);
     box-shadow: #b9a9a9 1px 1px;
+    transition: 0.3s;
+    transform: translateY(2px);
 }
 
 .tasks {
@@ -65,6 +67,8 @@
 
 .tasks img:hover {
     cursor: pointer;
+    transition: 0.3s;
+    transform: translateY(2px);
 }
 
 .task-container {
@@ -174,7 +178,7 @@
 
 .to-do-content {
     width:100%;
-    border: 1px solid black;
+    border: 1px solid rgb(150, 150, 150);
     border-radius: 8px;
     padding: 8px;
     margin-bottom: 8px;
@@ -182,6 +186,9 @@
 
 .to-do-content:hover {
     cursor: pointer;
+    transition: 0.3s;
+    transform: translateY(2px);
+    box-shadow: 1px 1px rgb(150, 150, 150);
 }
 
 .task-user-prioIcon {
@@ -292,6 +299,8 @@
 
 .current-task-close-btn:hover {
     cursor: pointer;
+    transform: translateY(2px);
+    transition: 0.3s;
 }
 
 .current-task-header {
@@ -308,6 +317,8 @@
 
 .current-subtasks-task input:hover {
     cursor: pointer;
+    transition: 0.3s;
+    transform: translateY(2px);
 }
 
 .delete-and-edit-task {
@@ -344,6 +355,7 @@
     color: #0038ff;
     text-shadow: 1px 1px #0038ff;
     transition: 0.3s;
+    transform: translateY(2px);
 }
 
 

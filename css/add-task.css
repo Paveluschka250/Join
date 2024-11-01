@@ -141,20 +141,26 @@ body {
 
 #addtask-content .urgent-addTask {
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid rgb(194, 194, 194) !important;
 }
 
 #addtask-content .urgent-addTask:hover {
-    border-bottom: solid red 2px;
+    box-shadow: 0px 2px red;
+    transition: 0.3s;
+    transform: translateY(2px);
+    border-bottom: 1px solid red !important;
 }
 
 #addtask-content .medium-addTask {
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid rgb(194, 194, 194) !important;
 }
 
 #addtask-content .medium-addTask:hover {
-    border-bottom: solid #ffcc00 2px;
+    box-shadow: 0px 2px #ffcc00;
+    transition: 0.3s;
+    transform: translateY(2px);
+    border-bottom: 1px solid #ffcc00 !important;
 }
 
 #addtask-content .medium-prio-icon {
@@ -163,11 +169,14 @@ body {
 
 #addtask-content .low-addTask {
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid rgb(194, 194, 194) !important;
 }
 
 #addtask-content .low-addTask:hover {
-    border-bottom: solid green 2px;
+    box-shadow: 0px 2px green;
+    transition: 0.3s;
+    transform: translateY(2px);
+    border-bottom: 1px solid green !important;
 }
 
 #addtask-content .buttons-row {
@@ -218,6 +227,8 @@ body {
     border-color: #007bff;
     box-shadow: 1px 1px #007bff;
     color: #007bff;
+    transition: 0.3s;
+    transform: translateY(2px);
 }
 
 #addtask-content .submit-btn-addTask {
@@ -241,6 +252,8 @@ body {
 
 #addtask-content .submit-btn-addTask:hover {
     background-color: #0056b3;
+    transition: 0.3s;
+    transform: translateY(2px);
 }
 
 #addtask-content .add-subtask-addTask {
@@ -271,6 +284,8 @@ body {
 
 .close-btn-addTask:hover {
     background-color: #0056b3;
+    transition: 0.3s;
+    transform: translateY(2px);
 }
 
 .add-task-sb {

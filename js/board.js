@@ -263,10 +263,10 @@ function taskStyle(taskCounter) {
     }
 }
 
-function loadingspinner(taskCounter, element) {
+function loadingspinner(taskCounter, subtasks) {
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
-    let allSubtasks = progressBar.length;
-    let progressPercentage = 100;  //hier muss noch eine rechnung rein
+    let allSubtasks = subtasks.length;
+    let progressPercentage = 100/allSubtasks*1;  //hier muss noch eine rechnung rein
     progressBar.style.width = `${progressPercentage}%`;
 }
 
@@ -307,10 +307,7 @@ function renderOverlayTask(taskCounter, currentTask) {
     console.log(currentTask[9]);
     let currentSubtasks = currentSubtask
         .map(subtask => `<div class="current-subtasks-task"><input type="checkbox">${subtask}</div>`)
-        .join('');
-        console.log(currentSubtasks);
-        
-
+        .join('');     
 
     overlayContainer.innerHTML = '';
     overlayContainer.innerHTML = `
