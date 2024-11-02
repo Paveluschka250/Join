@@ -81,7 +81,9 @@ function addSubTask() {
 
     contentDiv.innerHTML += `<li><p>${subTask.value}<p/></li>`;
     subTask.value = '';
-    closeNewSubtasksBtn()
+    closeNewSubtasksBtn();
+    getTasks();
+    renderAddTask();
 }
 
 function getFormData(event) {
@@ -243,7 +245,7 @@ function renderAddTask() {
                     <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
                 </div>
             `;
-            
+
             taskStyle(taskCounter);
             loadingspinner(taskCounter, element.subtasks);
         }
@@ -266,7 +268,7 @@ function taskStyle(taskCounter) {
 function loadingspinner(taskCounter, subtasks) {
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
     let allSubtasks = subtasks.length;
-    let progressPercentage = 100/allSubtasks*1;  //hier muss noch eine rechnung rein
+    let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
     progressBar.style.width = `${progressPercentage}%`;
 }
 
@@ -291,7 +293,7 @@ function showOverlayTask(taskCounter) {
     document.getElementById('overlay-show-task').classList.add('overlay-show-task');
     extractTaskData(taskCounter);
 
-    document.getElementById('current-to-do').addEventListener("click", function(event) {
+    document.getElementById('current-to-do').addEventListener("click", function (event) {
         event.stopPropagation();
     })
 }
@@ -307,7 +309,7 @@ function renderOverlayTask(taskCounter, currentTask) {
     console.log(currentTask[9]);
     let currentSubtasks = currentSubtask
         .map(subtask => `<div class="current-subtasks-task"><input type="checkbox">${subtask}</div>`)
-        .join('');     
+        .join('');
 
     overlayContainer.innerHTML = '';
     overlayContainer.innerHTML = `
@@ -339,7 +341,7 @@ function renderOverlayTask(taskCounter, currentTask) {
                     </div>
 
                     <div class="delete-and-edit-task">
-                        <div class="" onclick=""><img src="../assets/icons/delete.svg"><p>delete</p></div> | <div class="" onclick=""><img src="../assets/icons/edit.svg"><p>edit</p></div>
+                        <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | <div class="" onclick=""><img src="../assets/icons/edit.svg"><p>edit</p></div>
                     </div>
                 </div>
             `;
@@ -379,9 +381,9 @@ function extractTaskData(taskCounter) {
         });
     }
 
-    const prioIcon = prioIconElement ? prioIconElement.src : null; 
+    const prioIcon = prioIconElement ? prioIconElement.src : null;
 
-    let currentTask = [];    
+    let currentTask = [];
     currentTask.push(
         taskCounter,
         category,
@@ -391,7 +393,7 @@ function extractTaskData(taskCounter) {
         prioIcon,
         dueDate,
         fullName,
-        priority, 
+        priority,
         subtasks
     );
     renderOverlayTask(taskCounter, currentTask);
@@ -401,4 +403,33 @@ function extractTaskData(taskCounter) {
 function closeCurrentTask() {
     document.getElementById('overlay-show-task').classList.remove('overlay-show-task');
     document.getElementById('overlay-show-task').classList.add('d-none');
+}
+
+async function deleteTask(taskId) {
+    taskId--;
+    let currentTask = Object.keys(tasks.toDo);
+
+    if (tasks.toDo && tasks.toDo[currentTask[taskId]]) {
+        delete tasks.toDo[currentTask[taskId]];
+        console.log(`Task mit ID ${taskId} wurde lokal gelöscht.`);
+    } else {
+        console.log(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
     }
+
+    try {
+        const response = await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${currentTask[taskId]}.json`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            console.log(`Task mit ID ${taskId} erfolgreich aus der Datenbank gelöscht.`);
+            renderAddTask();
+        } else {
+            console.error('Fehler beim Löschen des Tasks aus der Datenbank:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Fehler beim Löschen des Tasks:', error);
+    }
+    closeCurrentTask();
+}
