@@ -35,7 +35,7 @@
                             <p>To Do</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="to-do-block" id="to-do-block">
+                        <div class="to-do-block" id="to-do-block" ondrop="moveTo('to-do-block')"ondragover="allowDrop(event)">
                             <div id="to-do" class="board-content">No tasks To do</div>
                         </div>
                     </div>
@@ -44,18 +44,24 @@
                             <p>In progress</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div id="in-progress" class="board-content">No tasks To do</div>
+                        <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)">
+                            <div id="in-progress-content" class="board-content">No tasks To do</div>
+                        </div>
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
                             <p>Await feedback</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div id="await-feedback" class="board-content">No tasks To do</div>
+                        <div id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)">
+                            <div id="await-feedback" class="board-content">No tasks To do</div>
+                        </div>
                     </div>
                     <div class="tasks margin-none">
                         <div class="task-headlines">Done</div>
-                        <div id="done" class="board-content">No tasks To do</div>
+                        <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
+                            <div class="board-content">No tasks To do</div>
+                        </div>
                     </div>
                 </div>
             </div>
