@@ -83,13 +83,11 @@ function addSubTask() {
     contentDiv.innerHTML += `<li><p>${subTask.value}<p/></li>`;
     subTask.value = '';
     closeNewSubtasksBtn();
-    // getTasks();
-    // renderAddTask();
 }
 
 function getFormData(event) {
     event.preventDefault();
-    let taskCategory = "to-do";
+    let taskCategory = { category: "toDo" };
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let dueDate = document.getElementById('due-date').value;
@@ -138,6 +136,7 @@ function getFormData(event) {
         .catch(error => {
             console.error('Error adding task:', error);
         });
+    getTasks();
 }
 
 function clearForm() {
@@ -199,35 +198,34 @@ function selectContactsSb(selectedValue) {
 }
 
 function renderAddTask() {
+
+
     let toDoBlock = document.getElementById("to-do-block");
     let toDoContent = document.getElementById("to-do");
     let toDo = tasks.toDo;
-    console.log(toDo);
-    
 
     if (toDo && Object.keys(toDo).length > 0) {
-        toDoBlock.innerHTML = "";
 
         let taskCounter = 0;
         for (let key in toDo) {
             const element = toDo[key];
             taskCounter++;
-            if (element.taskCategory == "to-do") {
+            if (element.taskCategory.category == "toDo") {
+                toDoBlock.innerHTML = "";
+                let prioIconURL;
+                if (element.priority === 'Urgent') {
+                    prioIconURL = '../assets/icons/PriorityUrgentRed.png';
+                } else if (element.priority === 'Medium') {
+                    prioIconURL = '../assets/icons/PriorityMediumOrange.png';
+                } else if (element.priority === 'Low') {
+                    prioIconURL = '../assets/icons/PriorityLowGreen.png';
+                }
 
-            let prioIconURL;
-            if (element.priority === 'Urgent') {
-                prioIconURL = '../assets/icons/PriorityUrgentRed.png';
-            } else if (element.priority === 'Medium') {
-                prioIconURL = '../assets/icons/PriorityMediumOrange.png';
-            } else if (element.priority === 'Low') {
-                prioIconURL = '../assets/icons/PriorityLowGreen.png';
-            }
+                let contactsHTML = element.assignedTo
+                    .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    .join('');
 
-            let contactsHTML = element.assignedTo
-                .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                .join('');
-
-            toDoBlock.innerHTML += `
+                toDoBlock.innerHTML += `
                 <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
                     <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
                     <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
@@ -251,20 +249,26 @@ function renderAddTask() {
                     <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
                 </div>
             `;
-        } else if (element.taskCategory == "inProgress"){
-            renderInProgress(taskCounter, element);
-        }else if (element.taskCategory == "await-feedback"){
-            renderAwaitFeedback(taskCounter, element);
-        } else if (element.taskCategory == "done"){
-            renderDone(taskCounter, element);
-        }
+            } else {
+                toDoContent.innerHTML = "No tasks To do";
+            }
+
+            if (element.taskCategory.category == "inProgress") {
+                renderInProgress(taskCounter, element);
+            }
             
+            if (element.taskCategory.category == "awaitFeedback") {
+                renderAwaitFeedback(taskCounter, element);
+            }
+            
+            if (element.taskCategory.category == "done") {
+                renderDone(taskCounter, element);
+            }
             taskStyle(taskCounter);
             loadingspinner(taskCounter, element.subtasks);
         }
-    } else {
-        toDoContent.innerHTML = "No tasks To do";
     }
+
 }
 
 function renderInProgress(taskCounter, element) {
@@ -274,20 +278,20 @@ function renderInProgress(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         inProgress.innerHTML = "";
 
-    let prioIconURL;
-    if (element.priority === 'Urgent') {
-        prioIconURL = '../assets/icons/PriorityUrgentRed.png';
-    } else if (element.priority === 'Medium') {
-        prioIconURL = '../assets/icons/PriorityMediumOrange.png';
-    } else if (element.priority === 'Low') {
-        prioIconURL = '../assets/icons/PriorityLowGreen.png';
-    }
+        let prioIconURL;
+        if (element.priority === 'Urgent') {
+            prioIconURL = '../assets/icons/PriorityUrgentRed.png';
+        } else if (element.priority === 'Medium') {
+            prioIconURL = '../assets/icons/PriorityMediumOrange.png';
+        } else if (element.priority === 'Low') {
+            prioIconURL = '../assets/icons/PriorityLowGreen.png';
+        }
 
-    let contactsHTML = element.assignedTo
-        .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-        .join('');
+        let contactsHTML = element.assignedTo
+            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+            .join('');
 
-    inProgress.innerHTML += `
+        inProgress.innerHTML += `
         <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
             <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
             <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
@@ -311,9 +315,7 @@ function renderInProgress(taskCounter, element) {
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
         </div>
     `;
-} else {
-    inProgress.innerHTML = "No tasks To do";
-}
+    }
 }
 
 function renderAwaitFeedback(taskCounter, element) {
@@ -323,20 +325,20 @@ function renderAwaitFeedback(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         awaitFeedback.innerHTML = "";
 
-    let prioIconURL;
-    if (element.priority === 'Urgent') {
-        prioIconURL = '../assets/icons/PriorityUrgentRed.png';
-    } else if (element.priority === 'Medium') {
-        prioIconURL = '../assets/icons/PriorityMediumOrange.png';
-    } else if (element.priority === 'Low') {
-        prioIconURL = '../assets/icons/PriorityLowGreen.png';
-    }
+        let prioIconURL;
+        if (element.priority === 'Urgent') {
+            prioIconURL = '../assets/icons/PriorityUrgentRed.png';
+        } else if (element.priority === 'Medium') {
+            prioIconURL = '../assets/icons/PriorityMediumOrange.png';
+        } else if (element.priority === 'Low') {
+            prioIconURL = '../assets/icons/PriorityLowGreen.png';
+        }
 
-    let contactsHTML = element.assignedTo
-        .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-        .join('');
+        let contactsHTML = element.assignedTo
+            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+            .join('');
 
-    awaitFeedback.innerHTML += `
+        awaitFeedback.innerHTML += `
         <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
             <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
             <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
@@ -360,9 +362,7 @@ function renderAwaitFeedback(taskCounter, element) {
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
         </div>
     `;
-} else {
-    awaitFeedback.innerHTML = "No tasks To do";
-}
+    }
 }
 
 function renderDone(taskCounter, element) {
@@ -372,20 +372,20 @@ function renderDone(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         done.innerHTML = "";
 
-    let prioIconURL;
-    if (element.priority === 'Urgent') {
-        prioIconURL = '../assets/icons/PriorityUrgentRed.png';
-    } else if (element.priority === 'Medium') {
-        prioIconURL = '../assets/icons/PriorityMediumOrange.png';
-    } else if (element.priority === 'Low') {
-        prioIconURL = '../assets/icons/PriorityLowGreen.png';
-    }
+        let prioIconURL;
+        if (element.priority === 'Urgent') {
+            prioIconURL = '../assets/icons/PriorityUrgentRed.png';
+        } else if (element.priority === 'Medium') {
+            prioIconURL = '../assets/icons/PriorityMediumOrange.png';
+        } else if (element.priority === 'Low') {
+            prioIconURL = '../assets/icons/PriorityLowGreen.png';
+        }
 
-    let contactsHTML = element.assignedTo
-        .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-        .join('');
+        let contactsHTML = element.assignedTo
+            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+            .join('');
 
-    done.innerHTML += `
+        done.innerHTML += `
         <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
             <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
             <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
@@ -409,9 +409,9 @@ function renderDone(taskCounter, element) {
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
         </div>
     `;
-} else {
-    done.innerHTML = "No tasks To do";
-}
+    } else {
+        done.innerHTML = "No tasks To do";
+    }
 }
 
 function taskStyle(taskCounter) {
@@ -604,8 +604,35 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function moveTo(category) {
-    let tasksKey = Object.keys(tasks.toDo);
-    tasks.toDo[tasksKey[currentDraggedElement]].taskCategory = category;
-    
+// function moveTo(category) {
+//     let tasksKey = Object.keys(tasks.toDo);
+//     tasks.toDo[tasksKey[currentDraggedElement]].taskCategory = category;
+
+// }
+
+async function moveTo(category) {
+    try {
+        // Die ID der zu verschiebenden Aufgabe wird abgerufen
+        let taskKey = Object.keys(tasks.toDo)[currentDraggedElement];
+        console.log(taskKey);
+        tasks.toDo[taskKey].taskCategory = category;
+
+        // API-Request senden, um nur die Kategorie in der Datenbank zu aktualisieren
+        await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
+            method: 'PUT', // PATCH für partielle Updates
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ category }) // Nur das Feld, das aktualisiert werden soll
+        });
+
+        console.log('Task successfully moved to category:', category);
+
+        // Daten neu laden, um die Änderung anzuzeigen
+
+    } catch (error) {
+        console.error('Error moving task:', error);
+    }
+    getTasks();
+    renderAddTask();
 }

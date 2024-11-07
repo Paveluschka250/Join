@@ -35,8 +35,8 @@
                             <p>To Do</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="to-do-block" id="to-do-block" ondrop="moveTo('to-do-block')"ondragover="allowDrop(event)">
-                            <div id="to-do" class="board-content">No tasks To do</div>
+                        <div id="to-do-block" ondrop="moveTo('toDo')"ondragover="allowDrop(event)">
+                            <div class="board-content" id="to-do">No tasks To do</div>
                         </div>
                     </div>
                     <div class="tasks">
@@ -54,13 +54,13 @@
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
                         <div id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)">
-                            <div id="await-feedback" class="board-content">No tasks To do</div>
+                            <div id="await-feedback-content" class="board-content">No tasks To do</div>
                         </div>
                     </div>
                     <div class="tasks margin-none">
                         <div class="task-headlines">Done</div>
                         <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
-                            <div class="board-content">No tasks To do</div>
+                            <div id="done-content" class="board-content">No tasks To do</div>
                         </div>
                     </div>
                 </div>
