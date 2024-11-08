@@ -12,7 +12,7 @@ let deadline ;
     console.log('onlineUser:', onlineUser);
     console.log('currentUser:', currentUser);
     if (onlineUser) {
-        const y = document.getElementById('userCircle')
+        const y = document.getElementById('userCircle');
         const userGreeting = document.getElementById('secPart');
         if (userGreeting) {
             userGreeting.innerHTML = onlineUser;
@@ -36,27 +36,36 @@ async function getTasksData() {
         if (!response.ok) {
             throw new Error('Fehler beim Abrufen der Daten');
         }
-        const data = await response.json();
-        console.log(data)
-         tasks = Object.values(data);
-         console.log(tasks.length)
         
-        tasks.forEach(Object=>{
-            datsArray.push(Object.dueDate);
+        const data = await response.json();
+        console.log(data);
+
+        tasks = Object.values(data);
+        console.log(tasks.length);
+        
+        tasks.forEach(function(taskObject) {
+            datsArray.push(taskObject.dueDate);
         });
+
         console.log(datsArray);
-        datsArray.sort((a, b) => new Date(a) -new Date(b));
-        console.log(datsArray)
-        deadline = datsArray [0]
-        console.log(deadline)
-        document.getElementById('uncomming-Deadline').innerHTML += `<h3>${deadline}</h3>`
+
+        datsArray.sort(function(a, b) {
+            return new Date(a) - new Date(b);
+        });
+
+        console.log(datsArray);
+
+        deadline = datsArray[0];
+        console.log(deadline);
+
+        document.getElementById('uncomming-Deadline').innerHTML += `<h3>${deadline}</h3>`;
 
     } catch (error) {
         console.error('Error:', error);
         alert('Error fetching user data: ' + error.message);
         return null;
     }
-    console.log(tasks.length)
+    console.log(tasks.length);
 }
 
 getTasksData()
