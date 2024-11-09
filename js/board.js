@@ -198,20 +198,26 @@ function selectContactsSb(selectedValue) {
 }
 
 function renderAddTask() {
-
-
+    let inProgress = document.getElementById("inProgress");
+    let awaitFeedback = document.getElementById("awaitFeedback");
+    let done = document.getElementById("done");
     let toDoBlock = document.getElementById("to-do-block");
+
     let toDoContent = document.getElementById("to-do");
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
+        inProgress.innerHTML = "";
+        awaitFeedback.innerHTML = "";
+        done.innerHTML = "";
+        toDoBlock.innerHTML = "";
 
         let taskCounter = 0;
         for (let key in toDo) {
             const element = toDo[key];
             taskCounter++;
             if (element.taskCategory.category == "toDo") {
-                toDoBlock.innerHTML = "";
+                // toDoBlock.innerHTML = "";
                 let prioIconURL;
                 if (element.priority === 'Urgent') {
                     prioIconURL = '../assets/icons/PriorityUrgentRed.png';
@@ -249,8 +255,8 @@ function renderAddTask() {
                     <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
                 </div>
             `;
-            } else {
-                toDoContent.innerHTML = "No tasks To do";
+            // } else {
+            //     toDoContent.innerHTML = "No tasks To do";
             }
 
             if (element.taskCategory.category == "inProgress") {
@@ -276,7 +282,7 @@ function renderInProgress(taskCounter, element) {
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
-        inProgress.innerHTML = "";
+        // inProgress.innerHTML = "";
 
         let prioIconURL;
         if (element.priority === 'Urgent') {
@@ -323,7 +329,7 @@ function renderAwaitFeedback(taskCounter, element) {
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
-        awaitFeedback.innerHTML = "";
+        // awaitFeedback.innerHTML = "";
 
         let prioIconURL;
         if (element.priority === 'Urgent') {
@@ -370,7 +376,7 @@ function renderDone(taskCounter, element) {
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
-        done.innerHTML = "";
+        // done.innerHTML = "";
 
         let prioIconURL;
         if (element.priority === 'Urgent') {

@@ -73,7 +73,7 @@
 
 .task-container {
     display:flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 90%;
 }
 
@@ -82,8 +82,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     height: 56px;
+    width: 100%;
 }
 
 .board-content {
@@ -356,6 +356,10 @@
     text-shadow: 1px 1px #0038ff;
     transition: 0.3s;
     transform: translateY(2px);
+}
+
+.drag-and-drop-div-height {
+    height:100%;
 }
 
 
