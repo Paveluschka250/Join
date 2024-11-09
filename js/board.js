@@ -217,7 +217,6 @@ function renderAddTask() {
             const element = toDo[key];
             taskCounter++;
             if (element.taskCategory.category == "toDo") {
-                // toDoBlock.innerHTML = "";
                 let prioIconURL;
                 if (element.priority === 'Urgent') {
                     prioIconURL = '../assets/icons/PriorityUrgentRed.png';
@@ -255,26 +254,36 @@ function renderAddTask() {
                     <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
                 </div>
             `;
-            // } else {
-            //     toDoContent.innerHTML = "No tasks To do";
             }
 
             if (element.taskCategory.category == "inProgress") {
                 renderInProgress(taskCounter, element);
             }
-            
+
             if (element.taskCategory.category == "awaitFeedback") {
                 renderAwaitFeedback(taskCounter, element);
             }
-            
+
             if (element.taskCategory.category == "done") {
                 renderDone(taskCounter, element);
             }
             taskStyle(taskCounter);
-            loadingspinner(taskCounter, element.subtasks);
+            // loadingspinner(taskCounter, element.subtasks);
         }
     }
+    checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
+}
 
+function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
+    if (toDoBlock.innerHTML === "") {
+        toDoBlock.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
+    } else if (inProgress.innerHTML === "") {
+        inProgress.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
+    } else if (awaitFeedback.innerHTML === "") {
+        awaitFeedback.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
+    } else if (done.innerHTML === "") {
+        done.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
+    }
 }
 
 function renderInProgress(taskCounter, element) {
@@ -282,7 +291,6 @@ function renderInProgress(taskCounter, element) {
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
-        // inProgress.innerHTML = "";
 
         let prioIconURL;
         if (element.priority === 'Urgent') {
@@ -329,7 +337,6 @@ function renderAwaitFeedback(taskCounter, element) {
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
-        // awaitFeedback.innerHTML = "";
 
         let prioIconURL;
         if (element.priority === 'Urgent') {
@@ -376,7 +383,6 @@ function renderDone(taskCounter, element) {
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
-        // done.innerHTML = "";
 
         let prioIconURL;
         if (element.priority === 'Urgent') {
@@ -415,8 +421,6 @@ function renderDone(taskCounter, element) {
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
         </div>
     `;
-    } else {
-        done.innerHTML = "No tasks To do";
     }
 }
 
@@ -610,31 +614,21 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
-// function moveTo(category) {
-//     let tasksKey = Object.keys(tasks.toDo);
-//     tasks.toDo[tasksKey[currentDraggedElement]].taskCategory = category;
-
-// }
-
 async function moveTo(category) {
     try {
-        // Die ID der zu verschiebenden Aufgabe wird abgerufen
         let taskKey = Object.keys(tasks.toDo)[currentDraggedElement];
         console.log(taskKey);
         tasks.toDo[taskKey].taskCategory = category;
 
-        // API-Request senden, um nur die Kategorie in der Datenbank zu aktualisieren
         await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
-            method: 'PUT', // PATCH für partielle Updates
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ category }) // Nur das Feld, das aktualisiert werden soll
+            body: JSON.stringify({ category })
         });
 
         console.log('Task successfully moved to category:', category);
-
-        // Daten neu laden, um die Änderung anzuzeigen
 
     } catch (error) {
         console.error('Error moving task:', error);
