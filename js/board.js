@@ -102,6 +102,14 @@ function getFormData(event) {
     let subtaskList = document.querySelectorAll('#subtask-content li');
     let subtasks = Array.from(subtaskList).map(li => li.textContent);
 
+    let subtasksChecked = [];
+    for (let i = 0; i < subtasks.length; i++) {
+        const element = subtasks[i];
+        let subtask = { "id": `subtask${i}`, "checked": false };
+        subtasksChecked.push(subtask);
+    }
+    console.log(subtasksChecked);
+
     let priority = '';
     if (document.getElementById('prio1').classList.contains('prio1-color')) {
         priority = 'Urgent';
@@ -118,6 +126,7 @@ function getFormData(event) {
         assignedTo,
         category,
         subtasks,
+        subtasksChecked,
         priority,
         taskCategory
     };
@@ -268,7 +277,7 @@ function renderAddTask() {
                 renderDone(taskCounter, element);
             }
             taskStyle(taskCounter);
-            // loadingspinner(taskCounter, element.subtasks);
+            loadingspinner(taskCounter, element.subtasks);
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
@@ -276,13 +285,16 @@ function renderAddTask() {
 
 function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
     if (toDoBlock.innerHTML === "") {
-        toDoBlock.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
-    } else if (inProgress.innerHTML === "") {
-        inProgress.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
-    } else if (awaitFeedback.innerHTML === "") {
-        awaitFeedback.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
-    } else if (done.innerHTML === "") {
-        done.innerHTML += '<div class="board-content" id="to-do">No tasks To do</div>';
+        toDoBlock.innerHTML = '<div class="board-content" id="to-do">No tasks To do</div>';
+    }
+    if (inProgress.innerHTML === "") {
+        inProgress.innerHTML = '<div class="board-content" id="in-progress-content">No tasks To do</div>';
+    }
+    if (awaitFeedback.innerHTML === "") {
+        awaitFeedback.innerHTML = '<div class="board-content" id="await-feedback-content">No tasks To do</div>';
+    }
+    if (done.innerHTML === "") {
+        done.innerHTML = '<div class="board-content" id="done-content">No tasks To do</div>';
     }
 }
 
@@ -419,8 +431,8 @@ function renderDone(taskCounter, element) {
             <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
             <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
-        </div>
-    `;
+        </div>`
+        ;
     }
 }
 
@@ -436,10 +448,24 @@ function taskStyle(taskCounter) {
 }
 
 function loadingspinner(taskCounter, subtasks) {
+    console.log(subtasks);
+    // subtaskIsChecked();
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
     let allSubtasks = subtasks.length;
     let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
     progressBar.style.width = `${progressPercentage}%`;
+}
+
+// function subtaskIsChecked() {
+
+// }
+
+function saveCheckBoxes(taskCounter) {
+    taskCounter--;
+    let taskId = Object.keys(tasks.toDo);
+    let subTaskAmount = tasks.toDo.taskId;
+    
+    console.log(subTaskAmount);
 }
 
 function getRandomColor() {
@@ -476,9 +502,8 @@ function renderOverlayTask(taskCounter, currentTask) {
         .join('');
 
     let currentSubtask = currentTask[9].split(",");
-    console.log(currentTask[9]);
     let currentSubtasks = currentSubtask
-        .map(subtask => `<div class="current-subtasks-task"><input type="checkbox">${subtask}</div>`)
+        .map(subtask => `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${taskCounter}" type="checkbox">${subtask}</div>`)
         .join('');
 
     overlayContainer.innerHTML = '';
@@ -567,7 +592,6 @@ function extractTaskData(taskCounter) {
         subtasks
     );
     renderOverlayTask(taskCounter, currentTask);
-    console.log(currentTask);
 }
 
 function closeCurrentTask() {

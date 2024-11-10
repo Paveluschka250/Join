@@ -77,6 +77,7 @@ function getTaskData(event) {
     let description = document.getElementById('description').value;
     let dueDate = document.getElementById('due-date').value;
     let category = document.getElementById('category').value;
+    let taskCategory = { category: "toDo" };
     
     let selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
     let assignedTo = [];
@@ -94,10 +95,18 @@ function getTaskData(event) {
     }
 
     let subtasks = [];
-    let subtaskElements = document.querySelectorAll('#subtask-content li p');
+    let subtaskElements = document.querySelectorAll('#subtask-content li');
     subtaskElements.forEach(function (subtaskElement) {
         subtasks.push(subtaskElement.textContent);
     });
+
+    let subtasksChecked = [];
+    for (let i = 0; i < subtaskElements.length; i++) {
+        const element = subtaskElements[i];
+        let subtaskId = { "id": `subtask${i}`, "checked": false };
+        subtasksChecked.push(subtaskId);
+    }
+
 
     let taskData = {
         title: title,
@@ -106,7 +115,9 @@ function getTaskData(event) {
         assignedTo: assignedTo,
         category: category,
         priority: priority,
-        subtasks: subtasks
+        subtasks: subtasks,
+        subtasksChecked: subtasksChecked,
+        taskCategory: taskCategory
     };
 
     fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {

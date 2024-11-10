@@ -35,7 +35,8 @@
                             <p>To Do</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="drag-and-drop-div-height" id="to-do-block" ondrop="moveTo('toDo')"ondragover="allowDrop(event)">
+                        <div class="drag-and-drop-div-height" id="to-do-block" ondrop="moveTo('toDo')"
+                            ondragover="allowDrop(event)">
                             <div class="board-content" id="to-do">No tasks To do</div>
                         </div>
                     </div>
@@ -44,7 +45,8 @@
                             <p>In progress</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="drag-and-drop-div-height" id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)">
+                        <div class="drag-and-drop-div-height" id="inProgress" ondrop="moveTo('inProgress')"
+                            ondragover="allowDrop(event)">
                             <div id="in-progress-content" class="board-content">No tasks To do</div>
                         </div>
                     </div>
@@ -53,17 +55,22 @@
                             <p>Await feedback</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
-                        <div class="drag-and-drop-div-height" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)">
+                        <div class="drag-and-drop-div-height" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
+                            ondragover="allowDrop(event)">
                             <div id="await-feedback-content" class="board-content">No tasks To do</div>
                         </div>
                     </div>
                     <div class="tasks margin-none">
-                        <div class="task-headlines">Done</div>
-                        <div class="drag-and-drop-div-height" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
+                        <div class="task-headlines">
+                            <p>Done</p>
+                        </div>
+                        <div class="drag-and-drop-div-height" id="done" ondrop="moveTo('done')"
+                            ondragover="allowDrop(event)">
                             <div id="done-content" class="board-content">No tasks To do</div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <div onclick="closeCurrentTask()" id="overlay-show-task" class="d-none">
                 <div id="current-task" class="current-task"></div>
