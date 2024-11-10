@@ -3,6 +3,7 @@ const onlineUser = localStorage.getItem('onlineUser');
 let tasks = []
 let datsArray = [];
 let deadline ;
+let tasksInBoard;
 
  // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
  function displayOnlinetUser() {
@@ -28,8 +29,6 @@ let deadline ;
 // Event-Listener, der aufgerufen wird, wenn die Seite geladen wird
 document.addEventListener('DOMContentLoaded',  displayOnlinetUser);
 
-
-
 async function getTasksData() {
     try {
         const response = await fetch(_URL + "/tasks/toDo.json");
@@ -38,10 +37,10 @@ async function getTasksData() {
         }
         
         const data = await response.json();
-        console.log(data);
+      // console.log(data);
 
         tasks = Object.values(data);
-        console.log(tasks.length);
+       //console.log(tasks.length);
         
         tasks.forEach(function(taskObject) {
             datsArray.push(taskObject.dueDate);
@@ -57,15 +56,20 @@ async function getTasksData() {
 
         deadline = datsArray[0];
         console.log(deadline);
+        tasksInBoard = tasks.length;
+       //console.log(tasksInBoard)
 
         document.getElementById('uncomming-Deadline').innerHTML += `<h3>${deadline}</h3>`;
+         
+          document.getElementById('tasksInBoard').innerHTML += `<h1>${tasksInBoard}</h1>`
+      
 
     } catch (error) {
         console.error('Error:', error);
         alert('Error fetching user data: ' + error.message);
         return null;
     }
-    console.log(tasks.length);
+   // console.log(tasks.length);
 }
 
 getTasksData()
