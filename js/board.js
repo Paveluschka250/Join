@@ -277,7 +277,7 @@ function renderAddTask() {
                 renderDone(taskCounter, element);
             }
             taskStyle(taskCounter);
-            loadingspinner(taskCounter, element.subtasks);
+            // loadingspinner(taskCounter, element.subtasks);
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
@@ -447,14 +447,14 @@ function taskStyle(taskCounter) {
     }
 }
 
-function loadingspinner(taskCounter, subtasks) {
-    console.log(subtasks);
-    // subtaskIsChecked();
-    let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
-    let allSubtasks = subtasks.length;
-    let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
-    progressBar.style.width = `${progressPercentage}%`;
-}
+// function loadingspinner(taskCounter, subtasks) {
+//     // console.log(subtasks);
+//     // subtaskIsChecked();
+//     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
+//     let allSubtasks = subtasks.length;
+//     let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
+//     progressBar.style.width = `${progressPercentage}%`;
+// }
 
 // function subtaskIsChecked() {
 
@@ -463,9 +463,74 @@ function loadingspinner(taskCounter, subtasks) {
 function saveCheckBoxes(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
-    let subTaskAmount = tasks.toDo.taskId;
-    
-    console.log(subTaskAmount);
+    let allTasksKey = [];
+    for(let key in taskId) {
+        let element = taskId[key];
+        allTasksKey.push(element)        
+    }
+
+    let currentTask = tasks.toDo[allTasksKey[taskCounter]];
+    let currentSubtaskAmount = currentTask.subtasks.length;
+    let subtasksChecked = [];
+    for (let i = 0; i < currentSubtaskAmount; i++) {
+        let input = document.getElementById(`checkbox${i}`).checked;
+        subtasksChecked.push(input);
+        console.log(subtasksChecked);
+    }
+    loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter); 
+}
+
+async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
+    const baseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/";
+
+    let taskKeys = Object.keys(tasks.toDo);
+    let taskId = taskKeys[taskCounter];
+
+    const url = `${baseUrl}tasks/toDo/${taskId}/subtasksChecked.json`;
+
+    let updatedSubtasks = subtasksChecked.map((isChecked, index) => ({
+        checked: isChecked,
+        id: `subtask${index}`
+    }));
+
+    try {
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedSubtasks)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Fehler beim Aktualisieren: ${response.statusText}`);
+        }
+
+        console.log("Subtask-Checkbox-Status erfolgreich aktualisiert.");
+    } catch (error) {
+        console.error("Fehler beim Aktualisieren der Subtasks:", error);
+    }
+}
+
+function loadCheckFieldStatus(taskCounter) {
+    taskCounter--;
+    let taskId = Object.keys(tasks.toDo);
+    let allTasksKey = [];
+    for(let key in taskId) {
+        let element = taskId[key];
+        allTasksKey.push(element)        
+    }
+
+    let currentTask = tasks.toDo[allTasksKey[taskCounter]];
+    let currentSubtaskAmount = currentTask.subtasks.length;
+    console.log(currentTask.subtasksChecked);
+
+    for (let i = 0; i < currentSubtaskAmount; i++) {
+        let input = document.getElementById(`checkbox${i}`);
+        if(currentTask.subtasksChecked[i].checked == true){
+        input.checked =  currentTask.subtasksChecked[i];
+        }
+    }
 }
 
 function getRandomColor() {
@@ -503,7 +568,7 @@ function renderOverlayTask(taskCounter, currentTask) {
 
     let currentSubtask = currentTask[9].split(",");
     let currentSubtasks = currentSubtask
-        .map(subtask => `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${taskCounter}" type="checkbox">${subtask}</div>`)
+        .map((subtask, i) => `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
         .join('');
 
     overlayContainer.innerHTML = '';
@@ -540,6 +605,7 @@ function renderOverlayTask(taskCounter, currentTask) {
                     </div>
                 </div>
             `;
+    loadCheckFieldStatus(taskCounter, currentTask);
 }
 
 function extractTaskData(taskCounter) {
