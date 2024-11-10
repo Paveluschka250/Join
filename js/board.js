@@ -277,7 +277,7 @@ function renderAddTask() {
                 renderDone(taskCounter, element);
             }
             taskStyle(taskCounter);
-            // loadingspinner(taskCounter, element.subtasks);
+            loadingspinner(taskCounter, element.subtasks);
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
@@ -447,18 +447,19 @@ function taskStyle(taskCounter) {
     }
 }
 
-// function loadingspinner(taskCounter, subtasks) {
-//     // console.log(subtasks);
-//     // subtaskIsChecked();
-//     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
-//     let allSubtasks = subtasks.length;
-//     let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
-//     progressBar.style.width = `${progressPercentage}%`;
-// }
+function loadingspinner(taskCounter, subtasks) {
+    let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
+    let allSubtasks = subtasks.length;
+    let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
+    progressBar.style.width = `${progressPercentage}%`;
+    // console.log(tasks.toDo);
+    
 
-// function subtaskIsChecked() {
+    let checkedSubtasks = 0;
 
-// }
+    // for()
+}
+
 
 function saveCheckBoxes(taskCounter) {
     taskCounter--;
