@@ -84,13 +84,12 @@ function showOverlay(id) {
   function hideOverlay(event) {
     const userCircle = document.getElementById('userCircle');
     const overlay = document.getElementById('overlay');
-  
-    // Prüfen, ob das geklickte Element nicht `userCircle` ist und das Overlay angezeigt wird
+  //hier wird sicher gestellt, ob der cklick Ausserhalb des divs userCircle ist
     if (!userCircle.contains(event.target) && !overlay.classList.contains('d-none')) {
       overlay.classList.add('d-none');
     }
   }
   
-  // Event-Listener auf das gesamte Dokument setzen, um auf Klicks im ganzen Dokument zu hören
+ 
   document.addEventListener('click', hideOverlay);
   
