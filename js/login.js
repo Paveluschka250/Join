@@ -92,7 +92,7 @@ async function loginUser(email, password) {
         // Nachricht nach 3 Sekunden ausblenden
         setTimeout(() => {
             popup.style.display = 'none';
-        }, 3000);
+        }, 5000);
     }
 
     try {
