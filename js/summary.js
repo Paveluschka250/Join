@@ -75,9 +75,21 @@ async function getTasksData() {
 getTasksData()
 
 
-
-
-
-
-
-
+// Funktion, um das Overlay anzuzeigen, wenn auf `userCircle` geklickt wird
+function showOverlay(id) {
+    document.getElementById('overlay').classList.remove('d-none');
+  }
+  
+  // Funktion, um das Overlay auszublenden, wenn außerhalb des `userCircle` geklickt wird
+  function hideOverlay(event) {
+    const userCircle = document.getElementById('userCircle');
+    const overlay = document.getElementById('overlay');
+  //hier wird sicher gestellt, ob der cklick Ausserhalb des divs userCircle ist
+    if (!userCircle.contains(event.target) && !overlay.classList.contains('d-none')) {
+      overlay.classList.add('d-none');
+    }
+  }
+  
+ 
+  document.addEventListener('click', hideOverlay);
+  
