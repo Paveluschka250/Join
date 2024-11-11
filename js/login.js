@@ -40,7 +40,7 @@ function setGuestMode() {
     localStorage.setItem('currentUser', 'G');
     localStorage.setItem('onlineUser', 'Gast');
     window.location.href = 'pages/summary.html?msg=Login erfolgreich';
-    window.location.href = 'pages/board.html?msg=Login erfolgreich';
+
    
 }
 
@@ -49,7 +49,7 @@ document.getElementById('guest').addEventListener('click', setGuestMode);
 
 
 // Funktion zur Authentifizierung des Benutzers
-async function loginUser(email, password) {
+/*async function loginUser(email, password) {
     const users = await getUserData();
     if (users) {
 
@@ -57,6 +57,7 @@ async function loginUser(email, password) {
         const user = userArray.find(user => user.email === email && user.password === password);
 
         if (user) {
+            window.location.href = 'pages/summary.html?msg=Login erfolgreich';
             // Speichern des ersten Buchstabens des Benutzernamens
             const onlineUser = user.username;
             const currentUser = user.username.charAt(0).toUpperCase();
@@ -65,8 +66,9 @@ async function loginUser(email, password) {
             // Speichern des ersten Buchstabens des Benutzernamens im lokalen Speicher (localStorage)
             localStorage.setItem('currentUser', currentUser);
            
-            window.location.href = 'pages/summary.html?msg=Login erfolgreich';
-        } else {
+            
+        } 
+        else {
             console.log("Ungültige E-Mail oder Passwort");
             alert("Ungültige E-Mail oder Passwort");
         }
@@ -78,6 +80,61 @@ async function loginUser(email, password) {
 
 document.getElementById('log').addEventListener('click', loginUser);
 
+*/
+async function loginUser(email, password) {
+    // Funktion zum Anzeigen der Nachricht
+    function showMessage(message, type) {
+        const popup = document.getElementById('message-popup');
+        popup.textContent = message;
+        popup.className = type;
+        popup.style.display = 'block';
 
+        // Nachricht nach 3 Sekunden ausblenden
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 3000);
+    }
+
+    try {
+        const users = await getUserData();
+        if (users) {
+            const userArray = Object.values(users);
+            const user = userArray.find(user => 
+                user.email === email && user.password === password
+            );
+
+            if (user) {
+                // Login erfolgreich
+                const onlineUser = user.username;
+                const currentUser = user.username.charAt(0).toUpperCase();
+                localStorage.setItem('onlineUser', onlineUser);
+                localStorage.setItem('currentUser', currentUser);
+                
+                showMessage('Login erfolgreich', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'pages/summary.html?msg=Login erfolgreich';
+                }, 1000);
+            } else {
+                console.log("Ungültige E-Mail oder Passwort");
+                showMessage('Ungültige E-Mail oder Passwort', 'error');
+            }
+        } else {
+            console.log("Keine Benutzer gefunden");
+            showMessage('Keine Benutzer gefunden', 'error');
+        }
+    } catch (error) {
+        console.error("Fehler beim Login:", error);
+        showMessage('Ein Fehler ist aufgetreten', 'error');
+    }
+}
+
+// Event Listener für den Login-Button
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    loginUser(email, password);
+});
 
 
