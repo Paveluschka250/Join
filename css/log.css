@@ -281,8 +281,8 @@ footer {
 #message-popup {
     display: none;
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 75px;
+    right: 550px;
     padding: 15px 25px;
     border-radius: 5px;
     color: white;
