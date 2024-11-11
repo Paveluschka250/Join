@@ -362,12 +362,28 @@
     height:100%;
 }
 
+.subtask-loadingbar-text{
+    font-size: 10px !important;
+}
+
+.task-subtask-container {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-subtask-amount {
+    display:flex;
+    flex-direction: row;
+}
+
+
 
 /* loading-bar */
 .subtask-progress-container {
-    width: 100%;
+    width: 45%;
     height: 10px;
-    background-color: #e0e0e0; /* Hintergrund des Containers */
+    background-color: #e0e0e0;
     border-radius: 5px;
     margin-top: 5px;
     overflow: hidden;
@@ -376,7 +392,7 @@
 
 .subtask-progress-bar {
     height: 100%;
-    width: 0%; /* Startbreite des Fortschrittsbalkens */
-    background-color: #4589FF; /* Farbe des Ladebalkens */
-    transition: width 0.3s ease; /* Glatte Animation beim Aktualisieren */
+    width: 0%;
+    background-color: #4589FF;
+    transition: width 0.3s ease;
 }

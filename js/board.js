@@ -245,8 +245,15 @@ function renderAddTask() {
                     <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
                     <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
                      
-                    <div class="subtask-progress-container">
-                        <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}"></div>
+                    <div class="task-subtask-container">    
+                        <div class="subtask-progress-container">
+                            <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
+                            </div>
+                        </div>
+                        <div>    
+                            <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="task-user-prioIcon">    
@@ -277,7 +284,7 @@ function renderAddTask() {
                 renderDone(taskCounter, element);
             }
             taskStyle(taskCounter);
-            loadingspinner(taskCounter, element.subtasks);
+            loadingspinner(taskCounter, element);
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
@@ -323,8 +330,15 @@ function renderInProgress(taskCounter, element) {
             <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
             <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
              
-            <div class="subtask-progress-container">
-                <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}"></div>
+            <div class="task-subtask-container">    
+                <div class="subtask-progress-container">
+                    <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
+                    </div>
+                </div>
+                <div>    
+                    <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
+                    </div>
+                </div>
             </div>
 
             <div class="task-user-prioIcon">    
@@ -369,8 +383,15 @@ function renderAwaitFeedback(taskCounter, element) {
             <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
             <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
              
-            <div class="subtask-progress-container">
-                <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}"></div>
+            <div class="task-subtask-container">    
+                <div class="subtask-progress-container">
+                    <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
+                    </div>
+                </div>
+                <div>    
+                    <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
+                    </div>
+                </div>
             </div>
 
             <div class="task-user-prioIcon">    
@@ -415,8 +436,15 @@ function renderDone(taskCounter, element) {
             <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
             <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
              
-            <div class="subtask-progress-container">
-                <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}"></div>
+            <div class="task-subtask-container">    
+                <div class="subtask-progress-container">
+                    <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
+                    </div>
+                </div>
+                <div>    
+                    <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
+                    </div>
+                </div>
             </div>
 
             <div class="task-user-prioIcon">    
@@ -432,7 +460,7 @@ function renderDone(taskCounter, element) {
             <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
         </div>`
-        ;
+            ;
     }
 }
 
@@ -447,17 +475,22 @@ function taskStyle(taskCounter) {
     }
 }
 
-function loadingspinner(taskCounter, subtasks) {
+function loadingspinner(taskCounter, element) {
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
-    let allSubtasks = subtasks.length;
-    let progressPercentage = 100 / allSubtasks * 1;  //hier muss noch eine rechnung rein
-    progressBar.style.width = `${progressPercentage}%`;
-    // console.log(tasks.toDo);
-    
-
+    let loadingbarText = document.getElementById(`subtasks-checked${taskCounter}`);
     let checkedSubtasks = 0;
-
-    // for()
+    let allSubtasks = element.subtasks.length;
+    for (let i = 0; i < allSubtasks; i++) {
+        if (element.subtasksChecked[i].checked === true) {
+            checkedSubtasks++;
+        }
+    };
+    let progressPercentage = 100 / allSubtasks * checkedSubtasks;
+    progressBar.style.width = `${progressPercentage}%`;
+    loadingbarText.innerHTML = `
+        <p class="subtask-loadingbar-text">${checkedSubtasks}/${allSubtasks}</p>
+        <p class="subtask-loadingbar-text">Subtasks</p>
+    `
 }
 
 
@@ -465,9 +498,9 @@ function saveCheckBoxes(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
     let allTasksKey = [];
-    for(let key in taskId) {
+    for (let key in taskId) {
         let element = taskId[key];
-        allTasksKey.push(element)        
+        allTasksKey.push(element)
     }
 
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
@@ -478,7 +511,7 @@ function saveCheckBoxes(taskCounter) {
         subtasksChecked.push(input);
         console.log(subtasksChecked);
     }
-    loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter); 
+    loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter);
 }
 
 async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
@@ -517,9 +550,9 @@ function loadCheckFieldStatus(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
     let allTasksKey = [];
-    for(let key in taskId) {
+    for (let key in taskId) {
         let element = taskId[key];
-        allTasksKey.push(element)        
+        allTasksKey.push(element)
     }
 
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
@@ -528,8 +561,8 @@ function loadCheckFieldStatus(taskCounter) {
 
     for (let i = 0; i < currentSubtaskAmount; i++) {
         let input = document.getElementById(`checkbox${i}`);
-        if(currentTask.subtasksChecked[i].checked == true){
-        input.checked =  currentTask.subtasksChecked[i];
+        if (currentTask.subtasksChecked[i].checked == true) {
+            input.checked = currentTask.subtasksChecked[i];
         }
     }
 }
