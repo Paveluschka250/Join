@@ -49,38 +49,7 @@ document.getElementById('guest').addEventListener('click', setGuestMode);
 
 
 // Funktion zur Authentifizierung des Benutzers
-/*async function loginUser(email, password) {
-    const users = await getUserData();
-    if (users) {
 
-        const userArray = Object.values(users); // Daten aus Firebase in ein Array umwandeln
-        const user = userArray.find(user => user.email === email && user.password === password);
-
-        if (user) {
-            window.location.href = 'pages/summary.html?msg=Login erfolgreich';
-            // Speichern des ersten Buchstabens des Benutzernamens
-            const onlineUser = user.username;
-            const currentUser = user.username.charAt(0).toUpperCase();
-            //Speichern des Namens
-            localStorage.setItem('onlineUser', onlineUser);
-            // Speichern des ersten Buchstabens des Benutzernamens im lokalen Speicher (localStorage)
-            localStorage.setItem('currentUser', currentUser);
-           
-            
-        } 
-        else {
-            console.log("Ungültige E-Mail oder Passwort");
-            alert("Ungültige E-Mail oder Passwort");
-        }
-    } else {
-        console.log("Keine Benutzer gefunden");
-        alert("Keine Benutzer gefunden");
-    }
-}
-
-document.getElementById('log').addEventListener('click', loginUser);
-
-*/
 async function loginUser(email, password) {
     // Funktion zum Anzeigen der Nachricht
     function showMessage(message, type) {
@@ -138,3 +107,28 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
 });
 
 
+function logout() {
+    // Session-Cookie löschen
+    document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    
+    // SessionStorage leeren
+    sessionStorage.clear();
+    
+    // LocalStorage leeren (optional)
+    localStorage.clear();
+    
+    // API-Aufruf zum Server-seitigen Session Destroy
+    fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include'  // wichtig für Session-Cookies
+    })
+    .then(response => {
+        if (response.ok) {
+            // Weiterleitung zur Login-Seite
+            window.location.href = '/login';
+        }
+    })
+    .catch(error => {
+        console.error('Logout error:', error);
+    });
+}
