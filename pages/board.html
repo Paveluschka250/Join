@@ -23,11 +23,12 @@
             <div id="main" class="board-main">
                 <div class="search-container-board">
                     <span class="input-container-board">
-                        <input class="input-board" type="search" required placeholder="Find Task">
+                        <input onkeyup="filterTasks()" id="search-input" class="input-board" type="search" required placeholder="Find Task">
                         <img src="..\assets\icons\search.svg" alt="">
                     </span>
                     <button onclick="toggleHamburgerMenu()" class="button-board">Add task +</button>
                 </div>
+                <div id="suggestions"></div>
 
                 <div class="task-container">
                     <div class="tasks">

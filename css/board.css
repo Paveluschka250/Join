@@ -377,8 +377,6 @@
     flex-direction: row;
 }
 
-
-
 /* loading-bar */
 .subtask-progress-container {
     width: 45%;
@@ -395,4 +393,39 @@
     width: 0%;
     background-color: #4589FF;
     transition: width 0.3s ease;
+}
+
+/* searchfield */
+.search-container-board {
+    position: relative;
+    display: flex;
+
+}
+.input-container-board {
+    display: flex;
+    align-items: center;
+}
+#suggestions {
+    position: absolute;
+    top: 165px;
+    width: 400px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    z-index: 10000;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 8px;
+    display: none;
+}
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.suggestion-item:hover {
+    background-color: #4589FF;
+    color: white;
+}
+.highlighted-task {
+    background-color: #ffffcc;
 }

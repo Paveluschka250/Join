@@ -1,6 +1,7 @@
 let tasks = [];
 let contactsForSidebar = [];
 let currentDraggedElement;
+let keys = [];
 
 async function getTasks() {
     let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
@@ -472,27 +473,33 @@ function taskStyle(taskCounter) {
     } else if (currentCategory.textContent === 'User Story') {
         currentCategory.style.backgroundColor = '#ff7a00';
         currentCategory.style.color = 'white';
+    } else {
+        currentCategory.style.backgroundColor = 'red';
     }
 }
 
 function loadingspinner(taskCounter, element) {
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
     let loadingbarText = document.getElementById(`subtasks-checked${taskCounter}`);
-    let checkedSubtasks = 0;
-    let allSubtasks = element.subtasks.length;
-    for (let i = 0; i < allSubtasks; i++) {
-        if (element.subtasksChecked[i].checked === true) {
-            checkedSubtasks++;
-        }
-    };
-    let progressPercentage = 100 / allSubtasks * checkedSubtasks;
-    progressBar.style.width = `${progressPercentage}%`;
-    loadingbarText.innerHTML = `
+    if (element.subtasks) {
+        let checkedSubtasks = 0;
+        let allSubtasks = element.subtasks.length;
+        for (let i = 0; i < allSubtasks; i++) {
+            if (element.subtasksChecked[i].checked === true) {
+                checkedSubtasks++;
+            }
+        };
+        let progressPercentage = 100 / allSubtasks * checkedSubtasks;
+        progressBar.style.width = `${progressPercentage}%`;
+        loadingbarText.innerHTML = `
         <p class="subtask-loadingbar-text">${checkedSubtasks}/${allSubtasks}</p>
         <p class="subtask-loadingbar-text">Subtasks</p>
     `
+    }
+    else {
+        loadingbarText.innerHTML = '<p class="subtask-loadingbar-text">No Subtasks!</p>'
+    }
 }
-
 
 function saveCheckBoxes(taskCounter) {
     taskCounter--;
@@ -556,13 +563,15 @@ function loadCheckFieldStatus(taskCounter) {
     }
 
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
-    let currentSubtaskAmount = currentTask.subtasks.length;
-    console.log(currentTask.subtasksChecked);
+    if (currentTask <= 0) {
+        let currentSubtaskAmount = currentTask.subtasks.length;
+        console.log(currentTask.subtasksChecked);
 
-    for (let i = 0; i < currentSubtaskAmount; i++) {
-        let input = document.getElementById(`checkbox${i}`);
-        if (currentTask.subtasksChecked[i].checked == true) {
-            input.checked = currentTask.subtasksChecked[i];
+        for (let i = 0; i < currentSubtaskAmount; i++) {
+            let input = document.getElementById(`checkbox${i}`);
+            if (currentTask.subtasksChecked[i].checked == true) {
+                input.checked = currentTask.subtasksChecked[i];
+            }
         }
     }
 }
@@ -594,16 +603,22 @@ function showOverlayTask(taskCounter) {
 }
 
 function renderOverlayTask(taskCounter, currentTask) {
+    console.log(taskCounter, currentTask);
     let overlayContainer = document.getElementById('current-task');
 
     let contactsHTML = currentTask[4]
         .map(initials => `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
         .join('');
 
-    let currentSubtask = currentTask[9].split(",");
-    let currentSubtasks = currentSubtask
-        .map((subtask, i) => `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
-        .join('');
+    let currentSubtasks;
+    if (currentTask.subtasks) {
+        let currentSubtask = currentTask[9].split(",");
+        currentSubtasks = currentSubtask
+            .map((subtask, i) => `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
+            .join('');
+    } else {
+        currentSubtasks = 'No subtasks!';
+    }
 
     overlayContainer.innerHTML = '';
     overlayContainer.innerHTML = `
@@ -689,7 +704,8 @@ function extractTaskData(taskCounter) {
         dueDate,
         fullName,
         priority,
-        subtasks
+        subtasks,
+        taskCounter
     );
     renderOverlayTask(taskCounter, currentTask);
 }
@@ -706,7 +722,6 @@ async function deleteTask(taskId) {
 
     if (tasks.toDo && tasks.toDo[currentTask[taskId]]) {
         delete tasks.toDo[currentTask[taskId]];
-        console.log(`Task mit ID ${taskId} wurde lokal gelöscht.`);
     } else {
         console.log(`Task mit ID ${taskId} nicht gefunden.`);
         return;
@@ -718,7 +733,6 @@ async function deleteTask(taskId) {
         });
 
         if (response.ok) {
-            console.log(`Task mit ID ${taskId} erfolgreich aus der Datenbank gelöscht.`);
             renderAddTask();
         } else {
             console.error('Fehler beim Löschen des Tasks aus der Datenbank:', response.statusText);
@@ -741,7 +755,6 @@ function allowDrop(ev) {
 async function moveTo(category) {
     try {
         let taskKey = Object.keys(tasks.toDo)[currentDraggedElement];
-        console.log(taskKey);
         tasks.toDo[taskKey].taskCategory = category;
 
         await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
@@ -757,6 +770,63 @@ async function moveTo(category) {
     } catch (error) {
         console.error('Error moving task:', error);
     }
-    getTasks();
-    renderAddTask();
+    getTasks()
 }
+
+function filterTasks() {
+    const searchValue = document.getElementById('search-input').value.toLowerCase();
+    const suggestionsContainer = document.getElementById('suggestions');
+    suggestionsContainer.innerHTML = '';
+
+    if (searchValue) {
+        let hasMatches = false;
+        for (const taskKeys in tasks) {
+            for (const taskId in tasks[taskKeys]) {
+                const task = tasks[taskKeys][taskId];
+                const titleMatch = task.title.toLowerCase().includes(searchValue);
+                const descriptionMatch = task.description && task.description.toLowerCase().includes(searchValue);
+
+                if (titleMatch || descriptionMatch) {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'suggestion-item';
+                    suggestionItem.innerHTML = `<strong>${task.title}</strong><br><small>${task.description}</small>`;
+                    suggestionItem.onclick = () => getTaskId(task, suggestionsContainer);  // Call showOverlayAddTask with taskId
+                    suggestionsContainer.appendChild(suggestionItem);
+                    hasMatches = true;
+                }
+            }
+        }
+
+        if (!hasMatches) {
+            const noResults = document.createElement('div');
+            noResults.className = 'suggestion-item';
+            noResults.innerText = 'Keine Ergebnisse gefunden';
+            suggestionsContainer.appendChild(noResults);
+        }
+
+        suggestionsContainer.style.display = 'block';
+    } else {
+        suggestionsContainer.style.display = 'none';
+    }
+}
+
+function getTaskId(id, suggestionsContainer) {
+    getKeysFromTasks();
+    for (let i = 0; i < keys.length; i++) {
+        let task = tasks.toDo[keys[i]];
+        if (task.title === id.title) {
+            i++;
+            suggestionsContainer.style.display = 'none';
+            document.getElementById('search-input').value = '';
+            showOverlayTask(i)
+        } else {
+            continue
+        }
+    }
+}
+
+function getKeysFromTasks() {
+    let taskKeys = Object.keys(tasks.toDo);
+    keys = taskKeys;
+}
+
