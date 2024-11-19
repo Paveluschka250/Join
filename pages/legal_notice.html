@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="../css/legal-notice.css">
   <link rel="stylesheet" href="../css/standart.css">
   <link rel="stylesheet" href="../css/main.css">
@@ -20,8 +23,9 @@
         <section class="container">
           <div class="legal-notice-title">
             <h1 class="blue-text">Legal Notice</h1>
-            <a 
-            onclick="window.history.back();"> <img src="../assets/icons/arrow-left.svg" /></a>
+            <a href="#" onclick="safeGoBack(); return false;">
+              <img src="../assets/icons/arrow-left.svg" alt="Back" />
+            </a>
           </div>
           <h3 class="blue-text">Imprint</h3>
           <ul>
@@ -102,4 +106,5 @@
   
 </body>
 <script src="../js/load_layout.js"></script>
+<script src="../js/logout.js"></script>
 </html>

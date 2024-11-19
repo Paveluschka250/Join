@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="stylesheet" href="../css/standart.css" />
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/sidebar.css" />
@@ -19,11 +22,9 @@
           <section class="container">
             <div class="help-title">
               <h1 class="blue-text">Help</h1>
-              <a
-              onclick="window.history.back();"
-              >
-                <img src="../assets/icons/arrow-left.svg"
-              /></a>
+              <a href="#" onclick="safeGoBack(); return false;">
+                <img src="../assets/icons/arrow-left.svg" alt="Back" />
+              </a>
             </div>
             <p>
               Welcome to the help page for <span class="blue-text">Join</span>,
@@ -129,4 +130,5 @@
     </article>
   </body>
   <script src="../js/load_layout.js"></script>
+  <script src="../js/logout.js"></script>
 </html>
