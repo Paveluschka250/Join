@@ -563,7 +563,7 @@ function loadCheckFieldStatus(taskCounter) {
     }
 
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
-    if (currentTask <= 0) {
+    if (currentTask.subtasks && currentTask.subtasksChecked) {
         let currentSubtaskAmount = currentTask.subtasks.length;
         console.log(currentTask.subtasksChecked);
 
@@ -611,10 +611,12 @@ function renderOverlayTask(taskCounter, currentTask) {
         .join('');
 
     let currentSubtasks;
-    if (currentTask.subtasks) {
+    if (currentTask[9] != "undefined" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");
+        console.log(currentTask[9]);
         currentSubtasks = currentSubtask
-            .map((subtask, i) => `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
+            .map((subtask, i) => 
+                `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
             .join('');
     } else {
         currentSubtasks = 'No subtasks!';
@@ -650,7 +652,7 @@ function renderOverlayTask(taskCounter, currentTask) {
                     </div>
 
                     <div class="delete-and-edit-task">
-                        <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | <div class="" onclick=""><img src="../assets/icons/edit.svg"><p>edit</p></div>
+                        <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | <div class="" onclick="editTask('${currentTask}',${taskCounter})"><img src="../assets/icons/edit.svg"><p>edit</p></div>
                     </div>
                 </div>
             `;
@@ -830,3 +832,129 @@ function getKeysFromTasks() {
     keys = taskKeys;
 }
 
+function editTask(currentTask, taskCounter) {
+    console.log(currentTask, taskCounter)
+    renderEditTask();
+}
+
+function renderEditTask(currentTask, taskCounter) {
+    let taskOverlay = document.getElementById("current-to-do");
+    taskOverlay.innerHTML = '';
+    taskOverlay.innerHTML = `
+        <div class="editTaskContainer">
+                        <div class="form-group-addTask-edit titleEdit">
+                            <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title-edit"
+                                name="title" placeholder="Enter a title" required>
+                        </div>
+
+                        <div class="form-group-addTask-edit description-edit m-b-8px">
+                            <label for="description"><b>Description</b></label>
+                            <textarea class="input-addTask cursor-pointer" id="description-edit" name="description" rows="4"
+                                placeholder="Enter a Description" required></textarea>
+                        </div>
+
+                        <div class="form-group-addTask-edit due-date-edit m-b-8px">
+                            <label for="due-date"><b>Due date</b></label>
+                            <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date-edit"
+                                name="due-date">
+                        </div>
+
+                        <div class="form-group-addTask-edit priority-addTask m-b-8px">
+                            <div class="m-b-8px">
+                                <label><b>Priority</b></label>
+                            </div>
+                            <div class="buttons-row m-b-8px edit-buttons">
+                                <button id="prio1-edit" onclick="getPriorityEdit('prio1-edit')" type="button"
+                                    class="prio-buttons-edit priority-btn-addTask urgent-addTask center-button">Urgent <img
+                                        id="high-prio-icon-edit" src="../assets/icons/prio3.svg"
+                                        alt="priorität hoch"></button>
+                                <button id="prio2-edit" onclick="getPriorityEdit('prio2-edit')" type="button"
+                                    class="prio-buttons-edit priority-btn-addTask medium-addTask center-button">Medium <img
+                                        src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon-edit"
+                                        class="medium-prio-icon"></button>
+                                <button id="prio3-edit" onclick="getPriorityEdit('prio3-edit')" type="button"
+                                    class="prio-buttons-edit priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon-edit"
+                                        src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+                            </div>
+                        </div>
+
+                        <div class="form-group-addTask-edit assigned-to-edit m-b-8px">
+                            <label for="assigned-to-sb-edit"><b>Assigned to</b> (optional)</label>
+                            <select onclick="getUsersToAssignedTo()"
+                                class="underline-select input-addTask cursor-pointer" id="assigned-to-sb-edit"
+                                name="assigned-to-sb-edit">
+                                <option value="">Select contacts to assign</option>
+                            </select>
+                            <div class="selected-contacts-sb" id="selected-contacts-sb-edit"></div>
+                        </div>
+
+                        <div class="form-group-addTask-edit m-b-16px category-edit">
+                            <label for="category"><b>Category</b></label>
+                            <select class="underline-select input-addTask cursor-pointer" id="category-edit" name="category">
+                                <option value="">Select task category</option>
+                                <option value="Technical Task">Technical Task</option>
+                                <option value="User Story">User Story</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group-addTask-edit subtask-edit new-task-btn m-b-8px">
+                            <label for="subtasks"><b>Subtasks</b> (optional)</label>
+                            <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text"
+                                id="subtasks-edit" name="subtasks-edit" placeholder="Add new subtask">
+                            <button type="button" id="add-subtask-btn-sb-edit" class="create-new-task"
+                                onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
+                            <div id="subtask-buttons-sb-edit" class="task-btn-div d-none">
+                                <button type="button" onclick="closeNewSubtasksBtn()"><img
+                                        src="../assets/icons/clearIcon.svg" alt="close"></button>|
+                                <button type="button" onclick="addSubTask()"><img
+                                        src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
+                            </div>
+                        </div>
+                        <div><button>Save</button></div>
+                    </div>
+    `
+    
+}
+
+function getPriorityEdit(id) {
+    let buttonRed = document.getElementById('prio1-edit');
+    let buttonOrange = document.getElementById('prio2-edit');
+    let buttonGreen = document.getElementById('prio3-edit');
+
+    if (id == 'prio1-edit') {
+        containsClassEdit('prio1-color', buttonRed, buttonOrange, buttonGreen);
+    } else if (id == 'prio2-edit') {
+        containsClassEdit('prio2-color', buttonRed, buttonOrange, buttonGreen);
+    } else if (id == 'prio3-edit') {
+        containsClassEdit('prio3-color', buttonRed, buttonOrange, buttonGreen);
+    }
+}
+
+function containsClassEdit(prioColor, red, orange, green) {
+    let btnIcon1 = document.getElementById('high-prio-icon-edit');
+    let btnIcon2 = document.getElementById('medium-prio-icon-edit');
+    let btnIcon3 = document.getElementById('low-prio-icon-edit');
+
+    if (prioColor === 'prio1-color') {
+        red.classList.add('prio1-color');
+        btnIcon1.classList.add('priotity-btn-filter1');
+        orange.classList.remove('prio2-color');
+        btnIcon2.classList.remove('priotity-btn-filter2');
+        green.classList.remove('prio3-color');
+        btnIcon3.classList.remove('priotity-btn-filter3');
+    } else if (prioColor === 'prio2-color') {
+        red.classList.remove('prio1-color');
+        btnIcon1.classList.remove('priotity-btn-filter1');
+        orange.classList.add('prio2-color');
+        btnIcon2.classList.add('priotity-btn-filter2');
+        green.classList.remove('prio3-color');
+        btnIcon3.classList.remove('priotity-btn-filter3');
+    } else if (prioColor === 'prio3-color') {
+        red.classList.remove('prio1-color');
+        btnIcon1.classList.remove('priotity-btn-filter1');
+        orange.classList.remove('prio2-color');
+        btnIcon2.classList.remove('priotity-btn-filter2');
+        green.classList.add('prio3-color');
+        btnIcon3.classList.add('priotity-btn-filter3');
+    }
+}
