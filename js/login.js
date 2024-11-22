@@ -1,3 +1,5 @@
+
+
 let msgBox = document.getElementById('msgBox');
 let urlParms = new URLSearchParams(window.location.search);
 const msg = urlParms.get('msg');
@@ -74,17 +76,13 @@ async function loginUser(email, password) {
                 // Login erfolgreich
                 const onlineUser = user.username;
                 const currentUser = user.username.charAt(0).toUpperCase();
-                
-                // Setze Login-Zeitstempel
-                localStorage.setItem('loginTimestamp', Date.now());
                 localStorage.setItem('onlineUser', onlineUser);
                 localStorage.setItem('currentUser', currentUser);
                 
                 showMessage('Login erfolgreich', 'success');
                 
-                // Verwende replace statt href
                 setTimeout(() => {
-                    window.location.replace('pages/summary.html?msg=Login erfolgreich');
+                    window.location.href = 'pages/summary.html?msg=Login erfolgreich';
                 }, 1000);
             } else {
                 console.log("Ungültige E-Mail oder Passwort");
@@ -134,30 +132,3 @@ function logout() {
         console.error('Logout error:', error);
     });
 }
-
-// Am Anfang der Datei
-function checkLoginStatus() {
-    const userEmail = localStorage.getItem('userEmail');
-    const userToken = localStorage.getItem('userToken');
-    
-    // Wenn wir auf einer geschützten Seite sind und keine gültigen Credentials haben
-    if (window.location.pathname.includes('summary.html') || 
-        window.location.pathname.includes('contacts.html') ||
-        window.location.pathname.includes('board.html')) {
-        
-        if (!userEmail || !userToken) {
-            window.location.replace('../index.html');
-        }
-    }
-}
-
-// Diese Funktion bei jedem Seitenload aufrufen
-document.addEventListener('DOMContentLoaded', checkLoginStatus);
-
-// Am Anfang der Datei hinzufügen
-document.addEventListener('DOMContentLoaded', function() {
-    // Wenn bereits eingeloggt, leite zu summary weiter
-    if (localStorage.getItem('onlineUser')) {
-        window.location.replace('pages/summary.html');
-    }
-});
