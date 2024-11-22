@@ -1,4 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, height=device-height"
+    />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Summary</title>
+    <link rel="stylesheet" href="../css/standart.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/summary.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <article class="main-container">
+      <aside class="sidebar" id="sidebar"></aside>
+      <main id="main">
+        <article id="summary-content">
+          <div class="greeting">
+            <div id="myGreet">
+              <span>Good morning, </span>
+            </div>
+            <div id="secPart"></div>
+          </div>
+          <div class="sec-container">
+            <div class="sec-Part">
+              <div class="urgent-tasks">
+                <div class="inner-urgentTasks">
+                  <div class="urgent-img">
+                    <img src="../assets/icons/icons png.png" />
+                  </div>
+                  <div id="tasks-length"><h1>7</h1></div>
+                  <div class="vertical-Line"></div>
+                </div>
+                <div class="urgent-text" id="">
+                  <a href="board.html"><h6>Tasks Urgent</h6></a>
+                </div>
+              </div>
+              <div class="date">
+                <div class="deadline" id="uncomming-Deadline"></div>
+                <div class="deadline-text"><h6>Upcoming Deadline</h6></div>
+              </div>
+            </div>
+            <div class="board">
+              <div class="inner-board">
+                <div class="img-task">
+                  <img src="../assets/icons/Board (1).png" />
+                </div>
+                <div id="tasksInBoard"><h1></h1></div>
+              </div>
+
+              <div class="task-text" id="">
+                <a href="board.html"><h6>Tasks in Board</h6></a>
+              </div>
+            </div>
+          </div>
+          <div class="third-container">
+            <div class="tasks-To-Do">
+              <div class="inner-tasks-To-Do">
+                <div><img src="../assets/icons/Urgent.png" /></div>
+                <div id="to-do"><h1></h1></div>
+              </div>
+
+              <div class="tasks-To-Do-Text"><span>Tasks To-do</span></div>
+            </div>
+            <div class="tasks-In-Progress">
+              <div class="inner-tasks-In-Progress">
+                <div><img src="../assets/icons/prop.png" /></div>
+                <div id="progress-task"><h1></h1></div>
+              </div>
+              <div class="tasks-In-Progress-Text">
+                <span>Task in Progress</span>
+              </div>
+            </div>
+            <div class="tasks-Awaiting-Feedback">
+              <div class="inner-Tasks-Awaiting-Feedback">
+                <div><img src="../assets/icons/Awaiting feedback.png" /></div>
+                <div id="awaiting-task"><h1></h1></div>
+              </div>
+              <div class="Tasks-Awaiting-Feedback-Text">
+                <span>Awaiting Feedback</span>
+              </div>
+            </div>
+            <div class="tasks-Done">
+              <div class="inner-Tasks-Done">
+                <div><img src="../assets/icons/prop2.png" /></div>
+                <div id="tasks-Done"><h1></h1></div>
+              </div>
+              <div class="Tasks-Done-Text"><span>Tasks Done</span></div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </article>
+  </body>
+  <script src="../js/load_layout.js"></script>
+  <script src="../js/logout.js"></script>
+  <script src="../js/summary.js"></script>
+</html>
+
+<!-- <!doctype html>
 <html lang="11">
 <head>
     <meta charset="UTF-8">
@@ -38,8 +147,6 @@
         <div id="userCircle"onclick="showOverlay('overlay')">
           
         </div>
-
-    <!-- Overlay -->
     
         <div id="overlay" class= "overlay-content d-none" >
           <a class="help" href="../pages/help.html">Help</a>
@@ -158,4 +265,4 @@
 </body>
 </html>
 
-
+ -->
