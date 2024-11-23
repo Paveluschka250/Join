@@ -185,6 +185,7 @@ function selectContactsSb(selectedValue) {
     let assignedToSb = document.getElementById('assigned-to-sb');
 
     if (selectedValue) {
+        
         let splitName = selectedValue.split(" ");
         let initials;
 
@@ -202,6 +203,7 @@ function selectContactsSb(selectedValue) {
     }
 
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
+    
     if (optionToDisable) {
         optionToDisable.disabled = true;
     }
@@ -234,6 +236,8 @@ function renderAddTask() {
                     prioIconURL = '../assets/icons/PriorityMediumOrange.png';
                 } else if (element.priority === 'Low') {
                     prioIconURL = '../assets/icons/PriorityLowGreen.png';
+                } else {
+                    prioIconURL = '../assets/icons/minus.png';
                 }
 
                 let contactsHTML = element.assignedTo
@@ -319,6 +323,8 @@ function renderInProgress(taskCounter, element) {
             prioIconURL = '../assets/icons/PriorityMediumOrange.png';
         } else if (element.priority === 'Low') {
             prioIconURL = '../assets/icons/PriorityLowGreen.png';
+        } else {
+            prioIconURL = '../assets/icons/minus.png';
         }
 
         let contactsHTML = element.assignedTo
@@ -372,6 +378,8 @@ function renderAwaitFeedback(taskCounter, element) {
             prioIconURL = '../assets/icons/PriorityMediumOrange.png';
         } else if (element.priority === 'Low') {
             prioIconURL = '../assets/icons/PriorityLowGreen.png';
+        } else {
+            prioIconURL = '../assets/icons/minus.png';
         }
 
         let contactsHTML = element.assignedTo
@@ -425,6 +433,8 @@ function renderDone(taskCounter, element) {
             prioIconURL = '../assets/icons/PriorityMediumOrange.png';
         } else if (element.priority === 'Low') {
             prioIconURL = '../assets/icons/PriorityLowGreen.png';
+        } else {
+            prioIconURL = '../assets/icons/minus.png';
         }
 
         let contactsHTML = element.assignedTo
@@ -652,10 +662,14 @@ function renderOverlayTask(taskCounter, currentTask) {
                     </div>
 
                     <div class="delete-and-edit-task">
-                        <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | <div class="" onclick="editTask('${currentTask}',${taskCounter})"><img src="../assets/icons/edit.svg"><p>edit</p></div>
+                        <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | 
+                        <div id="editTaskBtn"><img src="../assets/icons/edit.svg"><p>edit</p></div>
                     </div>
                 </div>
             `;
+    document.getElementById('editTaskBtn').addEventListener('click', function(){
+        editTask(currentTask, taskCounter);
+    });
     loadCheckFieldStatus(taskCounter, currentTask);
 }
 
@@ -833,8 +847,7 @@ function getKeysFromTasks() {
 }
 
 function editTask(currentTask, taskCounter) {
-    console.log(currentTask, taskCounter)
-    renderEditTask();
+    renderEditTask(currentTask, taskCounter);
 }
 
 function renderEditTask(currentTask, taskCounter) {
@@ -870,7 +883,7 @@ function renderEditTask(currentTask, taskCounter) {
                                         alt="priorität hoch"></button>
                                 <button id="prio2-edit" onclick="getPriorityEdit('prio2-edit')" type="button"
                                     class="prio-buttons-edit priority-btn-addTask medium-addTask center-button">Medium <img
-                                        src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon-edit"
+                                        src="../assets/icons/priorityMediumOrange.png" alt="priorität mittel" id="medium-prio-icon-edit"
                                         class="medium-prio-icon"></button>
                                 <button id="prio3-edit" onclick="getPriorityEdit('prio3-edit')" type="button"
                                     class="prio-buttons-edit priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon-edit"
@@ -880,7 +893,7 @@ function renderEditTask(currentTask, taskCounter) {
 
                         <div class="form-group-addTask-edit assigned-to-edit m-b-8px">
                             <label for="assigned-to-sb-edit"><b>Assigned to</b> (optional)</label>
-                            <select onclick="getUsersToAssignedTo()"
+                            <select onclick="loadContactsEdit()"
                                 class="underline-select input-addTask cursor-pointer" id="assigned-to-sb-edit"
                                 name="assigned-to-sb-edit">
                                 <option value="">Select contacts to assign</option>
@@ -913,7 +926,7 @@ function renderEditTask(currentTask, taskCounter) {
                         <div><button>Save</button></div>
                     </div>
     `
-    
+    editCurrentTask(currentTask, taskCounter);
 }
 
 function getPriorityEdit(id) {
@@ -925,6 +938,7 @@ function getPriorityEdit(id) {
         containsClassEdit('prio1-color', buttonRed, buttonOrange, buttonGreen);
     } else if (id == 'prio2-edit') {
         containsClassEdit('prio2-color', buttonRed, buttonOrange, buttonGreen);
+        document.getElementById('medium-prio-icon-edit').src = '../assets/icons/prio2.svg';
     } else if (id == 'prio3-edit') {
         containsClassEdit('prio3-color', buttonRed, buttonOrange, buttonGreen);
     }
@@ -956,5 +970,114 @@ function containsClassEdit(prioColor, red, orange, green) {
         btnIcon2.classList.remove('priotity-btn-filter2');
         green.classList.add('prio3-color');
         btnIcon3.classList.add('priotity-btn-filter3');
+    }
+}
+
+function editCurrentTask(currentTask, taskCounter) {
+    taskCounter--;
+    console.log(currentTask);
+    document.getElementById('title-edit').value = `${currentTask[2]}`;
+    document.getElementById('description-edit').value = `${currentTask[3]}`;
+    document.getElementById('due-date-edit').value = `${currentTask[6]}`;
+    editPriorityBtn(currentTask);
+    
+    loadContactsEdit();
+    let assignedContacts = document.getElementById('selected-contacts-sb-edit');
+    let contacts = currentTask[4];
+    if (contacts !== undefined) {
+        for (let i = 0; i < contacts.length; i++) {
+            const element = contacts[i];
+            assignedContacts.innerHTML += `
+                <div class="current-task-initials" style="background-color: ${getRandomColor()}">${element}</div>
+            `;
+        }
+    } else {
+        assignedContacts.innerHTML = '';
+    }
+
+
+    document.getElementById('category-edit').value = `${currentTask[1]}`;
+    // document.getElementById('');
+    // document.getElementById('');
+}
+
+function editPriorityBtn(currentTask) {
+    let btnIcon1 = document.getElementById('high-prio-icon-edit');
+    let btnIcon2 = document.getElementById('medium-prio-icon-edit');
+    let btnIcon3 = document.getElementById('low-prio-icon-edit');
+    let red = document.getElementById('prio1-edit');
+    let orange = document.getElementById('prio2-edit');
+    let green = document.getElementById('prio3-edit');
+    if (currentTask[8] === 'Urgent') {
+        red.classList.add('prio1-color');
+        btnIcon1.classList.add('priotity-btn-filter1');
+        orange.classList.remove('prio2-color');
+        btnIcon2.src = '../assets/icons/PriorityMediumOrange.png';
+        green.classList.remove('prio3-color');
+        btnIcon3.classList.remove('priotity-btn-filter3');
+    } else if (currentTask[8] === 'Medium') {
+        red.classList.remove('prio1-color');
+        btnIcon1.classList.remove('priotity-btn-filter1');
+        orange.classList.add('prio2-color');
+        btnIcon2.src = '../assets/icons/prio2.svg';
+        green.classList.remove('prio3-color');
+        btnIcon3.classList.remove('priotity-btn-filter3');
+    } else if (currentTask[8] === 'Low') {
+        red.classList.remove('prio1-color');
+        btnIcon1.classList.remove('priotity-btn-filter1');
+        orange.classList.remove('prio2-color');
+        btnIcon2.src = '../assets/icons/PriorityMediumOrange.png';
+        green.classList.add('prio3-color');
+        btnIcon3.classList.add('priotity-btn-filter3');
+    } else {
+        return currentTask;
+    }
+}
+
+function loadContactsEdit() {
+    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
+    let assignedToSbEdit = document.getElementById('assigned-to-sb-edit');
+    assignedToSbEdit.innerHTML = '';
+    assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
+    for (let i = 0; i < namesArray.length; i++) {
+        const option = document.createElement('option');
+        option.value = namesArray[i];
+        option.textContent = namesArray[i];
+        option.setAttribute('id', `optionSbEdit-${i}`);
+        assignedToSbEdit.appendChild(option);
+    }
+    assignedToSbEdit.addEventListener('change', function () {
+        selectContactsSbEdit(assignedToSbEdit.value);
+    });
+}
+
+function selectContactsSbEdit(selectedValue) {
+    let selectedContacts = document.getElementById('selected-contacts-sb-edit');
+    let assignedToSb = document.getElementById('assigned-to-sb-edit');
+
+    if (selectedValue) {
+        console.log(selectedValue);
+        
+        let splitName = selectedValue.split(" ");
+        let initials;
+
+        if (splitName.length > 1) {
+            let firstNameInitial = splitName[0][0].toUpperCase();
+            let secondNameInitial = splitName[1][0].toUpperCase();
+            initials = `${firstNameInitial}${secondNameInitial}`;
+        } else {
+            initials = splitName[0][0].toUpperCase();
+        }
+
+        if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
+            selectedContacts.innerHTML += `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`;
+        }
+    }
+
+    let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
+    console.log(optionToDisable);
+    
+    if (optionToDisable) {
+        optionToDisable.disabled = true;
     }
 }
