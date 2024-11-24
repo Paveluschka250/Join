@@ -1109,7 +1109,8 @@ function editSubtasks(currentTask) {
             img.alt = 'Icon';
             img.style.width = '12px';
             img.style.height = '12px';
-            img.addEventListener('click', () => deleteSubtaskEdit(currentTask, i));
+            let taskcounter = 0;
+            img.addEventListener('click', () => deleteSubtaskEdit(i));
 
             li.appendChild(img);
             list.appendChild(li);
