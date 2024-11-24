@@ -575,8 +575,6 @@ function loadCheckFieldStatus(taskCounter) {
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
     if (currentTask.subtasks && currentTask.subtasksChecked) {
         let currentSubtaskAmount = currentTask.subtasks.length;
-        console.log(currentTask.subtasksChecked);
-
         for (let i = 0; i < currentSubtaskAmount; i++) {
             let input = document.getElementById(`checkbox${i}`);
             if (currentTask.subtasksChecked[i].checked == true) {
@@ -613,7 +611,6 @@ function showOverlayTask(taskCounter) {
 }
 
 function renderOverlayTask(taskCounter, currentTask) {
-    console.log(taskCounter, currentTask);
     let overlayContainer = document.getElementById('current-task');
 
     let contactsHTML = currentTask[4]
@@ -623,7 +620,6 @@ function renderOverlayTask(taskCounter, currentTask) {
     let currentSubtasks;
     if (currentTask[9] != "undefined" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");
-        console.log(currentTask[9]);
         currentSubtasks = currentSubtask
             .map((subtask, i) => 
                 `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
@@ -915,15 +911,16 @@ function renderEditTask(currentTask, taskCounter) {
                             <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text"
                                 id="subtasks-edit" name="subtasks-edit" placeholder="Add new subtask">
                             <button type="button" id="add-subtask-btn-sb-edit" class="create-new-task"
-                                onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
-                            <div id="subtask-buttons-sb-edit" class="task-btn-div d-none">
-                                <button type="button" onclick="closeNewSubtasksBtn()"><img
-                                        src="../assets/icons/clearIcon.svg" alt="close"></button>|
-                                <button type="button" onclick="addSubTask()"><img
-                                        src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
+                                onclick="addNewSubTaskEdit()"><img src="../assets/icons/add.svg" alt="add"></button>
+                        </div>
+                        <div>
+                            <div id="subtask-edit-content">
+                                <ul id="subtask-edit-list"></ul>
                             </div>
                         </div>
-                        <div><button>Save</button></div>
+                        <div>
+                            <button>Save</button>
+                        </div>
                     </div>
     `
     editCurrentTask(currentTask, taskCounter);
@@ -995,8 +992,8 @@ function editCurrentTask(currentTask, taskCounter) {
         assignedContacts.innerHTML = '';
     }
 
-
     document.getElementById('category-edit').value = `${currentTask[1]}`;
+    editSubtasks(currentTask);
     // document.getElementById('');
     // document.getElementById('');
 }
@@ -1038,7 +1035,7 @@ function loadContactsEdit() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let assignedToSbEdit = document.getElementById('assigned-to-sb-edit');
     assignedToSbEdit.innerHTML = '';
-    assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
+    // assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
     for (let i = 0; i < namesArray.length; i++) {
         const option = document.createElement('option');
         option.value = namesArray[i];
@@ -1077,7 +1074,77 @@ function selectContactsSbEdit(selectedValue) {
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
     console.log(optionToDisable);
     
-    if (optionToDisable) {
+    if (optionToDisable && optionToDisable.disabled === false) {
         optionToDisable.disabled = true;
+        console.log('wurde deaktiviert');
+        
     }
+}
+
+function editSubtasks(currentTask) {
+    let subtasksEdit = currentTask[9];
+
+    let list = document.getElementById('subtask-edit-list');
+    list.innerHTML = '';
+
+    if (!subtasksEdit || subtasksEdit === "undefined") {
+        list.innerHTML = '';
+        return;
+    }
+
+    if (typeof subtasksEdit === "string") {
+        subtasksEdit = subtasksEdit.split(',').map(s => s.trim()).filter(Boolean); // Leerzeichen entfernen, leere Einträge filtern
+    }
+
+    if (Array.isArray(subtasksEdit) && subtasksEdit.length > 0) {
+        subtasksEdit.forEach((subtask, i) => {
+            let li = document.createElement('li');
+
+            let text = document.createTextNode(subtask);
+            li.appendChild(text);
+            li.setAttribute('id', `list${i}`);
+
+            let img = document.createElement('img');
+            img.src = '../assets/icons/delete.svg';
+            img.alt = 'Icon';
+            img.style.width = '12px';
+            img.style.height = '12px';
+            img.addEventListener('click', () => deleteSubtaskEdit(currentTask, i));
+
+            li.appendChild(img);
+            list.appendChild(li);
+        });
+    } else {
+        list.innerHTML = '';
+    }
+}
+
+function deleteSubtaskEdit(i) {
+    let listItem = document.getElementById(`list${i}`);
+    if (listItem) {
+        listItem.remove();
+    }
+}
+
+function addNewSubTaskEdit() {
+    let list = document.getElementById('subtask-edit-list');
+    let input = document.getElementById('subtasks-edit').value;
+    let amount = list.childElementCount;
+    
+    let li = document.createElement('li');
+
+    let text = document.createTextNode(input);
+    li.appendChild(text);
+    li.setAttribute('id', `list${amount}`);
+
+    let img = document.createElement('img');
+    img.src = '../assets/icons/delete.svg';
+    img.alt = 'Icon';
+    img.style.width = '12px';
+    img.style.height = '12px';
+    img.addEventListener('click', () => deleteSubtaskEdit(amount));
+
+    li.appendChild(img);
+    list.appendChild(li)
+    document.getElementById('subtasks-edit').value = '';
 }
