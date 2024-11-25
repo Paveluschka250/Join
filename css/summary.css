@@ -2,16 +2,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100px);
 }
+
 .greeting {
-  width: 745px;
+  grid-column: span 4;
+  width: auto;
   height: 77px;
-  margin-left: 70px;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
 }
+
 #myGreet {
   width: 338px;
   height: 58px;
@@ -20,291 +24,266 @@
   color: #2a3647;
   line-height: 57.6px;
 }
-#secPart {
-  width: 385px;
-  height: 77px;
-  color: #4589ff;
-  font-weight: 700;
-  font-size: 64px;
-  line-height: 76.8px;
-}
-.sec-container {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
+
+/* Grid Layout */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 25px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
+/* Erste Zeile - Urgent Tasks Box */
+#username {
+  color: #4589ff;
+}
 .sec-Part {
-  width: 672px;
-  height: 191px;
+  grid-column: span 3;
   background-color: #4589ff;
   border-radius: 30px;
-  box-shadow: 0px 0px 4px 0px #00000029;
+  padding: 28px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  transition: all 225ms ease-in-out;
 }
+
 .sec-Part:hover {
   background-color: white;
   transform: scale(1.1);
   box-shadow: 0px 0px 4px 0px #00000029;
   border-radius: 0px 30px 30px 30px;
 }
+
 .sec-Part:hover h6 {
   color: #4589ff;
 }
-.sec-Part:hover h1 {
-  color: #4589ff;
-}
+
 .sec-Part:hover .vertical-Line {
   background-color: #4589ff;
   border-left: 2px solid #4589ff;
 }
+
 .sec-Part:hover .deadline {
   color: #4589ff;
 }
-.board {
-  width: 208px;
-  height: 191px;
-  border-radius: 30px;
-  box-shadow: 0px 0px 4px 0px #00000029;
-  padding: 40px;
-  background-color: white;
-}
-.board:hover {
-  transform: scale(1.1);
-  background-color: #0038ff;
-  color: white;
-  border-radius: 0px 30px 30px 30px;
-}
-.board:hover h6 {
-  color: white;
-}
 
-.inner-board {
+.sec-Part .urgent-tasks {
+  grid-column: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  /* gap: 13px; */
+  height: 100%;
 }
-h6 {
-  font-size: 17px;
-  line-height: 27.6px;
-  text-align: center;
-  font-weight: 400;
+
+.sec-Part .urgent-tasks .urgent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
 }
-.task-text {
-  width: auto;
-  height: 56px;
-  margin-top: -10px;
-}
-.urgent-img {
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background-color: white;
-}
-.urgent-tasks {
-  height: 113px;
-  width: 140px;
-  margin-top: 30px;
-  margin-left: 100px;
-}
+
 .inner-urgentTasks {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  gap: 18px;
 }
-.urgent-text {
-  width: 140px;
-  height: 28px;
-  margin-left: -20px;
-  margin-top: -30px;
+
+.sec-Part:hover h1 {
+  color: #4589ff !important;
 }
-.urgent-text h6 {
+
+.urgent-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: white;
+  background-image: url(../assets/icons/summary/time.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.vertical-Line {
+  height: 90%;
+  width: 2px;
+  background-color: white;
+  margin-left: 60px;
+}
+
+.date {
+  grid-column: 2 / span 2;
+  display: flex;
+  flex-direction: column;
+  padding-left: 60px;
+  gap: 13px;
+}
+
+.date h3 {
+  margin: 0;
+}
+
+.deadline {
   color: white;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.deadline-text h6 {
+  color: white;
+  margin: 0;
 }
 
 #tasks-length h1 {
-  font-size: 30px;
-  line-height: 27.6px;
-  text-align: center;
-  font-weight: 800;
+  color: white;
+  font-size: 47px;
+  font-weight: 600;
+  margin: 0;
 }
-.vertical-Line {
-  height: 145px;
-  margin-left: 80px;
-  border-left: 2px solid white;
-  background-color: white;
+
+.urgent-text {
+  margin-top: 5px;
 }
-#tasks-length {
-  margin: 5px;
+
+.urgent-text h6 {
+  color: white;
+  margin: 0;
 }
-.date {
-  height: 120px;
-  width: 250px;
-  margin-top: -75px;
-  align-items: center;
-  float: right;
-  margin-right: 50px;
+
+/* Gemeinsame Basis-Klasse für alle Task-Boxen */
+.task-box {
+  grid-column: span 1;
+  background: white;
+  border-radius: 30px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-}
-.deadline-text h6 {
-  color: white;
-}
-.deadline {
-  color: white;
-  font-size: 23px;
-  font-weight: 700;
-}
-.third-container {
-  margin-top: 20px;
-  height: 200px;
-  display: flex;
   align-items: center;
-  justify-content: space-around;
-}
-.tasks-To-Do {
-  width: 204px;
-  height: 219px;
-  border-radius: 30px;
-  padding: 40px;
-  background-color: #d2e3ff;
-  cursor: pointer;
-}
-.tasks-In-Progress {
+  justify-content: space-between;
   box-shadow: 0px 0px 4px 0px #00000029;
-  width: 204px;
-  height: 219px;
-  border-radius: 30px;
-  padding: 40px;
-  cursor: pointer;
+  transition: all 225ms ease-in-out;
+  
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
 }
-.tasks-Awaiting-Feedback {
-  box-shadow: 0px 0px 4px 0px #00000029;
-  width: 204px;
-  height: 219px;
-  border-radius: 30px;
-  padding: 40px;
-  cursor: pointer;
-}
-.tasks-Done {
-  box-shadow: 0px 0px 4px 0px #00000029;
-  width: 204px;
-  height: 219px;
-  border-radius: 30px;
-  padding: 40px;
-  cursor: pointer;
-}
-.tasks-In-Progress:hover {
+
+/* Gemeinsame Hover-Effekte */
+.task-box:hover {
   transform: scale(1.1);
   background-color: #0038ff;
   color: white;
   border-radius: 0px 30px 30px 30px;
 }
-.tasks-In-Progress:hover .tasks-In-Progress-Text span {
+
+.task-box:hover h6,
+.task-box:hover span {
   color: white;
 }
-.tasks-Awaiting-Feedback:hover {
-  transform: scale(1.1);
-  background-color: #0038ff;
-  color: white;
-  border-radius: 0px 30px 30px 30px;
-}
-.tasks-Awaiting-Feedback:hover .Tasks-Awaiting-Feedback-Text span {
+
+/* Neuer Hover-Effekt für die Zahlen */
+.task-box:hover h1 {
   color: white;
 }
-.tasks-Done:hover {
-  transform: scale(1.1);
-  background-color: #0038ff;
-  color: white;
-  border-radius: 0px 30px 30px 30px;
-}
-.tasks-Done:hover .Tasks-Done-Text span {
-  color: white;
-}
-.tasks-To-Do:hover {
-  background-color: white;
-  transform: scale(1.1);
-  border-radius: 0px 30px 30px 30px;
-  box-shadow: 0px 0px 4px 0px #00000029;
-  width: 224px;
-  height: 200px;
-}
-.tasks-To-Do:hover #to-do h1 {
-  color: #4589ff;
-}
-.inner-tasks-To-Do {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.tasks-To-Do-Text,
-.tasks-In-Progress-Text {
-  margin-top: 10px;
-  align-items: center;
-}
+
+
+/* Anpassung der Text-Container */
+.task-text,
 .tasks-To-Do-Text,
 .tasks-In-Progress-Text,
 .Tasks-Awaiting-Feedback-Text,
-.Tasks-Done-Text span {
+.Tasks-Done-Text {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+/* Spezifischer Hover-Effekt für tasks-To-Do */
+.tasks-To-Do:hover h1 {
   color: #4589ff;
 }
-.inner-tasks-In-Progress {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.tasks-To-Do:hover span {
+  color: #4589ff;
 }
-.third-container img {
-  height: 70px;
-  width: 70px;
-}
-.inner-Tasks-Awaiting-Feedback {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.inner-Tasks-Done {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-/* Overlay Style */
-
-.overlay-content {
-  position: absolute;
-  top: 108px;
-  right: 8px;
-  padding: 16px;
-  border-radius: 8px;
-  text-align: right;
-  width: auto;
+.tasks-To-Do:hover {
   background-color: white;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4),
-    /* Stärkerer Schatten unten */ -2px 0 4px rgba(0, 0, 0, 0.2); /* Leichterer Schatten links */
-  pointer-events: auto;
 }
 
-.overlay-content a {
-  color: black;
-  text-decoration: none;
-  font-size: 16px;
-  display: block;
-  padding: 8px 0;
-  border-radius: 8px;
-  transition: transform 0.2s ease;
-  text-align: right;
+/* Gemeinsame Inner-Box Styles */
+.task-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 0;
+  flex: 1;
 }
 
-.overlay-content a:hover {
-  background-color: #d2e3ff;
-  transform: scale(1.05);
+/* Optional: Styling für die Zahlen in den task-inner Boxen */
+.task-inner h1 {
+  font-size: 47px;
+  margin: 0;
 }
 
-.overlay-content a.help {
-  display: none;
+/* Spezifische Styles */
+.board {
+  @extend .task-box;
 }
 
+.tasks-To-Do {
+  @extend .task-box;
+  background: #d2e3ff;
+}
+
+.tasks-In-Progress {
+  @extend .task-box;
+}
+
+.tasks-Awaiting-Feedback {
+  @extend .task-box;
+}
+
+.tasks-Done {
+  @extend .task-box;
+}
+
+.inner-board,
+.inner-tasks-To-Do,
+.inner-Tasks-Awaiting-Feedback,
+.inner-tasks-In-Progress,
+.inner-Tasks-Done {
+  @extend .task-inner;
+}
+
+/* Text Styles */
+h6 {
+  font-size: 23px;
+  line-height: 27.6px;
+  font-weight: 400;
+  margin: 0;
+}
+
+h1 {
+  font-size: 64px;
+  margin: 0;
+  color: #000;
+}
+
+span {
+  color: #2a3647;
+  font-size: 23px;
+  color: #4589ff;
+}
+
+/* Responsive Styles */
 @media (max-width: 1024px) {
   .overlay-content a.help {
     display: block;
@@ -324,6 +303,54 @@ h6 {
     right: 40px;
   }
 }
+
 .d-none {
   display: none;
 }
+
+/* Optional: Spezifische Transitionen für die Kinder-Elemente */
+.sec-Part h1,
+.sec-Part h6,
+.sec-Part .deadline,
+.sec-Part .vertical-Line {
+  transition: color 225ms ease-in-out, background-color 225ms ease-in-out;
+}
+
+/* Gemeinsame Styles für alle Icon-Container */
+.icon-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Spezifische Background-Images für jeden Icon-Container */
+.board-icon {
+  background-image: url(../assets/icons/summary/board.svg);
+}
+
+.todo-icon {
+  background-image: url(../assets/icons/summary/to-do.svg);
+}
+
+.progress-icon {
+  background-image: url(../assets/icons/summary/progress.svg);
+}
+
+.feedback-icon {
+  background-image: url(../assets/icons/summary/feedback.svg);
+}
+
+.done-icon {
+  background-image: url(../assets/icons/summary/done.svg);
+}
+
+.box-link {
+    text-decoration: none;
+    color: inherit;
+    display: contents; /* Verhindert, dass der Link das Layout beeinflusst */
+}
+
+

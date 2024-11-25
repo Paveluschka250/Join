@@ -13,29 +13,28 @@ let progressNum;
 let awitingFeedbackNum;
 let doneNum;
 
- // Funktion zum Abrufen des Benutzernamens aus localStorage und Anzeigen in summary.html
- function displayOnlinetUser() {
-     
+function updateUserCircle() {
+    // Wir brauchen nur den onlineUser
     const onlineUser = localStorage.getItem('onlineUser');
-    const currentUser = localStorage.getItem('currentUser');
-    console.log('onlineUser:', onlineUser);
-    console.log('currentUser:', currentUser);
+    
     if (onlineUser) {
-        const y = document.getElementById('userCircle');
-        const userGreeting = document.getElementById('secPart');
+        // Update den Grußtext
+        const userGreeting = document.getElementById('username');
         if (userGreeting) {
             userGreeting.innerHTML = onlineUser;
-            y.innerHTML += `<h4>${currentUser}</h4`
-        } else {
-            console.error('Das Element mit der ID "secPart" wurde nicht gefunden.');
         }
-    } else {
-        console.error('onlineUser existiert nicht im localStorage.');
+        
+        // Update den Avatar
+        const userCircle = document.getElementById('userCircle');
+        if (userCircle) {
+            userCircle.innerHTML = '';
+            const initial = onlineUser.charAt(0).toUpperCase();
+            userCircle.innerHTML = `<h4>${initial}</h4>`;
+        }
     }
 }
 
-// Event-Listener, der aufgerufen wird, wenn die Seite geladen wird
-document.addEventListener('DOMContentLoaded',  displayOnlinetUser);
+document.addEventListener('DOMContentLoaded', updateUserCircle);
 
 async function getTasksData() {
     try {

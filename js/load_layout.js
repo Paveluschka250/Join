@@ -119,3 +119,16 @@ function addEventListenersToOverlayContentLinks(overlay) {
 function toggleOverlay(show, overlay) {
   overlay.style.display = show ? "block" : "none";
 }
+
+async function includeHTML() {
+  // ... bestehender Code ...
+  
+  // Nach dem Laden des Headers
+  if (elem.getAttribute("id") == "header") {
+    await loadHTML(file, elem);
+    // Aktualisiere den userCircle nach dem Laden des Headers
+    updateUserCircle();
+  }
+  
+  // ... restlicher bestehender Code ...
+}
