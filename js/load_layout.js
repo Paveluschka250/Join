@@ -9,6 +9,13 @@ async function loadHeader() {
     document.getElementById("header").innerHTML = data;
     adjustHeaderForLegalPages();
     initializeOverlay();
+    
+    // Hier die Initialen laden, nachdem der Header eingefügt wurde
+    const currentUser = localStorage.getItem('currentUser');
+    const userCircle = document.querySelector('#userCircle h4');
+    if (userCircle && currentUser) {
+      userCircle.textContent = currentUser;
+    }
   } catch (error) {
     console.error("Error in loadHeader: ", error);
   }
@@ -120,6 +127,13 @@ function toggleOverlay(show, overlay) {
   overlay.style.display = show ? "block" : "none";
 }
 
+function loadUserInitials() {
+  const userCircle = document.getElementById('userCircle');
+  const initialsElement = userCircle.querySelector('h4');
+  const userInitials = localStorage.getItem('userInitials') || 'G';
+  initialsElement.textContent = userInitials;
+}
+
 async function includeHTML() {
   // ... bestehender Code ...
   
@@ -127,8 +141,24 @@ async function includeHTML() {
   if (elem.getAttribute("id") == "header") {
     await loadHTML(file, elem);
     // Aktualisiere den userCircle nach dem Laden des Headers
-    updateUserCircle();
+    loadUserInitials();
   }
   
   // ... restlicher bestehender Code ...
 }
+
+function logout() {
+    localStorage.removeItem('userInitials');
+    window.location.href = '../index.html';
+}
+
+// Event-Listener für den Logout-Link hinzufügen
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutLink = document.querySelector('.overlay-content a[href="../index.html"]');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            logout();
+        });
+    }
+});

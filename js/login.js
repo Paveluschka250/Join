@@ -1,5 +1,3 @@
-
-
 let msgBox = document.getElementById('msgBox');
 let urlParms = new URLSearchParams(window.location.search);
 const msg = urlParms.get('msg');
@@ -51,14 +49,12 @@ document.getElementById('guest').addEventListener('click', setGuestMode);
 // Funktion zur Authentifizierung des Benutzers
 
 async function loginUser(email, password) {
-    // Funktion zum Anzeigen der Nachricht
     function showMessage(message, type) {
         const popup = document.getElementById('message-popup');
         popup.textContent = message;
         popup.className = type;
         popup.style.display = 'block';
 
-        // Nachricht nach 3 Sekunden ausblenden
         setTimeout(() => {
             popup.style.display = 'none';
         }, 5000);
@@ -75,9 +71,13 @@ async function loginUser(email, password) {
             if (user) {
                 // Login erfolgreich
                 const onlineUser = user.username;
-                const currentUser = user.username.charAt(0).toUpperCase();
+                // Teile den Benutzernamen in Vor- und Nachnamen
+                const nameParts = user.username.split(' ');
+                // Hole die Initialen (erster Buchstabe vom Vornamen + erster Buchstabe vom Nachnamen)
+                const initials = (nameParts[0].charAt(0) + (nameParts[1] ? nameParts[1].charAt(0) : '')).toUpperCase();
+                
                 localStorage.setItem('onlineUser', onlineUser);
-                localStorage.setItem('currentUser', currentUser);
+                localStorage.setItem('currentUser', initials);
                 
                 showMessage('Login erfolgreich', 'success');
                 
