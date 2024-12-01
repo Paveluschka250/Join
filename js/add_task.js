@@ -81,9 +81,12 @@ function getTaskData(event) {
     
     let selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
     let assignedTo = [];
+    let fullNames = [];
     selectedContactsDivs.forEach(function(div) {
         assignedTo.push(div.textContent);
-    });
+        let value = div.getAttribute('value');
+        fullNames.push(value);
+    });    
 
     let priority = '';
     if (document.getElementById('priority1').classList.contains('prio1-color')) {
@@ -117,7 +120,8 @@ function getTaskData(event) {
         priority: priority,
         subtasks: subtasks,
         subtasksChecked: subtasksChecked,
-        taskCategory: taskCategory
+        taskCategory: taskCategory,
+        fullNames: fullNames
     };
 
     fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
@@ -144,7 +148,8 @@ function resetFormFields() {
     document.getElementById('due-date').value = '';
     document.getElementById('assigned-to').value = '';
     document.getElementById('category').value = '';
-
+    document.getElementById('selected-contacts').innerHTML = '';
+    
     let subtaskContent = document.getElementById('subtask-content');
     subtaskContent.innerHTML = '';
 
@@ -170,7 +175,7 @@ function getUsersToAssignedTo() {
     assignedTo.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
     for (let i = 0; i < namesArray.length; i++) {
         const option = document.createElement('option');
-        option.value = namesArray[i];
+        option.value = namesArray[i];        
         option.textContent = namesArray[i];
         option.setAttribute('id', `option-${i}`);
         assignedTo.appendChild(option);
@@ -183,7 +188,7 @@ function getUsersToAssignedTo() {
 function selectContacts(selectedValue) {
     let selectedContacts = document.getElementById('selected-contacts');
     let assignedTo = document.getElementById('assigned-to');
-
+    console.log(selectedValue);
     if (selectedValue) {
         let splitName = selectedValue.split(" ");
         if (splitName.length > 1) {
@@ -191,9 +196,9 @@ function selectContacts(selectedValue) {
             let secondNameInitial = splitName[1][0].toUpperCase();
             let initials = `${firstNameInitial}${secondNameInitial}`;
 
-            selectedContacts.innerHTML += `<div class="contact-initials">${initials}</div>`;
+            selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials">${initials}</div>`;
         } else {
-            selectedContacts.innerHTML += `<div class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
+            selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
         }
     } let optionToDisable = assignedTo.querySelector(`option[value="${selectedValue}"]`);
     if (optionToDisable) {

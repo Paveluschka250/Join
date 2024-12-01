@@ -96,20 +96,28 @@ function getFormData(event) {
 
     let selectedContactsDivs = document.querySelectorAll('#selected-contacts-sb .contact-initials-sb');
     let assignedTo = [];
+    let fullNames = [];
     selectedContactsDivs.forEach(function (div) {
         assignedTo.push(div.textContent);
+        let value = div.getAttribute('value'); // Holt den Wert des value Attributs
+        fullNames.push(value);
     });
 
-    let subtaskList = document.querySelectorAll('#subtask-content li');
-    let subtasks = Array.from(subtaskList).map(li => li.textContent);
 
+    let subtaskList = document.querySelectorAll('#subtask-content li');
+    let subtasks = [];
     let subtasksChecked = [];
+    if (subtaskList.length > 0) {
+    subtasks = Array.from(subtaskList).map(li => li.textContent);
     for (let i = 0; i < subtasks.length; i++) {
         const element = subtasks[i];
         let subtask = { "id": `subtask${i}`, "checked": false };
         subtasksChecked.push(subtask);
     }
-    console.log(subtasksChecked);
+    } else {
+        subtasks = ['dummy'];
+        subtasksChecked = ['dummy'];
+    }
 
     let priority = '';
     if (document.getElementById('prio1').classList.contains('prio1-color')) {
@@ -129,8 +137,12 @@ function getFormData(event) {
         subtasks,
         subtasksChecked,
         priority,
-        taskCategory
+        taskCategory,
+        fullNames
     };
+    
+    // prepareDataForUpload(formData);
+    
     fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
         method: 'POST',
         headers: {
@@ -171,6 +183,7 @@ function getUsersToAssignedTo() {
     for (let i = 0; i < namesArray.length; i++) {
         const option = document.createElement('option');
         option.value = namesArray[i];
+
         option.textContent = namesArray[i];
         option.setAttribute('id', `optionSb-${i}`);
         assignedToSb.appendChild(option);
@@ -185,8 +198,9 @@ function selectContactsSb(selectedValue) {
     let assignedToSb = document.getElementById('assigned-to-sb');
 
     if (selectedValue) {
-        
+
         let splitName = selectedValue.split(" ");
+        console.log(selectedValue);
         let initials;
 
         if (splitName.length > 1) {
@@ -198,12 +212,12 @@ function selectContactsSb(selectedValue) {
         }
 
         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-            selectedContacts.innerHTML += `<div class="contact-initials-sb">${initials}</div>`;
+            selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials-sb">${initials}</div>`;
         }
     }
 
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
-    
+
     if (optionToDisable) {
         optionToDisable.disabled = true;
     }
@@ -214,8 +228,6 @@ function renderAddTask() {
     let awaitFeedback = document.getElementById("awaitFeedback");
     let done = document.getElementById("done");
     let toDoBlock = document.getElementById("to-do-block");
-
-    let toDoContent = document.getElementById("to-do");
     let toDo = tasks.toDo;
 
     if (toDo && Object.keys(toDo).length > 0) {
@@ -491,7 +503,7 @@ function taskStyle(taskCounter) {
 function loadingspinner(taskCounter, element) {
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
     let loadingbarText = document.getElementById(`subtasks-checked${taskCounter}`);
-    if (element.subtasks) {
+    if (element.subtasks != 'dummy') {
         let checkedSubtasks = 0;
         let allSubtasks = element.subtasks.length;
         for (let i = 0; i < allSubtasks; i++) {
@@ -618,10 +630,10 @@ function renderOverlayTask(taskCounter, currentTask) {
         .join('');
 
     let currentSubtasks;
-    if (currentTask[9] != "undefined" && typeof currentTask[9] === 'string') {
+    if (currentTask[9] != "dummy" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");
         currentSubtasks = currentSubtask
-            .map((subtask, i) => 
+            .map((subtask, i) =>
                 `<div class="current-subtasks-task"><input onclick="saveCheckBoxes(${taskCounter})" id="checkbox${i}" type="checkbox">${subtask}</div>`)
             .join('');
     } else {
@@ -663,7 +675,7 @@ function renderOverlayTask(taskCounter, currentTask) {
                     </div>
                 </div>
             `;
-    document.getElementById('editTaskBtn').addEventListener('click', function(){
+    document.getElementById('editTaskBtn').addEventListener('click', function () {
         editTask(currentTask, taskCounter);
     });
     loadCheckFieldStatus(taskCounter, currentTask);
@@ -802,7 +814,7 @@ function filterTasks() {
                     const suggestionItem = document.createElement('div');
                     suggestionItem.className = 'suggestion-item';
                     suggestionItem.innerHTML = `<strong>${task.title}</strong><br><small>${task.description}</small>`;
-                    suggestionItem.onclick = () => getTaskId(task, suggestionsContainer);  // Call showOverlayAddTask with taskId
+                    suggestionItem.onclick = () => getTaskId(task, suggestionsContainer);
                     suggestionsContainer.appendChild(suggestionItem);
                     hasMatches = true;
                 }
@@ -820,6 +832,15 @@ function filterTasks() {
     } else {
         suggestionsContainer.style.display = 'none';
     }
+
+    document.addEventListener('click', function(event) {
+        const isClickInside = suggestionsContainer.contains(event.target) || 
+                              document.getElementById('search-input').contains(event.target);
+
+        if (!isClickInside) {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
 }
 
 function getTaskId(id, suggestionsContainer) {
@@ -844,86 +865,91 @@ function getKeysFromTasks() {
 
 function editTask(currentTask, taskCounter) {
     renderEditTask(currentTask, taskCounter);
+    editCurrentTask(currentTask, taskCounter);
+    document.getElementById('saveEditBtn').addEventListener("click", () => {
+        saveEditBtn(taskCounter);        
+    });
 }
 
 function renderEditTask(currentTask, taskCounter) {
     let taskOverlay = document.getElementById("current-to-do");
     taskOverlay.innerHTML = '';
     taskOverlay.innerHTML = `
-        <div class="editTaskContainer">
-                        <div class="form-group-addTask-edit titleEdit">
-                            <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title-edit"
-                                name="title" placeholder="Enter a title" required>
-                        </div>
+        <form>
+            <div class="editTaskContainer">
+                <div class="form-group-addTask-edit titleEdit">
+                    <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title-edit"
+                        name="title" placeholder="Enter a title" required>
+                </div>
 
-                        <div class="form-group-addTask-edit description-edit m-b-8px">
-                            <label for="description"><b>Description</b></label>
-                            <textarea class="input-addTask cursor-pointer" id="description-edit" name="description" rows="4"
-                                placeholder="Enter a Description" required></textarea>
-                        </div>
+                <div class="form-group-addTask-edit description-edit m-b-8px">
+                    <label for="description"><b>Description</b></label>
+                    <textarea class="input-addTask cursor-pointer" id="description-edit" name="description" rows="4"
+                        placeholder="Enter a Description" required></textarea>
+                </div>
 
-                        <div class="form-group-addTask-edit due-date-edit m-b-8px">
-                            <label for="due-date"><b>Due date</b></label>
-                            <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date-edit"
-                                name="due-date">
-                        </div>
+                <div class="form-group-addTask-edit due-date-edit m-b-8px">
+                    <label for="due-date"><b>Due date</b></label>
+                    <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date-edit"
+                        name="due-date">
+                </div>
 
-                        <div class="form-group-addTask-edit priority-addTask m-b-8px">
-                            <div class="m-b-8px">
-                                <label><b>Priority</b></label>
-                            </div>
-                            <div class="buttons-row m-b-8px edit-buttons">
-                                <button id="prio1-edit" onclick="getPriorityEdit('prio1-edit')" type="button"
-                                    class="prio-buttons-edit priority-btn-addTask urgent-addTask center-button">Urgent <img
-                                        id="high-prio-icon-edit" src="../assets/icons/prio3.svg"
-                                        alt="priorität hoch"></button>
-                                <button id="prio2-edit" onclick="getPriorityEdit('prio2-edit')" type="button"
-                                    class="prio-buttons-edit priority-btn-addTask medium-addTask center-button">Medium <img
-                                        src="../assets/icons/priorityMediumOrange.png" alt="priorität mittel" id="medium-prio-icon-edit"
-                                        class="medium-prio-icon"></button>
-                                <button id="prio3-edit" onclick="getPriorityEdit('prio3-edit')" type="button"
-                                    class="prio-buttons-edit priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon-edit"
-                                        src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
-                            </div>
-                        </div>
-
-                        <div class="form-group-addTask-edit assigned-to-edit m-b-8px">
-                            <label for="assigned-to-sb-edit"><b>Assigned to</b> (optional)</label>
-                            <select onclick="loadContactsEdit()"
-                                class="underline-select input-addTask cursor-pointer" id="assigned-to-sb-edit"
-                                name="assigned-to-sb-edit">
-                                <option value="">Select contacts to assign</option>
-                            </select>
-                            <div class="selected-contacts-sb" id="selected-contacts-sb-edit"></div>
-                        </div>
-
-                        <div class="form-group-addTask-edit m-b-16px category-edit">
-                            <label for="category"><b>Category</b></label>
-                            <select class="underline-select input-addTask cursor-pointer" id="category-edit" name="category">
-                                <option value="">Select task category</option>
-                                <option value="Technical Task">Technical Task</option>
-                                <option value="User Story">User Story</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group-addTask-edit subtask-edit new-task-btn m-b-8px">
-                            <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                            <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text"
-                                id="subtasks-edit" name="subtasks-edit" placeholder="Add new subtask">
-                            <button type="button" id="add-subtask-btn-sb-edit" class="create-new-task"
-                                onclick="addNewSubTaskEdit()"><img src="../assets/icons/add.svg" alt="add"></button>
-                        </div>
-                        <div>
-                            <div id="subtask-edit-content">
-                                <ul id="subtask-edit-list"></ul>
-                            </div>
-                        </div>
-                        <div>
-                            <button>Save</button>
-                        </div>
+                <div class="form-group-addTask-edit priority-addTask m-b-8px">
+                    <div class="m-b-8px">
+                        <label><b>Priority</b></label>
                     </div>
+                    <div class="buttons-row m-b-8px edit-buttons">
+                        <button id="prio1-edit" onclick="getPriorityEdit('prio1-edit')" type="button"
+                            class="prio-buttons-edit priority-btn-addTask urgent-addTask center-button">Urgent <img
+                                id="high-prio-icon-edit" src="../assets/icons/prio3.svg"
+                                alt="priorität hoch"></button>
+                        <button id="prio2-edit" onclick="getPriorityEdit('prio2-edit')" type="button"
+                                class="prio-buttons-edit priority-btn-addTask medium-addTask center-button">Medium <img
+                                src="../assets/icons/priorityMediumOrange.png" alt="priorität mittel" id="medium-prio-icon-edit"
+                                class="medium-prio-icon"></button>
+                        <button id="prio3-edit" onclick="getPriorityEdit('prio3-edit')" type="button"
+                            class="prio-buttons-edit priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon-edit"
+                                src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
+                    </div>
+                </div>
+
+                <div class="form-group-addTask-edit assigned-to-edit m-b-8px">
+                    <label for="assigned-to-sb-edit"><b>Assigned to</b> (optional)</label>
+                    <select onclick="loadContactsEdit()"
+                        class="underline-select input-addTask cursor-pointer" id="assigned-to-sb-edit"
+                        name="assigned-to-sb-edit">
+                        <option value="">Select contacts to assign</option>
+                    </select>
+                    <div class="selected-contacts-sb" id="selected-contacts-sb-edit"></div>
+                </div>
+
+                <div class="form-group-addTask-edit m-b-16px category-edit">
+                    <label for="category"><b>Category</b></label>
+                    <select class="underline-select input-addTask cursor-pointer" id="category-edit" name="category">
+                        <option value="">Select task category</option>
+                        <option value="Technical Task">Technical Task</option>
+                        <option value="User Story">User Story</option>
+                    </select>
+                </div>
+
+                <div class="form-group-addTask-edit subtask-edit new-task-btn m-b-8px">
+                    <label for="subtasks"><b>Subtasks</b> (optional)</label>
+                    <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text"
+                        id="subtasks-edit" name="subtasks-edit" placeholder="Add new subtask">
+                    <button type="button" id="add-subtask-btn-sb-edit" class="create-new-task"
+                        onclick="addNewSubTaskEdit()"><img src="../assets/icons/add.svg" alt="add"></button>
+                </div>
+                <div>
+                    <div id="subtask-edit-content">
+                        <ul id="subtask-edit-list"></ul>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" id="saveEditBtn">Save</button>
+                </div>
+            </div>
+        </form>
     `
-    editCurrentTask(currentTask, taskCounter);
 }
 
 function getPriorityEdit(id) {
@@ -972,20 +998,22 @@ function containsClassEdit(prioColor, red, orange, green) {
 
 function editCurrentTask(currentTask, taskCounter) {
     taskCounter--;
-    console.log(currentTask);
     document.getElementById('title-edit').value = `${currentTask[2]}`;
     document.getElementById('description-edit').value = `${currentTask[3]}`;
     document.getElementById('due-date-edit').value = `${currentTask[6]}`;
     editPriorityBtn(currentTask);
-    
+
     loadContactsEdit();
     let assignedContacts = document.getElementById('selected-contacts-sb-edit');
     let contacts = currentTask[4];
+
+    getKeysFromTasks();
+    let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
     if (contacts !== undefined) {
         for (let i = 0; i < contacts.length; i++) {
             const element = contacts[i];
             assignedContacts.innerHTML += `
-                <div class="current-task-initials" style="background-color: ${getRandomColor()}">${element}</div>
+                <div class="current-task-initials" value="${fullNames[i]}" style="background-color: ${getRandomColor()}">${element}</div>
             `;
         }
     } else {
@@ -994,8 +1022,6 @@ function editCurrentTask(currentTask, taskCounter) {
 
     document.getElementById('category-edit').value = `${currentTask[1]}`;
     editSubtasks(currentTask);
-    // document.getElementById('');
-    // document.getElementById('');
 }
 
 function editPriorityBtn(currentTask) {
@@ -1034,8 +1060,8 @@ function editPriorityBtn(currentTask) {
 function loadContactsEdit() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let assignedToSbEdit = document.getElementById('assigned-to-sb-edit');
-    assignedToSbEdit.innerHTML = '';
-    // assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
+    // assignedToSbEdit.innerHTML = '';
+    assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
     for (let i = 0; i < namesArray.length; i++) {
         const option = document.createElement('option');
         option.value = namesArray[i];
@@ -1054,7 +1080,7 @@ function selectContactsSbEdit(selectedValue) {
 
     if (selectedValue) {
         console.log(selectedValue);
-        
+
         let splitName = selectedValue.split(" ");
         let initials;
 
@@ -1067,17 +1093,17 @@ function selectContactsSbEdit(selectedValue) {
         }
 
         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-            selectedContacts.innerHTML += `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`;
+            selectedContacts.innerHTML += `<div class="current-task-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">${initials}</div>`;
         }
     }
 
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
     console.log(optionToDisable);
-    
+
     if (optionToDisable && optionToDisable.disabled === false) {
         optionToDisable.disabled = true;
         console.log('wurde deaktiviert');
-        
+
     }
 }
 
@@ -1087,7 +1113,7 @@ function editSubtasks(currentTask) {
     let list = document.getElementById('subtask-edit-list');
     list.innerHTML = '';
 
-    if (!subtasksEdit || subtasksEdit === "undefined") {
+    if (!subtasksEdit || subtasksEdit === "dummy") {
         list.innerHTML = '';
         return;
     }
@@ -1131,7 +1157,7 @@ function addNewSubTaskEdit() {
     let list = document.getElementById('subtask-edit-list');
     let input = document.getElementById('subtasks-edit').value;
     let amount = list.childElementCount;
-    
+
     let li = document.createElement('li');
 
     let text = document.createTextNode(input);
@@ -1149,3 +1175,91 @@ function addNewSubTaskEdit() {
     list.appendChild(li)
     document.getElementById('subtasks-edit').value = '';
 }
+
+function saveEditBtn(taskCounter) {
+    taskCounter--;
+    getKeysFromTasks();
+    let currentTaskKey = keys[taskCounter];    
+    getDataFromEdit(currentTaskKey);
+}
+
+function getDataFromEdit(key) {
+    let currentStatus = tasks.toDo[key].taskCategory.category;
+
+    let taskCategory = { category: currentStatus };
+    let title = document.getElementById('title-edit').value;
+    let description = document.getElementById('description-edit').value;
+    let dueDate = document.getElementById('due-date-edit').value;
+    let category = document.getElementById('category-edit').value;
+
+    let selectedContactsDivs = document.querySelectorAll('#selected-contacts-sb-edit .current-task-initials');
+    let assignedTo = [];
+    let fullNames = [];
+    selectedContactsDivs.forEach(function (div) {
+        assignedTo.push(div.textContent);
+        let value = div.getAttribute('value');
+        fullNames.push(value);
+    });
+
+    let subtasks = [];
+    let subtasksChecked = [];
+
+    let subtaskList = document.querySelectorAll('#subtask-edit-content li');
+    if (subtaskList.length > 0) {
+        subtasks = Array.from(subtaskList).map(li => li.textContent);
+
+        for (let i = 0; i < subtasks.length; i++) {
+            let subtaskStatus = tasks.toDo[key].subtasksChecked[i] ? tasks.toDo[key].subtasksChecked[i].checked : false;
+            let subtask = { "id": `subtask${i}`, "checked": subtaskStatus };
+            subtasksChecked.push(subtask);
+        }
+    } else {
+        subtasks = ['dummy'];
+        subtasksChecked = ['dummy'];
+    }
+
+    let priority = '';
+    if (document.getElementById('prio1-edit').classList.contains('prio1-color')) {
+        priority = 'Urgent';
+    } else if (document.getElementById('prio2-edit').classList.contains('prio2-color')) {
+        priority = 'Medium';
+    } else if (document.getElementById('prio3-edit').classList.contains('prio3-color')) {
+        priority = 'Low';
+    }
+
+    let formData = {
+        title,
+        description,
+        dueDate,
+        assignedTo,
+        category,
+        subtasks,
+        subtasksChecked,
+        priority,
+        taskCategory,
+        fullNames
+    };
+
+    const firebaseURL = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${key}.json`;
+
+    fetch(firebaseURL, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Fehler beim Aktualisieren der Daten: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Daten erfolgreich aktualisiert:', data);
+        })
+        .catch(error => {
+            console.error('Fehler beim Aktualisieren der Aufgabe:', error);
+        });
+}
+

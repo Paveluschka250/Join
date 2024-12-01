@@ -158,6 +158,17 @@
     margin-right: 8px;
 }
 
+.contact-initials-sb-edit {
+    height: 48px;
+    width: 48px;
+    background-color: #4589FF;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+}
+
 .prio1-color {
     background-color: red !important;
     color: white;
