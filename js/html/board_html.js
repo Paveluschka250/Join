@@ -1,11 +1,11 @@
 function renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
                 <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
-                    <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
-                    <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
-                    <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
+                    <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
+                    <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+                    <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
                      
-                    <div class="task-subtask-container">    
+                    <div class="task-subtask-container margin-8px">    
                         <div class="subtask-progress-container">
                             <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
                             </div>
@@ -16,7 +16,7 @@ function renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
                         </div>
                     </div>
 
-                    <div class="task-user-prioIcon">    
+                    <div class="task-user-prioIcon margin-8px">    
                         <div>
                             <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
                         </div>
@@ -35,11 +35,11 @@ function renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
 function rederInProgress(element, taskCounter, prioIconURL, contactsHTML) {
     return         `
     <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
-        <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
-        <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
-        <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
+        <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
+        <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+        <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
          
-        <div class="task-subtask-container">    
+        <div class="task-subtask-container margin-8px">    
             <div class="subtask-progress-container">
                 <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
                 </div>
@@ -50,7 +50,7 @@ function rederInProgress(element, taskCounter, prioIconURL, contactsHTML) {
             </div>
         </div>
 
-        <div class="task-user-prioIcon">    
+        <div class="task-user-prioIcon margin-8px">    
             <div>
                 <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
             </div>
@@ -69,11 +69,11 @@ function rederInProgress(element, taskCounter, prioIconURL, contactsHTML) {
 function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
         <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
-            <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
-            <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
-            <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
+            <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
+            <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+            <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
              
-            <div class="task-subtask-container">    
+            <div class="task-subtask-container margin-8px">    
                 <div class="subtask-progress-container">
                     <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
                     </div>
@@ -84,7 +84,7 @@ function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML
                 </div>
             </div>
 
-            <div class="task-user-prioIcon">    
+            <div class="task-user-prioIcon margin-8px">    
                 <div>
                     <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
                 </div>
@@ -103,11 +103,11 @@ function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML
 function renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
         <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
-            <div id="category-to-do${taskCounter}" class="category-to-do">${element.category}</div>
-            <h4 id="title-task${taskCounter}" class="title-task">${element.title}</h4>
-            <p id="description-task${taskCounter}" class="description-task">${element.description}</p>
+            <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
+            <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+            <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
              
-            <div class="task-subtask-container">    
+            <div class="task-subtask-container margin-8px">    
                 <div class="subtask-progress-container">
                     <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
                     </div>
@@ -118,7 +118,7 @@ function renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML) {
                 </div>
             </div>
 
-            <div class="task-user-prioIcon">    
+            <div class="task-user-prioIcon margin-8px">    
                 <div>
                     <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
                 </div>

@@ -33,7 +33,7 @@
                 <div class="task-container">
                     <div class="tasks">
                         <div class="task-headlines">
-                            <p>To Do</p>
+                            <p class="headlines-tasks">To Do</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
                         <div class="drag-and-drop-div-height" id="to-do-block" ondrop="moveTo('toDo')"
@@ -43,7 +43,7 @@
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
-                            <p>In progress</p>
+                            <p class="headlines-tasks">In progress</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
                         <div class="drag-and-drop-div-height" id="inProgress" ondrop="moveTo('inProgress')"
@@ -53,7 +53,7 @@
                     </div>
                     <div class="tasks">
                         <div class="task-headlines">
-                            <p>Await feedback</p>
+                            <p class="headlines-tasks">Await feedback</p>
                             <img onclick="toggleHamburgerMenu()" src="../assets/icons/plus-button.svg" alt="">
                         </div>
                         <div class="drag-and-drop-div-height" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
@@ -63,7 +63,7 @@
                     </div>
                     <div class="tasks margin-none">
                         <div class="task-headlines">
-                            <p>Done</p>
+                            <p class="headlines-tasks">Done</p>
                         </div>
                         <div class="drag-and-drop-div-height" id="done" ondrop="moveTo('done')"
                             ondragover="allowDrop(event)">
