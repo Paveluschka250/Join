@@ -44,8 +44,8 @@ function containsClass(prioColor, red, orange, green) {
     let btnIcon3 = document.getElementById('low-prio-icon');
 
     if (prioColor === 'prio1-color') {
-        red.classList.add('prio1-color');
-        btnIcon1.classList.add('priotity-btn-filter1');
+        red.classList.toggle('prio1-color');
+        btnIcon1.classList.toggle('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
         btnIcon2.classList.remove('priotity-btn-filter2');
         green.classList.remove('prio3-color');
@@ -53,8 +53,8 @@ function containsClass(prioColor, red, orange, green) {
     } else if (prioColor === 'prio2-color') {
         red.classList.remove('prio1-color');
         btnIcon1.classList.remove('priotity-btn-filter1');
-        orange.classList.add('prio2-color');
-        btnIcon2.classList.add('priotity-btn-filter2');
+        orange.classList.toggle('prio2-color');
+        btnIcon2.classList.toggle('priotity-btn-filter2');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (prioColor === 'prio3-color') {
@@ -62,8 +62,8 @@ function containsClass(prioColor, red, orange, green) {
         btnIcon1.classList.remove('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
         btnIcon2.classList.remove('priotity-btn-filter2');
-        green.classList.add('prio3-color');
-        btnIcon3.classList.add('priotity-btn-filter3');
+        green.classList.toggle('prio3-color');
+        btnIcon3.classList.toggle('priotity-btn-filter3');
     }
 }
 
@@ -707,7 +707,7 @@ function getPriorityEdit(id) {
         containsClassEdit('prio1-color', buttonRed, buttonOrange, buttonGreen);
     } else if (id == 'prio2-edit') {
         containsClassEdit('prio2-color', buttonRed, buttonOrange, buttonGreen);
-        document.getElementById('medium-prio-icon-edit').src = '../assets/icons/prio2.svg';
+        // document.getElementById('medium-prio-icon-edit').src = '../assets/icons/prio2.svg';
     } else if (id == 'prio3-edit') {
         containsClassEdit('prio3-color', buttonRed, buttonOrange, buttonGreen);
     }
@@ -719,17 +719,19 @@ function containsClassEdit(prioColor, red, orange, green) {
     let btnIcon3 = document.getElementById('low-prio-icon-edit');
 
     if (prioColor === 'prio1-color') {
-        red.classList.add('prio1-color');
-        btnIcon1.classList.add('priotity-btn-filter1');
+        red.classList.toggle('prio1-color');
+        btnIcon1.classList.toggle('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
         btnIcon2.classList.remove('priotity-btn-filter2');
+        btnIcon2.classList.remove('prio2-icon-color');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (prioColor === 'prio2-color') {
         red.classList.remove('prio1-color');
         btnIcon1.classList.remove('priotity-btn-filter1');
-        orange.classList.add('prio2-color');
-        btnIcon2.classList.add('priotity-btn-filter2');
+        orange.classList.toggle('prio2-color');
+        btnIcon2.classList.toggle('priotity-btn-filter2');
+        btnIcon2.classList.toggle('prio2-icon-color');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (prioColor === 'prio3-color') {
@@ -737,8 +739,9 @@ function containsClassEdit(prioColor, red, orange, green) {
         btnIcon1.classList.remove('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
         btnIcon2.classList.remove('priotity-btn-filter2');
-        green.classList.add('prio3-color');
-        btnIcon3.classList.add('priotity-btn-filter3');
+        btnIcon2.classList.remove('prio2-icon-color');
+        green.classList.toggle('prio3-color');
+        btnIcon3.classList.toggle('priotity-btn-filter3');
     }
 }
 
@@ -781,21 +784,21 @@ function editPriorityBtn(currentTask) {
         red.classList.add('prio1-color');
         btnIcon1.classList.add('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
-        btnIcon2.src = '../assets/icons/PriorityMediumOrange.png';
+        btnIcon2.classList.remove('priotity-btn-filter2');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (currentTask[8] === 'Medium') {
         red.classList.remove('prio1-color');
         btnIcon1.classList.remove('priotity-btn-filter1');
         orange.classList.add('prio2-color');
-        btnIcon2.src = '../assets/icons/prio2.svg';
+        btnIcon2.classList.add('priotity-btn-filter2');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (currentTask[8] === 'Low') {
         red.classList.remove('prio1-color');
         btnIcon1.classList.remove('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
-        btnIcon2.src = '../assets/icons/PriorityMediumOrange.png';
+        btnIcon2.classList.remove('priotity-btn-filter2');
         green.classList.add('prio3-color');
         btnIcon3.classList.add('priotity-btn-filter3');
     } else {

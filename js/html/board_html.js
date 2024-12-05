@@ -202,7 +202,7 @@ function renderEditTaskHTML () {
                                 alt="priorität hoch"></button>
                         <button id="prio2-edit" onclick="getPriorityEdit('prio2-edit')" type="button"
                                 class="prio-buttons-edit priority-btn-addTask medium-addTask center-button">Medium <img
-                                src="../assets/icons/priorityMediumOrange.png" alt="priorität mittel" id="medium-prio-icon-edit"
+                                src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon-edit"
                                 class="medium-prio-icon"></button>
                         <button id="prio3-edit" onclick="getPriorityEdit('prio3-edit')" type="button"
                             class="prio-buttons-edit priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon-edit"
@@ -242,7 +242,7 @@ function renderEditTaskHTML () {
                     </div>
                 </div>
                 <div>
-                    <button type="button" id="saveEditBtn">Save</button>
+                    <button type="button" class="saveEditBtn" id="saveEditBtn">Ok<img src="../assets/icons/check.svg"></button>
                 </div>
             </div>
         </form>
