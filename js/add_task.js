@@ -98,16 +98,20 @@ function getTaskData(event) {
     }
 
     let subtasks = [];
+    let subtasksChecked = [];
     let subtaskElements = document.querySelectorAll('#subtask-content li');
+    if(subtaskElements.length > 0) {
     subtaskElements.forEach(function (subtaskElement) {
         subtasks.push(subtaskElement.textContent);
     });
 
-    let subtasksChecked = [];
     for (let i = 0; i < subtaskElements.length; i++) {
         const element = subtaskElements[i];
         let subtaskId = { "id": `subtask${i}`, "checked": false };
         subtasksChecked.push(subtaskId);
+    }} else {
+        subtasks = ['dummy'];
+        subtasksChecked = ['dummy'];
     }
 
 

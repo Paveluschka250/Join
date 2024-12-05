@@ -608,7 +608,7 @@
     }
 
     .to-do-content {
-        min-width: 120px;
+        min-width: 130px;
         width: 130px;
         margin-right: 8px;
     }
@@ -624,6 +624,10 @@
 
     .board-content {
         width: 100%
+    }
+
+    .task-initials {
+        width: 25px !important;
     }
 }
 
@@ -648,5 +652,9 @@
         display: flex;
         align-items: center;
         width: 215px;
+    }
+
+    .task-initials {
+        width: 25px !important;
     }
 }
