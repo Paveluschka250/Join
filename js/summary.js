@@ -17,10 +17,11 @@ function updateUserCircle() {
     // Wir brauchen nur den onlineUser
     const onlineUser = localStorage.getItem('onlineUser');
     
-    if (onlineUser) {
+    if (onlineUser && onlineUser!="Gast") {
         // Update den Grußtext
         const userGreeting = document.getElementById('username');
         if (userGreeting) {
+          
             userGreeting.innerHTML = onlineUser;
         }
         
