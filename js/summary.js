@@ -12,6 +12,8 @@ let toDoNum;
 let progressNum;
 let awitingFeedbackNum;
 let doneNum;
+let urgentTasks =[];
+let urgent;
 
 function updateUserCircle() {
     // Wir brauchen nur den onlineUser
@@ -59,6 +61,7 @@ async function getTasksData() {
 
        
           getCategory()
+         
 
     } catch (error) {
         console.error('Error:', error);
@@ -108,16 +111,30 @@ function getCategory(){
 
 }
 function render(){
+  getPriority()
   toDoNum = toDoTasks.length;
   progressNum = inProgressTasks.length;
   awitingFeedbackNum = awaitFeedbackTasks.length
+  urgent = urgentTasks.length;
   doneNum = doneTasks.length;
   document.getElementById('to-do').innerHTML += `<h1>${toDoNum}</h1>`;
   document.getElementById('progress-task').innerHTML += `<h1>${progressNum}</h1>`;
   document.getElementById('awaiting-task').innerHTML += `<h1>${awitingFeedbackNum}</h1>`;
   document.getElementById('tasks-Done').innerHTML += `<h1>${doneNum}</h1>`;
+  document.getElementById('tasks-length').innerHTML +=`<h1>${urgent}</h1>`;
 
 }
+
+function getPriority(){
+  // Array durchlaufen und sortieren
+  tasks.forEach(function(task) {
+    var priority = task.priority;
+  
+    // array urgentTasks mit den entsprechenden Tasks auffüllen um die länge zu ermitteln
+    if (priority === "Urgent") {
+      urgentTasks.push(task);
+    } 
+  })};
 
 // Funktion, um das Overlay anzuzeigen, wenn auf `userCircle` geklickt wird
 function showOverlay(id) {
