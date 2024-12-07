@@ -23,7 +23,8 @@
             <div id="main" class="board-main">
                 <div class="search-container-board">
                     <span class="input-container-board">
-                        <input onkeyup="filterTasks()" id="search-input" class="input-board" type="search" required placeholder="Find Task">
+                        <input onkeyup="filterTasks()" id="search-input" class="input-board" type="search" required
+                            placeholder="Find Task">
                         <img src="..\assets\icons\search.svg" alt="">
                     </span>
                     <button onclick="toggleHamburgerMenu()" class="button-board">Add task +</button>
@@ -71,6 +72,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             </div>
             <div onclick="closeCurrentTask()" id="overlay-show-task" class="d-none">
@@ -79,7 +81,7 @@
         </main>
 
         <div class="hamburger-menu overlay-add-task-board" id="overlay-add-task-board">
-            <div id="addtask-content" class="container-addTask add-task-sb hamburger-menu">
+            <div id="addtask-content" class="add-task-sb-board hamburger-menu">
                 <form onsubmit="getFormData(event)" class="form-add-task" action="#" method="post">
                     <div class="add-task-sb-headline">
                         <h3 class="headline-add-task-sb">Add Task</h3><img class="add-task-sb-close-icon"
@@ -161,7 +163,7 @@
                     </div>
 
                     <div class="form-actions-addTask input-addTask hamburger-menu-add-task-close-btn">
-                        <button type="submit" class="submit-btn-addTask">Create Task <img
+                        <button type="submit" class="submit-btn-addTask board-create-task">Create Task <img
                                 src="../assets/icons/createTaskIcon.svg" alt=""></button>
                     </div>
                 </form>
@@ -172,4 +174,5 @@
 <script src="../js/load_layout.js"></script>
 <script src="../js/board.js"></script>
 <script src="../js/html/board_html.js"></script>
+
 </html>

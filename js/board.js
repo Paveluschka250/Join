@@ -466,13 +466,18 @@ function getRandomColor() {
 }
 
 function showOverlayTask(taskCounter) {
-    document.getElementById('overlay-show-task').classList.remove('d-none');
-    document.getElementById('overlay-show-task').classList.add('overlay-show-task');
+    const overlay = document.getElementById('overlay-show-task');
+    const currentTask = document.getElementById('current-task');
+    overlay.classList.remove('d-none');
+    overlay.classList.add('overlay-show-task');
     extractTaskData(taskCounter);
 
-    document.getElementById('current-to-do').addEventListener("click", function (event) {
-        event.stopPropagation();
-    })
+    if (!currentTask.hasAttribute('data-listener-added')) {
+        currentTask.addEventListener("click", function (event) {
+            event.stopPropagation(); // Verhindert das Schließen des Overlays bei Klicks auf "current-to-do"
+        });
+        currentTask.setAttribute('data-listener-added', 'true');
+    }
 }
 
 function renderOverlayTask(taskCounter, currentTask) {
@@ -556,8 +561,9 @@ function extractTaskData(taskCounter) {
 }
 
 function closeCurrentTask() {
-    document.getElementById('overlay-show-task').classList.remove('overlay-show-task');
-    document.getElementById('overlay-show-task').classList.add('d-none');
+    const overlay = document.getElementById('overlay-show-task');
+    overlay.classList.remove('overlay-show-task');
+    overlay.classList.add('d-none');
     getTasks();
 }
 
@@ -707,7 +713,6 @@ function getPriorityEdit(id) {
         containsClassEdit('prio1-color', buttonRed, buttonOrange, buttonGreen);
     } else if (id == 'prio2-edit') {
         containsClassEdit('prio2-color', buttonRed, buttonOrange, buttonGreen);
-        // document.getElementById('medium-prio-icon-edit').src = '../assets/icons/prio2.svg';
     } else if (id == 'prio3-edit') {
         containsClassEdit('prio3-color', buttonRed, buttonOrange, buttonGreen);
     }
@@ -785,6 +790,7 @@ function editPriorityBtn(currentTask) {
         btnIcon1.classList.add('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
         btnIcon2.classList.remove('priotity-btn-filter2');
+        btnIcon2.classList.remove('prio2-icon-color');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (currentTask[8] === 'Medium') {
@@ -792,6 +798,7 @@ function editPriorityBtn(currentTask) {
         btnIcon1.classList.remove('priotity-btn-filter1');
         orange.classList.add('prio2-color');
         btnIcon2.classList.add('priotity-btn-filter2');
+        btnIcon2.classList.add('prio2-icon-color');
         green.classList.remove('prio3-color');
         btnIcon3.classList.remove('priotity-btn-filter3');
     } else if (currentTask[8] === 'Low') {
@@ -799,6 +806,7 @@ function editPriorityBtn(currentTask) {
         btnIcon1.classList.remove('priotity-btn-filter1');
         orange.classList.remove('prio2-color');
         btnIcon2.classList.remove('priotity-btn-filter2');
+        btnIcon2.classList.remove('prio2-icon-color');
         green.classList.add('prio3-color');
         btnIcon3.classList.add('priotity-btn-filter3');
     } else {
@@ -921,6 +929,8 @@ function saveEditBtn(taskCounter) {
     getKeysFromTasks();
     let currentTaskKey = keys[taskCounter];    
     getDataFromEdit(currentTaskKey);
+    closeCurrentTask();
+    renderAddTask();
 }
 
 function getDataFromEdit(key) {
@@ -931,7 +941,7 @@ function getDataFromEdit(key) {
     let description = document.getElementById('description-edit').value;
     let dueDate = document.getElementById('due-date-edit').value;
     let category = document.getElementById('category-edit').value;
-
+    
     let selectedContactsDivs = document.querySelectorAll('#selected-contacts-sb-edit .current-task-initials');
     let assignedTo = [];
     let fullNames = [];
@@ -973,6 +983,11 @@ function getDataFromEdit(key) {
         fullNames
     };
     editToFirebase(formData, key)
+}
+
+function selectedContactsEdit() {
+
+    return [assignedTo, fullNames]
 }
 
 function editToFirebase(formData, key) {

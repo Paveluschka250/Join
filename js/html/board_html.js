@@ -202,7 +202,7 @@ function renderEditTaskHTML () {
                                 alt="priorität hoch"></button>
                         <button id="prio2-edit" onclick="getPriorityEdit('prio2-edit')" type="button"
                                 class="prio-buttons-edit priority-btn-addTask medium-addTask center-button">Medium <img
-                                src="../assets/icons/prio2.svg" alt="priorität mittel" id="medium-prio-icon-edit"
+                                src="../assets/icons/PriorityMediumOrange.png" alt="priorität mittel" id="medium-prio-icon-edit"
                                 class="medium-prio-icon"></button>
                         <button id="prio3-edit" onclick="getPriorityEdit('prio3-edit')" type="button"
                             class="prio-buttons-edit priority-btn-addTask low-addTask center-button">Low <img id="low-prio-icon-edit"

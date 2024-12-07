@@ -1,6 +1,10 @@
+body {
+    overflow: hidden;
+}
+
 .board-main {
     margin: 32px;
-    width: 100%;
+    /* width: calc(100% - 64px); */
 }
 
 .search-container-board {
@@ -74,7 +78,7 @@
 .task-container {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
 }
 
 .task-headlines {
@@ -106,11 +110,11 @@
 
 .hamburger-menu-add-task-close-btn {
     display: flex !important;
-    position: relative !important;
+    position: absolute !important;
     width: 100% !important;
     align-items: flex-end !important;
     justify-content: flex-end !important;
-    bottom: 0 !important;
+    bottom: 12px !important;
     right: 0 !important;
     flex: 1;
     padding-bottom: 0px !important;
@@ -593,11 +597,43 @@
     cursor: pointer;
     transition: 0.3s;
     transform: translateY(2px);
+    background-color: #0038ff;
 }
 
 .prio2-icon-color {
-    filter: brightness(0) saturate(100%) invert(75%) sepia(59%) saturate(1118%) hue-rotate(358deg) brightness(101%) contrast(107%);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(317deg) brightness(108%) contrast(101%);
 }
+
+.add-task-sb-board {
+    border-top-left-radius: 16px !important;
+    border-bottom-left-radius: 16px !important;
+    max-width: 400px !important;
+    /* margin: 32px; */
+    padding: 20px;
+    height: 95% !important;
+    /* position: absolute;
+    right: 0; */
+}
+
+.overlay-add-task-board {
+    z-index: 1000;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.board-create-task {
+    position: absolute;
+    bottom: 0 !important;
+}
+
+/* .d-flex {
+    display: block;
+    position:relative;
+} */
 
 @media(max-width: 700px) {
     .category-to-do {
@@ -618,7 +654,7 @@
 
     .task-container {
         flex-direction: column;
-        height: 563px;
+        height: calc(100vh - 264px);
         overflow-y: scroll;
     }
 
@@ -659,12 +695,29 @@
     .current-task-initials {
         width: 36px !important;
     }
+
+    .scroll-input {
+        width: 275px;
+    }
+
+    .add-task-sb-board {
+        border-top-left-radius: 16px !important;
+        width: 400px;
+        margin: 32px;
+        padding: 20px;
+        height: 90% !important;
+        position: relative !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @media(max-width: 480px) {
     .board-main {
-        margin: 32px;
-        width: 95vw;
+        margin: 16px auto;
+        /* width: calc(100% - 64px); */
+        width: 92vw !important;
     }
 
     .search-container-board {
@@ -672,6 +725,7 @@
         flex-direction: column;
         align-items: flex-start;
         margin-bottom: 0;
+
     }
 
     .button-board {
@@ -682,7 +736,7 @@
     .input-container-board {
         display: flex;
         justify-content: space-between;
-        width: 90%;
+        width: 100%;
     }
 
     .task-initials {
@@ -695,6 +749,22 @@
 
     #suggestions {
         width: 85%;
+    }
+
+    .task-container {
+        flex-direction: column;
+        height: calc(100vh - 264px);
+        overflow-y: scroll;
+        margin: 10px auto;
+    }
+
+    .edit-buttons button{
+        font-size: 10px;
+    }
+
+    .current-task {
+        display: flex;
+        justify-content: center;
     }
 }
 
@@ -710,4 +780,38 @@
     .to-do-content {
         margin-bottom: 8px;
     }
-} 
+
+    .container-addTask-sb-board {
+        border-top-left-radius: 16px !important;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .add-task-sb-board {
+        border-radius: 16px !important;
+        width: 400px;
+        margin: 32px;
+        padding: 20px;
+        height: 90% !important;
+        position: relative !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .overlay-add-task-board {
+        display: flex;
+        align-items: center;
+    }
+
+    .taskcontainer {
+        flex-direction: column;
+        height: calc(100% - 360px);
+        overflow-y: scroll;
+    }
+}
