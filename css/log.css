@@ -309,3 +309,119 @@ footer {
 .success {
     background-color: #44b544;
 }
+/* Responsive Design für kleine Bildschirme */
+@media screen and (max-width: 768px) {
+    /* Header-Inhalte auf neue Position bringen */
+    #not-User {
+        position: fixed;
+        bottom: 60px; /* 5px höher als vorher */
+        left: 40%; /* 10px nach rechts verschoben */
+        transform: translateX(-50%); /* Zentriert */
+        font-size: 1em;
+        color: grey;
+        text-align: center;
+        margin-bottom: 10px; /* Abstand nach unten */
+        z-index: 10;
+        display: inline-block;
+    }
+
+    .navigation .btnLogin-popup {
+        position: fixed;
+        bottom: 60px; /* 15px höher als vorher */
+        left: 55%; /* 10px nach rechts verschoben */
+        transform: translateX(-50%); /* Zentriert */
+        width: 100px; /* Kleinerer Button */
+        height: 40px;
+        font-size: 0.9em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        border-radius: 6px;
+        margin-right: 20px; /* Button nach rechts verschoben */
+    }
+
+    .navigation .btnLogin-popup a {
+        text-decoration: none;
+        color: #fff;
+        display: block; /* Damit der Text vollständig sichtbar ist */
+        text-align: center; /* Zentriert */
+        width: 100%; /* Füllt den Button aus */
+        font-size: 0.8em; /* Kleinere Schriftgröße */
+        line-height: 40px; /* Passt die vertikale Zentrierung an */
+    }
+
+    .navigation .btnLogin-popup {
+        background-color: #4589FF;
+        border: 2px solid #fff;
+        outline: none;
+        color: #fff;
+        font-size: 1.1em;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    .navigation .btnLogin-popup:hover {
+        background: hwb(218 12% 52%);
+        color: #fff;
+    }
+
+    /* Responsives Login-Formular */
+    .wrapper {
+        width: 90%; /* Breite reduziert */
+        margin: 20px auto;
+        height: auto; /* Höhe flexibel */
+    }
+
+    .form-box-login {
+        padding: 20px;
+    }
+
+    .form-box-login h2 {
+        font-size: 1.5em; /* Kleinere Schriftgröße */
+    }
+
+    .input-box {
+        height: 45px;
+        margin: 15px 0;
+    }
+
+    .input-box input {
+        font-size: 0.9em;
+        padding: 0 30px 0 5px;
+    }
+
+    .input-box .icon {
+        font-size: 1em;
+    }
+
+    .btn {
+        margin-top: 30px;
+        flex-direction: column;
+        gap: 10px; /* Abstand zwischen den Buttons */
+    }
+
+    #log, #guest {
+        width: 100%; /* Breite 100% */
+    }
+
+    /* Footer bleibt unverändert */
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 10px;
+    }
+
+    .end {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .privacy, .legal-notice {
+        margin: 0 10px;
+    }
+}
