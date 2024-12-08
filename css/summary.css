@@ -402,11 +402,129 @@ span {
 @media (max-width: 768px) {
   /* Nach 4 Sekunden: Greeting ausblenden und Rest einblenden */
   .greeting {
-    animation: toggleVisibility 0.5s ease-in-out 4s forwards;
+    animation: toggleVisibility 0.5s ease-in-out 3s forwards;
   }
   .main-container,
   #header {
     display: block !important;
-    animation: toggleVisibility 0.5s ease-in-out 4s reverse; /* Umgekehrte Animation */
+    animation: toggleVisibility 0.5s ease-in-out 3s reverse; /* Umgekehrte Animation */
+  }
+}
+/* Responsive Anpassung */
+@media (max-width: 768px) {
+  .main-container {
+    display: flex;
+    flex-wrap: wrap; /* Ermöglicht Umbruch in neue Zeilen */
+    gap: 15px; /* Abstand zwischen den Elementen */
+    padding: 20px;
+    justify-content: center;
+  }
+
+  /* sec-Part: Alleinstehend, volle Breite */
+  .sec-Part {
+    width: 100%; /* Volle Breite */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px; /* Abstand zur nächsten Reihe */
+    box-sizing: border-box;
+  }
+
+  /* Allgemeine Boxen (Task-Boxen) */
+  .task-box {
+    width: calc(50% - 10px); /* Zwei Boxen nebeneinander, mit Abstand */
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  /* Schriftgrößen und Inhalte anpassen */
+  .task-box h1,
+  .sec-Part h1 {
+    font-size: 14px; /* Kleinere Schriftgröße */
+    margin: 5px 0;
+  }
+
+  .task-box span,
+  .sec-Part span {
+    font-size: 12px; /* Kleinere Schriftgröße */
+  }
+
+  .task-inner img {
+    width: 40%; /* Bildgröße verkleinern */
+    height: auto;
+  }
+
+  /* Abstand für Boxen */
+  .task-box:nth-child(odd) {
+    margin-right: 10px; /* Abstand rechts für die erste Box in einer Zeile */
+  }
+
+  .task-box:nth-child(even) {
+    margin-right: 0; /* Keine zusätzliche Lücke für die zweite Box */
+  }
+}
+/* Responsive Anpassung */
+@media (max-width: 768px) {
+  .main-container {
+    display: flex;
+    flex-wrap: wrap; /* Elemente umbrechen */
+    justify-content: space-between; /* Gleichmäßige Verteilung */
+    gap: 15px; /* Abstand zwischen Reihen */
+    padding: 20px;
+  }
+
+  /* sec-Part: Erste Reihe, alleinstehend */
+  .sec-Part {
+    width: 100%; /* Volle Breite */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+  }
+
+  /* Boxen für die folgenden Reihen */
+  .task-box {
+    width: calc(50% - 10px); /* Zwei Boxen nebeneinander */
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* Inhalte innerhalb der Boxen */
+  .task-box h1,
+  .sec-Part h1 {
+    font-size: 14px; /* Schriftgröße verkleinern */
+    margin: 5px 0;
+  }
+
+  .task-box span,
+  .sec-Part span {
+    font-size: 12px; /* Schriftgröße verkleinern */
+  }
+
+  .task-inner img {
+    width: 40%; /* Bildgröße proportional verkleinern */
+    height: auto;
+  }
+
+  /* Abstand für die Boxen */
+  .task-box:nth-child(odd) {
+    margin-right: 10px; /* Abstand für linke Boxen in der Reihe */
+  }
+
+  .task-box:nth-child(even) {
+    margin-right: 0; /* Rechte Boxen haben keinen Abstand */
   }
 }
