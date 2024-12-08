@@ -354,3 +354,59 @@ span {
 }
 
 
+/* Standard-Styles */
+.display-none {
+  display: none !important;
+}
+
+/* Ergänzung für kleinere Bildschirme */
+@media (max-width: 768px) {
+  body {
+    overflow: hidden; /* Verhindert das Scrollen */
+  }
+
+  /* Zuerst alle Inhalte ausblenden */
+  .main-container,
+  #header {
+    display: none; /* Standardmäßig unsichtbar */
+  }
+
+  .greeting {
+    display: flex; /* Sichtbar lassen */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 1000;
+    text-align: center;
+  }
+}
+
+/* Keyframes für das Ein- und Ausblenden */
+@keyframes toggleVisibility {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+/* Dynamischer Wechsel */
+@media (max-width: 768px) {
+  /* Nach 4 Sekunden: Greeting ausblenden und Rest einblenden */
+  .greeting {
+    animation: toggleVisibility 0.5s ease-in-out 4s forwards;
+  }
+  .main-container,
+  #header {
+    display: block !important;
+    animation: toggleVisibility 0.5s ease-in-out 4s reverse; /* Umgekehrte Animation */
+  }
+}
