@@ -249,6 +249,9 @@
 .contacts-overlay.inactive {
   animation-name: slideOutRight;
 }
+.edit-delete-overlay {
+  display: none;
+}
 @keyframes slideInRight {
   from {
     right: -584px;
