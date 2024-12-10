@@ -9,10 +9,8 @@ async function loadHeader() {
     document.getElementById("header").innerHTML = data;
     adjustHeaderForLegalPages();
     initializeOverlay();
-    
-    // Hier die Initialen laden, nachdem der Header eingefügt wurde
-    const currentUser = localStorage.getItem('currentUser');
-    const userCircle = document.querySelector('#userCircle h4');
+    const currentUser = localStorage.getItem("currentUser");
+    const userCircle = document.querySelector("#userCircle h4");
     if (userCircle && currentUser) {
       userCircle.textContent = currentUser;
     }
@@ -91,7 +89,7 @@ function addEventListenersToTriggerOverlay(overlay) {
   document.querySelectorAll("#trigger-overlay").forEach(function (element) {
     element.addEventListener("click", function (event) {
       const clickedElement = event.target;
-      if (clickedElement.closest('.help-icon')) {
+      if (clickedElement.closest(".help-icon")) {
         return;
       }
       toggleOverlay(true, overlay);
@@ -110,14 +108,16 @@ function addEventListenersToOverlay(overlay) {
 }
 
 function addEventListenersToOverlayContent(overlay) {
-  document.querySelector(".overlay-content").addEventListener("click", function (event) {
-    event.stopPropagation();
-  });
+  document
+    .querySelector(".overlay-content")
+    .addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
 }
 
 function addEventListenersToOverlayContentLinks(overlay) {
-  document.querySelectorAll('.overlay-content a').forEach(link => {
-    link.addEventListener('click', function () {
+  document.querySelectorAll(".overlay-content a").forEach((link) => {
+    link.addEventListener("click", function () {
       toggleOverlay(false, overlay);
     });
   });
@@ -128,37 +128,32 @@ function toggleOverlay(show, overlay) {
 }
 
 function loadUserInitials() {
-  const userCircle = document.getElementById('userCircle');
-  const initialsElement = userCircle.querySelector('h4');
-  const userInitials = localStorage.getItem('userInitials') || 'G';
+  const userCircle = document.getElementById("userCircle");
+  const initialsElement = userCircle.querySelector("h4");
+  const userInitials = localStorage.getItem("userInitials") || "G";
   initialsElement.textContent = userInitials;
 }
 
 async function includeHTML() {
-  // ... bestehender Code ...
-  
-  // Nach dem Laden des Headers
   if (elem.getAttribute("id") == "header") {
     await loadHTML(file, elem);
-    // Aktualisiere den userCircle nach dem Laden des Headers
     loadUserInitials();
   }
-  
-  // ... restlicher bestehender Code ...
 }
 
 function logout() {
-    localStorage.removeItem('userInitials');
-    window.location.href = '../index.html';
+  localStorage.removeItem("userInitials");
+  window.location.href = "../index.html";
 }
 
-// Event-Listener für den Logout-Link hinzufügen
-document.addEventListener('DOMContentLoaded', function() {
-    const logoutLink = document.querySelector('.overlay-content a[href="../index.html"]');
-    if (logoutLink) {
-        logoutLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            logout();
-        });
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutLink = document.querySelector(
+    '.overlay-content a[href="../index.html"]'
+  );
+  if (logoutLink) {
+    logoutLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      logout();
+    });
+  }
 });

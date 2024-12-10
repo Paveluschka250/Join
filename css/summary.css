@@ -27,7 +27,6 @@
   line-height: 57.6px;
 }
 
-/* Grid Layout */
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -39,9 +38,9 @@
   padding: 0 20px;
 }
 
-/* Erste Zeile - Urgent Tasks Box */
 #username {
   color: #4589ff;
+
 }
 .sec-Part {
   grid-column: span 3;
@@ -79,7 +78,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* gap: 13px; */
   height: 100%;
 }
 
@@ -160,7 +158,6 @@
   margin: 0;
 }
 
-/* Gemeinsame Basis-Klasse für alle Task-Boxen */
 .task-box {
   grid-column: span 1;
   background: white;
@@ -179,7 +176,6 @@
   box-sizing: border-box;
 }
 
-/* Gemeinsame Hover-Effekte */
 .task-box:hover {
   transform: scale(1.1);
   background-color: #0038ff;
@@ -192,12 +188,10 @@
   color: white;
 }
 
-/* Neuer Hover-Effekt für die Zahlen */
 .task-box:hover h1 {
   color: white;
 }
 
-/* Anpassung der Text-Container */
 .task-text,
 .tasks-To-Do-Text,
 .tasks-In-Progress-Text,
@@ -207,18 +201,18 @@
   padding-bottom: 10px;
 }
 
-/* Spezifischer Hover-Effekt für tasks-To-Do */
 .tasks-To-Do:hover h1 {
   color: #4589ff;
 }
+
 .tasks-To-Do:hover span {
   color: #4589ff;
 }
+
 .tasks-To-Do:hover {
   background-color: white;
 }
 
-/* Gemeinsame Inner-Box Styles */
 .task-inner {
   display: flex;
   flex-direction: row;
@@ -229,13 +223,11 @@
   flex: 1;
 }
 
-/* Optional: Styling für die Zahlen in den task-inner Boxen */
 .task-inner h1 {
   font-size: 47px;
   margin: 0;
 }
 
-/* Spezifische Styles */
 .board {
   @extend .task-box;
 }
@@ -265,7 +257,6 @@
   @extend .task-inner;
 }
 
-/* Text Styles */
 h6 {
   font-size: 23px;
   line-height: 27.6px;
@@ -285,35 +276,10 @@ span {
   color: #4589ff;
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  #summary-content {
-    height: calc(100vh - 100px - 76px);
-  }
-  .overlay-content a.help {
-    display: block;
-  }
-  .overlay-content a {
-    color: #4589ff;
-  }
-  .profile p {
-    display: none;
-  }
-  #header header .profile #none a[href="../pages/help.html"] {
-    display: none;
-  }
-  .overlay-content {
-    border-top-right-radius: 0px;
-    top: 80px;
-    right: 40px;
-  }
-}
-
 .d-none {
   display: none;
 }
 
-/* Optional: Spezifische Transitionen für die Kinder-Elemente */
 .sec-Part h1,
 .sec-Part h6,
 .sec-Part .deadline,
@@ -321,7 +287,6 @@ span {
   transition: color 225ms ease-in-out, background-color 225ms ease-in-out;
 }
 
-/* Gemeinsame Styles für alle Icon-Container */
 .icon-container {
   width: 60px;
   height: 60px;
@@ -331,7 +296,6 @@ span {
   background-position: center;
 }
 
-/* Spezifische Background-Images für jeden Icon-Container */
 .board-icon {
   background-image: url(../assets/icons/summary/board.svg);
 }
@@ -355,15 +319,13 @@ span {
 .box-link {
   text-decoration: none;
   color: inherit;
-  display: contents; /* Verhindert, dass der Link das Layout beeinflusst */
+  display: contents;
 }
 
-/* Standard-Styles */
 .display-none {
   display: none !important;
 }
 
-/* Keyframes für das Ein- und Ausblenden */
 @keyframes toggleVisibility {
   0% {
     visibility: visible;
@@ -372,165 +334,5 @@ span {
   100% {
     visibility: hidden;
     opacity: 0;
-  }
-}
-/* Responsive Anpassung */
-@media (max-width: 768px) {
-  .task-box {
-  }
-
-  .task-box h1,
-  .sec-Part h1,
-  .sec-Part .urgent-tasks .urgent-container .inner-urgentTasks #tasks-length h1,
-  h3 {
-    margin: 5px 0;
-    font-size: 30px; /* Kleinere Schriftgröße */
-  }
-
-  .sec-Part .date .deadline h3 {
-    font-size: 25px;
-  }
-
-  .tasks-In-Progress-Text,
-  .task-text,
-  .Tasks-Awaiting-Feedback-Text,
-  .Tasks-Done-Text,
-  .tasks-To-Do-Text {
-    padding-bottom: 0;
-  }
-
-  .task-box span,
-  .sec-Part span,
-  h6 {
-    font-size: 17px; /* Schriftgröße verkleinern */
-  }
-
-  .urgent-img,
-  .board-icon,
-  .todo-icon,
-  .progress-icon,
-  .feedback-icon,
-  .done-icon {
-    width: 45px;
-    height: 45px;
-    background-size: cover;
-    background-color: #4589ff;
-  }
-
-  .vertical-Line {
-    margin-left: 20px;
-  }
-  .date {
-    padding-left: 20px;
-  }
-
-  .inner-urgentTasks,
-  .task-inner {
-    gap: 10px;
-    flex: 0;
-  }
-
-  .date,
-  .urgent-container {
-    gap: 10px;
-  }
-
-  .greeting {
-    animation: toggleVisibility 0.5s ease-in-out 3s forwards;
-    flex-direction: column;
-    display: flex; /* Sichtbar lassen */
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 100px;
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - 100px - 76px);
-    background: white;
-    z-index: 1000;
-    text-align: center;
-  }
-
-  /* sec-Part: Erste Reihe, alleinstehend */
-  .sec-Part {
-    padding: 20px;
-    grid-template-columns: 1fr;
-    width: 382px; /* Volle Breite */
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-  }
-
-  .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Zwei Spalten für mobile Ansicht */
-    grid-template-rows: auto;
-    gap: 15px;
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-  }
-
-  /* sec-Part soll die volle Breite einnehmen */
-  .sec-Part {
-    grid-column: 1 / -1; /* Von erste bis letzte Spalte */
-    width: 100%;
-    margin-bottom: 15px;
-  }
-
-  /* tasks-To-Do soll auch die volle Breite einnehmen */
-  .tasks-To-Do {
-    grid-column: 1 / -1;
-    width: 100%;
-    margin-bottom: 15px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-
-  /* Die restlichen Boxen sollen je 2 nebeneinander sein */
-  .tasks-In-Progress,
-  .tasks-Awaiting-Feedback,
-  .Tasks-Done,
-  .board {
-    grid-column: span 1; /* Jede Box nimmt eine Spalte ein */
-    width: 100%;
-  }
-
-  /* Anpassung der Box-Größen */
-  .task-box {
-    aspect-ratio: auto;
-    /* height: 150px; */
-    gap: 10px;
-    padding: 20px;
-  }
-
-  /* Reihenfolge der Elemente im Grid anpassen */
-  .sec-Part {
-    order: 1;
-  }
-
-  .tasks-To-Do {
-    order: 2;
-  }
-
-  .board {
-    order: 4; /* Board nach hinten verschieben */
-  }
-
-  .tasks-In-Progress {
-    order: 3;
-  }
-
-  .tasks-Awaiting-Feedback {
-    order: 5;
-  }
-
-  .tasks-Done {
-    order: 6;
   }
 }
