@@ -331,12 +331,3 @@
 #contacts-content .contact-item:nth-child(20) {
   animation-delay: 1s;
 }
-@media (max-width: 1440px) {
-  #contacts-content .contact-header {
-    flex-direction: column;
-    gap: 16px;
-  }
-  #contacts-content .header-right {
-    margin-left: 0;
-  }
-}

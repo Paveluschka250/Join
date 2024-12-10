@@ -1,0 +1,91 @@
+@media (max-width: 768px) {
+  .contacts-overlay {
+    border-radius: 30px;
+    right: -584px;
+    width: 396px;
+    height: 90%;
+    top: calc(5%);
+  }
+  #edit-contact-overlay .overlay-content-header,
+  #contacts-overlay .overlay-content-header {
+    border-radius: 30px 30px 0 0;
+  }
+  .overlay-content-header img {
+    display: none;
+  }
+
+  .overlay-content-add-contact {
+    height: auto;
+    padding-top: calc(15px + 67.5px);
+  }
+  .profile-picture {
+    position: absolute;
+    top: calc(280px - 67.5px);
+  }
+  #addContactForm {
+    width: 80%;
+  }
+  .create-btn {
+    padding: 12px 8px;
+    font-size: 19px;
+  }
+  .cancel-btn {
+    display: none;
+  }
+  .save-btn,
+  .delete-btn {
+    padding: 12px 8px;
+    font-size: 19px;
+  }
+  #edit-contact-overlay.active {
+    border-radius: 30px;
+    right: -584px;
+    width: 396px;
+    height: 90%;
+    top: calc(5%);
+  }
+  #editContactForm {
+    width: 80%;
+  }
+  #editContactForm .input-wrapper {
+    margin: 0;
+  }
+  #editContactForm .input-wrapper input,
+  #contacts-overlay .input-wrapper input {
+    font-size: 15px;
+  }
+  #edit-contact-overlay.active {
+    left: auto;
+  }
+}
+@media (max-width: 425px) {
+  .contacts-overlay {
+    width: 90%;
+    height: 90%;
+  }
+  .overlay-content-header p {
+    font-size: 20px;
+  }
+  #edit-contact-overlay.active {
+    width: 90%;
+    height: 90%;
+  }
+}
+@media (max-height: 932px) {
+  .overlay-content-header {
+    height: 280px;
+  }
+  .profile-picture,
+  .input-wrapper,
+  .button-wrapper {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-height: 736px) {
+  .profile-picture,
+  .input-wrapper,
+  .button-wrapper {
+    margin: 0;
+  }
+}

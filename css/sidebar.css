@@ -1,147 +1,144 @@
 .sidebar {
-    width: 200px; /* Breite der Sidebar */
-    background-color: #f8f9fa; /* Hintergrundfarbe der Sidebar */
-    display: flex;
-    flex-direction: column; /* Anordnung der Elemente von oben nach unten */
-    height: calc(100% - 132px); /* Höhe der Sidebar auf volle Bildschirmhöhe */
-    padding: 16px; /* Innenabstand */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Schatten für die Sidebar */
-    overflow: hidden; /* Verhindert Scrollbars in der Sidebar */
-    position: fixed;
-    margin-top: 100px;
-    z-index: 999;
+  width: 200px;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 132px);
+  padding: 16px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: fixed;
+  margin-top: 100px;
+  z-index: 999;
 }
 
 .sidebar-logo img {
-    width: 100%; /* Logo nimmt volle Breite ein */
-    margin-bottom: 16px; /* Abstand nach unten */
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .sidebar-nav {
-    flex: 1; /* Füllt den verfügbaren Platz */
-    display: flex;
-    gap: 15px;
-    flex-direction: column; /* Buttons untereinander anordnen */
-    overflow: hidden; /* Verhindert Scrollbars in der Navigationsleiste */
+  flex: 1;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .sidebar-button.active {
-    background-color: #D2E3FF; /* Aktive Hintergrundfarbe */
+  background-color: #d2e3ff;
 }
 
-
 .sidebar-button {
-    display: flex; /* Flexbox für die Buttons */
-    align-items: center; /* Vertikale Zentrierung */
-    background: none; /* Kein Hintergrund */
-    border: none; /* Kein Rand */
-    border-radius: 8px;
-    padding: 8px 30px; /* Innenabstand für die Buttons */
-    cursor: pointer; /* Zeigt, dass es klickbar ist */
-    transition: background-color 0.2s; /* Sanfte Übergangsanimation */
-    padding-left: 50px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 30px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  padding-left: 50px;
 }
 
 .sidebar-button:hover {
-    background-color: rgba(210, 227, 255, 0.6);
+  background-color: rgba(210, 227, 255, 0.6);
 }
 
 .sidebar-button.active:hover {
-    background-color: #D2E3FF; /* Gleiche Farbe wie .active, kein Hover-Effekt */
+  background-color: #d2e3ff;
 }
 
 .sidebar-button.active:hover {
-    background-color: #D2E3FF; /* Keine Änderung der Hintergrundfarbe beim Hover für aktive Schaltfläche */
-    cursor: default; /* Zeigt, dass die Schaltfläche nicht klickbar ist */
+  background-color: #d2e3ff;
+  cursor: default;
 }
 
 .sidebar-icon {
-    width: 24px; /* Breite der Icons auf 24px geändert */
-    height: 24px; /* Höhe der Icons auf 24px geändert */
-    margin-right: 8px; /* Abstand zwischen Icon und Text */
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 
 .sidebar-footer {
-    margin-top: auto; /* Platziert den Footer am Ende der Sidebar */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding-left: 48px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 48px;
 }
 
 .footer-text {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #6c757d;
-    cursor: pointer;
-    text-decoration: none;
-    padding: 8px;
-    width: max-content;
+  margin: 8px 0;
+  font-size: 14px;
+  color: #6c757d;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 8px;
+  width: max-content;
 }
 
 .footer-text:hover {
-    color: #4589ff;
+  color: #4589ff;
 }
 
-/* Hinzufügen der aktiven Klasse für hervorgehobene Links */
 .footer-text.active {
-    color: white;
-    background-color: #4589ff; /* Blaues Padding */
-    border-radius: 4px;
+  color: white;
+  background-color: #4589ff;
+  border-radius: 4px;
 }
 
-/* Fügen Sie diese Media Query am Ende der Datei hinzu */
 @media (max-width: 1024px) {
-    .sidebar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 76px; /* Geändert auf 76px */
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 0; /* Padding entfernt, um die volle Höhe zu nutzen */
-        margin-top: 0;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    }
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 76px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    margin-top: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
 
-    .sidebar-nav {
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 100%; /* Volle Höhe des Footers nutzen */
-    }
+  .sidebar-nav {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 
-    .sidebar-button {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 8px;
-        height: 100%;
-        font-size: 15px;
-        gap: 4px;
-        color: #000000; /* Standardfarbe für inaktive Buttons */
-    }
+  .sidebar-button {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    height: 100%;
+    font-size: 15px;
+    gap: 4px;
+    color: #000000;
+  }
 
-    .sidebar-button.active {
-        background-color: transparent; /* Entfernt den Hintergrund für aktive Buttons */
-        color: #4589ff; /* Blaue Schriftfarbe für aktive Buttons */
-    }
+  .sidebar-button.active {
+    background-color: transparent;
+    color: #4589ff;
+  }
 
-    .sidebar-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 0;
-        margin-bottom: 0;
-    }
+  .sidebar-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
 
-    /* Fügen Sie diese neue Regel hinzu, um auch das Icon blau zu färben */
-    .sidebar-button.active .sidebar-icon {
-        filter: invert(40%) sepia(57%) saturate(2532%) hue-rotate(203deg) brightness(103%) contrast(96%);
-    }
+  .sidebar-button.active .sidebar-icon {
+    filter: invert(40%) sepia(57%) saturate(2532%) hue-rotate(203deg)
+      brightness(103%) contrast(96%);
+  }
 
-    .sidebar-footer {
-        display: none;
-    }
+  .sidebar-footer {
+    display: none;
+  }
 }
