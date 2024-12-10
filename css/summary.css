@@ -420,7 +420,24 @@ span {
     justify-content: center;
   }
 
-  
+  /* Anpassung zwischen 768px und 332px */
+@media (max-width: 768px) and (min-width: 332px) {
+  .div2 {
+    display: block; /* Div 2 in einer neuen Reihe */
+  }
+  .div3 {
+    display: inline-block; /* Div 3 bleibt inline-block */
+  }
+  .div4 {
+    display: block; /* Div 4 in einer neuen Reihe */
+  }
+  .div5 {
+    display: inline-block; /* Div 5 bleibt inline-block */
+  }
+  .div6 {
+    display: block; /* Div 6 in einer neuen Reihe */
+  }
+}
 
   /* Schriftgrößen und Inhalte anpassen */
   .task-box h1,
