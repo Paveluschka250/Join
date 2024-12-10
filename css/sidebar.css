@@ -3,7 +3,7 @@
     background-color: #f8f9fa; /* Hintergrundfarbe der Sidebar */
     display: flex;
     flex-direction: column; /* Anordnung der Elemente von oben nach unten */
-    height: calc(100vh - 132px); /* Höhe der Sidebar auf volle Bildschirmhöhe */
+    height: calc(100% - 132px); /* Höhe der Sidebar auf volle Bildschirmhöhe */
     padding: 16px; /* Innenabstand */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Schatten für die Sidebar */
     overflow: hidden; /* Verhindert Scrollbars in der Sidebar */
