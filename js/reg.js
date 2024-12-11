@@ -12,7 +12,7 @@ function addUser(){
   let password = document.getElementById('password').value;
   let confirmedPw = document.getElementById('passwordConfirm').value;
   users.push({email: email, password: password, username: username});
- // print(users);
+
 
   if(confirmedPw ===  password && password.length > 4){
     sentDataToDB("/user", {"username":username, "email":email, "password":password});
@@ -23,10 +23,10 @@ function addUser(){
   }
 
 }
-//console.log(users);
+
 const _URL = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app";
 
-  // Registrierungsdaten werden zur DB gesendet
+ 
   async function sentDataToDB(path="", data={}) {
 
     try {

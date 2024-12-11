@@ -5,14 +5,14 @@ if(msg){
  msgBox.innerHTML = msg;
 
 }
-//falls aufgerufen wird die Erfolgsnachricht verschwinden
+
 function hideMsgBox(){
     const msgB = document.getElementById('msgBox');
     if(msgB){
         msgB.style.display = 'none';
     }
 }
-//Aufruf der hideMsgBox() in einer setTimeout function
+
 setTimeout(hideMsgBox, 3000);
 
 async function getUserData() {
@@ -42,11 +42,9 @@ function setGuestMode() {
    
 }
 
-// Event-Listener für den Klick auf den Button mit der ID "guest"
+
 document.getElementById('guest').addEventListener('click', setGuestMode);
 
-
-// Funktion zur Authentifizierung des Benutzers
 
 async function loginUser(email, password) {
     function showMessage(message, type) {
@@ -69,11 +67,11 @@ async function loginUser(email, password) {
             );
 
             if (user) {
-                // Login erfolgreich
+               
                 const onlineUser = user.username;
-                // Teile den Benutzernamen in Vor- und Nachnamen
+               
                 const nameParts = user.username.split(' ');
-                // Hole die Initialen (erster Buchstabe vom Vornamen + erster Buchstabe vom Nachnamen)
+               
                 const initials = (nameParts[0].charAt(0) + (nameParts[1] ? nameParts[1].charAt(0) : '')).toUpperCase();
                 
                 localStorage.setItem('onlineUser', onlineUser);
@@ -98,7 +96,6 @@ async function loginUser(email, password) {
     }
 }
 
-// Event Listener für den Login-Button
 document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -107,28 +104,3 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
 });
 
 
-function logout() {
-    // Session-Cookie löschen
-    document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    
-    // SessionStorage leeren
-    sessionStorage.clear();
-    
-    // LocalStorage leeren (optional)
-    localStorage.clear();
-    
-    // API-Aufruf zum Server-seitigen Session Destroy
-    fetch('/api/logout', {
-        method: 'POST',
-        credentials: 'include'  // wichtig für Session-Cookies
-    })
-    .then(response => {
-        if (response.ok) {
-            // Weiterleitung zur Login-Seite
-            window.location.href = '/login';
-        }
-    })
-    .catch(error => {
-        console.error('Logout error:', error);
-    });
-}
