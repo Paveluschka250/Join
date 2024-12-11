@@ -104,10 +104,7 @@ function getCategory(){
   render()
 
 
-  console.log("Await Feedback Tasks:", awaitFeedbackTasks);
-  console.log("In Progress Tasks:", inProgressTasks);
-  console.log("To Do Tasks:", toDoTasks);
-  console.log("Done Tasks:", doneTasks);
+ 
 
 }
 function render(){
