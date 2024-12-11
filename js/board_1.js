@@ -42,17 +42,13 @@ function saveCheckBoxes(taskCounter) {
 
 async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
     const baseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/";
-
     let taskKeys = Object.keys(tasks.toDo);
     let taskId = taskKeys[taskCounter];
-
     const url = `${baseUrl}tasks/toDo/${taskId}/subtasksChecked.json`;
-
     let updatedSubtasks = subtasksChecked.map((isChecked, index) => ({
         checked: isChecked,
         id: `subtask${index}`
     }));
-
     try {
         const response = await fetch(url, {
             method: "PUT",
@@ -61,11 +57,9 @@ async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
             },
             body: JSON.stringify(updatedSubtasks)
         });
-
         if (!response.ok) {
             throw new Error(`Fehler beim Aktualisieren: ${response.statusText}`);
         }
-
         console.log("Subtask-Checkbox-Status erfolgreich aktualisiert.");
     } catch (error) {
         console.error("Fehler beim Aktualisieren der Subtasks:", error);
