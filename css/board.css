@@ -195,8 +195,6 @@ body {
     width: 100%;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 8px;
-    /* padding: 8px; */
-    /* margin: 8px; */
 }
 
 .to-do-content:hover {
@@ -221,6 +219,7 @@ body {
 }
 
 .title-task {
+    font-size: 12px;
     color: #4589FF;
     margin-top: 20px;
     margin-bottom: 8px;
@@ -229,6 +228,7 @@ body {
 .description-task {
     margin: 8px 0;
     color: lightgrey;
+    font-size: 10px;
 }
 
 .task-prio-icon {
