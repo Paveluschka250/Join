@@ -26,29 +26,40 @@ function containsClass(prioColor, red, orange, green) {
     let btnIcon1 = document.getElementById('priority-btn1');
     let btnIcon2 = document.getElementById('priority-btn2');
     let btnIcon3 = document.getElementById('priority-btn3');
-
     if (prioColor === 'prio1-color') {
-        red.classList.toggle('prio1-color');
-        btnIcon1.classList.toggle('priotity-btn-filter1');
-        orange.classList.remove('prio2-color');
-        btnIcon2.classList.remove('priotity-btn-filter2');
-        green.classList.remove('prio3-color');
-        btnIcon3.classList.remove('priotity-btn-filter3');
+        prioColor1(red, orange, green, btnIcon1, btnIcon2, btnIcon3);
     } else if (prioColor === 'prio2-color') {
-        red.classList.remove('prio1-color');
-        btnIcon1.classList.remove('priotity-btn-filter1');
-        orange.classList.toggle('prio2-color');
-        btnIcon2.classList.toggle('priotity-btn-filter2');
-        green.classList.remove('prio3-color');
-        btnIcon3.classList.remove('priotity-btn-filter3');
+        prioColor2(red, orange, green, btnIcon1, btnIcon2, btnIcon3);
     } else if (prioColor === 'prio3-color') {
-        red.classList.remove('prio1-color');
-        btnIcon1.classList.remove('priotity-btn-filter1');
-        orange.classList.remove('prio2-color');
-        btnIcon2.classList.remove('priotity-btn-filter2');
-        green.classList.toggle('prio3-color');
-        btnIcon3.classList.toggle('priotity-btn-filter3');
+        prioColor3(red, orange, green, btnIcon1, btnIcon2, btnIcon3);
     }
+}
+
+function prioColor1(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
+    red.classList.toggle('prio1-color');
+    btnIcon1.classList.toggle('priotity-btn-filter1');
+    orange.classList.remove('prio2-color');
+    btnIcon2.classList.remove('priotity-btn-filter2');
+    green.classList.remove('prio3-color');
+    btnIcon3.classList.remove('priotity-btn-filter3');
+}
+
+function prioColor2(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
+    red.classList.remove('prio1-color');
+    btnIcon1.classList.remove('priotity-btn-filter1');
+    orange.classList.toggle('prio2-color');
+    btnIcon2.classList.toggle('priotity-btn-filter2');
+    green.classList.remove('prio3-color');
+    btnIcon3.classList.remove('priotity-btn-filter3');
+}
+
+function prioColor3(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
+    red.classList.remove('prio1-color');
+    btnIcon1.classList.remove('priotity-btn-filter1');
+    orange.classList.remove('prio2-color');
+    btnIcon2.classList.remove('priotity-btn-filter2');
+    green.classList.toggle('prio3-color');
+    btnIcon3.classList.toggle('priotity-btn-filter3');
 }
 
 function addNewSubTask() {
@@ -153,22 +164,17 @@ function resetFormFields() {
     document.getElementById('assigned-to').value = '';
     document.getElementById('category').value = '';
     document.getElementById('selected-contacts').innerHTML = '';
-    
     let subtaskContent = document.getElementById('subtask-content');
     subtaskContent.innerHTML = '';
-
     let buttonRed = document.getElementById('priority1');
     let buttonOrange = document.getElementById('priority2');
     let buttonGreen = document.getElementById('priority3');
-
     buttonRed.classList.remove('prio1-color');
     buttonOrange.classList.remove('prio2-color');
     buttonGreen.classList.remove('prio3-color');
-
     document.getElementById('priority-btn1').classList.remove('priotity-btn-filter1');
     document.getElementById('priority-btn2').classList.remove('priotity-btn-filter2');
     document.getElementById('priority-btn3').classList.remove('priotity-btn-filter3');
-
     closeNewSubtasksBtn();
 }
 
@@ -199,7 +205,6 @@ function selectContacts(selectedValue) {
             let firstNameInitial = splitName[0][0].toUpperCase();
             let secondNameInitial = splitName[1][0].toUpperCase();
             let initials = `${firstNameInitial}${secondNameInitial}`;
-
             selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials">${initials}</div>`;
         } else {
             selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
