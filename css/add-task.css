@@ -349,7 +349,8 @@
 }
 
 .priotity-btn-filter2 {
-  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(317deg) brightness(108%) contrast(101%);
+  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
+    hue-rotate(317deg) brightness(108%) contrast(101%);
 }
 
 .priotity-btn-filter3 {
@@ -383,6 +384,11 @@
 @media (max-width: 1024px) {
   * {
     box-sizing: border-box;
+  }
+
+  header,
+  .logo {
+    box-sizing: unset !important;
   }
 
   #addtask-content {

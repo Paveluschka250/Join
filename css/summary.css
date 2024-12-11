@@ -24,6 +24,10 @@
   color: #2a3647;
   line-height: 57.6px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -34,8 +38,13 @@
   margin: 0 20px;
   padding: 0 20px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 #username {
   color: #4589ff;
+
 }
 .sec-Part {
   grid-column: span 3;
@@ -68,7 +77,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* gap: 13px; */
   height: 100%;
 }
 .sec-Part .urgent-tasks .urgent-container {
@@ -136,6 +144,10 @@
   color: white;
   margin: 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .task-box {
   grid-column: span 1;
   background: white;
@@ -152,6 +164,10 @@
   height: auto;
   box-sizing: border-box;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .task-box:hover {
   transform: scale(1.1);
   background-color: #0038ff;
@@ -162,9 +178,17 @@
 .task-box:hover span {
   color: white;
 }
+<<<<<<< HEAD
 .task-box:hover h1 {
   color: white;
 }
+=======
+
+.task-box:hover h1 {
+  color: white;
+}
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .task-text,
 .tasks-To-Do-Text,
 .tasks-In-Progress-Text,
@@ -173,15 +197,25 @@
   text-align: center;
   padding-bottom: 10px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .tasks-To-Do:hover h1 {
   color: #4589ff;
 }
+
 .tasks-To-Do:hover span {
   color: #4589ff;
 }
+
 .tasks-To-Do:hover {
   background-color: white;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .task-inner {
   display: flex;
   flex-direction: row;
@@ -191,10 +225,18 @@
   margin-bottom: 0;
   flex: 1;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .task-inner h1 {
   font-size: 47px;
   margin: 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .board {
   @extend .task-box;
 }
@@ -218,6 +260,10 @@
 .inner-Tasks-Done {
   @extend .task-inner;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 h6 {
   font-size: 23px;
   line-height: 27.6px;
@@ -234,6 +280,7 @@ span {
   font-size: 23px;
   color: #4589ff;
 }
+<<<<<<< HEAD
 @media (max-width: 1024px) {
   #summary-content {
     height: calc(100vh - 100px - 76px);
@@ -259,12 +306,23 @@ span {
 .d-none {
   display: none;
 }
+=======
+
+.d-none {
+  display: none;
+}
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .sec-Part h1,
 .sec-Part h6,
 .sec-Part .deadline,
 .sec-Part .vertical-Line {
   transition: color 225ms ease-in-out, background-color 225ms ease-in-out;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .icon-container {
   width: 60px;
   height: 60px;
@@ -273,6 +331,10 @@ span {
   background-repeat: no-repeat;
   background-position: center;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .board-icon {
   background-image: url(../assets/icons/summary/board.svg);
 }
@@ -295,8 +357,12 @@ span {
 .box-link {
   text-decoration: none;
   color: inherit;
-  display: contents; /* Verhindert, dass der Link das Layout beeinflusst */
+  display: contents;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
 .display-none {
   display: none !important;
 }
@@ -310,6 +376,7 @@ span {
     visibility: hidden;
     opacity: 0;
   }
+<<<<<<< HEAD
 }
 /* Responsive Anpassung */
 @media (max-width: 768px) {
@@ -444,3 +511,6 @@ span {
     order: 6;
   }
 }
+=======
+}
+>>>>>>> 0c05800617b063aa2190c8b2b003562d867496d9
