@@ -276,9 +276,7 @@ body {
 
 ::-webkit-scrollbar {
     width: 12px;
-    /* Breite des vertikalen Scrollbalkens */
     height: 12px;
-    /* Höhe des horizontalen Scrollbalkens */
 }
 
 .current-task-initials {
@@ -609,11 +607,8 @@ body {
     border-top-left-radius: 16px !important;
     border-bottom-left-radius: 16px !important;
     max-width: 400px !important;
-    /* margin: 32px; */
     padding: 20px;
     height: 95% !important;
-    /* position: absolute;
-    right: 0; */
 }
 
 .overlay-add-task-board {
@@ -630,11 +625,6 @@ body {
     position: absolute;
     bottom: 0 !important;
 }
-
-/* .d-flex {
-    display: block;
-    position:relative;
-} */
 
 @media(max-width: 700px) {
     .category-to-do {
@@ -717,7 +707,6 @@ body {
 @media(max-width: 480px) {
     .board-main {
         margin: 16px auto;
-        /* width: calc(100% - 64px); */
         width: 92vw !important;
     }
 
