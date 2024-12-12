@@ -117,7 +117,7 @@
 
 .input-wrapper {
   position: relative;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
 }
 
 .input-wrapper input {
@@ -153,7 +153,12 @@
   display: flex;
   justify-content: center;
   gap: 25px;
-  margin-top: 32px;
+  /* margin-top: 32px; */
+}
+
+form {
+  display: flex;
+  gap: 35px;
 }
 
 .cancel-btn,
@@ -217,7 +222,7 @@
 
 .input-wrapper {
   position: relative;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
 }
 
 .input-wrapper input.error {
@@ -315,7 +320,7 @@
 
 #editContactForm .input-wrapper {
   position: relative;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
   width: 100%;
 }
 
@@ -352,7 +357,7 @@
   display: flex;
   justify-content: center;
   gap: 16px;
-  margin-top: 32px;
+  /* margin-top: 32px; */
 }
 
 #editContactForm .button-wrapper button {
