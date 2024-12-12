@@ -16,18 +16,18 @@ let urgentTasks =[];
 let urgent;
 
 function updateUserCircle() {
-    // Wir brauchen nur den onlineUser
+   
     const onlineUser = localStorage.getItem('onlineUser');
     
     if (onlineUser && onlineUser!="Gast") {
-        // Update den Grußtext
+       
         const userGreeting = document.getElementById('username');
         if (userGreeting) {
           
             userGreeting.innerHTML = onlineUser;
         }
         
-        // Update den Avatar
+       
         const userCircle = document.getElementById('userCircle');
         if (userCircle) {
             userCircle.innerHTML = '';
@@ -68,7 +68,7 @@ async function getTasksData() {
         alert('Error fetching user data: ' + error.message);
         return null;
     }
-   // console.log(tasks.length);
+   
 }
 function deadlineRender(){
   deadline = datsArray[0];
@@ -85,12 +85,12 @@ function deadlineRender(){
 getTasksData()
 
 function getCategory(){
-  // Array durchlaufen und sortieren
+  
   tasks.forEach(function(task) {
-    //  `category`-Wert aus `taskCategory`rausholen
+   
     var category = task.taskCategory.category;
 
-    // Sortiere je nach `category` ins entsprechende Array
+
     if (category === "awaitFeedback") {
         awaitFeedbackTasks.push(task);
     } else if (category === "inProgress") {
@@ -103,7 +103,7 @@ function getCategory(){
   });
   render()
 
-  // Ergebnis: Die Aufgaben sind in die vier Arrays aufgeteilt
+ 
   console.log("Await Feedback Tasks:", awaitFeedbackTasks);
   console.log("In Progress Tasks:", inProgressTasks);
   console.log("To Do Tasks:", toDoTasks);
@@ -126,26 +126,26 @@ function render(){
 }
 
 function getPriority(){
-  // Array durchlaufen und sortieren
+ 
   tasks.forEach(function(task) {
     var priority = task.priority;
   
-    // array urgentTasks mit den entsprechenden Tasks auffüllen um die länge zu ermitteln
+  
     if (priority === "Urgent") {
       urgentTasks.push(task);
     } 
   })};
 
-// Funktion, um das Overlay anzuzeigen, wenn auf `userCircle` geklickt wird
+
 function showOverlay(id) {
     document.getElementById('overlay').classList.remove('d-none');
   }
   
-  // Funktion, um das Overlay auszublenden, wenn außerhalb des `userCircle` geklickt wird
+ 
   function hideOverlay(event) {
     const userCircle = document.getElementById('userCircle');
     const overlay = document.getElementById('overlay');
-  //hier wird sicher gestellt, ob der cklick Ausserhalb des divs userCircle ist
+
     if (!userCircle.contains(event.target) && !overlay.classList.contains('d-none')) {
       overlay.classList.add('d-none');
     }
