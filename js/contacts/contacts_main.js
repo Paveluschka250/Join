@@ -11,16 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
   JSON.parse(localStorage.getItem("contacts"))
     ? renderContacts(contacts)
     : null;
-    
-  // Button Event Listeners
+
   document.querySelector(".sticky-button-wrapper button").onclick = openContactsOverlay;
   document.getElementById("closeOverlay").onclick = closeContactsOverlay;
   
-  // Form Event Listeners
   document.getElementById("addContactForm").addEventListener("submit", addNewContact);
   document.getElementById("editContactForm").addEventListener("submit", saveEditedContact);
   
-  // Edit Contact Event Listeners
   const saveEditedContactBtn = document.getElementById("saveEditedContactBtn");
   if (saveEditedContactBtn) {
     saveEditedContactBtn.addEventListener("click", saveEditedContact);
@@ -31,13 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
     editContactForm.addEventListener("submit", saveEditedContact);
   }
   
-  // Close Contact Info Event Listener
   const closeContactInfoButton = document.getElementById('close-contact-info');
   if (closeContactInfoButton) {
     closeContactInfoButton.addEventListener('click', closeContactInfo);
   }
   
-  // Hide Edit Delete Overlay Event Listener
   document.body.addEventListener('click', function() {
     hideEditDeleteOverlay();
   });

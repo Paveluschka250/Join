@@ -149,7 +149,6 @@ function extractTaskData(taskCounter) {
     const taskElement = document.getElementById(`to-do-content${taskCounter}`);
 
     if (!taskElement) {
-        console.error(`Task mit ID to-do-content${taskCounter} nicht gefunden.`);
         return null;
     }
 
