@@ -1,6 +1,7 @@
 #privacy-policy-content {
   display: flex;
   justify-content: center;
+  margin-bottom: 76px;
 }
 #privacy-policy-content .container {
   width: 85%;

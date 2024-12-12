@@ -1,6 +1,7 @@
 #legal-notice-content {
   display: flex;
   justify-content: center;
+  margin-bottom: 76px;
 }
 #legal-notice-content .container {
   width: 85%;

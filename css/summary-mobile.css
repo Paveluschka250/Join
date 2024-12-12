@@ -1,6 +1,7 @@
 @media (max-width: 1024px) {
   #summary-content {
     height: calc(100vh - 100px - 76px);
+    padding: 0;
   }
 
   .overlay-content a.help {
@@ -116,12 +117,13 @@
   }
 
   .summary-grid {
+    overflow: auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
     gap: 15px;
     width: 100%;
-    padding: 0 20px;
+    padding: 20px 20px;
     box-sizing: border-box;
   }
 
