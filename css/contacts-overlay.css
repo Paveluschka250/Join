@@ -117,7 +117,6 @@
 
 .input-wrapper {
   position: relative;
-  /* margin-bottom: 32px; */
 }
 
 .input-wrapper input {
@@ -153,7 +152,6 @@
   display: flex;
   justify-content: center;
   gap: 25px;
-  /* margin-top: 32px; */
 }
 
 form {
@@ -222,7 +220,6 @@ form {
 
 .input-wrapper {
   position: relative;
-  /* margin-bottom: 32px; */
 }
 
 .input-wrapper input.error {
@@ -320,7 +317,6 @@ form {
 
 #editContactForm .input-wrapper {
   position: relative;
-  /* margin-bottom: 32px; */
   width: 100%;
 }
 
@@ -357,7 +353,6 @@ form {
   display: flex;
   justify-content: center;
   gap: 16px;
-  /* margin-top: 32px; */
 }
 
 #editContactForm .button-wrapper button {

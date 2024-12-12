@@ -6,13 +6,16 @@
     height: 90%;
     top: calc(5%);
   }
+  
   .overlay-content-header {
     height: 280px;
   }
+
   #edit-contact-overlay .overlay-content-header,
   #contacts-overlay .overlay-content-header {
     border-radius: 30px 30px 0 0;
   }
+
   .overlay-content-header img {
     display: none;
   }
@@ -21,29 +24,36 @@
     height: auto;
     padding-top: calc(15px + 67.5px);
   }
+
   .profile-picture {
     position: absolute;
     top: calc(280px - 67.5px);
   }
+
   #addContactForm {
     width: 80%;
   }
+
   .create-btn {
     padding: 12px 8px;
     font-size: 19px;
   }
+
   .cancel-btn {
     display: none;
   }
+
   .save-btn,
   .delete-btn {
     padding: 8px 8px;
     font-size: 14px;
   }
+
   .delete-btn:hover,
   .save-btn:hover {
     transform: scale(1);
   }
+
   #edit-contact-overlay.active {
     border-radius: 30px;
     right: -584px;
@@ -51,24 +61,26 @@
     height: 90%;
     top: calc(5%);
   }
+
   #editContactForm {
     width: 80%;
   }
+
   form {
     display: flex;
     gap: 35px;
   }
-  /* #editContactForm .input-wrapper {
-    margin: 0;
-  } */
+
   #editContactForm .input-wrapper input,
   #contacts-overlay .input-wrapper input {
     font-size: 15px;
   }
+
   #edit-contact-overlay.active {
     left: auto;
   }
 }
+
 @media (max-width: 425px) {
   .contacts-overlay {
     width: 90%;
@@ -82,6 +94,7 @@
     height: 90%;
   }
 }
+
 @media (max-height: 932px) {
   form {
     gap: 25px;
@@ -94,10 +107,12 @@
   .button-wrapper {
     margin: 0;
   }
+
   .input-wrapper input,
   #editContactForm .input-wrapper input {
     padding: 6px 21px;
   }
+
   form {
     gap: 25px;
   }
