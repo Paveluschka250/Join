@@ -277,3 +277,16 @@ function getPriorityToEdit() {
     }
     return priority;
 }
+
+function overlayBoardClosed(event) {
+    let content = document.getElementById('addtask-content');
+    if (!content.contains(event.target)) {
+        toggleHamburgerMenu();
+    }
+}
+
+document.getElementById('overlay-add-task-board').addEventListener('click', overlayBoardClosed);
+
+document.getElementById('addtask-content').addEventListener('click', function(event) {
+    event.stopPropagation();
+});

@@ -366,6 +366,8 @@ function taskStyle(taskCounter) {
         currentCategory.style.backgroundColor = '#ff7a00';
         currentCategory.style.color = 'white';
     } else {
-        currentCategory.style.backgroundColor = 'red';
+        currentCategory.style.backgroundColor = 'lightblue';
+        currentCategory.innerHTML = 'Ticket';
+        currentCategory.style.color  = 'white';
     }
 }

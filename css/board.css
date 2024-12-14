@@ -58,7 +58,7 @@ body {
 }
 
 .tasks {
-    width: 140px;
+    width: 175px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -98,7 +98,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 10px;
+    font-size: 16px;
     color: #b9a9a9;
 }
 
@@ -632,7 +632,7 @@ body {
     }
 
     .headlines-tasks {
-        font-size: 12px !important;
+        font-size: 16px !important;
     }
 
     .title-task {
@@ -803,5 +803,11 @@ body {
         flex-direction: column;
         height: calc(100% - 360px);
         overflow-y: scroll;
+    }
+}
+
+@media(min-width: 1440px) {
+    .board-main {
+        max-width: 1040px !important;
     }
 }
