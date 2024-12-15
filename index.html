@@ -13,6 +13,7 @@
 
     <title>join</title>
    <link rel="stylesheet" href="./css/log.css" >
+   <link rel="stylesheet" href="./css/log_responsive.css" >
 </head>
 <body>
 
@@ -23,8 +24,7 @@
         <nav class="navigation">
           
             <div>
-                <button class="btnLogin-popup"><a href="reg.html">sign up</a></button>
-           
+                <a href="reg.html"><button class="btnLogin-popup">sign up</button></a>
             </div>
         </nav>    
            
@@ -34,9 +34,8 @@
     </div>
    
    <div class="wrapper">
-
-     <div class="form-box-login">
-        <h2>Log in</h2>
+        <div class="form-box-login">
+            <h2>Log in</h2>
        <form id="loginForm" onsubmit="loginUser(document.getElementById('email').value, document.getElementById('password').value); return false;">
            <div class="input-box">
             <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
@@ -68,14 +67,14 @@
        <div id="msgBox" class="msgBox">
 
        </div>
-    <div class="end">
+       <div class="end">
         <div class="privacy">
             <a href="pages/privacy_policy_login.html">Privacy Policy</a>
         </div>
         <div class="legal-notice">
             <a href="pages/legal_notice_login.html">Legal Notice</a>
         </div>
-    </div>
+       </div>
    </footer>
    
    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
