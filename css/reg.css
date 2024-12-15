@@ -54,10 +54,12 @@ header h4{
     color: #fff;
 }
  body{
-    display: flex;justify-content:center ;
+    display: flex;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: #4589FF;
+    position: relative;
 }
 .wrapper{
     position: relative;
@@ -191,7 +193,129 @@ header h4{
 
 
 
-im/* styles.css */
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        width: 90%;
+        max-width: 400px;
+        margin: 20px;
+        height: auto;
+        min-height: 520px;
+    }
+
+    .wrapper .form-box-login {
+        padding: 20px;
+    }
+
+    .form-box-login h2 {
+        font-size: 1.8em;
+    }
+
+    .input-box {
+        margin: 20px 0;
+    }
+
+    .btn {
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    #reg, #guest {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 100vh;
+        gap: 10px;
+        padding-top: 100px;
+        overflow-x: hidden;
+    }
+
+    .img-logo {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .img-logo img {
+        max-width: 30px;
+        height: auto;
+        display: block;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .wrapper {
+        width: 90%;
+        border-radius: 10px;
+        height: auto;
+        min-height: auto;
+        transform: none;
+        padding-top: 20px;
+        margin-top: 0;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .wrapper {
+        margin: 10px 0;
+        height: auto;
+    }
+}
+
+/* Improve overall responsiveness */
+.img-logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+}
+
+@media screen and (max-width: 480px) {
+    .img-logo img {
+        width: 40px;
+        height: auto;
+    }
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+}
+
+.end {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+@media screen and (max-height: 700px) {
+    .img-logo {
+        position: absolute;
+    }
+    
+    footer {
+        position: relative;
+        margin-top: 20px;
+    }
+}
 
 body, html {
     height: 100%;
@@ -285,7 +409,6 @@ footer {
     font-weight: 300;
     text-decoration: none;
 }
-
 .d-none{
     display: none;
 }

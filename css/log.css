@@ -5,37 +5,48 @@
     font-family: 'Roboto', sans-serif;
  }
  header{
-    position:fixed ;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     padding: 20px 100px;
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
     align-items: center;
     z-index: 99;
+}
+#not-User {
+    position: absolute;
+    right: 250px;
 }
 header h4{
     font-size: 1em;
     color:grey;
     font-weight: 200;
+    white-space: nowrap;
 
 }
-.navigation a{
+.navigation {
+    display: flex;
+    align-items: center;
+}
+.navigation a {
     position: relative;
     font-size: 1em;
     color: #fff;
     text-decoration: none;
     font-weight: 500;
     margin-left: 40px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-
-
 .navigation .btnLogin-popup{
     width: 130px;
     height: 50px;
-   background-color: #4589FF;
+    background-color: #4589FF;
     border: 2px solid #fff;
     outline: none;
     border-radius: 6px;
@@ -43,14 +54,16 @@ header h4{
     font-size: 1.1em;
     color: #fff;
     font-weight: 500;
-    margin-left: 40px;
     transition: .5s;
-    display: flex;
-    
-    align-items: center;
+    margin-left: 40px;
+}
+.navigation .btnLogin-popup a {
+    margin: 0;
+    color: #fff;
+    text-decoration: none;
 }
 .navigation .btnLogin-popup:hover{
-    background:hwb(218 12% 52%);
+    background: hwb(218 12% 52%);
     color: #fff;
 }
  body{
@@ -186,37 +199,139 @@ header h4{
     color: grey;
     font-weight: 500;
 }
-
-
-
-
-im/* styles.css */
-
-body, html {
-    height: 100%;
-    margin: 0;
-    overflow: hidden; /* Verhindert Scrollen während der Animation */
-}
-
 .img-logo {
     position: fixed;
-    bottom: 0;
-    right: 0;
-    animation: moveLogo 3s forwards;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+}
+.img-logo img {
+    width: 100px;
+    height: auto;
+}
+@media screen and (max-width: 480px) {
+    .img-logo {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+    }
+
+    .img-logo img {
+        width: 40px;
+        height: auto;
+    }
+}
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    header {
+        padding: 20px;
+        justify-content: center;
+    }
+
+    .navigation .btnLogin-popup {
+        margin-left: 20px;
+    }
+
+    .wrapper {
+        width: 90%;
+        max-width: 400px;
+        margin: 20px;
+    }
 }
 
-@keyframes moveLogo {
-    from {
-        bottom: -100px;
-        right: -100px;
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 100vh;
+        gap: 10px;
+        padding-top: 80px;
     }
-    to {
-        top: 40px;
-        left: 40px;
-        bottom: auto;
-        right: auto;
+
+    header {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .navigation .btnLogin-popup {
+        width: 100px;
+        height: 40px;
+        font-size: 0.9em;
+        margin-left: 0;
+    }
+
+    .wrapper {
+        width: 90%;
+        height: auto;
+        min-height: 400px;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .wrapper .form-box-login {
+        padding: 20px;
+    }
+
+    .form-box-login h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .input-box {
+        height: 45px;
+        margin: 20px 0;
+    }
+
+    .input-box input {
+        font-size: 0.9em;
+    }
+
+    .input-box label {
+        font-size: 0.9em;
+    }
+
+    .remember-forgot {
+        font-size: 0.8em;
+    }
+
+    .btn {
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    #log, #guest {
+        width: 100%;
+        max-width: 200px;
+        height: 40px;
+        font-size: 1em;
     }
 }
+
+@media screen and (max-height: 600px) {
+    .wrapper {
+        height: auto;
+        min-height: 350px;
+        margin: 60px 0 20px 0;
+    }
+
+    .btn {
+        margin-top: 30px;
+    }
+}
+
+#message-popup {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 300px;
+    right: auto;
+}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -301,7 +416,6 @@ footer {
         opacity: 1;
     }
 }
-
 .error {
     background-color: #ff4444;
 }
@@ -313,7 +427,7 @@ footer {
 @media screen and (max-width: 768px) {
     /* Header-Inhalte auf neue Position bringen */
     #not-User {
-        position: fixed;
+        position: absolute;
         bottom: 60px; /* 5px höher als vorher */
         left: 40%; /* 10px nach rechts verschoben */
         transform: translateX(-50%); /* Zentriert */
@@ -350,7 +464,6 @@ footer {
         font-size: 0.8em; /* Kleinere Schriftgröße */
         line-height: 40px; /* Passt die vertikale Zentrierung an */
     }
-
     .navigation .btnLogin-popup {
         background-color: #4589FF;
         border: 2px solid #fff;
@@ -361,52 +474,42 @@ footer {
         cursor: pointer;
         transition: 0.5s;
     }
-
     .navigation .btnLogin-popup:hover {
         background: hwb(218 12% 52%);
         color: #fff;
     }
-
     /* Responsives Login-Formular */
     .wrapper {
         width: 90%; /* Breite reduziert */
         margin: 20px auto;
         height: auto; /* Höhe flexibel */
     }
-
     .form-box-login {
         padding: 20px;
     }
-
     .form-box-login h2 {
         font-size: 1.5em; /* Kleinere Schriftgröße */
     }
-
     .input-box {
         height: 45px;
-        margin: 15px 0;
+        margin: 20px 0;
     }
 
     .input-box input {
         font-size: 0.9em;
         padding: 0 30px 0 5px;
     }
-
     .input-box .icon {
         font-size: 1em;
     }
-
     .btn {
         margin-top: 30px;
         flex-direction: column;
         gap: 10px; /* Abstand zwischen den Buttons */
     }
-
     #log, #guest {
         width: 100%; /* Breite 100% */
     }
-
-    /* Footer bleibt unverändert */
     footer {
         position: fixed;
         bottom: 0;
@@ -414,13 +517,11 @@ footer {
         width: 100%;
         padding: 20px 10px;
     }
-
     .end {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
     .privacy, .legal-notice {
         margin: 0 10px;
     }
