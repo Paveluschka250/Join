@@ -191,7 +191,12 @@ header h4{
 }
 
 
-
+.btn{
+    margin: 10px;
+}
+h2{
+    margin: 10px;
+}
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
@@ -221,10 +226,18 @@ header h4{
         gap: 15px;
         align-items: center;
     }
+   
 
     #reg, #guest {
         width: 100%;
         max-width: 200px;
+    }
+    .img-logo{
+        margin: -20px;
+    }
+    .img-logo img{
+        height: 50px;
+        width: 50px;
     }
 }
 

@@ -117,7 +117,7 @@
   }
 
   .summary-grid {
-    overflow: auto;
+    overflow: hidden;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
@@ -125,6 +125,7 @@
     width: 100%;
     padding: 20px 20px;
     box-sizing: border-box;
+
   }
 
   .sec-Part {

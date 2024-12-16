@@ -43,22 +43,39 @@
 
     footer {
         padding: 10px;
+        display: none;
     }
+   
 }
 
 @media screen and (max-width: 768px) {
     header {
         padding: 20px 50px;
     }
+    .legal-notice {
+        display: none;
+    }
+    .privacy {
+        display: none;
+    }
+    .img-logo img{
+        height: 50px;
+        width: 50px;
+    }
 
     #not-User {
         position: absolute;
         bottom: 60px;
         right: 150px;
+        display: none;
     }
 
     .navigation .btnLogin-popup {
-        margin-left: 20px;
+        margin-left: -25px;
+        width: 80px;
+        height: 30px;
+        top: 25px;
+        
     }
 }
 
@@ -86,7 +103,7 @@
         z-index: 1000;
     }
 
-    #not-User {
+    #not-User h4 {
         display: none;
     }
 
