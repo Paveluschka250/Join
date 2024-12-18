@@ -258,15 +258,23 @@ function renderAddTask() {
         for (let key in toDo) {
             const element = toDo[key];
             taskCounter++;
+
             if (element.taskCategory.category == "toDo") {
                 let prioIconURL = getPrioIconURL(element);
+                let contactsHTML = '';
 
-                let contactsHTML = element.assignedTo
-                    .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                    .join('');
-
-                toDoBlock.innerHTML += renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML)
+                if (Array.isArray(element.assignedTo)) {
+                    contactsHTML = element.assignedTo
+                        .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                        .join('');
+                } else {
+                    contactsHTML = '';
+                }
+                toDoBlock.innerHTML += renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
             }
+
+
+
 
             if (element.taskCategory.category == "inProgress") {
                 renderInProgress(taskCounter, element);
@@ -368,6 +376,6 @@ function taskStyle(taskCounter) {
     } else {
         currentCategory.style.backgroundColor = 'lightblue';
         currentCategory.innerHTML = 'Ticket';
-        currentCategory.style.color  = 'white';
+        currentCategory.style.color = 'white';
     }
 }
