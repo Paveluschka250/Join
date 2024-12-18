@@ -273,9 +273,6 @@ function renderAddTask() {
                 toDoBlock.innerHTML += renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
             }
 
-
-
-
             if (element.taskCategory.category == "inProgress") {
                 renderInProgress(taskCounter, element);
             }
@@ -315,10 +312,15 @@ function renderInProgress(taskCounter, element) {
 
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
-        let contactsHTML = element.assignedTo
+        let contactsHTML = '';
+
+        if(Array.isArray(element.assignedTo)){
+            contactsHTML = element.assignedTo
             .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
             .join('');
-
+        } else {
+            contactsHTML = '';
+        }
         inProgress.innerHTML += rederInProgress(element, taskCounter, prioIconURL, contactsHTML);
     }
 }
@@ -329,10 +331,15 @@ function renderAwaitFeedback(taskCounter, element) {
 
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
-        let contactsHTML = element.assignedTo
+        let contactsHTML = '';
+
+        if(Array.isArray(element.assignedTo)){
+            contactsHTML = element.assignedTo
             .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
             .join('');
-
+        } else {
+            contactsHTML = '';
+        }
         awaitFeedback.innerHTML += renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML)
     }
 }
@@ -343,10 +350,15 @@ function renderDone(taskCounter, element) {
 
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
-        let contactsHTML = element.assignedTo
+        let contactsHTML = '';
+
+        if(Array.isArray(element.assignedTo)){
+            contactsHTML = element.assignedTo
             .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
             .join('');
-
+        } else {
+            contactsHTML = '';
+        }
         done.innerHTML += renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML);
     }
 }
