@@ -694,6 +694,7 @@ body {
 
     .task-initials {
         width: 25px !important;
+        color: white;
     }
 
     #suggestions {
