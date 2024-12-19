@@ -157,7 +157,7 @@ function renderOverlayTaskHTML (currentTask, taskCounter, contactsHTML, currentS
             </div>
         </div>
         
-        <div>
+        <div class="subtask-container-overlay-board">
             <b>Subtasks</b>
             <ul id="current-subtasks-task${taskCounter}">${currentSubtasks}</ul>
         </div>
