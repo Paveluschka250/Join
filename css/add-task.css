@@ -14,28 +14,82 @@
   height: calc(100vh - 140px);
 }
 
+#addtask-content * {
+  box-sizing: border-box;
+}
+
 #addtask-content .form-add-task {
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
-.form-add-task select {
-  width: 99% !important;
+#addtask-content .select-wrapper {
+  position: relative;
 }
 
-.underline-select {
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: solid lightgrey 1px;
+#addtask-content .underline-select {
+  -webkit-appearance: none;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.underline-select:hover {
+#addtask-content .underline-select:hover {
   border-bottom: #4589ff solid 1px;
 }
 
-.form-add-task select:hover {
-  cursor: pointer;
+#addtask-content .underline-select:focus {
+  border: none;
+  border-bottom: solid #4589ff 1px;
+}
+
+#addtask-content .select-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+#addtask-content .underline-select option {
+  background-color: white;
+  color: #000;
+  padding: 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 15px;
+}
+
+#addtask-content .underline-select option:hover,
+#addtask-content .underline-select option:focus,
+#addtask-content .underline-select option:active,
+#addtask-content .underline-select option:checked {
+  background: #4589ff !important;
+  color: white !important;
+  border-radius: 15px;
+}
+
+/* Für Firefox */
+#addtask-content .underline-select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+  border-radius: 15px;
+
+}
+
+/* Für Chrome/Safari */
+#addtask-content .underline-select::-ms-expand {
+  display: none;
+  border-radius: 15px;
+
+}
+
+#addtask-content .underline-select:focus + .select-arrow {
+  transform: translateY(-50%) rotate(90deg);
 }
 
 #addtask-content .form-group-addTask {
@@ -96,19 +150,30 @@
 }
 
 #addtask-content .underline-addTask {
-  border-bottom: solid lightgray 1px;
-  border-top: 0 !important;
-  border-left: 0 !important;
-  border-right: 0 !important;
-  border-radius: 0 !important;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 14px;
+  border: none;
+  border-bottom: solid #cacaca 1px;
+}
+
+#addtask-content .underline-addTask::placeholder {
+  color: #cacaca;
+  font-size: 20px;
 }
 
 #addtask-content .input-addTask {
   width: 93%;
   padding: 10px 10px;
   font-size: 14px;
+  border: solid #cacaca 1px;
+  border-radius: 8px;
 }
 
+#addtask-content .input-addTask::placeholder {
+  color: #cacaca;
+  font-size: 14px;
+}
 #addtask-content textarea {
   resize: none;
 }
@@ -129,7 +194,7 @@
 #addtask-content .priority-btn-addTask {
   margin: 4px;
   height: 24px;
-  width: 100px;
+  min-width: 120px;
   border: none;
   border-radius: 5px;
   font-size: 14px;
@@ -186,6 +251,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  padding: 16px 20px;
+  gap: 10px;
 }
 
 #addtask-content .center-button img {
@@ -294,7 +361,7 @@
   justify-content: space-between;
   z-index: 1001;
   height: calc(100vh - 44px) !important;
-  border: solid lightgray 2px;
+  border: solid #cacaca 2px;
   border-radius: 8px 0 0 8px !important;
 }
 
@@ -322,7 +389,7 @@
 .scroll-input {
   overflow-y: scroll;
   overflow-x: hidden;
-  width: 340px;
+  width: 440px;
 }
 
 .prio1-color {
@@ -425,4 +492,45 @@
   .form-actions-addTask {
     left: 1150px;
   }
+}
+
+#addtask-content .custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+#addtask-content .custom-select {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background: white;
+}
+
+#addtask-content .custom-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+  margin-top: 4px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+#addtask-content .custom-select-dropdown .option {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#addtask-content .custom-select-dropdown .option:hover {
+  background-color: #4589ff;
+  color: white;
 }

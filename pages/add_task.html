@@ -1,120 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      property="og:title"
+      content="Join - Task and Project Management Made Easy"
+    />
+    <meta
+      property="og:description"
+      content="Join is a modern platform combining Kanban board features with advanced contact management to boost work organization and collaboration."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://join-370.developerakademie.net/Join/"
+    />
+    <meta
+      property="og:image"
+      content="https://join-370.developerakademie.net/Join/assets/img/logo-blue.png"
+    />
+    <link rel="icon" href="../assets/img/logo-blue.svg" type="image/x-icon" />
 
-    <meta property="og:title" content="Join - Task and Project Management Made Easy">
-    <meta property="og:description" content="Join is a modern platform combining Kanban board features with advanced contact management to boost work organization and collaboration.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://join-370.developerakademie.net/Join/"> 
-    <meta property="og:image" content="https://join-370.developerakademie.net/Join/assets/img/logo-blue.png">
-    <link rel="icon" href="../assets/img/logo-blue.svg" type="image/x-icon">
-
-    <link rel="stylesheet" href="../css/standart.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/add-task.css">
+    <link rel="stylesheet" href="../css/standart.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/add-task.css" />
 
     <title>Join - Add Task</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="header">
-        <div id="userCircle"></div>
+      <div id="userCircle"></div>
     </div>
     <article class="main-container">
-        <aside class="sidebar" id="sidebar"></aside>
-        <main class="body-addTask" id="main">
-            <div id="addtask-content" class="container-addTask scroll-input">
-                <form onsubmit="getTaskData(event)" class="form-add-task">
-                    <div class="form-group-addTask">
-                        <input class="underline-addTask input-addTask cursor-pointer" type="text" id="title"
-                            name="title" placeholder="Enter a title" required>
-                    </div>
-
-                    <div class="form-group-addTask">
-                        <label for="description"><b>Description</b> (optional)</label>
-                        <textarea class="input-addTask cursor-pointer" id="description" name="description" rows="4"
-                            placeholder="Enter a Description"></textarea>
-                    </div>
-
-                    <div class="form-group-addTask">
-                        <label for="due-date"><b>Due date</b></label>
-                        <input class="underline-addTask input-addTask cursor-pointer" type="date" id="due-date"
-                            name="due-date">
-                    </div>
-
-                    <div class="form-group-addTask priority-addTask">
-                        <div>
-                            <label><b>Priority</b></label>
-                        </div>
-                        <div class="buttons-row">
-                            <button type="button" id="priority1" onclick="getPriority('priority1')"
-                                class="priority-btn-addTask urgent-addTask center-button">Urgent <img id="priority-btn1"
-                                    src="../assets/icons/prio3.svg" alt="priorität hoch"></button>
-                            <button type="button" id="priority2" onclick="getPriority('priority2')"
-                                class="priority-btn-addTask medium-addTask center-button ">Medium <img
-                                    id="priority-btn2" src="../assets/icons/prio2.svg" alt="priorität mittel"
-                                    class="medium-prio-icon"></button>
-                            <button type="button" id="priority3" onclick="getPriority('priority3')"
-                                class="priority-btn-addTask low-addTask center-button">Low <img id="priority-btn3"
-                                    src="../assets/icons/prio1.svg" alt="priorität niedrig"></button>
-                        </div>
-                    </div>
-
-                    <div class="form-group-addTask">
-                        <label for="assigned-to"><b>Assigned to</b> (optional)</label>
-                        <select onfocus="getUsersToAssignedTo()" id="assigned-to" class="underline-select input-addTask" name="assigned-to">
-                            <option value="">Select contacts to assign</option>
-                        </select>
-                        <div class="selected-contacts" id="selected-contacts"></div>
-                    </div>
-
-                    <div class="form-group-addTask">
-                        <label for="category"><b>Category</b></label>
-                        <select class="underline-select input-addTask" id="category" name="category">
-                            <option value="" disabeld selected hidden>Select task category</option>
-                            <option value="Technical Task">Technical Task</option>
-                            <option value="User Story">User Story</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group-addTask new-task-btn">
-                        <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                        <input class="underline-addTask input-addTask add-icon cursor-pointer" type="text" id="subtasks"
-                            name="subtasks" placeholder="Add new subtask">
-                        <button id="open-subtask" class="create-new-task" onclick="addNewSubTask()" type="button"><img
-                                src="../assets/icons/add.svg" alt="add"></button>
-                        <div id="subtask-close-and-add" class="task-btn-div d-none">
-                            <button onclick="closeNewSubtasksBtn()" type="button"><img src="../assets/icons/clearIcon.svg"
-                                    alt="close"></button>|
-                            <button onclick="addSubTask()" type="button"><img src="../assets/icons/createTaskIcon.svg"
-                                    alt="create Task"></button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <ul id="subtask-content" class="added-subtasks"></ul>
-                    </div>
-
-                    <div class="form-actions-addTask input-addTask">
-                        <button type="reset" class="clear-btn-addTask">Clear <img src="../assets/icons/clearIcon.svg"
-                                alt=""></button>
-                        <button type="submit" class="submit-btn-addTask">Create Task <img
-                                src="../assets/icons/createTaskIcon.svg" alt=""></button>
-                    </div>
-                </form>
+      <aside class="sidebar" id="sidebar"></aside>
+      <main class="body-addTask" id="main">
+        <div id="addtask-content" class="container-addTask scroll-input">
+          <form onsubmit="getTaskData(event)" class="form-add-task">
+            <div class="form-group-addTask">
+              <input
+                class="underline-addTask cursor-pointer"
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Enter a title"
+                required
+              />
             </div>
-        </main>
+
+            <div class="form-group-addTask">
+              <label for="description"><b>Description</b> (optional)</label>
+              <textarea
+                class="input-addTask cursor-pointer"
+                id="description"
+                name="description"
+                rows="4"
+                placeholder="Enter a Description"
+              ></textarea>
+            </div>
+
+            <div class="form-group-addTask">
+              <label for="due-date"><b>Due date</b></label>
+              <input
+                class="underline-addTask cursor-pointer"
+                type="date"
+                id="due-date"
+                name="due-date"
+              />
+            </div>
+
+            <div class="form-group-addTask priority-addTask">
+              <div>
+                <label><b>Priority</b></label>
+              </div>
+              <div class="buttons-row">
+                <button
+                  type="button"
+                  id="priority1"
+                  onclick="getPriority('priority1')"
+                  class="priority-btn-addTask urgent-addTask center-button"
+                >
+                  Urgent
+                  <img
+                    id="priority-btn1"
+                    src="../assets/icons/prio3.svg"
+                    alt="priorität hoch"
+                  />
+                </button>
+                <button
+                  type="button"
+                  id="priority2"
+                  onclick="getPriority('priority2')"
+                  class="priority-btn-addTask medium-addTask center-button"
+                >
+                  Medium
+                  <img
+                    id="priority-btn2"
+                    src="../assets/icons/prio2.svg"
+                    alt="priorität mittel"
+                    class="medium-prio-icon"
+                  />
+                </button>
+                <button
+                  type="button"
+                  id="priority3"
+                  onclick="getPriority('priority3')"
+                  class="priority-btn-addTask low-addTask center-button"
+                >
+                  Low
+                  <img
+                    id="priority-btn3"
+                    src="../assets/icons/prio1.svg"
+                    alt="priorität niedrig"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group-addTask">
+              <label for="assigned-to"><b>Assigned to</b> (optional)</label>
+              <div class="custom-select-wrapper">
+                <div class="custom-select underline-select underline-addTask" onclick="toggleDropdown('contacts-dropdown')">
+                  <span id="contacts-selected">Select contacts to assign</span>
+                  <img src="../assets/icons/arrow_drop_down.svg" class="select-arrow" alt="dropdown arrow">
+                </div>
+                <div id="contacts-dropdown" class="custom-select-dropdown">
+                  <!-- Wird dynamisch befüllt -->
+                </div>
+              </div>
+              <div class="selected-contacts" id="selected-contacts"></div>
+            </div>
+
+            <div class="form-group-addTask">
+              <label for="category"><b>Category</b></label>
+              <div class="custom-select-wrapper">
+                <div class="custom-select underline-select underline-addTask" onclick="toggleDropdown('category-dropdown')">
+                  <span id="category-selected">Select task category</span>
+                  <img src="../assets/icons/arrow_drop_down.svg" class="select-arrow" alt="dropdown arrow">
+                </div>
+                <div id="category-dropdown" class="custom-select-dropdown">
+                  <div class="option" onclick="selectOption('category', 'Technical Task')">Technical Task</div>
+                  <div class="option" onclick="selectOption('category', 'User Story')">User Story</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-addTask new-task-btn">
+              <label for="subtasks"><b>Subtasks</b> (optional)</label>
+              <input
+                class="underline-addTask add-icon cursor-pointer"
+                type="text"
+                id="subtasks"
+                name="subtasks"
+                placeholder="Add new subtask"
+              />
+              <button
+                id="open-subtask"
+                class="create-new-task"
+                onclick="addNewSubTask()"
+                type="button"
+              >
+                <img src="../assets/icons/add.svg" alt="add" />
+              </button>
+              <div id="subtask-close-and-add" class="task-btn-div d-none">
+                <button onclick="closeNewSubtasksBtn()" type="button">
+                  <img
+                    src="../assets/icons/clearIcon.svg"
+                    alt="close"
+                  /></button
+                >|
+                <button onclick="addSubTask()" type="button">
+                  <img
+                    src="../assets/icons/createTaskIcon.svg"
+                    alt="create Task"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <ul id="subtask-content" class="added-subtasks"></ul>
+            </div>
+
+            <div class="form-actions-addTask input-addTask">
+              <button type="reset" class="clear-btn-addTask">
+                Clear <img src="../assets/icons/clearIcon.svg" alt="" />
+              </button>
+              <button type="submit" class="submit-btn-addTask">
+                Create Task
+                <img src="../assets/icons/createTaskIcon.svg" alt="" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
     </article>
-</body>
+  </body>
 
-<script src="../js/load_layout.js"></script>
-<script src="../js/add_task.js"></script>
-
-
-
+  <script src="../js/load_layout.js"></script>
+  <script src="../js/add_task.js"></script>
 </html>
