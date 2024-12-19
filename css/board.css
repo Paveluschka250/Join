@@ -286,7 +286,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 8px;
-    margin: 8px;
+    margin: 8px 16px 4px 8px;
+}
+
+.full-names-overlay {
+    font-size: 18px !important;
+    color:rgb(94, 91, 91);
 }
 
 .current-to-do-content {
@@ -399,6 +404,12 @@ body {
 .task-subtask-amount {
     display: flex;
     flex-direction: row;
+}
+
+.initials-and-fullnames-container {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 /* loading-bar */
@@ -627,6 +638,10 @@ body {
     bottom: 0 !important;
 }
 
+.subtask-container-overlay-board {
+    margin-top: 16px;
+}
+
 @media(max-width: 800px) {
     .category-to-do {
         font-size: 12px;
@@ -749,7 +764,7 @@ body {
         margin: 10px auto;
     }
 
-    .edit-buttons button{
+    .edit-buttons button {
         font-size: 10px;
     }
 

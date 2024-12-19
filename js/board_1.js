@@ -35,7 +35,6 @@ function saveCheckBoxes(taskCounter) {
     for (let i = 0; i < currentSubtaskAmount; i++) {
         let input = document.getElementById(`checkbox${i}`).checked;
         subtasksChecked.push(input);
-        console.log(subtasksChecked);
     }
     loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter);
 }
@@ -120,9 +119,9 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
-
+    console.log(currentTask);
     let contactsHTML = currentTask[4]
-        .map(initials => `<div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+        .map((initials, i) => `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div><div class="full-names-overlay" id="name-${i}"></div></div>`)
         .join('');
 
     let currentSubtasks;
@@ -143,6 +142,18 @@ function renderOverlayTask(taskCounter, currentTask) {
         editTask(currentTask, taskCounter);
     });
     loadCheckFieldStatus(taskCounter, currentTask);
+    overlayTaskGetFullNames(taskCounter);
+}
+
+function overlayTaskGetFullNames(taskCounter) {
+    getKeysFromTasks();
+    taskCounter--;
+    let names = (tasks.toDo[keys[taskCounter]].fullNames);
+    for (let i = 0; i < names.length; i++) {
+        const element = names[i];
+        let initial = document.getElementById(`name-${i}`);
+        initial.innerHTML = `${element}`;
+    }
 }
 
 function extractTaskData(taskCounter) {
