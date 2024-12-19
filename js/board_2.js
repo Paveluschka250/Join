@@ -180,13 +180,13 @@ function addNewSubTaskEdit() {
     document.getElementById('subtasks-edit').value = '';
 }
 
-function saveEditBtn(taskCounter) {
+async function saveEditBtn(taskCounter) {
     taskCounter--;
     getKeysFromTasks();
     let currentTaskKey = keys[taskCounter];
     getDataFromEdit(currentTaskKey);
     closeCurrentTask();
-    getTasks();
+    await getTasks();
 }
 
 function getDataFromEdit(key) {
