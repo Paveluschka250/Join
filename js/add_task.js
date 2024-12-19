@@ -179,38 +179,77 @@ function resetFormFields() {
 }
 
 function getUsersToAssignedTo() {
-    const namesArray = Object.values(contacts).map(item => item.name);
-    let assignedTo = document.getElementById('assigned-to');
-    assignedTo.innerHTML = '';
-    assignedTo.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
-    for (let i = 0; i < namesArray.length; i++) {
-        const option = document.createElement('option');
-        option.value = namesArray[i];        
-        option.textContent = namesArray[i];
-        option.setAttribute('id', `option-${i}`);
-        assignedTo.appendChild(option);
+  const namesArray = Object.values(contacts).map(item => item.name);
+  let contactsDropdown = document.getElementById('contacts-dropdown');
+  contactsDropdown.innerHTML = '';
+  
+  namesArray.forEach((name) => {
+    if (!isContactSelected(name)) {
+      const option = document.createElement('div');
+      option.className = 'option';
+      option.textContent = name;
+      option.onclick = (e) => {
+        e.stopPropagation();
+        selectContacts(name);
+      };
+      contactsDropdown.appendChild(option);
     }
-    assignedTo.addEventListener('change', function () {
-        selectContacts(assignedTo.value);
-    });
+  });
+}
+
+function isContactSelected(name) {
+  const selectedDivs = document.querySelectorAll('#selected-contacts .contact-initials');
+  return Array.from(selectedDivs).some(div => div.getAttribute('value') === name);
 }
 
 function selectContacts(selectedValue) {
-    let selectedContacts = document.getElementById('selected-contacts');
-    let assignedTo = document.getElementById('assigned-to');
-    console.log(selectedValue);
-    if (selectedValue) {
-        let splitName = selectedValue.split(" ");
-        if (splitName.length > 1) {
-            let firstNameInitial = splitName[0][0].toUpperCase();
-            let secondNameInitial = splitName[1][0].toUpperCase();
-            let initials = `${firstNameInitial}${secondNameInitial}`;
-            selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials">${initials}</div>`;
-        } else {
-            selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials">${splitName[0][0].toUpperCase()}</div>`;
-        }
-    } let optionToDisable = assignedTo.querySelector(`option[value="${selectedValue}"]`);
-    if (optionToDisable) {
-        optionToDisable.disabled = true;
-    }
+  let selectedContacts = document.getElementById('selected-contacts');
+  
+  if (selectedValue) {
+    let splitName = selectedValue.split(" ");
+    let initials = splitName.length > 1 
+      ? `${splitName[0][0].toUpperCase()}${splitName[1][0].toUpperCase()}`
+      : `${splitName[0][0].toUpperCase()}`;
+    
+    selectedContacts.innerHTML += `
+      <div value="${selectedValue}" class="contact-initials">
+        ${initials}
+      </div>`;
+  }
+  
+  document.getElementById('contacts-dropdown').style.display = 'none';
+  
+  const arrow = document.querySelector('.custom-select[onclick*="contacts-dropdown"] .select-arrow');
+  if (arrow) arrow.style.transform = 'translateY(-50%) rotate(0deg)';
 }
+
+function toggleDropdown(dropdownId) {
+  const dropdown = document.getElementById(dropdownId);
+  const arrow = dropdown.parentElement.querySelector('.select-arrow');
+  
+  if (dropdownId === 'contacts-dropdown' && dropdown.style.display !== 'block') {
+    getUsersToAssignedTo();
+  }
+  
+  const isOpen = dropdown.style.display === 'block';
+  dropdown.style.display = isOpen ? 'none' : 'block';
+  
+  if (arrow) {
+    arrow.style.transform = isOpen 
+      ? 'translateY(-50%) rotate(0deg)' 
+      : 'translateY(-50%) rotate(180deg)';
+  }
+}
+
+function selectOption(selectId, value) {
+  document.getElementById(`${selectId}-selected`).textContent = value;
+  document.getElementById(`${selectId}-dropdown`).style.display = 'none';
+  // Hier können Sie den Wert speichern oder weitere Aktionen ausführen
+}
+
+// Schließe Dropdown wenn außerhalb geklickt wird
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.custom-select-wrapper')) {
+    document.querySelectorAll('.custom-select-dropdown').forEach(d => d.style.display = 'none');
+  }
+});
