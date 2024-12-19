@@ -186,7 +186,7 @@ function saveEditBtn(taskCounter) {
     let currentTaskKey = keys[taskCounter];
     getDataFromEdit(currentTaskKey);
     closeCurrentTask();
-    renderAddTask();
+    getTasks();
 }
 
 function getDataFromEdit(key) {

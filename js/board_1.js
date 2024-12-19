@@ -49,19 +49,14 @@ async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
         id: `subtask${index}`
     }));
     try {
-        const response = await fetch(url, {
+        await fetch(url, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(updatedSubtasks)
         });
-        if (!response.ok) {
-            throw new Error(`Fehler beim Aktualisieren: ${response.statusText}`);
-        }
-        console.log("Subtask-Checkbox-Status erfolgreich aktualisiert.");
     } catch (error) {
-        console.error("Fehler beim Aktualisieren der Subtasks:", error);
     }
 }
 
@@ -119,7 +114,6 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
-    console.log(currentTask);
     let contactsHTML = currentTask[4]
         .map((initials, i) => `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div><div class="full-names-overlay" id="name-${i}"></div></div>`)
         .join('');
@@ -148,11 +142,13 @@ function renderOverlayTask(taskCounter, currentTask) {
 function overlayTaskGetFullNames(taskCounter) {
     getKeysFromTasks();
     taskCounter--;
-    let names = (tasks.toDo[keys[taskCounter]].fullNames);
-    for (let i = 0; i < names.length; i++) {
-        const element = names[i];
-        let initial = document.getElementById(`name-${i}`);
-        initial.innerHTML = `${element}`;
+    if (tasks.toDo[keys[taskCounter]].fullNames) {
+        let names = (tasks.toDo[keys[taskCounter]].fullNames);
+        for (let i = 0; i < names.length; i++) {
+            const element = names[i];
+            let initial = document.getElementById(`name-${i}`);
+            initial.innerHTML = `${element}`;
+        }
     }
 }
 
@@ -338,6 +334,7 @@ function editTask(currentTask, taskCounter) {
     document.getElementById('saveEditBtn').addEventListener("click", () => {
         saveEditBtn(taskCounter);
     });
+
 }
 
 function renderEditTask() {
