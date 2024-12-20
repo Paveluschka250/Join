@@ -7,7 +7,7 @@ async function getTasks() {
     let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
     let responseToJson = await response.json();
     tasks = responseToJson;
-    renderAddTask();
+    renderTask();
 }
 
 async function getContactsForSidebar() {
@@ -103,7 +103,7 @@ function addSubTask() {
     closeNewSubtasksBtn();
 }
 
-function getFormData(event) {
+async function getFormData(event) {
     event.preventDefault();
     let taskCategory = { category: "toDo" };
     let title = document.getElementById('title').value;
@@ -157,11 +157,11 @@ function getFormData(event) {
         taskCategory,
         fullNames
     };
-    postFormDataToFireBase(formData);
-    getTasks();
+    await postFormDataToFireBase(formData);
+    await getTasks();
 }
 
-function postFormDataToFireBase(formData) {
+async function postFormDataToFireBase(formData) {
     fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
         method: 'POST',
         headers: {
@@ -171,12 +171,10 @@ function postFormDataToFireBase(formData) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Task successfully added:', data);
-            clearForm();
         })
         .catch(error => {
-            console.error('Error adding task:', error);
         });
+        clearForm();
 }
 
 function clearForm() {
@@ -218,7 +216,6 @@ function selectContactsSb(selectedValue) {
     if (selectedValue) {
 
         let splitName = selectedValue.split(" ");
-        console.log(selectedValue);
         let initials;
 
         if (splitName.length > 1) {
@@ -241,7 +238,7 @@ function selectContactsSb(selectedValue) {
     }
 }
 
-function renderAddTask() {
+function renderTask() {
     let inProgress = document.getElementById("inProgress");
     let awaitFeedback = document.getElementById("awaitFeedback");
     let done = document.getElementById("done");
@@ -270,7 +267,7 @@ function renderAddTask() {
                 } else {
                     contactsHTML = '';
                 }
-                toDoBlock.innerHTML += renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
+                toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
             }
 
             if (element.taskCategory.category == "inProgress") {

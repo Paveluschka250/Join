@@ -1,4 +1,4 @@
-function renderAddTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
+function renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
                 <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
                     <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
