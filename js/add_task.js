@@ -148,11 +148,9 @@ function getTaskData(event) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Task successfully added:', data);
             resetFormFields();
         })
         .catch(error => {
-            console.error('Error adding task:', error);
         });
 }
 
