@@ -204,11 +204,11 @@ function extractTaskData(taskCounter) {
     renderOverlayTask(taskCounter, currentTask);
 }
 
-function closeCurrentTask() {
+async function closeCurrentTask() {
     const overlay = document.getElementById('overlay-show-task');
     overlay.classList.remove('overlay-show-task');
     overlay.classList.add('d-none');
-    getTasks();
+    await getTasks();
 }
 
 async function deleteTask(taskId) {
@@ -226,11 +226,10 @@ async function deleteTask(taskId) {
         });
 
         if (response.ok) {
-            renderAddTask();
+            await getTasks();
         }
     }
     catch (error) {
-        console.error('Fehler beim Löschen des Tasks:', error);
     }
     closeCurrentTask();
 }
@@ -257,7 +256,6 @@ async function moveTo(category) {
             body: JSON.stringify({ category })
         });
     } catch (error) {
-        console.error('Error moving task:', error);
     }
     getTasks()
 }

@@ -189,7 +189,7 @@ async function saveEditBtn(taskCounter) {
     await getTasks();
 }
 
-function getDataFromEdit(key) {
+async function getDataFromEdit(key) {
     let currentStatus = tasks.toDo[key].taskCategory.category;
 
     let taskCategory = { category: currentStatus };
@@ -238,7 +238,8 @@ function getDataFromEdit(key) {
         taskCategory,
         fullNames
     };
-    editToFirebase(formData, key)
+    editToFirebase(formData, key);
+    await getTasks();
 }
 
 function selectedContactsEdit() {
@@ -262,7 +263,6 @@ function editToFirebase(formData, key) {
             return response.json();
         })
         .catch(error => {
-            console.error('Fehler beim Aktualisieren der Aufgabe:', error);
         });
 }
 
