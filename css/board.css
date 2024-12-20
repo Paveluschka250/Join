@@ -636,7 +636,8 @@ body {
 
 .board-create-task {
     position: absolute;
-    bottom: 0 !important;
+    bottom: 24px !important;
+    right: 16px;
 }
 
 .subtask-container-overlay-board {

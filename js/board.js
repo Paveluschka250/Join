@@ -171,10 +171,12 @@ async function postFormDataToFireBase(formData) {
     })
         .then(response => response.json())
         .then(data => {
+            
         })
         .catch(error => {
         });
         clearForm();
+        await getTasks();
 }
 
 function clearForm() {

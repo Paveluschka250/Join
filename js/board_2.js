@@ -184,7 +184,7 @@ async function saveEditBtn(taskCounter) {
     taskCounter--;
     getKeysFromTasks();
     let currentTaskKey = keys[taskCounter];
-    getDataFromEdit(currentTaskKey);
+    await getDataFromEdit(currentTaskKey);
     closeCurrentTask();
     await getTasks();
 }
