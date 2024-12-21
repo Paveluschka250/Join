@@ -100,7 +100,7 @@ function addSubTask() {
 
     contentDiv.innerHTML += `
         <li>
-            <div onclick="deleteSubTask(this)" class="li-elemente-subtasks">
+            <div onclick="deleteSubTask(this)" class="li-elemente-subtask li-elements-overlayTask">
                 <p>${subTask.value}<p/>
                 <button><img src="../assets/icons/delete.svg"></img></button>    
             </div>
