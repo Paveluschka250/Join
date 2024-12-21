@@ -132,30 +132,58 @@ function editSubtasks(currentTask) {
         return;
     }
     if (typeof subtasksEdit === "string") {
-        subtasksEdit = subtasksEdit.split(',').map(s => s.trim()).filter(Boolean); // Leerzeichen entfernen, leere Einträge filtern
+        subtasksEdit = subtasksEdit.split(',').map(s => s.trim()).filter(Boolean);
     }
     if (Array.isArray(subtasksEdit) && subtasksEdit.length > 0) {
         subtasksEdit.forEach((subtask, i) => {
-            let li = document.createElement('li');
-            let text = document.createTextNode(subtask);
-            li.appendChild(text);
-            li.setAttribute('id', `list${i}`);
-            let img = document.createElement('img');
-            img.src = '../assets/icons/delete.svg';
-            img.alt = 'Icon';
-            img.style.width = '12px';
-            img.style.height = '12px';
-            img.addEventListener('click', () => deleteSubtaskEdit(i));
-            li.appendChild(img);
-            list.appendChild(li);
+            list.innerHTML += `
+                <li id="list-${i}">
+                    <div id="subtask${i}" class="li-element-subtasks">
+                        <p id="current-subtask-to-edit${i}">${subtask}</p>
+                        <div class="edit-subtasks-icons">
+                            <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
+                            |
+                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                        </div>
+                    </div>
+                    <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
+                        <input id="input-value${i}">
+                        <div class="edit-subtasks-icons">
+                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                            |
+                            <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
+                        </div>
+                    </div>
+                </li>
+            `
+        ;
         });
     } else {
         list.innerHTML = '';
     }
 }
 
+function confirmEditSubtask(i) {
+    let inputValue = document.getElementById(`input-value${i}`).value;
+    let subtask = document.getElementById(`current-subtask-to-edit${i}`);
+    let subtaskContent = document.getElementById(`subtask${i}`);
+    let input = document.getElementById(`subtask-edit-input${i}`);
+    subtask.innerHTML = `${inputValue}`;
+    subtaskContent.classList.toggle('d-none');
+    input.classList.toggle('d-none');
+}
+
+function editCurrentSubtask(i, content) {
+    let subtask = document.getElementById(`subtask${i}`);
+    let input = document.getElementById(`subtask-edit-input${i}`);
+    let inputValue = document.getElementById(`input-value${i}`);
+    subtask.classList.toggle('d-none');
+    input.classList.toggle('d-none');
+    inputValue.value = `${content}`;
+}
+
 function deleteSubtaskEdit(i) {
-    let listItem = document.getElementById(`list${i}`);
+    let listItem = document.getElementById(`list-${i}`);
     if (listItem) {
         listItem.remove();
     }

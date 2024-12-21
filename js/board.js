@@ -98,9 +98,20 @@ function addSubTask() {
     let subTask = document.getElementById('subtasks');
     let contentDiv = document.getElementById('subtask-content');
 
-    contentDiv.innerHTML += `<li><p>${subTask.value}<p/></li>`;
+    contentDiv.innerHTML += `
+        <li>
+            <div onclick="deleteSubTask(this)" class="li-elemente-subtasks">
+                <p>${subTask.value}<p/>
+                <button><img src="../assets/icons/delete.svg"></img></button>    
+            </div>
+        </li>
+    `;
     subTask.value = '';
     closeNewSubtasksBtn();
+}
+
+function deleteSubTask(liElement) {
+    liElement.parentElement.remove();
 }
 
 async function getFormData(event) {

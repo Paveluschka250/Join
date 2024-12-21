@@ -582,10 +582,10 @@ body {
     position: relative;
 }
 
-#subtask-edit-list li img {
+/* #subtask-edit-list li img {
     position: absolute;
     right: 0;
-}
+} */
 
 #subtask-edit-list li img:hover {
     cursor: pointer;
@@ -661,6 +661,49 @@ body {
 
 .gap-0 {
     gap: 0 !important;
+}
+
+
+.li-element-subtasks {
+    display:flex;
+    flex-direction: row !important;
+    justify-content: space-between;
+}
+
+.li-element-subtasks p{
+    margin: 0 !important;
+}
+
+.li-elemente-subtasks button {
+    border: none;
+    background-color: white;
+}
+
+.li-elemente-subtasks img {
+    width: 12px !important;
+}
+
+.li-elemente-subtasks img:hover {
+    cursor: pointer;
+    transition: 0.3s;
+    transform: translateY(2px);
+}
+
+.edit-subtasks-icons{
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative;
+    width: 40px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-subtasks-icons img{
+    width: 12px !important;
+}
+
+.filterCheckButton {
+    filter: invert(52%) sepia(47%) saturate(4550%) hue-rotate(202deg) brightness(100%) contrast(104%);
 }
 
 @media(max-width: 800px) {
