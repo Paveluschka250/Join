@@ -582,10 +582,27 @@ body {
     position: relative;
 }
 
-/* #subtask-edit-list li img {
-    position: absolute;
-    right: 0;
-} */
+.li-elements-overlayTask {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center;
+}
+
+.li-elements-overlayTask button {
+    background-color: white !important;
+    border: none;
+}
+
+.li-elements-overlayTask button:hover {
+    cursor: pointer;
+    transition: 0.3ms;
+    transform: translateY(2px);
+}
+
+.li-elements-overlayTask img {
+    width: 12px !important;
+}
 
 #subtask-edit-list li img:hover {
     cursor: pointer;
