@@ -163,7 +163,7 @@
 }
 
 #addtask-content .input-addTask {
-  width: 93%;
+  width: 100%;
   padding: 10px 10px;
   font-size: 14px;
   border: solid #cacaca 1px;
@@ -176,6 +176,16 @@
 }
 #addtask-content textarea {
   resize: none;
+}
+
+.only-bottom-border{
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.underline-blue:hover{
+  border-color:#0056b3 !important;
 }
 
 #addtask-content label {

@@ -619,10 +619,21 @@ body {
 .add-task-sb-board {
     border-top-left-radius: 16px !important;
     border-bottom-left-radius: 16px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
     max-width: 400px !important;
     padding: 20px;
-    height: 95% !important;
+    height: 96% !important;
+    position: relative;
+    overflow-x: auto;
 }
+
+/* .board-create-task-btn {
+    display: flex;
+    position: relative !important;
+    bottom: 0;
+    width: 100% !important;
+} */
 
 .overlay-add-task-board {
     z-index: 1000;
@@ -642,6 +653,14 @@ body {
 
 .subtask-container-overlay-board {
     margin-top: 16px;
+}
+
+.width-100 {
+    width: 100% !important;
+}
+
+.gap-0 {
+    gap: 0 !important;
 }
 
 @media(max-width: 800px) {
@@ -708,6 +727,7 @@ body {
 
     .scroll-input {
         width: 275px;
+        padding-bottom: 0 !important;
     }
 
     .add-task-sb-board {
@@ -718,7 +738,7 @@ body {
         height: 90% !important;
         position: relative !important;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
     }
 }
@@ -775,6 +795,30 @@ body {
         display: flex;
         justify-content: center;
     }
+
+    .add-task-sb-board {
+        width: 300px !important;
+    }
+
+    .gap-0 {
+        width: 100% !important;
+    }
+
+    .buttons-row button {
+        font-size: 12px !important;
+        min-width: 30% !important;
+        justify-content: center !important;
+    }
+
+    .board-create-task {
+        position: static;
+        bottom: 24px !important;
+        right: 16px;
+    }
+
+    .board-create-task-btn {
+        justify-content: flex-end;
+    }
 }
 
 @media(max-width: 1024px) {
@@ -809,7 +853,7 @@ body {
         height: 90% !important;
         position: relative !important;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
     }
 
@@ -828,5 +872,11 @@ body {
 @media(min-width: 1440px) {
     .board-main {
         max-width: 1040px !important;
+    }
+}
+
+@media(max-height: 700px) {
+    .board-create-task {
+        position: static !important;
     }
 }
