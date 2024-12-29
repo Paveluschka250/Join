@@ -192,7 +192,7 @@ body {
 }
 
 .to-do-content {
-    width: 100%;
+    width: 99%;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 8px;
     margin-bottom: 8px;
@@ -389,7 +389,8 @@ body {
 }
 
 .drag-and-drop-div-height {
-    height: 100%;
+    height: calc(100vh - 317px);
+    overflow-x: scroll;
 }
 
 .subtask-loadingbar-text {
@@ -751,6 +752,7 @@ body {
         flex-direction: row;
         width: 100%;
         overflow-x: scroll !important;
+        height: auto;
     }
 
     .to-do-content {
