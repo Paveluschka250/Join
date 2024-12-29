@@ -544,6 +544,34 @@
   color: white;
 }
 
+.li-elements-overlayTask {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center;
+}
+
+.li-elements-overlayTask button {
+  background-color: white !important;
+  border: none;
+}
+
+.li-elements-overlayTask button:hover {
+  cursor: pointer;
+  transition: 0.3ms;
+  transform: translateY(2px);
+}
+
+.li-elements-overlayTask img {
+  width: 12px !important;
+}
+
+.added-subtasks {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
 @media (max-width: 450px) {
   .body-addTask {
     width: 100%;
