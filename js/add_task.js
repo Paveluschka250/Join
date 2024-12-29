@@ -170,8 +170,7 @@ function resetFormFields() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
     document.getElementById('due-date').value = '';
-    document.getElementById('assigned-to').value = '';
-    document.getElementById('category').value = '';
+    document.getElementById('category-selected').innerHTML = 'Select task category';
     document.getElementById('selected-contacts').innerHTML = '';
     let subtaskContent = document.getElementById('subtask-content');
     subtaskContent.innerHTML = '';
