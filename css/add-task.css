@@ -543,7 +543,19 @@
   background-color: #4589ff;
   color: white;
 }
-/* 
-@media (max-width: 450px) {
 
-} */
+@media (max-width: 450px) {
+  .body-addTask {
+    width: 100%;
+  }
+
+  .priority-btn-addTask {
+    font-size: 12px !important;
+    min-width: 25% !important;
+  }
+
+  .center-button {
+    gap: 4px !important;
+    padding: 8px 12px !important;
+  }
+}
