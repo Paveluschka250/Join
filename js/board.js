@@ -182,12 +182,12 @@ async function postFormDataToFireBase(formData) {
     })
         .then(response => response.json())
         .then(data => {
-            
+
         })
         .catch(error => {
         });
-        clearForm();
-        await getTasks();
+    clearForm();
+    await getTasks();
 }
 
 function clearForm() {
@@ -256,46 +256,48 @@ function renderTask() {
     let awaitFeedback = document.getElementById("awaitFeedback");
     let done = document.getElementById("done");
     let toDoBlock = document.getElementById("to-do-block");
-    let toDo = tasks.toDo;
+    if ("toDo" in (tasks ||  {})) {
+        let toDo = tasks.toDo;
 
-    if (toDo && Object.keys(toDo).length > 0) {
-        inProgress.innerHTML = "";
-        awaitFeedback.innerHTML = "";
-        done.innerHTML = "";
-        toDoBlock.innerHTML = "";
+        if (toDo && Object.keys(toDo).length > 0) {
+            inProgress.innerHTML = "";
+            awaitFeedback.innerHTML = "";
+            done.innerHTML = "";
+            toDoBlock.innerHTML = "";
 
-        let taskCounter = 0;
-        for (let key in toDo) {
-            const element = toDo[key];
-            taskCounter++;
+            let taskCounter = 0;
+            for (let key in toDo) {
+                const element = toDo[key];
+                taskCounter++;
 
-            if (element.taskCategory.category == "toDo") {
-                let prioIconURL = getPrioIconURL(element);
-                let contactsHTML = '';
+                if (element.taskCategory.category == "toDo") {
+                    let prioIconURL = getPrioIconURL(element);
+                    let contactsHTML = '';
 
-                if (Array.isArray(element.assignedTo)) {
-                    contactsHTML = element.assignedTo
-                        .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                        .join('');
-                } else {
-                    contactsHTML = '';
+                    if (Array.isArray(element.assignedTo)) {
+                        contactsHTML = element.assignedTo
+                            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                            .join('');
+                    } else {
+                        contactsHTML = '';
+                    }
+                    toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
                 }
-                toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
-            }
 
-            if (element.taskCategory.category == "inProgress") {
-                renderInProgress(taskCounter, element);
-            }
+                if (element.taskCategory.category == "inProgress") {
+                    renderInProgress(taskCounter, element);
+                }
 
-            if (element.taskCategory.category == "awaitFeedback") {
-                renderAwaitFeedback(taskCounter, element);
-            }
+                if (element.taskCategory.category == "awaitFeedback") {
+                    renderAwaitFeedback(taskCounter, element);
+                }
 
-            if (element.taskCategory.category == "done") {
-                renderDone(taskCounter, element);
+                if (element.taskCategory.category == "done") {
+                    renderDone(taskCounter, element);
+                }
+                taskStyle(taskCounter);
+                loadingspinner(taskCounter, element);
             }
-            taskStyle(taskCounter);
-            loadingspinner(taskCounter, element);
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
@@ -324,10 +326,10 @@ function renderInProgress(taskCounter, element) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = '';
 
-        if(Array.isArray(element.assignedTo)){
+        if (Array.isArray(element.assignedTo)) {
             contactsHTML = element.assignedTo
-            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-            .join('');
+                .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                .join('');
         } else {
             contactsHTML = '';
         }
@@ -343,10 +345,10 @@ function renderAwaitFeedback(taskCounter, element) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = '';
 
-        if(Array.isArray(element.assignedTo)){
+        if (Array.isArray(element.assignedTo)) {
             contactsHTML = element.assignedTo
-            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-            .join('');
+                .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                .join('');
         } else {
             contactsHTML = '';
         }
@@ -362,10 +364,10 @@ function renderDone(taskCounter, element) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = '';
 
-        if(Array.isArray(element.assignedTo)){
+        if (Array.isArray(element.assignedTo)) {
             contactsHTML = element.assignedTo
-            .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-            .join('');
+                .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                .join('');
         } else {
             contactsHTML = '';
         }
