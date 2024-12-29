@@ -98,7 +98,7 @@ function getTaskData(event) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let dueDate = document.getElementById('due-date').value;
-    let category = document.getElementById('category').value;
+    let category = document.getElementById('category-selected').value;
     let taskCategory = { category: "toDo" };
     
     let selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
