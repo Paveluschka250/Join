@@ -251,6 +251,9 @@ function renderEditTaskHTML () {
                     <button type="button" id="add-subtask-btn-sb-edit" class="create-new-task"
                         onclick="addNewSubTaskEdit()"><img src="../assets/icons/add.svg" alt="add"></button>
                 </div>
+                <div class="subtask-error" id="subtask-error-edit">
+                    <p>You can not add empty subtasks!</p>
+                </div>
                 <div>
                     <div id="subtask-edit-content">
                         <ul id="subtask-edit-list"></ul>

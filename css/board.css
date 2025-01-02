@@ -253,6 +253,7 @@ body {
     font-size: 10px;
     width: 16px;
     text-align: center;
+    color: white;
 }
 
 .overlay-show-task {
@@ -757,6 +758,7 @@ body {
 .moveToButtons:hover {
     transition: 0.3s;
     transform: translateY(2px);
+    cursor: pointer;
 }
 
 .responsive-btn {
@@ -771,6 +773,10 @@ body {
     border-bottom-left-radius: 8px;
     background-color:  rgb(69, 137, 255);
     color: white;
+}
+
+.responsive-btn button:hover {
+    cursor: pointer;
 }
 
 .subtask-error {
