@@ -575,6 +575,13 @@ main {
   margin-bottom: 0;
 }
 
+.subtask-error-add-task {
+  border: solid black 1px;
+  border-radius: 8px;
+  display:none;
+  justify-content: center;
+}
+
 
 @media (max-width: 450px) {
   .body-addTask {

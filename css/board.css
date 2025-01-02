@@ -190,12 +190,15 @@ body {
     color: white;
     border-bottom-color: black !important;
 }
-
 .to-do-content {
     width: 99%;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 8px;
     margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 240px;
+    justify-content: space-between;
 }
 
 .to-do-content:hover {
@@ -220,7 +223,7 @@ body {
 }
 
 .title-task {
-    font-size: 12px;
+    font-size: 16px;
     color: #4589FF;
     margin-top: 20px;
     margin-bottom: 8px;
@@ -724,7 +727,68 @@ body {
     filter: invert(52%) sepia(47%) saturate(4550%) hue-rotate(202deg) brightness(100%) contrast(104%);
 }
 
+.move-to-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.move-to-container button{
+    display: none;
+}
+
+.move-to-category-buttons-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.moveToButtons {
+    width: 100%;
+    height: 46px;
+    background-color: rgb(69, 137, 255);
+    color: white;
+    margin: 1px 0;
+    border: none;
+    border-radius: 8px;
+}
+
+.moveToButtons:hover {
+    transition: 0.3s;
+    transform: translateY(2px);
+}
+
+.responsive-btn {
+    display: block;
+    width: 100%;
+}
+
+.responsive-btn button {
+    width: 100%;
+    border: solid black 1px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color:  rgb(69, 137, 255);
+    color: white;
+}
+
+.subtask-error {
+    border: solid black 1px;
+    border-radius: 8px;
+    display:none;
+    justify-content: center;
+}
+
 @media(max-width: 800px) {
+    .move-to-container button{
+        margin-right: 8px;
+        background-color: white;
+        border: solid lightgrey 1px;
+        border-radius: 4px;
+        display:block;
+    }
+
     .category-to-do {
         font-size: 12px;
     }
@@ -756,8 +820,8 @@ body {
     }
 
     .to-do-content {
-        min-width: 130px;
-        width: 130px;
+        min-width: 160px;
+        width: 160px;
         margin-right: 8px;
     }
 
@@ -940,5 +1004,15 @@ body {
 @media(max-height: 700px) {
     .board-create-task {
         position: static !important;
+    }
+}
+
+@media(min-width: 800px) {
+    .responsive-btn {
+        display: none;
+    }
+
+    .move-to-category-buttons-container button:hover {
+        cursor: pointer;
     }
 }

@@ -156,7 +156,7 @@ function editSubtasks(currentTask) {
                     </div>
                 </li>
             `
-        ;
+                ;
         });
     } else {
         list.innerHTML = '';
@@ -315,6 +315,51 @@ function overlayBoardClosed(event) {
 
 document.getElementById('overlay-add-task-board').addEventListener('click', overlayBoardClosed);
 
-document.getElementById('addtask-content').addEventListener('click', function(event) {
+document.getElementById('addtask-content').addEventListener('click', function (event) {
     event.stopPropagation();
 });
+
+function taskMoveToMenu(taskCounter, event) {
+    if (event && event.type !== 'drag') {
+        event.stopPropagation(); // Drag-Events unberührt lassen
+    }
+    let currentTask = document.getElementById(`to-do-content${taskCounter}`);
+    currentTask.innerHTML = "";
+    currentTask.innerHTML = `
+        <div class="move-to-category-buttons-container" id="move-to-category-buttons-container">
+            <button onclick="moveToCategory(${taskCounter}, 'toDo', event)" class="moveToButtons">To Do</button>
+            <button onclick="moveToCategory(${taskCounter}, 'inProgress', event)" class="moveToButtons">In progress</button>
+            <button onclick="moveToCategory(${taskCounter}, 'awaitFeedback', event)" class="moveToButtons">Await feedback</button>
+            <button onclick="moveToCategory(${taskCounter}, 'done', event)" class="moveToButtons">Done</button>
+            <button onclick="closeMoveTo(event)" class="moveToButtons">X</button>
+        </div>
+        `;
+}
+
+// function stopPropagationButtonsContainer () {
+//     document.getElementById('')
+// }
+
+async function moveToCategory(taskCounter, category, event) {
+    event.stopPropagation();
+    taskCounter--;
+    try {
+        let taskKey = Object.keys(tasks.toDo)[taskCounter];
+        tasks.toDo[taskKey].taskCategory = category;
+
+        await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ category })
+        });
+    } catch (error) {
+    }
+    await closeMoveTo(event);
+}
+
+async function closeMoveTo(event) {
+    event.stopPropagation();
+    await getTasks();
+}

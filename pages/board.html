@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta property="og:title" content="Join - Task and Project Management Made Easy">
-    <meta property="og:description" content="Join is a modern platform combining Kanban board features with advanced contact management to boost work organization and collaboration.">
+    <meta property="og:description"
+        content="Join is a modern platform combining Kanban board features with advanced contact management to boost work organization and collaboration.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://join-370.developerakademie.net/Join/"> 
+    <meta property="og:url" content="https://join-370.developerakademie.net/Join/">
     <meta property="og:image" content="https://join-370.developerakademie.net/Join/assets/img/logo-blue.png">
     <link rel="icon" href="../assets/img/logo-blue.svg" type="image/x-icon">
 
@@ -80,8 +81,7 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
+            <!-- </div> -->
             </div>
             <div onclick="closeCurrentTask()" id="overlay-show-task" class="d-none">
                 <div id="current-task" class="current-task"></div>
@@ -97,8 +97,8 @@
                     </div>
                     <div class="scroll-input hide-scrollbar width-100">
                         <div class="form-group-addTask">
-                            <input class="underline-addTask input-addTask cursor-pointer only-bottom-border" type="text" id="title"
-                                name="title" placeholder="Enter a title" required>
+                            <input class="underline-addTask input-addTask cursor-pointer only-bottom-border" type="text"
+                                id="title" name="title" placeholder="Enter a title" required>
                         </div>
 
                         <div class="form-group-addTask">
@@ -109,8 +109,8 @@
 
                         <div class="form-group-addTask">
                             <label for="due-date"><b>Due date</b></label>
-                            <input class="only-bottom-border underline-addTask input-addTask cursor-pointer" type="date" id="due-date"
-                                name="due-date">
+                            <input class="only-bottom-border underline-addTask input-addTask cursor-pointer" type="date"
+                                id="due-date" name="due-date">
                         </div>
 
                         <div class="form-group-addTask priority-addTask">
@@ -135,8 +135,8 @@
                         <div class="form-group-addTask">
                             <label for="assigned-to-sb"><b>Assigned to</b> (optional)</label>
                             <select onclick="getUsersToAssignedTo()"
-                                class="only-bottom-border underline-select input-addTask cursor-pointer" id="assigned-to-sb"
-                                name="assigned-to-sb">
+                                class="only-bottom-border underline-select input-addTask cursor-pointer"
+                                id="assigned-to-sb" name="assigned-to-sb">
                                 <option value="">Select contacts to assign</option>
                             </select>
                             <div class="selected-contacts-sb" id="selected-contacts-sb"></div>
@@ -144,7 +144,8 @@
 
                         <div class="form-group-addTask">
                             <label for="category"><b>Category</b></label>
-                            <select class="only-bottom-border underline-select input-addTask cursor-pointer" id="category" name="category">
+                            <select class="only-bottom-border underline-select input-addTask cursor-pointer"
+                                id="category" name="category">
                                 <option value="">Select task category</option>
                                 <option value="Technical Task">Technical Task</option>
                                 <option value="User Story">User Story</option>
@@ -153,8 +154,9 @@
 
                         <div class="form-group-addTask new-task-btn">
                             <label for="subtasks"><b>Subtasks</b> (optional)</label>
-                            <input class="underline-blue only-bottom-border underline-addTask input-addTask add-icon cursor-pointer" type="text"
-                                id="subtasks" name="subtasks" placeholder="Add new subtask">
+                            <input
+                                class="underline-blue only-bottom-border underline-addTask input-addTask add-icon cursor-pointer"
+                                type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
                             <button type="button" id="add-subtask-btn-sb" class="create-new-task"
                                 onclick="addNewSubTask()"><img src="../assets/icons/add.svg" alt="add"></button>
                             <div id="subtask-buttons-sb" class="task-btn-div d-none">
@@ -163,6 +165,9 @@
                                 <button type="button" onclick="addSubTask()"><img
                                         src="../assets/icons/createTaskIcon.svg" alt="create Task"></button>
                             </div>
+                        </div>
+                        <div class="subtask-error-add-task" id="subtask-error-add-task">
+                            <p>You can not add empty subtasks!</p>
                         </div>
                     </div>
 
