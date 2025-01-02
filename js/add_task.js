@@ -75,7 +75,7 @@ function closeNewSubtasksBtn() {
 function addSubTask() {
   let subTask = document.getElementById('subtasks');
   let contentDiv = document.getElementById('subtask-content');
-  if (!subTask === "") {
+  if (subTask.value !== '') {
     contentDiv.innerHTML += `
         <li>
             <div onclick="deleteSubTask(this)" class="li-elemente-subtask li-elements-overlayTask">
