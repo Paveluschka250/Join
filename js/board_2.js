@@ -34,6 +34,7 @@ function editCurrentTask(currentTask, taskCounter) {
     }
     document.getElementById('category-edit').value = `${currentTask[1]}`;
     editSubtasks(currentTask);
+
 }
 
 function editPriorityBtn(currentTask) {
@@ -191,22 +192,41 @@ function deleteSubtaskEdit(i) {
 
 function addNewSubTaskEdit() {
     let list = document.getElementById('subtask-edit-list');
-    let input = document.getElementById('subtasks-edit').value;
-    let amount = list.childElementCount;
-    let li = document.createElement('li');
-    let text = document.createTextNode(input);
-    li.appendChild(text);
-    li.setAttribute('id', `list${amount}`);
-    let img = document.createElement('img');
-    img.src = '../assets/icons/delete.svg';
-    img.alt = 'Icon';
-    img.style.width = '12px';
-    img.style.height = '12px';
-    img.addEventListener('click', () => deleteSubtaskEdit(amount));
-    li.appendChild(img);
-    list.appendChild(li)
-    document.getElementById('subtasks-edit').value = '';
+    let subtask = document.getElementById('subtasks-edit').value;
+    let i = list.childElementCount++;
+
+    if (subtask !== "") {
+        list.innerHTML += `
+            <li id="list-${i}">
+                <div id="subtask${i}" class="li-element-subtasks">
+                    <p id="current-subtask-to-edit${i}">${subtask}</p>
+                    <div class="edit-subtasks-icons">
+                        <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
+                        |
+                        <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                    </div>
+                  </div>
+                <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
+                    <input id="input-value${i}">
+                    <div class="edit-subtasks-icons">
+                        <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                        |
+                        <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
+                    </div>
+                </div>
+            </li>
+        `
+            ;
+        document.getElementById('subtasks-edit').value = '';
+    } else {
+        let subtaskError = document.getElementById('subtask-error-edit');
+        subtaskError.style.display = 'flex';
+        setTimeout(function () {
+            subtaskError.style.display = "none";
+        }, 3000);
+    }
 }
+
 
 async function saveEditBtn(taskCounter) {
     taskCounter--;
@@ -335,10 +355,6 @@ function taskMoveToMenu(taskCounter, event) {
         </div>
         `;
 }
-
-// function stopPropagationButtonsContainer () {
-//     document.getElementById('')
-// }
 
 async function moveToCategory(taskCounter, category, event) {
     event.stopPropagation();
