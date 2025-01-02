@@ -2,9 +2,8 @@ function renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
                 <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
                     <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
-                    <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
-                    <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
-                     
+                        <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+                        <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>               
                     <div class="task-subtask-container margin-8px">    
                         <div class="subtask-progress-container">
                             <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
@@ -23,6 +22,9 @@ function renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
                         <div>
                             <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
                         </div>
+                    </div>
+                    <div class="responsive-btn">
+                        <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
                     </div>
                     <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
                     <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
@@ -58,6 +60,9 @@ function rederInProgress(element, taskCounter, prioIconURL, contactsHTML) {
                 <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
             </div>
         </div>
+        <div class="responsive-btn">
+            <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
+        </div>
         <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
         <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
         <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
@@ -92,6 +97,9 @@ function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML
                     <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
                 </div>
             </div>
+            <div class="responsive-btn">
+                <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
+            </div>            
             <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
             <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
             <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
@@ -102,7 +110,11 @@ function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML
 
 function renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
-        <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
+        <div draggable="true"
+        ondragstart="startDragging(${taskCounter})" 
+        onclick="showOverlayTask(${taskCounter})" 
+        class="to-do-content" 
+        id="to-do-content${taskCounter}">
             <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
             <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
             <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
@@ -125,6 +137,9 @@ function renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML) {
                 <div>
                     <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
                 </div>
+            </div>
+            <div class="responsive-btn">
+                <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
             </div>
             <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
             <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>

@@ -97,7 +97,7 @@ function closeNewSubtasksBtn() {
 function addSubTask() {
     let subTask = document.getElementById('subtasks');
     let contentDiv = document.getElementById('subtask-content');
-
+    if(!subTask === "") {
     contentDiv.innerHTML += `
         <li>
             <div onclick="deleteSubTask(this)" class="li-elemente-subtask li-elements-overlayTask">
@@ -108,6 +108,13 @@ function addSubTask() {
     `;
     subTask.value = '';
     closeNewSubtasksBtn();
+    } else {
+        let subtaskError = document.getElementById('subtask-error');
+        subtaskError.style.display = 'flex';
+        setTimeout(function() {
+            subtaskError.style.display = "none";
+        }, 3000);
+    }
 }
 
 function deleteSubTask(liElement) {
