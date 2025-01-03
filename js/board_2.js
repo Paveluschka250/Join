@@ -31,10 +31,13 @@ function editCurrentTask(currentTask, taskCounter) {
         }
     } else {
         assignedContacts.innerHTML = '';
+    }    
+    if (currentTask[1] !== 'Ticket') {
+        document.getElementById('category-edit').value = `${currentTask[1]}`;
+    } else {
+        document.getElementById('category-edit').value = '';
     }
-    document.getElementById('category-edit').value = `${currentTask[1]}`;
     editSubtasks(currentTask);
-
 }
 
 function editPriorityBtn(currentTask) {
