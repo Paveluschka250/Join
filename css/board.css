@@ -232,7 +232,7 @@ body {
 .description-task {
     margin: 8px 0;
     color: lightgrey;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .task-prio-icon {
@@ -803,9 +803,9 @@ body {
         font-size: 16px !important;
     }
 
-    .title-task {
+    /* .title-task {
         font-size: 12px;
-    }
+    } */
 
     .description-task {
         font-size: 10px;
