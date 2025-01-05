@@ -140,27 +140,7 @@ function editSubtasks(currentTask) {
     }
     if (Array.isArray(subtasksEdit) && subtasksEdit.length > 0) {
         subtasksEdit.forEach((subtask, i) => {
-            list.innerHTML += `
-                <li id="list-${i}">
-                    <div id="subtask${i}" class="li-element-subtasks">
-                        <p id="current-subtask-to-edit${i}">${subtask}</p>
-                        <div class="edit-subtasks-icons">
-                            <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
-                            |
-                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
-                        </div>
-                    </div>
-                    <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
-                        <input id="input-value${i}">
-                        <div class="edit-subtasks-icons">
-                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
-                            |
-                            <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
-                        </div>
-                    </div>
-                </li>
-            `
-                ;
+            list.innerHTML += editSubtasksHTML(subtask, i);
         });
     } else {
         list.innerHTML = '';
@@ -261,7 +241,7 @@ async function getDataFromEdit(key) {
     let subtasks = [];
     let subtasksChecked = [];
 
-    let subtaskList = document.querySelectorAll('#subtask-edit-content li');
+    let subtaskList = document.querySelectorAll('#subtask-edit-content p');
     if (subtaskList.length > 0) {
         subtasks = Array.from(subtaskList).map(li => li.textContent);
 
