@@ -232,12 +232,9 @@ function getUsersToAssignedTo() {
 function selectContactsSb(selectedValue) {
     let selectedContacts = document.getElementById('selected-contacts-sb');
     let assignedToSb = document.getElementById('assigned-to-sb');
-
     if (selectedValue) {
-
         let splitName = selectedValue.split(" ");
         let initials;
-
         if (splitName.length > 1) {
             let firstNameInitial = splitName[0][0].toUpperCase();
             let secondNameInitial = splitName[1][0].toUpperCase();
@@ -245,14 +242,11 @@ function selectContactsSb(selectedValue) {
         } else {
             initials = splitName[0][0].toUpperCase();
         }
-
         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
             selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials-sb">${initials}</div>`;
         }
     }
-
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
-
     if (optionToDisable) {
         optionToDisable.disabled = true;
     }

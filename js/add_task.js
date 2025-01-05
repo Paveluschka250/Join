@@ -173,7 +173,6 @@ function getTaskData(event) {
     });
 }
 
-
 function resetFormFields() {
   document.getElementById('title').value = '';
   document.getElementById('description').value = '';
@@ -260,10 +259,8 @@ function toggleDropdown(dropdownId) {
 function selectOption(selectId, value) {
   document.getElementById(`${selectId}-selected`).textContent = value;
   document.getElementById(`${selectId}-dropdown`).style.display = 'none';
-  // Hier können Sie den Wert speichern oder weitere Aktionen ausführen
 }
 
-// Schließe Dropdown wenn außerhalb geklickt wird
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.custom-select-wrapper')) {
     document.querySelectorAll('.custom-select-dropdown').forEach(d => d.style.display = 'none');
