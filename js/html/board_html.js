@@ -266,3 +266,27 @@ function renderEditTaskHTML () {
         </form>
     `
 }
+
+function editSubtasksHTML(subtask, i) {
+    return `
+             <li id="list-${i}">
+                    <div id="subtask${i}" class="li-element-subtasks">
+                        <p id="current-subtask-to-edit${i}">${subtask}</p>
+                        <div class="edit-subtasks-icons">
+                            <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
+                            |
+                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                        </div>
+                    </div>
+                    <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
+                        <input id="input-value${i}">
+                        <div class="edit-subtasks-icons">
+                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                            |
+                            <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
+                        </div>
+                    </div>
+                </li>
+            
+        `
+}
