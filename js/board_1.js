@@ -68,7 +68,6 @@ function loadCheckFieldStatus(taskCounter) {
         let element = taskId[key];
         allTasksKey.push(element)
     }
-
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
     if (currentTask.subtasks && currentTask.subtasksChecked) {
         let currentSubtaskAmount = currentTask.subtasks.length;
@@ -117,7 +116,6 @@ function renderOverlayTask(taskCounter, currentTask) {
     let contactsHTML = currentTask[4]
         .map((initials, i) => `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div><div class="full-names-overlay" id="name-${i}"></div></div>`)
         .join('');
-
     let currentSubtasks;
     if (currentTask[9] != "dummy" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");
@@ -128,10 +126,8 @@ function renderOverlayTask(taskCounter, currentTask) {
     } else {
         currentSubtasks = 'No subtasks!';
     }
-
     overlayContainer.innerHTML = '';
     overlayContainer.innerHTML = renderOverlayTaskHTML(currentTask, taskCounter, contactsHTML, currentSubtasks);
-
     document.getElementById('editTaskBtn').addEventListener('click', function () {
         editTask(currentTask, taskCounter);
     });
@@ -154,11 +150,9 @@ function overlayTaskGetFullNames(taskCounter) {
 
 function extractTaskData(taskCounter) {
     const taskElement = document.getElementById(`to-do-content${taskCounter}`);
-
     if (!taskElement) {
         return null;
     }
-
     const categoryElement = taskElement.querySelector(`#category-to-do${taskCounter}`);
     const titleElement = taskElement.querySelector(`#title-task${taskCounter}`);
     const descriptionElement = taskElement.querySelector(`#description-task${taskCounter}`);
@@ -168,7 +162,6 @@ function extractTaskData(taskCounter) {
     const fullNameElement = taskElement.querySelector(`#set-full-name${taskCounter}`);
     const priorityElement = taskElement.querySelector(`#set-priority${taskCounter}`);
     const subtasksElement = taskElement.querySelector(`#set-subtasks${taskCounter}`)
-
     const category = categoryElement ? categoryElement.textContent.trim() : null;
     const title = titleElement ? titleElement.textContent.trim() : null;
     const description = descriptionElement ? descriptionElement.textContent.trim() : null;
@@ -176,7 +169,6 @@ function extractTaskData(taskCounter) {
     const fullName = fullNameElement ? fullNameElement.textContent.trim() : null;
     const priority = priorityElement ? priorityElement.textContent.trim() : null;
     const subtasks = subtasksElement ? subtasksElement.textContent.trim() : null;
-
     const contactsHTML = [];
     if (contactsContainer) {
         const contactDivs = contactsContainer.querySelectorAll('div');
@@ -184,7 +176,6 @@ function extractTaskData(taskCounter) {
             contactsHTML.push(contactDiv.innerHTML.trim());
         });
     }
-
     const prioIcon = prioIconElement ? prioIconElement.src : null;
 
     let currentTask = [];
@@ -219,7 +210,6 @@ async function deleteTask(taskId) {
     } else {
         return;
     }
-
     try {
         const response = await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${currentTask[taskId]}.json`, {
             method: 'DELETE',
@@ -264,7 +254,6 @@ function filterTasks() {
     const searchValue = document.getElementById('search-input').value.toLowerCase();
     const suggestionsContainer = document.getElementById('suggestions');
     suggestionsContainer.innerHTML = '';
-
     if (searchValue) {
         let hasMatches = false;
         for (const taskKeys in tasks) {
@@ -272,7 +261,6 @@ function filterTasks() {
                 const task = tasks[taskKeys][taskId];
                 const titleMatch = task.title.toLowerCase().includes(searchValue);
                 const descriptionMatch = task.description && task.description.toLowerCase().includes(searchValue);
-
                 if (titleMatch || descriptionMatch) {
                     const suggestionItem = document.createElement('div');
                     suggestionItem.className = 'suggestion-item';
@@ -283,19 +271,16 @@ function filterTasks() {
                 }
             }
         }
-
         if (!hasMatches) {
             const noResults = document.createElement('div');
             noResults.className = 'suggestion-item';
             noResults.innerText = 'Keine Ergebnisse gefunden';
             suggestionsContainer.appendChild(noResults);
         }
-
         suggestionsContainer.style.display = 'block';
     } else {
         suggestionsContainer.style.display = 'none';
     }
-
     document.addEventListener('click', function (event) {
         const isClickInside = suggestionsContainer.contains(event.target) ||
             document.getElementById('search-input').contains(event.target);

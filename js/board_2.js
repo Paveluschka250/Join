@@ -18,6 +18,17 @@ function editCurrentTask(currentTask, taskCounter) {
     document.getElementById('due-date-edit').value = `${currentTask[6]}`;
     editPriorityBtn(currentTask);
     loadContactsEdit();
+    editAssignedContacts(currentTask, taskCounter);
+   
+    if (currentTask[1] !== 'Ticket') {
+        document.getElementById('category-edit').value = `${currentTask[1]}`;
+    } else {
+        document.getElementById('category-edit').value = '';
+    }
+    editSubtasks(currentTask);
+}
+
+function editAssignedContacts(currentTask, taskCounter) {
     let assignedContacts = document.getElementById('selected-contacts-sb-edit');
     let contacts = currentTask[4];
     getKeysFromTasks();
@@ -31,13 +42,7 @@ function editCurrentTask(currentTask, taskCounter) {
         }
     } else {
         assignedContacts.innerHTML = '';
-    }    
-    if (currentTask[1] !== 'Ticket') {
-        document.getElementById('category-edit').value = `${currentTask[1]}`;
-    } else {
-        document.getElementById('category-edit').value = '';
-    }
-    editSubtasks(currentTask);
+    } 
 }
 
 function editPriorityBtn(currentTask) {
@@ -179,27 +184,7 @@ function addNewSubTaskEdit() {
     let i = list.childElementCount++;
 
     if (subtask !== "") {
-        list.innerHTML += `
-            <li id="list-${i}">
-                <div id="subtask${i}" class="li-element-subtasks">
-                    <p id="current-subtask-to-edit${i}">${subtask}</p>
-                    <div class="edit-subtasks-icons">
-                        <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
-                        |
-                        <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
-                    </div>
-                  </div>
-                <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
-                    <input id="input-value${i}">
-                    <div class="edit-subtasks-icons">
-                        <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
-                        |
-                        <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
-                    </div>
-                </div>
-            </li>
-        `
-            ;
+        list.innerHTML += addNewSubTaskEditHTML(subtask, i);
         document.getElementById('subtasks-edit').value = '';
     } else {
         let subtaskError = document.getElementById('subtask-error-edit');
@@ -254,9 +239,7 @@ async function getDataFromEdit(key) {
         subtasks = ['dummy'];
         subtasksChecked = ['dummy'];
     }
-
     let priority = getPriorityToEdit();
-
     let formData = {
         title,
         description,
@@ -271,11 +254,6 @@ async function getDataFromEdit(key) {
     };
     editToFirebase(formData, key);
     await getTasks();
-}
-
-function selectedContactsEdit() {
-
-    return [assignedTo, fullNames]
 }
 
 function editToFirebase(formData, key) {
@@ -324,19 +302,11 @@ document.getElementById('addtask-content').addEventListener('click', function (e
 
 function taskMoveToMenu(taskCounter, event) {
     if (event && event.type !== 'drag') {
-        event.stopPropagation(); // Drag-Events unberührt lassen
+        event.stopPropagation();
     }
     let currentTask = document.getElementById(`to-do-content${taskCounter}`);
     currentTask.innerHTML = "";
-    currentTask.innerHTML = `
-        <div class="move-to-category-buttons-container" id="move-to-category-buttons-container">
-            <button onclick="moveToCategory(${taskCounter}, 'toDo', event)" class="moveToButtons">To Do</button>
-            <button onclick="moveToCategory(${taskCounter}, 'inProgress', event)" class="moveToButtons">In progress</button>
-            <button onclick="moveToCategory(${taskCounter}, 'awaitFeedback', event)" class="moveToButtons">Await feedback</button>
-            <button onclick="moveToCategory(${taskCounter}, 'done', event)" class="moveToButtons">Done</button>
-            <button onclick="closeMoveTo(event)" class="moveToButtons">X</button>
-        </div>
-        `;
+    currentTask.innerHTML = taskMoveToMenuHTML(taskCounter);
 }
 
 async function moveToCategory(taskCounter, category, event) {
@@ -345,7 +315,6 @@ async function moveToCategory(taskCounter, category, event) {
     try {
         let taskKey = Object.keys(tasks.toDo)[taskCounter];
         tasks.toDo[taskKey].taskCategory = category;
-
         await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
             method: 'PUT',
             headers: {
