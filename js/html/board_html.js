@@ -1,74 +1,74 @@
 function renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML) {
     return `
-                <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
-                    <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
-                        <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
-                        <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>               
-                    <div class="task-subtask-container margin-8px">    
-                        <div class="subtask-progress-container">
-                            <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
-                            </div>
-                        </div>
-                        <div>    
-                            <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
-                            </div>
-                        </div>
+        <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
+            <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
+                <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+                <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>               
+            <div class="task-subtask-container margin-8px">    
+                <div class="subtask-progress-container">
+                    <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
                     </div>
-
-                    <div class="task-user-prioIcon margin-8px">    
-                        <div>
-                            <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
-                        </div>
-                        <div>
-                            <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
-                        </div>
-                    </div>
-                    <div class="responsive-btn">
-                        <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
-                    </div>
-                    <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
-                    <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
-                    <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
-                    <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
                 </div>
-            `
+                <div>    
+                    <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-user-prioIcon margin-8px">    
+                <div>
+                    <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
+                </div>
+                <div>
+                    <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
+                </div>
+            </div>
+            <div class="responsive-btn">
+                <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
+            </div>
+            <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
+            <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
+            <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
+            <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
+        </div>
+    `
 }
 
 function rederInProgress(element, taskCounter, prioIconURL, contactsHTML) {
     return         `
-    <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
-        <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
-        <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
-        <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
-         
-        <div class="task-subtask-container margin-8px">    
-            <div class="subtask-progress-container">
-                <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
-                </div>
-            </div>
-            <div>    
-                <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
-                </div>
-            </div>
-        </div>
+        <div draggable="true" ondragstart="startDragging(${taskCounter})" onclick="showOverlayTask(${taskCounter})" class="to-do-content" id="to-do-content${taskCounter}">
+            <div id="category-to-do${taskCounter}" class="category-to-do margin-8px">${element.category}</div>
+            <h4 id="title-task${taskCounter}" class="title-task margin-8px">${element.title}</h4>
+            <p id="description-task${taskCounter}" class="description-task margin-8px">${element.description}</p>
 
-        <div class="task-user-prioIcon margin-8px">    
-            <div>
-                <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
+            <div class="task-subtask-container margin-8px">    
+                <div class="subtask-progress-container">
+                    <div class="subtask-progress-bar" id="subtask-progress-bar-${taskCounter}">
+                    </div>
+                </div>
+                <div>    
+                    <div class="task-subtask-amount" id="subtasks-checked${taskCounter}">
+                    </div>
+                </div>
             </div>
-            <div>
-                <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
+
+            <div class="task-user-prioIcon margin-8px">    
+                <div>
+                    <div id="contacts-task${taskCounter}" class="contacts-task-container">${contactsHTML}</div>
+                </div>
+                <div>
+                    <img class="task-prio-icon" id="task-prio-icon${taskCounter}" src="${prioIconURL}" alt="Priority Icon">
+                </div>
             </div>
+            <div class="responsive-btn">
+                <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
+            </div>
+            <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
+            <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
+            <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
+            <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
         </div>
-        <div class="responsive-btn">
-            <button onclick="taskMoveToMenu(${taskCounter}, event)">move to</button>
-        </div>
-        <div class="d-none" id="set-full-name${taskCounter}">${element.assignedTo}</div>
-        <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
-        <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
-        <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
-    </div>
-`
+    `
 }
 
 function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML) {
@@ -145,44 +145,45 @@ function renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML) {
             <div class="d-none" id="set-due-date${taskCounter}">${element.dueDate}</div>
             <div class="d-none" id="set-priority${taskCounter}">${element.priority}</div>
             <div class="d-none" id="set-subtasks${taskCounter}">${element.subtasks}</div>
-        </div>`
+        </div>
+    `
 }
 
 function renderOverlayTaskHTML (currentTask, taskCounter, contactsHTML, currentSubtasks) {
     return `
-    <div class="current-to-do-content" id="current-to-do">
-        <div class="current-task-header">
-            <div id="current-category-to-do" class="current-category-to-do">${currentTask[1]}</div>
-            <img onclick="closeCurrentTask()" src="../assets/icons/clearIcon.svg" class="current-task-close-btn">
-        </div>
-        <h4 id="current-title-task" class="current-title-task">${currentTask[2]}</h4>
-        <p id="current-description-task" class="current-description-task">${currentTask[3]}</p>
-         <div>
-            <p><b>Due Date: </b>${currentTask[6]} </p>
-        </div>
+        <div class="current-to-do-content" id="current-to-do">
+            <div class="current-task-header">
+                <div id="current-category-to-do" class="current-category-to-do">${currentTask[1]}</div>
+                <img onclick="closeCurrentTask()" src="../assets/icons/clearIcon.svg" class="current-task-close-btn">
+            </div>
+            <h4 id="current-title-task" class="current-title-task">${currentTask[2]}</h4>
+            <p id="current-description-task" class="current-description-task">${currentTask[3]}</p>
+             <div>
+                <p><b>Due Date: </b>${currentTask[6]} </p>
+            </div>
 
-        <div>    
-            <div class="current-task-priority">
-                <p><b>Priority:</b> ${currentTask[8]}</p>
-                <img class="task-prio-icon" src="${currentTask[5]}" alt="Priority Icon">
-            </div>    
-            <div>
-                <div><b>Assigned To:</b> </div>
-                <div id="current-contacts-task${taskCounter}" class="current-contacts-task-container">${contactsHTML}</div>
+            <div>    
+                <div class="current-task-priority">
+                    <p><b>Priority:</b> ${currentTask[8]}</p>
+                    <img class="task-prio-icon" src="${currentTask[5]}" alt="Priority Icon">
+                </div>    
+                <div>
+                    <div><b>Assigned To:</b> </div>
+                    <div id="current-contacts-task${taskCounter}" class="current-contacts-task-container">${contactsHTML}</div>
+                </div>
+            </div>
+
+            <div class="subtask-container-overlay-board">
+                <b>Subtasks</b>
+                <ul id="current-subtasks-task${taskCounter}">${currentSubtasks}</ul>
+            </div>
+
+            <div class="delete-and-edit-task">
+                <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | 
+                <div id="editTaskBtn"><img src="../assets/icons/edit.svg"><p>edit</p></div>
             </div>
         </div>
-        
-        <div class="subtask-container-overlay-board">
-            <b>Subtasks</b>
-            <ul id="current-subtasks-task${taskCounter}">${currentSubtasks}</ul>
-        </div>
-
-        <div class="delete-and-edit-task">
-            <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | 
-            <div id="editTaskBtn"><img src="../assets/icons/edit.svg"><p>edit</p></div>
-        </div>
-    </div>
-`
+    `
 }
 
 function renderEditTaskHTML () {
@@ -269,25 +270,25 @@ function renderEditTaskHTML () {
 
 function editSubtasksHTML(subtask, i) {
     return `
-             <li id="list-${i}">
-                    <div id="subtask${i}" class="li-element-subtasks">
-                        <p id="current-subtask-to-edit${i}">${subtask}</p>
-                        <div class="edit-subtasks-icons">
-                            <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
-                            |
-                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
-                        </div>
-                    </div>
-                    <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
-                        <input id="input-value${i}">
-                        <div class="edit-subtasks-icons">
-                            <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
-                            |
-                            <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
-                        </div>
-                    </div>
-                </li>
-        `
+        <li id="list-${i}">
+            <div id="subtask${i}" class="li-element-subtasks">
+                <p id="current-subtask-to-edit${i}">${subtask}</p>
+                <div class="edit-subtasks-icons">
+                    <img onclick="editCurrentSubtask('${i}', '${subtask}')" src="../assets/icons/edit.svg" alt="icon">
+                    |
+                    <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                </div>
+            </div>
+            <div id="subtask-edit-input${i}" class="d-none li-element-subtasks">
+                <input id="input-value${i}">
+                <div class="edit-subtasks-icons">
+                    <img onclick="deleteSubtaskEdit(${i})" src="../assets/icons/delete.svg" alt="icon">
+                    |
+                    <img onclick="confirmEditSubtask(${i})" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
+                </div>
+            </div>
+        </li>
+    `
 }
 
 function taskMoveToMenuHTML(taskCounter) {

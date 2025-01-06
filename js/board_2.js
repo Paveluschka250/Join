@@ -42,7 +42,14 @@ function editAssignedContacts(currentTask, taskCounter) {
         }
     } else {
         assignedContacts.innerHTML = '';
-    } 
+    }
+    assignedContacts.addEventListener('click', function() {
+        deleteUsersEdit(assignedContacts);
+    } )
+}
+
+function deleteUsersEdit(assignedContacts) {
+    assignedContacts.innerHTML = '';
 }
 
 function editPriorityBtn(currentTask) {
