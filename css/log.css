@@ -351,7 +351,7 @@ footer {
 }
 .privacy{
     color: #fff;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 200;
     text-align: center;
     display: flex;
@@ -361,7 +361,7 @@ footer {
 }
 .privacy a{
     color: grey;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 200;
     text-decoration: none;
     margin-left: 5px;
@@ -385,7 +385,7 @@ footer {
 #msgBox{
     width: 350px;
     height: 40px;
-    background-color: whitesmoke;
+    background-color: transparent;
     color: forestgreen;
     display: flex;
     align-items: center;
