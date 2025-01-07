@@ -25,6 +25,7 @@
         width: 100%;
         max-width: 350px;
         margin-top: 80px;
+        height: calc(100vh - 150px)
     }
 
     .form-box-login {
@@ -43,7 +44,7 @@
 
     footer {
         padding: 10px;
-        display: none;
+        /* display: none; */
     }
    
 }
@@ -53,10 +54,10 @@
         padding: 20px 50px;
     }
     .legal-notice {
-        display: none;
+        /* display: none; */
     }
     .privacy {
-        display: none;
+        /* display: none; */
     }
     .img-logo img{
         height: 50px;
