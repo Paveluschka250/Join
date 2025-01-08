@@ -1,6 +1,6 @@
 async function loadHeader() {
   try {
-    const response = await fetch("/patials/header.html");
+    const response = await fetch("../patials/header.html");
     if (!response.ok) {
       console.error("Keine Datei namens header.html gefunden");
       return;
@@ -36,7 +36,7 @@ loadHeader();
 
 async function loadSidebar() {
   try {
-    const response = await fetch("/patials/sidebar.html");
+    const response = await fetch("../patials/sidebar.html");
     if (!response.ok) {
       console.error("Keine Datei namens sidebar.html gefunden");
       return;
