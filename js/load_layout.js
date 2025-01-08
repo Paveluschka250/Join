@@ -1,6 +1,6 @@
 async function loadHeader() {
   try {
-    const response = await fetch("../patials/header.html");
+    const response = await fetch("/patials/header.html");
     if (!response.ok) {
       console.error("Keine Datei namens header.html gefunden");
       return;
@@ -36,7 +36,7 @@ loadHeader();
 
 async function loadSidebar() {
   try {
-    const response = await fetch("../patials/sidebar.html");
+    const response = await fetch("/patials/sidebar.html");
     if (!response.ok) {
       console.error("Keine Datei namens sidebar.html gefunden");
       return;
@@ -143,12 +143,12 @@ async function includeHTML() {
 
 function logout() {
   localStorage.removeItem("userInitials");
-  window.location.href = "../index.html";
+  window.location.href = "/index.html";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   const logoutLink = document.querySelector(
-    '.overlay-content a[href="../index.html"]'
+    '.overlay-content a[href="/index.html"]'
   );
   if (logoutLink) {
     logoutLink.addEventListener("click", function (e) {
