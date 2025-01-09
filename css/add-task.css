@@ -115,7 +115,7 @@ main {
 }
 
 .create-new-task img {
-  width: 11px;
+  width: 20px;
   padding: 2px;
 }
 
@@ -452,7 +452,7 @@ main {
 .contact-initials {
   height: 48px;
   width: 48px;
-  background-color: #4589ff;
+  /* background-color: #4589ff; */
   border-radius: 50%;
   display: flex;
   justify-content: center;
