@@ -227,7 +227,7 @@ function selectContacts(selectedValue) {
       : `${splitName[0][0].toUpperCase()}`;
 
     selectedContacts.innerHTML += `
-      <div value="${selectedValue}" class="contact-initials">
+      <div value="${selectedValue}" class="contact-initials" style="background-color:${getRandomColor()}">
         ${initials}
       </div>`;
   }
@@ -266,3 +266,18 @@ document.addEventListener('click', (e) => {
     document.querySelectorAll('.custom-select-dropdown').forEach(d => d.style.display = 'none');
   }
 });
+
+function getRandomColor() {
+  const colors = [
+      '#FF5733',
+      '#33FF57',
+      '#3357FF',
+      '#FF33A8',
+      '#FFD133',
+      '#33FFF0',
+      '#8E44AD',
+      '#E74C3C'
+  ];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}
