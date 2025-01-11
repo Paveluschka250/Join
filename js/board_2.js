@@ -130,7 +130,7 @@ function selectContactsSbEdit(selectedValue) {
             initials = splitName[0][0].toUpperCase();
         }
         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-            selectedContacts.innerHTML += `<div class="current-task-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">${initials}</div>`;
+            selectedContacts.innerHTML += `<div class="current-task-initials edit-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">${initials}</div>`;
         }
     }
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
