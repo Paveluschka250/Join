@@ -113,7 +113,10 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
-    let contactsHTML = currentTask[4]
+    console.log(currentTask);
+
+    let contactsHTML = currentTask[7]
+        .split(",")
         .map((initials, i) => `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div><div class="full-names-overlay" id="name-${i}"></div></div>`)
         .join('');
     let currentSubtasks;

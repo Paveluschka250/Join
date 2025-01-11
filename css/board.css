@@ -304,6 +304,11 @@ body {
     color: white;
 }
 
+.edit-initials {
+    margin: 8px -16px 4px 8px !important;
+    box-shadow: 10px 10px !important;
+}
+
 .full-names-overlay {
     font-size: 18px !important;
     color:rgb(94, 91, 91);
