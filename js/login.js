@@ -61,10 +61,11 @@ async function getUserData() {
 let isGuest = false; 
 
 /**
- * Aktiviert den Gast-Modus und leitet zur Übersichtsseite weiter
- * @returns {void}
+ * Aktiviert den Gast-Modus und leitet zur Übersichtsseite weiter.
+ * @async
+ * @returns {Promise<void>}
  */
-function setGuestMode() {
+async function setGuestMode() {
     isGuest = true;
     console.log("Gast-Modus aktiviert:", isGuest);
     localStorage.setItem('currentUser', 'G');
@@ -75,11 +76,12 @@ function setGuestMode() {
 document.getElementById('guest').addEventListener('click', setGuestMode);
 
 /**
- * Verarbeitet den Benutzer-Login-Prozess
+ * Verarbeitet den Benutzer-Login-Prozess.
  * @async
  * @param {string} email - Die E-Mail-Adresse des Benutzers
  * @param {string} password - Das Passwort des Benutzers
  * @returns {Promise<void>}
+ * @throws {Error} Wenn die Anmeldedaten ungültig sind oder ein Fehler auftritt
  */
 async function loginUser(email, password) {
     /**

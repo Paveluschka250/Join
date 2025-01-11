@@ -49,8 +49,7 @@ function addUser() {
 }
 
 /**
- * Zeigt eine animierte Fehlermeldung in einem Container an
- * Die Nachricht verschwindet automatisch nach 5 Sekunden
+ * Zeigt eine Fehlermeldung im angegebenen Container an
  * @param {HTMLElement} container - Der Container für die Fehlermeldung
  * @param {string} message - Die anzuzeigende Fehlermeldung
  * @returns {void}
@@ -87,8 +86,8 @@ function displayErrorMessage(container, message) {
 }
 
 /**
- * Sendet Daten an die Firebase Realtime Database
- * Bei erfolgreicher Registrierung wird der Benutzer zur Login-Seite weitergeleitet
+ * Sendet Daten an die Firebase Realtime Database.
+ * Bei erfolgreicher Registrierung wird der Benutzer zur Login-Seite weitergeleitet.
  * @async
  * @param {string} path - Der Pfad in der Datenbank (z.B. "/user")
  * @param {Object} data - Die zu speichernden Benutzerdaten

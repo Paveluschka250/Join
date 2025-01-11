@@ -49,11 +49,11 @@ function showOverlay(id) {
 }
 
 /**
- * Versteckt das Overlay-Element, wenn außerhalb des Benutzerkreises geklickt wird
- * @param {Event} event - Das Click-Event
+ * Versteckt das Overlay-Element
+ * @param {string} id - Die ID des zu versteckenden Overlay-Elements
  * @returns {void}
  */
-function hideOverlay(event) {
+function hideOverlay(id) {
   const userCircle = document.getElementById("userCircle");
   const overlay = document.getElementById("overlay");
 
@@ -63,8 +63,8 @@ function hideOverlay(event) {
 }
 
 /**
- * Lädt und aktualisiert die Zusammenfassungsdaten des Dashboards
- * Initialisiert Standardwerte und aktualisiert Aufgabenzähler und Deadlines
+ * Lädt und aktualisiert die Zusammenfassungsdaten des Dashboards.
+ * Initialisiert Standardwerte und aktualisiert Aufgabenzähler und Deadlines.
  * @async
  * @returns {Promise<void>}
  * @throws {Error} Wenn beim Laden der Daten ein Fehler auftritt
@@ -83,7 +83,7 @@ async function loadSummary() {
 }
 
 /**
- * Ruft die Aufgaben von der Firebase-Datenbank ab
+ * Ruft die Aufgaben von der Firebase-Datenbank ab.
  * @async
  * @returns {Promise<Array<Object>|null>} Array von Aufgaben oder null wenn keine Daten vorhanden
  * @throws {Error} Wenn die Daten nicht abgerufen werden können
@@ -98,7 +98,7 @@ async function fetchTasks() {
 }
 
 /**
- * Berechnet die Anzahl der Aufgaben in den verschiedenen Kategorien
+ * Berechnet die Anzahl der Aufgaben in den verschiedenen Kategorien.
  * @param {Array<Object>} tasks - Array aller Aufgaben
  * @returns {{
  *   total: number,
@@ -121,7 +121,7 @@ function getTaskCounts(tasks) {
 }
 
 /**
- * Aktualisiert die Anzeige der Aufgabenzähler in der UI
+ * Aktualisiert die Anzeige der Aufgabenzähler in der UI.
  * @param {Array<Object>} tasks - Array aller Aufgaben
  * @returns {void}
  */
@@ -137,8 +137,8 @@ function updateTaskCounts(tasks) {
 }
 
 /**
- * Aktualisiert die Anzeige der nächsten Deadline
- * Zeigt das früheste Fälligkeitsdatum aller Aufgaben an
+ * Aktualisiert die Anzeige der nächsten Deadline.
+ * Zeigt das früheste Fälligkeitsdatum aller Aufgaben an.
  * @param {Array<Object>} tasks - Array aller Aufgaben
  * @returns {void}
  */
@@ -152,8 +152,8 @@ function updateDeadline(tasks) {
 }
 
 /**
- * Setzt alle Anzeigewerte auf ihre Standardwerte zurück
- * Wird beim initialen Laden und bei Fehlern verwendet
+ * Setzt alle Anzeigewerte auf ihre Standardwerte zurück.
+ * Wird beim initialen Laden und bei Fehlern verwendet.
  * @returns {void}
  */
 function setDefaultValues() {
