@@ -30,14 +30,14 @@ function editCurrentTask(currentTask, taskCounter) {
 
 function editAssignedContacts(currentTask, taskCounter) {
     let assignedContacts = document.getElementById('selected-contacts-sb-edit');
-    let contacts = currentTask[4];
+    let contacts = currentTask[7].split(",");
     getKeysFromTasks();
     let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
     if (contacts !== undefined) {
         for (let i = 0; i < contacts.length; i++) {
             const element = contacts[i];
             assignedContacts.innerHTML += `
-                <div class="current-task-initials" value="${fullNames[i]}" style="background-color: ${getRandomColor()}">${element}</div>
+                <div class="current-task-initials edit-initials" value="${fullNames[i]}" style="background-color: ${getRandomColor()}">${element}</div>
             `;
         }
     } else {
