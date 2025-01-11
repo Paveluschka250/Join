@@ -284,6 +284,7 @@ body {
     border-radius: 16px;
     height: 80%;
     width: 40%;
+    min-width: 500px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -853,6 +854,7 @@ body {
     .current-task {
         height: 90%;
         width: 90%;
+        min-width: 300px;
     }
 
     .board-content {
