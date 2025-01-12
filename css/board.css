@@ -295,6 +295,7 @@ body {
 }
 
 .current-task-initials {
+    box-sizing : content-box;
     border-radius: 50%;
     width: 24px;
     display: flex;
@@ -872,6 +873,7 @@ body {
 
     .current-task-initials {
         width: 36px !important;
+        box-sizing: border-box;
     }
 
     .scroll-input {
@@ -976,6 +978,7 @@ body {
     }
 
     .current-task-initials {
+        box-sizing: border-box;
         width: 36px;
     }
 
