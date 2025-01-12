@@ -19,6 +19,14 @@ async function initializeContacts() {
   }
 }
 
+/**
+ * Event-Listener für das DOM-Content-Loaded Event
+ * Initialisiert alle notwendigen Event-Handler für die Kontaktverwaltung:
+ * - Lädt und rendert bestehende Kontakte aus dem localStorage
+ * - Setzt Click-Handler für das Öffnen/Schließen des Kontakt-Overlays
+ * - Initialisiert Formular-Handler für das Hinzufügen und Bearbeiten von Kontakten
+ * - Setzt Event-Listener für UI-Interaktionen wie das Schließen der Kontaktinfo
+ */
 document.addEventListener("DOMContentLoaded", function () {
   JSON.parse(localStorage.getItem("contacts"))
     ? renderContacts(contacts)
