@@ -331,3 +331,11 @@
 #contacts-content .contact-item:nth-child(20) {
   animation-delay: 1s;
 }
+.contact-item.active {
+  background-color: #4589ff;
+  color: white;
+}
+.contact-item.active .contact-details p,
+.contact-item.active .contact-details .email {
+  color: white !important;
+}

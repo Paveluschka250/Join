@@ -91,6 +91,10 @@ function addContactEventListeners() {
     item.style.animationDelay = `${index * 0.1}s`;
 
     item.addEventListener("click", function () {
+      document.querySelectorAll('.contact-item').forEach(contact => {
+        contact.classList.remove('active');
+      });
+      this.classList.add('active');
       const name = this.getAttribute("data-name");
       const email = this.getAttribute("data-email");
       const phone = this.getAttribute("data-phone");
@@ -395,4 +399,18 @@ function closeContactInfo() {
     contactInfo.classList.remove("active");
     contactInfo.classList.remove("closing");
   }, 300);
+}
+
+function handleContactClick(contact, element) {
+    // Bestehender Code...
+    
+    // Entferne 'active' Klasse von allen Kontakt-Items
+    document.querySelectorAll('.contact-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Füge 'active' Klasse zum geklickten Element hinzu
+    element.classList.add('active');
+    
+    // Restlicher bestehender Code...
 }
