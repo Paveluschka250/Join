@@ -945,6 +945,7 @@ body {
     .current-task {
         display: flex;
         justify-content: center;
+        position: relative;
     }
 
     .add-task-sb-board {

@@ -325,3 +325,23 @@ function addNewSubTaskEditHTML(subtask, i) {
         </li>
     `
 }
+
+function addSubTaskHTML(subTask) {
+    return `
+        <li>
+            <div id="current-subtask-${subTask.value}" class="li-elemente-subtask li-elements-overlayTask">
+                <p>${subTask.value}<p/>
+                <button onclick="editSubtask(this, '${subTask.value}')" type="button"><img src="../assets/icons/edit.svg" alt="icon"></img></button>
+                |
+                <button onclick="deleteSubTask(this)"><img src="../assets/icons/delete.svg"></img></button>  
+            </div>
+             <div id="edit-${subTask.value}" class="d-none li-element-subtasks margin-8px">
+                <input id="input-edit-${subTask.value}">
+                <div class="edit-subtasks-icons">
+                  <img onclick="deleteSubTask(this)" src="../assets/icons/delete.svg" alt="icon">
+                  |
+                  <img onclick="confirmEditSubtask(this, '${subTask.value}')" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
+              </div>
+        </li>
+    `
+}

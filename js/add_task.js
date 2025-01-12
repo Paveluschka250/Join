@@ -76,23 +76,7 @@ function addSubTask() {
   let subTask = document.getElementById('subtasks');
   let contentDiv = document.getElementById('subtask-content');
   if (subTask.value !== '') {
-    contentDiv.innerHTML += `
-        <li>
-            <div id="current-subtask-${subTask.value}" class="li-elemente-subtask li-elements-overlayTask">
-                <p>${subTask.value}<p/>
-                <button onclick="editSubtask(this, '${subTask.value}')" type="button"><img src="../assets/icons/edit.svg" alt="icon"></img></button>
-                |
-                <button onclick="deleteSubTask(this)"><img src="../assets/icons/delete.svg"></img></button>  
-            </div>
-             <div id="edit-${subTask.value}" class="d-none li-element-subtasks margin-8px">
-                <input id="input-edit-${subTask.value}">
-                <div class="edit-subtasks-icons">
-                  <img onclick="deleteSubTask(this)" src="../assets/icons/delete.svg" alt="icon">
-                  |
-                  <img onclick="confirmEditSubtask(this, '${subTask.value}')" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
-              </div>
-        </li>
-    `;
+    contentDiv.innerHTML += addSubTaskHTML(subTask);
     subTask.value = '';
     closeNewSubtasksBtn()
   } else {
@@ -165,7 +149,7 @@ function getTaskData(event) {
 
   let subtasks = [];
   let subtasksChecked = [];
-  let subtaskElements = document.querySelectorAll('#subtask-content li');
+  let subtaskElements = document.querySelectorAll('#subtask-content li p');
   if (subtaskElements.length > 0) {
     subtaskElements.forEach(function (subtaskElement) {
       subtasks.push(subtaskElement.textContent);
