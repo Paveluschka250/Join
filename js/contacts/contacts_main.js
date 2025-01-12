@@ -1,6 +1,18 @@
+/**
+ * Globale Variable für die Kontaktliste
+ * Wird aus dem localStorage geladen oder als leeres Array initialisiert
+ */
 let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+/**
+ * Speichert den aktuell bearbeiteten Kontakt
+ */
 let currentEditingContact = null;
 
+/**
+ * Initialisiert die Kontaktliste
+ * Lädt Kontakte aus Firebase wenn keine lokalen Kontakte vorhanden sind
+ */
 async function initializeContacts() {
   if (contacts.length === 0) {
     contacts = await downloadContactsFromFirebase();
@@ -40,6 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 initializeContacts(); 
 
+/**
+ * Fügt einen neuen Kontakt hinzu
+ * Validiert das Formular und speichert den Kontakt in Firebase
+ * @param {Event} event - Das Submit-Event des Formulars
+ */
 async function addNewContact(event) {
   event.preventDefault();
   if (!validateForm()) {
@@ -52,6 +69,10 @@ async function addNewContact(event) {
   }
 }
 
+/**
+ * Sammelt die Formulardaten für einen neuen Kontakt
+ * @returns {Object} Ein Objekt mit den Kontaktdaten
+ */
 function getContactFormData() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
@@ -63,6 +84,11 @@ function getContactFormData() {
   };
 }
 
+/**
+ * Verarbeitet einen neu hinzugefügten Kontakt
+ * Fügt ihn zur lokalen Liste hinzu und aktualisiert die Anzeige
+ * @param {Object} addedContact - Der hinzugefügte Kontakt
+ */
 async function processAddedContact(addedContact) {
   contacts.push(addedContact);
   renderContacts(contacts);
@@ -70,6 +96,10 @@ async function processAddedContact(addedContact) {
   document.getElementById("addContactForm").reset();
 }
 
+/**
+ * Löscht einen Kontakt mit Animation
+ * @param {string} name - Der Name des zu löschenden Kontakts
+ */
 async function deleteContact(name) {
   const contactItems = document.querySelectorAll(".contact-item");
   contactItems.forEach((item) => {
@@ -87,6 +117,9 @@ async function deleteContact(name) {
   }, 500);
 }
 
+/**
+ * Leert die Kontaktdetails-Ansicht
+ */
 function clearContactDetails() {
   document.querySelector(".shortname").textContent = "";
   document.querySelector(".full-name").textContent = "";
@@ -96,6 +129,10 @@ function clearContactDetails() {
   document.querySelector(".contact-info").classList.remove("active");
 }
 
+/**
+ * Speichert die Änderungen an einem Kontakt
+ * @param {Event} event - Das Submit-Event des Bearbeiten-Formulars
+ */
 async function saveEditedContact(event) {
   if (event && event.preventDefault) {
     event.preventDefault();
@@ -112,6 +149,10 @@ async function saveEditedContact(event) {
   }
 }
 
+/**
+ * Sammelt die Daten aus dem Bearbeiten-Formular
+ * @returns {Object} Die bearbeiteten Kontaktdaten
+ */
 function getEditedContactData() {
   return {
     name: document.getElementById("editName").value,
@@ -120,10 +161,20 @@ function getEditedContactData() {
   };
 }
 
+/**
+ * Findet den zu aktualisierenden Kontakt
+ * @param {string} name - Name des Kontakts
+ * @returns {Object} Der gefundene Kontakt
+ */
 function findContactToUpdate(name) {
   return contacts.find(contact => contact.name === currentEditingContact);
 }
 
+/**
+ * Aktualisiert einen Kontakt in der Datenbank und UI
+ * @param {Object} contactToUpdate - Der zu aktualisierende Kontakt
+ * @param {Object} updatedContactData - Die neuen Kontaktdaten
+ */
 async function updateContact(contactToUpdate, updatedContactData) {
   try {
     await updateContactInFirebase(contactToUpdate.id, updatedContactData);
@@ -135,6 +186,11 @@ async function updateContact(contactToUpdate, updatedContactData) {
   }
 }
 
+/**
+ * Aktualisiert einen Kontakt im lokalen Kontakte-Array
+ * @param {string} id - Die ID des zu aktualisierenden Kontakts
+ * @param {Object} updatedData - Die aktualisierten Daten
+ */
 function updateContactsArray(id, updatedData) {
   const index = contacts.findIndex(contact => contact.id === id);
   if (index !== -1) {
@@ -142,6 +198,10 @@ function updateContactsArray(id, updatedData) {
   }
 }
 
+/**
+ * Validiert das Bearbeiten-Formular
+ * @returns {boolean} True wenn alle Eingaben gültig sind
+ */
 function validateEditForm() {
   const nameInput = document.getElementById("editName");
   const emailInput = document.getElementById("editEmail");
@@ -156,6 +216,11 @@ function validateEditForm() {
   return isValid;
 }
 
+/**
+ * Validiert die Namenseingabe im Bearbeitungsformular
+ * @param {HTMLElement} nameInput - Das Namenseingabefeld
+ * @returns {boolean} True wenn der Name gültig ist
+ */
 function validateNameInput(nameInput) {
   if (nameInput && nameInput.value.trim() === "") {
     showError(nameInput, "Name ist erforderlich");
@@ -164,6 +229,11 @@ function validateNameInput(nameInput) {
   return true;
 }
 
+/**
+ * Validiert die E-Mail-Eingabe im Bearbeitungsformular
+ * @param {HTMLElement} emailInput - Das E-Mail-Eingabefeld
+ * @returns {boolean} True wenn die E-Mail gültig ist
+ */
 function validateEmailInput(emailInput) {
   if (emailInput && !validateEmail(emailInput.value)) {
     showError(emailInput, "Ungültige E-Mail-Adresse");
@@ -172,6 +242,11 @@ function validateEmailInput(emailInput) {
   return true;
 }
 
+/**
+ * Validiert die Telefonnummereingabe im Bearbeitungsformular
+ * @param {HTMLElement} phoneInput - Das Telefonnummer-Eingabefeld
+ * @returns {boolean} True wenn die Telefonnummer gültig ist
+ */
 function validatePhoneInput(phoneInput) {
   if (phoneInput) {
     if (!validatePhoneStart(phoneInput.value)) {
@@ -188,6 +263,9 @@ function validatePhoneInput(phoneInput) {
   return true;
 }
 
+/**
+ * Löscht einen Kontakt aus dem Bearbeiten-Modus heraus
+ */
 function deleteContactFromEdit() {
   if (currentEditingContact) {
     deleteContact(currentEditingContact);

@@ -1,3 +1,7 @@
+/**
+ * Rendert die Kontaktliste mit Sortierung und Animation
+ * @param {Array} contacts - Array der anzuzeigenden Kontakte
+ */
 function renderContacts(contacts) {
   const contactsList = document.getElementById("contacts-list");
   contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -9,6 +13,10 @@ function renderContacts(contacts) {
   }, 500);
 }
 
+/**
+ * Entfernt bestehende Kontakte mit Animation
+ * @param {HTMLElement} contactsList - Das Container-Element der Kontaktliste
+ */
 function removeExistingContacts(contactsList) {
   const existingContacts = contactsList.querySelectorAll(".contact-item");
   existingContacts.forEach((contact) => {
@@ -16,6 +24,11 @@ function removeExistingContacts(contactsList) {
   });
 }
 
+/**
+ * Generiert das HTML für die gesamte Kontaktliste
+ * @param {Array} contacts - Array der Kontakte
+ * @returns {string} Das generierte HTML
+ */
 function generateContactsHTML(contacts) {
   let htmlContent = "";
   let currentLetter = "";
@@ -31,6 +44,11 @@ function generateContactsHTML(contacts) {
   return htmlContent;
 }
 
+/**
+ * Generiert das HTML für eine Kontaktgruppe (Buchstabenüberschrift)
+ * @param {string} currentLetter - Der aktuelle Anfangsbuchstabe
+ * @returns {string} Das generierte HTML für die Gruppenüberschrift
+ */
 function generateContactGroupHTML(currentLetter) {
   return `
     <div class="contact-group">
@@ -40,6 +58,12 @@ function generateContactGroupHTML(currentLetter) {
   `;
 }
 
+/**
+ * Generiert das HTML für einen einzelnen Kontakt
+ * @param {Object} contact - Die Kontaktdaten
+ * @param {string} color - Die Hintergrundfarbe für den Avatar
+ * @returns {string} Das generierte HTML für den Kontakt
+ */
 function generateContactHTML(contact, color) {
   return `
     <div class="contact-item" 
@@ -58,6 +82,9 @@ function generateContactHTML(contact, color) {
   `;
 }
 
+/**
+ * Fügt Event-Listener zu allen Kontakten hinzu
+ */
 function addContactEventListeners() {
   const newContacts = document.querySelectorAll(".contact-item");
   newContacts.forEach((item, index) => {
@@ -75,6 +102,10 @@ function addContactEventListeners() {
   });
 }
 
+/**
+ * Zeigt oder versteckt die Kontaktdetails
+ * @param {boolean} show - True zum Anzeigen, False zum Verstecken
+ */
 function toggleContactInfo(show) {
   const contactInfo = document.querySelector(".contact-info");
   if (show) {
@@ -91,6 +122,9 @@ function toggleContactInfo(show) {
   }
 }
 
+/**
+ * Öffnet das Overlay zum Hinzufügen eines Kontakts
+ */
 function openContactsOverlay() {
   const overlay = document.getElementById("contacts-overlay");
   overlay.classList.remove("inactive");
@@ -105,6 +139,9 @@ function openContactsOverlay() {
   }, 10);
 }
 
+/**
+ * Schließt das Overlay zum Hinzufügen eines Kontakts
+ */
 function closeContactsOverlay() {
   const overlay = document.getElementById("contacts-overlay");
   overlay.classList.remove("active");
@@ -119,6 +156,13 @@ function closeContactsOverlay() {
   }
 }
 
+/**
+ * Aktualisiert die Kontaktdetails-Ansicht
+ * @param {string} name - Name des Kontakts
+ * @param {string} email - E-Mail des Kontakts
+ * @param {string} phone - Telefonnummer des Kontakts
+ * @param {string} color - Farbe des Avatars
+ */
 function updateContactDetails(name, email, phone, color) {
   updateShortnameElement(name, color);
   updateContactInfo(name, email, phone);
@@ -130,6 +174,11 @@ function updateContactDetails(name, email, phone, color) {
   setupDeleteContactButton(name);
 }
 
+/**
+ * Aktualisiert das Shortname-Element mit Initialen und Farbe
+ * @param {string} name - Der vollständige Name des Kontakts
+ * @param {string} color - Die Hintergrundfarbe für die Initialen
+ */
 function updateShortnameElement(name, color) {
   const initials = getInitials(name);
   const shortnameElement = document.querySelector(".shortname");
@@ -137,6 +186,11 @@ function updateShortnameElement(name, color) {
   shortnameElement.style.backgroundColor = color;
 }
 
+/**
+ * Extrahiert die Initialen aus einem Namen
+ * @param {string} name - Der vollständige Name
+ * @returns {string} Die Initialen in Großbuchstaben
+ */
 function getInitials(name) {
   return name
     .split(" ")
@@ -145,12 +199,22 @@ function getInitials(name) {
     .toUpperCase();
 }
 
+/**
+ * Aktualisiert die Kontaktinformationen in der Detailansicht
+ * @param {string} name - Name des Kontakts
+ * @param {string} email - E-Mail des Kontakts
+ * @param {string} phone - Telefonnummer des Kontakts
+ */
 function updateContactInfo(name, email, phone) {
   document.querySelector(".full-name").textContent = name;
   document.querySelector(".detail.email .blue-text").textContent = email;
   document.querySelector(".detail.phone p").textContent = phone;
 }
 
+/**
+ * Richtet den Lösch-Button für einen Kontakt ein
+ * @param {string} name - Name des zu löschenden Kontakts
+ */
 function setupDeleteButton(name) {
   const deleteButton = document.querySelector(".action.delete");
   deleteButton.onclick = function () {
@@ -158,6 +222,13 @@ function setupDeleteButton(name) {
   };
 }
 
+/**
+ * Richtet den Bearbeiten-Button für einen Kontakt ein
+ * @param {string} name - Name des Kontakts
+ * @param {string} email - E-Mail des Kontakts
+ * @param {string} phone - Telefonnummer des Kontakts
+ * @param {string} color - Farbe des Avatars
+ */
 function setupEditButton(name, email, phone, color) {
   const editButton = document.querySelector(".action.edit");
   editButton.onclick = function () {
@@ -165,12 +236,18 @@ function setupEditButton(name, email, phone, color) {
   };
 }
 
+/**
+ * Aktiviert die Kontaktinfo-Ansicht
+ */
 function activateContactInfo() {
   const contactInfo = document.querySelector(".contact-info");
   contactInfo.classList.remove("closing");
   contactInfo.classList.add("active");
 }
 
+/**
+ * Richtet den Bearbeiten/Löschen-Button ein
+ */
 function setupEditDeleteButton() {
   const editDeleteButton = document.querySelector(".edit-delete-button");
   editDeleteButton.onclick = function (event) {
@@ -179,6 +256,13 @@ function setupEditDeleteButton() {
   };
 }
 
+/**
+ * Richtet den Kontakt-Bearbeiten-Button ein
+ * @param {string} name - Name des Kontakts
+ * @param {string} email - E-Mail des Kontakts
+ * @param {string} phone - Telefonnummer des Kontakts
+ * @param {string} color - Farbe des Avatars
+ */
 function setupEditContactButton(name, email, phone, color) {
   document.getElementById("editContactBtn").onclick = function () {
     hideEditDeleteOverlay();
@@ -186,6 +270,10 @@ function setupEditContactButton(name, email, phone, color) {
   };
 }
 
+/**
+ * Richtet den Kontakt-Löschen-Button ein
+ * @param {string} name - Name des zu löschenden Kontakts
+ */
 function setupDeleteContactButton(name) {
   document.getElementById("deleteContactBtn").onclick = function () {
     hideEditDeleteOverlay();
@@ -193,6 +281,13 @@ function setupDeleteContactButton(name) {
   };
 }
 
+/**
+ * Öffnet das Overlay zum Bearbeiten eines Kontakts
+ * @param {string} name - Name des Kontakts
+ * @param {string} email - E-Mail des Kontakts
+ * @param {string} phone - Telefonnummer des Kontakts
+ * @param {string} color - Farbe des Avatars
+ */
 function openEditContactsOverlay(name, email, phone, color) {
   activateEditContactOverlay();
   fillEditContactForm(name, email, phone);
@@ -201,18 +296,32 @@ function openEditContactsOverlay(name, email, phone, color) {
   createOverlayBackground();
 }
 
+/**
+ * Aktiviert das Bearbeiten-Overlay
+ */
 function activateEditContactOverlay() {
   const overlay = document.getElementById("edit-contact-overlay");
   overlay.classList.remove("inactive");
   overlay.classList.add("active");
 }
 
+/**
+ * Füllt das Bearbeiten-Formular mit den Kontaktdaten
+ * @param {string} name - Name des Kontakts
+ * @param {string} email - E-Mail des Kontakts
+ * @param {string} phone - Telefonnummer des Kontakts
+ */
 function fillEditContactForm(name, email, phone) {
   document.getElementById("editName").value = name;
   document.getElementById("editEmail").value = email;
   document.getElementById("editPhone").value = phone;
 }
 
+/**
+ * Setzt die Initialen im Bearbeiten-Overlay
+ * @param {string} name - Name des Kontakts
+ * @param {string} color - Farbe des Avatars
+ */
 function setContactInitials(name, color) {
   const initials = name
     .split(" ")
@@ -224,10 +333,17 @@ function setContactInitials(name, color) {
   initialsElement.style.backgroundColor = color;
 }
 
+/**
+ * Setzt den aktuell bearbeiteten Kontakt
+ * @param {string} name - Name des Kontakts
+ */
 function setCurrentEditingContact(name) {
   currentEditingContact = name;
 }
 
+/**
+ * Erstellt den halbtransparenten Hintergrund für Overlays
+ */
 function createOverlayBackground() {
   document.body.insertAdjacentHTML(
     "beforeend",
@@ -239,31 +355,25 @@ function createOverlayBackground() {
   }, 10);
 }
 
-function closeEditContactsOverlay() {
-  const overlay = document.getElementById("edit-contact-overlay");
-  overlay.classList.remove("active");
-  overlay.classList.add("inactive");
-  const background = document.querySelector(".overlay-background");
-  if (background) {
-    background.classList.remove("active");
-    background.removeEventListener("click", closeEditContactsOverlay);
-    setTimeout(() => {
-      background.remove();
-    }, 300);
-  }
-  currentEditingContact = null;
-}
-
+/**
+ * Zeigt das Bearbeiten/Löschen-Overlay an
+ */
 function showEditDeleteOverlay() {
   const overlay = document.querySelector(".edit-delete-overlay");
   overlay.classList.add("active");
 }
 
+/**
+ * Versteckt das Bearbeiten/Löschen-Overlay
+ */
 function hideEditDeleteOverlay() {
   const overlay = document.querySelector(".edit-delete-overlay");
   overlay.classList.remove("active");
 }
 
+/**
+ * Richtet den Event-Listener für den Overlay-Hintergrund ein
+ */
 function setupOverlayBackgroundListener() {
   const background = document.querySelector(".overlay-background");
   if (background) {
@@ -274,6 +384,9 @@ function setupOverlayBackgroundListener() {
   }
 }
 
+/**
+ * Schließt die Kontaktinfo-Ansicht mit Animation
+ */
 function closeContactInfo() {
   const contactInfo = document.querySelector(".contact-info");
   contactInfo.classList.add("closing");
