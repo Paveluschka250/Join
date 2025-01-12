@@ -1,6 +1,19 @@
-const _URL =
-  "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app";
-const onlineUser = localStorage.getItem("onlineUser");
+const _URL = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app"
+const onlineUser = localStorage.getItem('onlineUser');
+let tasks = []
+let datsArray = [];
+let deadline ;
+let tasksInBoard;
+let awaitFeedbackTasks = [];
+let inProgressTasks = [];
+let toDoTasks = [];
+let doneTasks = [];
+let toDoNum;
+let progressNum;
+let awitingFeedbackNum;
+let doneNum;
+let urgentTasks =[];
+let urgent;
 
 function updateUserCircle() {
   const onlineUser = localStorage.getItem("onlineUser");
@@ -20,101 +33,116 @@ function updateUserCircle() {
   }
 }
 
+document.addEventListener('DOMContentLoaded', updateUserCircle);
+
+async function getTasksData() {
+    try {
+        const response = await fetch(_URL + "/tasks/toDo.json");
+        if (!response.ok) {
+            throw new Error('Fehler beim Abrufen der Daten');
+        }
+
+        const data = await response.json();
+        tasks = Object.values(data);
+        tasks.forEach(function(taskObject) {
+            datsArray.push(taskObject.dueDate);
+        });
+
+  
+        datsArray.sort(function(a, b) {
+            return new Date(a) - new Date(b);
+        });
+
+        deadlineRender()
+
+       
+          getCategory()
+         
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error fetching user data: ' + error.message);
+        return null;
+    }
+   
+}
+function deadlineRender(){
+  deadline = datsArray[0];
+  
+  tasksInBoard = tasks.length;
+
+ 
+  document.getElementById('uncomming-Deadline').innerHTML += `<h3>${deadline}</h3>`;
+   
+    document.getElementById('tasksInBoard').innerHTML += `<h1>${tasksInBoard}</h1>`
+
+}
+
+getTasksData()
+
+function getCategory(){
+  
+  tasks.forEach(function(task) {
+   
+    var category = task.taskCategory.category;
+
+
+    if (category === "awaitFeedback") {
+        awaitFeedbackTasks.push(task);
+    } else if (category === "inProgress") {
+        inProgressTasks.push(task);
+    } else if (category === "toDo") {
+        toDoTasks.push(task);
+    } else if (category === "done") {
+        doneTasks.push(task);
+    }
+  });
+  render()
+
+ 
+ 
+
+}
+function render(){
+  getPriority()
+  toDoNum = toDoTasks.length;
+  progressNum = inProgressTasks.length;
+  awitingFeedbackNum = awaitFeedbackTasks.length
+  urgent = urgentTasks.length;
+  doneNum = doneTasks.length;
+  document.getElementById('to-do').innerHTML += `<h1>${toDoNum}</h1>`;
+  document.getElementById('progress-task').innerHTML += `<h1>${progressNum}</h1>`;
+  document.getElementById('awaiting-task').innerHTML += `<h1>${awitingFeedbackNum}</h1>`;
+  document.getElementById('tasks-Done').innerHTML += `<h1>${doneNum}</h1>`;
+  document.getElementById('tasks-length').innerHTML +=`<h1>${urgent}</h1>`;
+
+}
+
+function getPriority(){
+ 
+  tasks.forEach(function(task) {
+    var priority = task.priority;
+  
+  
+    if (priority === "Urgent") {
+      urgentTasks.push(task);
+    } 
+  })};
+
+
 function showOverlay(id) {
-  document.getElementById("overlay").classList.remove("d-none");
-}
-
-function hideOverlay(event) {
-  const userCircle = document.getElementById("userCircle");
-  const overlay = document.getElementById("overlay");
-
-  if (
-    !userCircle.contains(event.target) &&
-    !overlay.classList.contains("d-none")
-  ) {
-    overlay.classList.add("d-none");
+    document.getElementById('overlay').classList.remove('d-none');
   }
-}
+  
+ 
+  function hideOverlay(event) {
+    const userCircle = document.getElementById('userCircle');
+    const overlay = document.getElementById('overlay');
 
-async function loadSummary() {
-  try {
-    setDefaultValues();
-    const tasks = await fetchTasks();
-    if (!tasks) return;
-
-    updateTaskCounts(tasks);
-    updateDeadline(tasks);
-  } catch (error) {
-    console.error("Fehler beim Laden der Zusammenfassung:", error);
+    if (!userCircle.contains(event.target) && !overlay.classList.contains('d-none')) {
+      overlay.classList.add('d-none');
+    }
   }
-}
-
-async function fetchTasks() {
-  const response = await fetch(`${_URL}/tasks/toDo.json`);
-  if (!response.ok) {
-    throw new Error("Fehler beim Abrufen der Daten");
-  }
-  const data = await response.json();
-  return data ? Object.values(data) : null;
-}
-
-function getTaskCounts(tasks) {
-  return {
-    total: tasks.length,
-    urgent: tasks.filter((task) => task.priority === "Urgent").length,
-    todo: tasks.filter((task) => task.taskCategory.category === "toDo").length,
-    inProgress: tasks.filter(
-      (task) => task.taskCategory.category === "inProgress"
-    ).length,
-    awaitingFeedback: tasks.filter(
-      (task) => task.taskCategory.category === "awaitFeedback"
-    ).length,
-    done: tasks.filter((task) => task.taskCategory.category === "done").length,
-  };
-}
-
-function updateTaskCounts(tasks) {
-  const counts = getTaskCounts(tasks);
-
-  document.getElementById(
-    "tasksInBoard"
-  ).innerHTML = `<h1>${counts.total}</h1>`;
-  document.getElementById(
-    "tasks-length"
-  ).innerHTML = `<h1>${counts.urgent}</h1>`;
-  document.getElementById("to-do").innerHTML = `<h1>${counts.todo}</h1>`;
-  document.getElementById(
-    "progress-task"
-  ).innerHTML = `<h1>${counts.inProgress}</h1>`;
-  document.getElementById(
-    "awaiting-task"
-  ).innerHTML = `<h1>${counts.awaitingFeedback}</h1>`;
-  document.getElementById("tasks-Done").innerHTML = `<h1>${counts.done}</h1>`;
-}
-
-function updateDeadline(tasks) {
-  const dates = tasks.map((task) => new Date(task.dueDate));
-  const earliestDeadline =
-    dates.length > 0 ? new Date(Math.min(...dates)) : null;
-
-  document.getElementById("uncomming-Deadline").innerHTML = earliestDeadline
-    ? `<h3>${earliestDeadline.toLocaleDateString()}</h3>`
-    : "<h3>Keine Deadline</h3>";
-}
-
-function setDefaultValues() {
-  document.getElementById("tasksInBoard").innerHTML = "<h1>0</h1>";
-  document.getElementById("tasks-length").innerHTML = "<h1>0</h1>";
-  document.getElementById("to-do").innerHTML = "<h1>0</h1>";
-  document.getElementById("progress-task").innerHTML = "<h1>0</h1>";
-  document.getElementById("awaiting-task").innerHTML = "<h1>0</h1>";
-  document.getElementById("tasks-Done").innerHTML = "<h1>0</h1>";
-  document.getElementById("uncomming-Deadline").innerHTML =
-    "<h3>Keine Deadline</h3>";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  updateUserCircle();
-  loadSummary();
-});
-document.addEventListener("click", hideOverlay);
+  
+ 
+  document.addEventListener('click', hideOverlay);
