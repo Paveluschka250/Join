@@ -78,10 +78,19 @@ function addSubTask() {
   if (subTask.value !== '') {
     contentDiv.innerHTML += `
         <li>
-            <div onclick="deleteSubTask(this)" class="li-elemente-subtask li-elements-overlayTask">
+            <div id="current-subtask-${subTask.value}" class="li-elemente-subtask li-elements-overlayTask">
                 <p>${subTask.value}<p/>
-                <button><img src="../assets/icons/delete.svg"></img></button>    
+                <button onclick="editSubtask(this, '${subTask.value}')" type="button"><img src="../assets/icons/edit.svg" alt="icon"></img></button>
+                |
+                <button onclick="deleteSubTask(this)"><img src="../assets/icons/delete.svg"></img></button>  
             </div>
+             <div id="edit-${subTask.value}" class="d-none li-element-subtasks margin-8px">
+                <input id="input-edit-${subTask.value}">
+                <div class="edit-subtasks-icons">
+                  <img onclick="deleteSubTask(this)" src="../assets/icons/delete.svg" alt="icon">
+                  |
+                  <img onclick="confirmEditSubtask(this, '${subTask.value}')" class="filterCheckButton" src="../assets/icons/createTaskIcon.svg" alt="icon">
+              </div>
         </li>
     `;
     subTask.value = '';
@@ -95,8 +104,36 @@ function addSubTask() {
   }
 }
 
-function deleteSubTask(liElement) {
-  liElement.parentElement.remove();
+function confirmEditSubtask(btn, subtask) {
+  let currentSubtask = document.getElementById(`current-subtask-${subtask}`);
+  let inputDiv = document.getElementById(`edit-${subtask}`);
+  let subtaskContent = btn.closest('li').querySelector('p');
+
+  let input = document.getElementById(`input-edit-${subtask}`).value;
+  console.log(input)
+  subtaskContent.innerHTML = input;
+  currentSubtask.classList.remove('d-none');
+  currentSubtask.classList.toggle('li-elements-overlayTask');
+  inputDiv.classList.add('d-none');
+  inputDiv.classList.toggle('li-elements-overlayTask');
+}
+
+function editSubtask(btn, subtask) {
+  let currentSubtask = btn.closest('div');
+  let inputDiv = document.getElementById(`edit-${subtask}`);
+  let input = document.getElementById(`input-edit-${subtask}`);
+  input.value = `${subtask}`;
+  currentSubtask.classList.add('d-none');
+  currentSubtask.classList.toggle('li-elements-overlayTask');
+  inputDiv.classList.remove('d-none');
+  inputDiv.classList.toggle('li-elements-overlayTask');
+}
+
+function deleteSubTask(buttonElement) {
+  let liElement = buttonElement.closest('li');
+  if (liElement) {
+    liElement.remove();
+  }
 }
 
 function getTaskData(event) {
