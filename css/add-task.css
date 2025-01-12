@@ -460,6 +460,10 @@ main {
   margin-right: 8px;
 }
 
+.initials-position {
+  margin-right: -12px;
+}
+
 /* Neue Media Query für Bildschirme bis 1024px */
 @media (max-width: 1024px) {
   * {

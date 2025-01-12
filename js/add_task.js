@@ -227,7 +227,7 @@ function selectContacts(selectedValue) {
       : `${splitName[0][0].toUpperCase()}`;
 
     selectedContacts.innerHTML += `
-      <div value="${selectedValue}" class="contact-initials" style="background-color:${getRandomColor()}">
+      <div value="${selectedValue}" class="contact-initials initials-position" style="background-color:${getRandomColor()}">
         ${initials}
       </div>`;
   }
