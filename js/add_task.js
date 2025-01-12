@@ -208,6 +208,7 @@ function getTaskData(event) {
     })
     .catch(error => {
     });
+    window.location.href = './board.html';
 }
 
 function resetFormFields() {
