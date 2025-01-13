@@ -707,10 +707,12 @@ body {
     display:flex;
     flex-direction: row !important;
     justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .li-element-subtasks p{
     margin: 0 !important;
+    width: 88%;
 }
 
 .li-elemente-subtasks button {
