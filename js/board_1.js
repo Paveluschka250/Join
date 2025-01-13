@@ -113,12 +113,15 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
-    console.log(currentTask);
-
-    let contactsHTML = currentTask[7]
+    let contactsHTML;
+    if(currentTask[7] != "undefined") {
+        contactsHTML = currentTask[7]
         .split(",")
         .map((initials, i) => `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div><div class="full-names-overlay" id="name-${i}"></div></div>`)
         .join('');
+    } else {
+        contactsHTML = `<p class="no-users-assigned">No Users assigned!</p>`;
+    }
     let currentSubtasks;
     if (currentTask[9] != "dummy" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");

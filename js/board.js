@@ -283,15 +283,15 @@ function renderTask() {
 
                             for (let i = 0; i < element.assignedTo.length; i++) {
                                 const initials = element.assignedTo[i];
-                                contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                             }
                         } else if (element.assignedTo.length > 4) {
                             for (let i = 0; i < 3; i++) {
                                 const initials = element.assignedTo[i];
-                                contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                             }
                             let UsersAmount = element.assignedTo.length - 3;
-                            contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
+                            contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
                         } else {
                             contactsHTML = '';
                         }
@@ -351,15 +351,15 @@ function renderInProgress(taskCounter, element) {
 
                 for (let i = 0; i < element.assignedTo.length; i++) {
                     const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
             } else if (element.assignedTo.length > 4) {
                 for (let i = 0; i < 3; i++) {
                     const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
                 let UsersAmount = element.assignedTo.length - 3;
-                contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
+                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
             } else {
                 contactsHTML = '';
             }
@@ -386,15 +386,15 @@ function renderAwaitFeedback(taskCounter, element) {
 
                 for (let i = 0; i < element.assignedTo.length; i++) {
                     const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
             } else if (element.assignedTo.length > 4) {
                 for (let i = 0; i < 3; i++) {
                     const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
                 let UsersAmount = element.assignedTo.length - 3;
-                contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
+                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
             } else {
                 contactsHTML = '';
             }
@@ -421,15 +421,15 @@ function renderDone(taskCounter, element) {
 
                 for (let i = 0; i < element.assignedTo.length; i++) {
                     const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
             } else if (element.assignedTo.length > 4) {
                 for (let i = 0; i < 3; i++) {
                     const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
                 let UsersAmount = element.assignedTo.length - 3;
-                contactsHTML.push(`<div class="task-initials" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
+                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
             } else {
                 contactsHTML = '';
             }

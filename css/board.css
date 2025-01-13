@@ -803,6 +803,16 @@ body {
     justify-content: center;
 }
 
+.no-users-assigned {
+    margin-left: 16px;
+}
+
+.margin-right {
+    margin-right: -3px;
+    border: solid rgb(69, 67, 67) 1px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
 @media(max-width: 800px) {
     .move-to-container button{
         margin-right: 8px;
@@ -843,8 +853,8 @@ body {
     }
 
     .to-do-content {
-        min-width: 160px;
-        width: 160px;
+        min-width: 170px;
+        width: 170px;
         margin-right: 8px;
     }
 
