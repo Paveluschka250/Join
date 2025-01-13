@@ -199,6 +199,7 @@ body {
     flex-direction: column;
     height: 240px;
     justify-content: space-between;
+    box-shadow: 2px 2px 2px #9E9E9E;
 }
 
 .to-do-content:hover {
@@ -220,6 +221,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 2px 2px 2px #9E9E9E;
 }
 
 .title-task {
