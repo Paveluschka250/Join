@@ -310,7 +310,8 @@ body {
 
 .edit-initials {
     margin: 8px -16px 4px 8px !important;
-    box-shadow: 10px 10px !important;
+    box-shadow: 1px 1px 1px #6a6a6a;
+    border: 1px solid #6a6a6a;
 }
 
 .full-names-overlay {
@@ -565,6 +566,7 @@ body {
     border-left: 0;
     border-bottom: 1px solid lightgrey;
     border-top: 0;
+    height: 32px;
 }
 
 .m-b-8px {
@@ -599,7 +601,7 @@ body {
     position: absolute;
     bottom: 9px;
     right: 1px;
-    height: 8px;
+    height: 12px;
 }
 
 #subtask-edit-list {

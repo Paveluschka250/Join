@@ -323,7 +323,6 @@ function editTask(currentTask, taskCounter) {
     document.getElementById('saveEditBtn').addEventListener("click", () => {
         saveEditBtn(taskCounter);
     });
-
 }
 
 function renderEditTask() {

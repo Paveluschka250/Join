@@ -33,7 +33,7 @@ function editAssignedContacts(currentTask, taskCounter) {
     let contacts = currentTask[7].split(",");
     getKeysFromTasks();
     let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
-    if (contacts !== undefined) {
+    if (contacts.length > 0 && fullNames) {
         for (let i = 0; i < contacts.length; i++) {
             const element = contacts[i];
             assignedContacts.innerHTML += `
@@ -138,6 +138,39 @@ function selectContactsSbEdit(selectedValue) {
         optionToDisable.disabled = true;
     }
 }
+
+// Funktion, um ausgewählte Optionen hinzuzufügen und in selectedContacts zu rendern
+// function updateSelectedContacts() {
+//     let selectElement = document.getElementById('assigned-to-sb-edit');
+//     let selectedContacts = document.getElementById('selected-contacts-sb-edit');
+
+//     // Lösche vorherige Inhalte
+//     selectedContacts.innerHTML = '';
+
+//     // Iteriere über die ausgewählten Optionen
+//     Array.from(selectElement.selectedOptions).forEach(option => {
+//         let selectedValue = option.value;
+//         let splitName = selectedValue.split(" ");
+//         let initials;
+
+//         if (splitName.length > 1) {
+//             let firstNameInitial = splitName[0][0].toUpperCase();
+//             let secondNameInitial = splitName[1][0].toUpperCase();
+//             initials = `${firstNameInitial}${secondNameInitial}`;
+//         } else {
+//             initials = splitName[0][0].toUpperCase();
+//         }
+
+//         // Verhindere doppelte Einträge
+//         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
+//             selectedContacts.innerHTML += `
+//                 <div class="current-task-initials edit-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">
+//                     ${initials}
+//                 </div>
+//             `;
+//         }
+//     });
+// }
 
 function editSubtasks(currentTask) {
     let subtasksEdit = currentTask[9];
