@@ -17,9 +17,9 @@ function editCurrentTask(currentTask, taskCounter) {
     document.getElementById('description-edit').value = `${currentTask[3]}`;
     document.getElementById('due-date-edit').value = `${currentTask[6]}`;
     editPriorityBtn(currentTask);
-    loadContactsEdit();
+    loadContactsToEdit();
     editAssignedContacts(currentTask, taskCounter);
-   
+
     if (currentTask[1] !== 'Ticket') {
         document.getElementById('category-edit').value = `${currentTask[1]}`;
     } else {
@@ -29,7 +29,7 @@ function editCurrentTask(currentTask, taskCounter) {
 }
 
 function editAssignedContacts(currentTask, taskCounter) {
-    let assignedContacts = document.getElementById('selected-contacts-sb-edit');
+    let assignedContacts = document.getElementById('added-users-container');
     let contacts = currentTask[7].split(",");
     getKeysFromTasks();
     let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
@@ -43,9 +43,9 @@ function editAssignedContacts(currentTask, taskCounter) {
     } else {
         assignedContacts.innerHTML = '';
     }
-    assignedContacts.addEventListener('click', function() {
+    assignedContacts.addEventListener('click', function () {
         deleteUsersEdit(assignedContacts);
-    } )
+    })
 }
 
 function deleteUsersEdit(assignedContacts) {
@@ -100,59 +100,28 @@ function lowEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     btnIcon3.classList.add('priotity-btn-filter3');
 }
 
-function loadContactsEdit() {
-    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
-    let assignedToSbEdit = document.getElementById('assigned-to-sb-edit');
-    assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
-    for (let i = 0; i < namesArray.length; i++) {
-        const option = document.createElement('option');
-        option.value = namesArray[i];
-        option.textContent = namesArray[i];
-        option.setAttribute('id', `optionSbEdit-${i}`);
-        assignedToSbEdit.appendChild(option);
-    }
-    assignedToSbEdit.addEventListener('change', function () {
-        selectContactsSbEdit(assignedToSbEdit.value);
-    });
-}
+// function loadContactsEdit() {
+//     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
+//     let assignedToSbEdit = document.getElementById('assigned-to-sb-edit');
+//     assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
+//     for (let i = 0; i < namesArray.length; i++) {
+//         const option = document.createElement('option');
+//         option.value = namesArray[i];
+//         option.textContent = namesArray[i];
+//         option.setAttribute('id', `optionSbEdit-${i}`);
+//         assignedToSbEdit.appendChild(option);
+//     }
+//     assignedToSbEdit.addEventListener('change', function () {
+//         selectContactsSbEdit(assignedToSbEdit.value);
+//     });
+// }
 
-function selectContactsSbEdit(selectedValue) {
-    let selectedContacts = document.getElementById('selected-contacts-sb-edit');
-    let assignedToSb = document.getElementById('assigned-to-sb-edit');
-    if (selectedValue) {
-        let splitName = selectedValue.split(" ");
-        let initials;
-        if (splitName.length > 1) {
-            let firstNameInitial = splitName[0][0].toUpperCase();
-            let secondNameInitial = splitName[1][0].toUpperCase();
-            initials = `${firstNameInitial}${secondNameInitial}`;
-        } else {
-            initials = splitName[0][0].toUpperCase();
-        }
-        if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-            selectedContacts.innerHTML += `<div class="current-task-initials edit-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">${initials}</div>`;
-        }
-    }
-    let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
-    if (optionToDisable && optionToDisable.disabled === false) {
-        optionToDisable.disabled = true;
-    }
-}
-
-// Funktion, um ausgewählte Optionen hinzuzufügen und in selectedContacts zu rendern
-// function updateSelectedContacts() {
-//     let selectElement = document.getElementById('assigned-to-sb-edit');
+// function selectContactsSbEdit(selectedValue) {
 //     let selectedContacts = document.getElementById('selected-contacts-sb-edit');
-
-//     // Lösche vorherige Inhalte
-//     selectedContacts.innerHTML = '';
-
-//     // Iteriere über die ausgewählten Optionen
-//     Array.from(selectElement.selectedOptions).forEach(option => {
-//         let selectedValue = option.value;
+//     let assignedToSb = document.getElementById('assigned-to-sb-edit');
+//     if (selectedValue) {
 //         let splitName = selectedValue.split(" ");
 //         let initials;
-
 //         if (splitName.length > 1) {
 //             let firstNameInitial = splitName[0][0].toUpperCase();
 //             let secondNameInitial = splitName[1][0].toUpperCase();
@@ -160,17 +129,95 @@ function selectContactsSbEdit(selectedValue) {
 //         } else {
 //             initials = splitName[0][0].toUpperCase();
 //         }
-
-//         // Verhindere doppelte Einträge
 //         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-//             selectedContacts.innerHTML += `
-//                 <div class="current-task-initials edit-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">
-//                     ${initials}
-//                 </div>
-//             `;
+//             selectedContacts.innerHTML += `<div class="current-task-initials edit-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">${initials}</div>`;
 //         }
-//     });
+//     }
+//     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
+//     if (optionToDisable && optionToDisable.disabled === false) {
+//         optionToDisable.disabled = true;
+//     }
 // }
+
+function toggleDropdown() {
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    // Wenn das Dropdown-Menü sichtbar ist, wird es geschlossen
+    if (dropdownMenu.style.display === 'block') {
+        dropdownMenu.style.display = 'none';
+    } else {
+        // Andernfalls wird es angezeigt
+        dropdownMenu.style.display = 'block';
+    }
+}
+
+function handleUserSelection() {
+    const selectElement = document.getElementById('user-select');
+
+    // Holen aller ausgewählten Optionen
+    const selectedUsers = Array.from(selectElement.selectedOptions).map(option => option.value);
+
+    // Benutzer rendern (aber das Dropdown bleibt offen, wenn noch nicht geschlossen wurde)
+    renderUsers(selectedUsers);
+}
+
+// Funktion zum Rendern der ausgewählten Benutzer
+function renderUsers(users) {
+    const taskContainer = document.getElementById('added-users-container');
+     
+      let initials = createInitialsForEdit(users);
+        
+    taskContainer.innerHTML += `
+        <div class="current-task-initials edit-initials" value="${users}" style="background-color: ${getRandomColor()}">${initials}</div>
+    `
+}
+
+function loadContactsToEdit() {
+    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
+    let userSelect = document.getElementById('user-select');
+    for (let i = 0; i < namesArray.length; i++) {
+
+        const option = document.createElement('option');
+        option.value = namesArray[i];
+        option.textContent = namesArray[i];
+        option.setAttribute('id', `optionSbEdit-${i}1`);
+        userSelect.appendChild(option);
+    }
+}
+
+function createInitialsForEdit(user) {
+    if (user) {
+        let splitName = user[0].split(" ");
+        if (splitName.length > 1) {
+            let firstNameInitial = splitName[0][0].toUpperCase();
+            let secondNameInitial = splitName[1][0].toUpperCase();
+            let initials = `${firstNameInitial}${secondNameInitial}`;
+            console.log(initials);
+            return initials;
+            
+            
+        } else {
+            let initials = splitName[0][0].toUpperCase();
+            return initials;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function editSubtasks(currentTask) {
     let subtasksEdit = currentTask[9];
@@ -254,7 +301,7 @@ async function getDataFromEdit(key) {
     let dueDate = document.getElementById('due-date-edit').value;
     let category = document.getElementById('category-edit').value;
 
-    let selectedContactsDivs = document.querySelectorAll('#selected-contacts-sb-edit .current-task-initials');
+    let selectedContactsDivs = document.querySelectorAll('#added-users-container .current-task-initials');
     let assignedTo = [];
     let fullNames = [];
     selectedContactsDivs.forEach(function (div) {

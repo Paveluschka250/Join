@@ -564,9 +564,18 @@ body {
     cursor: pointer;
     border-right: 0;
     border-left: 0;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid #000000;
     border-top: 0;
+    border-radius: 0 0 8px 8px;
     height: 32px;
+}
+
+.subtask-edit input:hover {
+    border-bottom: 1px solid #4589FF;
+}
+
+.assigned-to-edit-icon{
+    width: 12px;
 }
 
 .m-b-8px {
@@ -670,13 +679,6 @@ body {
     position: relative;
     overflow-x: auto;
 }
-
-/* .board-create-task-btn {
-    display: flex;
-    position: relative !important;
-    bottom: 0;
-    width: 100% !important;
-} */
 
 .overlay-add-task-board {
     z-index: 1000;
@@ -817,6 +819,80 @@ body {
     margin-right: -3px;
     border: solid rgb(69, 67, 67) 1px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 1000;
+    width: 100%;
+    border-radius: 8px;
+    height: 124px;
+    box-shadow: 2px 2px 2px rgba(#6a6a6a);
+}
+
+#user-select {
+    width: 100%;
+    border-radius: 8px;
+    padding: 2px;
+    height: 124px;
+}
+
+#user-select option{
+    cursor: pointer;
+    height: 20px;
+    display:flex;
+    align-items: center;
+}
+
+#user-select option:hover {
+    background-color: #4589FF;
+    color: white;
+}
+
+#added-users-container{
+    display:flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+
+/* Optional: Stil für den Button */
+#dropdown-button {
+    width: 100%;
+    height: 32px;
+    padding: 10px;
+    background-color: white;
+    border-bottom: 1px solid black;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0 0 8px 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+#dropdown-button:hover {
+    border-bottom:solid 1px #4589FF ;
+}
+
+.category-input-edit {
+    width: 100%;
+    height: 34px;
+    padding: 6px;
+    background-color: white;
+    border-bottom: 1px solid black;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0 0 8px 8px;
+    cursor: pointer;
+}
+
+.category-input-edit:hover {
+    border-bottom:solid 1px #4589FF ;
 }
 
 @media(max-width: 800px) {

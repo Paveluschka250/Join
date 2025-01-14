@@ -323,12 +323,14 @@ function editTask(currentTask, taskCounter) {
     document.getElementById('saveEditBtn').addEventListener("click", () => {
         saveEditBtn(taskCounter);
     });
+    loadContactsToEdit()
 }
 
 function renderEditTask() {
     let taskOverlay = document.getElementById("current-to-do");
     taskOverlay.innerHTML = '';
     taskOverlay.innerHTML = renderEditTaskHTML();
+
 }
 
 function getPriorityEdit(id) {

@@ -226,19 +226,22 @@ function renderEditTaskHTML () {
                     </div>
                 </div>
 
-                <div class="form-group-addTask-edit assigned-to-edit m-b-8px">
-                    <label for="assigned-to-sb-edit"><b>Assigned to</b> (optional)</label>
-                    <select onclick="loadContactsEdit()"
-                        class="underline-select input-addTask cursor-pointer" id="assigned-to-sb-edit"
-                        name="assigned-to-sb-edit">
-                        <option value="">Select contacts to assign</option>
-                    </select>
-                    <div class="selected-contacts-sb" id="selected-contacts-sb-edit"></div>
+                <div class="dropdown">
+                    <div><b>Assigned to</b> (optional)</div>
+                    <button type="button" id="dropdown-button" onclick="toggleDropdown()">Select contacts to assign
+                    <img class="assigned-to-edit-icon" src="../assets/icons/add.svg"></button>
+                    <div id="dropdown-menu" class="dropdown-menu" style="display: none;">
+                        <select id="user-select" multiple onchange="handleUserSelection()"> 
+                        </select>
+                    </div>
+                </div>
+                <div id="added-users-container">
+                    <!-- Task und Benutzer werden hier angezeigt -->
                 </div>
 
                 <div class="form-group-addTask-edit m-b-16px category-edit">
                     <label for="category"><b>Category</b></label>
-                    <select class="underline-select input-addTask cursor-pointer" id="category-edit" name="category">
+                    <select class="category-input-edit cursor-pointer" id="category-edit" name="category">
                         <option value="">Select task category</option>
                         <option value="Technical Task">Technical Task</option>
                         <option value="User Story">User Story</option>
