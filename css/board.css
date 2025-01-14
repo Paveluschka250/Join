@@ -382,9 +382,15 @@ body {
     justify-content: space-between;
     width: 140px;
     height: 24px;
-    position: absolute;
-    bottom: 32px;
+    position: relative;
+    bottom: 16px;
     right: 8px;
+}
+
+.flex-grow {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .delete-and-edit-task img {
@@ -514,18 +520,24 @@ body {
     cursor: pointer;
     border-right: 0;
     border-left: 0;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid rgb(0, 0, 0);
     border-top: 0;
+    padding: 6px;
     width: 100%;
+    border-radius: 0 0 8px 8px;
 }
 
 .titleEdit input:hover {
-    border-bottom: 1px solid rgba(27, 76, 168, 0.258) !important;
+    border-bottom: 1px solid #4589FF !important;
 }
 
 .description-edit textarea {
     margin-bottom: 16px;
     width: 100%;
+}
+
+.description-edit textarea:hover {
+    border:#4589FF solid 1px;
 }
 
 .due-date-edit {
@@ -538,8 +550,15 @@ body {
     cursor: pointer;
     border-right: 0;
     border-left: 0;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid rgb(0, 0, 0);
     border-top: 0;
+    padding: 4px;
+    padding-left: 8px;
+    border-radius: 0 0 8px 8px;
+}
+
+.due-date-edit input:hover {
+    border-bottom: 1px solid #4589FF;
 }
 
 .category-edit {
@@ -568,6 +587,7 @@ body {
     border-top: 0;
     border-radius: 0 0 8px 8px;
     height: 32px;
+    padding-left: 8px;
 }
 
 .subtask-edit input:hover {
@@ -615,6 +635,7 @@ body {
 
 #subtask-edit-list {
     position: relative;
+    margin-bottom: 48px;
 }
 
 .li-elements-overlayTask {
@@ -652,8 +673,8 @@ body {
     border: none;
     font-size: 20px;
     position: absolute;
-    bottom: 50px;
-    right: 16px;
+    bottom: 8px;
+    right: 0;
 }
 
 .saveEditBtn:hover {
@@ -662,6 +683,12 @@ body {
     transition: 0.3s;
     transform: translateY(2px);
     background-color: #0038ff;
+}
+
+.safe-edit-btn-div{
+    width: 100%;
+    position: relative;
+    bottom: 0;
 }
 
 .prio2-icon-color {
@@ -698,6 +725,7 @@ body {
 
 .subtask-container-overlay-board {
     margin-top: 16px;
+    margin-bottom: 48px;
 }
 
 .width-100 {
@@ -830,13 +858,12 @@ body {
     width: 100%;
     border-radius: 8px;
     height: 124px;
-    box-shadow: 2px 2px 2px rgba(#6a6a6a);
+    box-shadow: 2px 2px 2px 2px #6a6a6a;
 }
 
 #user-select {
     width: 100%;
     border-radius: 8px;
-    padding: 2px;
     height: 124px;
 }
 
@@ -889,6 +916,7 @@ body {
     border-left: 0;
     border-radius: 0 0 8px 8px;
     cursor: pointer;
+    border-inline: none;
 }
 
 .category-input-edit:hover {

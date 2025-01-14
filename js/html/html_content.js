@@ -177,10 +177,11 @@ function renderOverlayTaskHTML (currentTask, taskCounter, contactsHTML, currentS
                 <b>Subtasks</b>
                 <ul id="current-subtasks-task${taskCounter}">${currentSubtasks}</ul>
             </div>
-
+            <div class="flex-grow">
             <div class="delete-and-edit-task">
                 <div class="" onclick="deleteTask(${taskCounter})"><img src="../assets/icons/delete.svg"><p>delete</p></div> | 
                 <div id="editTaskBtn"><img src="../assets/icons/edit.svg"><p>edit</p></div>
+            </div>
             </div>
         </div>
     `
@@ -263,8 +264,10 @@ function renderEditTaskHTML () {
                         <ul id="subtask-edit-list"></ul>
                     </div>
                 </div>
-                <div>
-                    <button type="button" class="saveEditBtn" id="saveEditBtn">Ok<img src="../assets/icons/check.svg"></button>
+                <div class="safe-edit-btn-div">
+                    <div>
+                        <button type="button" class="saveEditBtn" id="saveEditBtn">Ok<img src="../assets/icons/check.svg"></button>
+                    </div>
                 </div>
             </div>
         </form>
