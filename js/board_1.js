@@ -82,14 +82,11 @@ function loadCheckFieldStatus(taskCounter) {
 
 function getRandomColor() {
     const colors = [
-        '#FF5733',
-        '#33FF57',
-        '#3357FF',
-        '#FF33A8',
-        '#FFD133',
-        '#33FFF0',
-        '#8E44AD',
-        '#E74C3C'
+        '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FFD133', 
+        '#33FFF0', '#8E44AD', '#E74C3C', '#1ABC9C', '#F39C12', 
+        '#3498DB', '#9B59B6', '#2ECC71', '#E67E22', '#D35400', 
+        '#16A085', '#2980B9', '#C0392B', '#7D3C98', '#F4D03F', 
+        '#58D68D', '#5DADE2', '#AF7AC5', '#F5B041', '#73C6B6'
     ];
 
     const randomIndex = Math.floor(Math.random() * colors.length);
