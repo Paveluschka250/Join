@@ -163,12 +163,16 @@ function handleUserSelection() {
 // Funktion zum Rendern der ausgewählten Benutzer
 function renderUsers(users) {
     const taskContainer = document.getElementById('added-users-container');
-     
-      let initials = createInitialsForEdit(users);
-        
-    taskContainer.innerHTML += `
-        <div class="current-task-initials edit-initials" value="${users}" style="background-color: ${getRandomColor()}">${initials}</div>
-    `
+    
+    // Überprüfen, ob die Benutzer bereits existieren
+    users.forEach(user => {
+        if (!document.querySelector(`.current-task-initials[value="${user}"]`)) {
+            let initials = createInitialsForEdit([user]); // Benutzername in Array übergeben
+            taskContainer.innerHTML += `
+                <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
+            `;
+        }
+    });
 }
 
 function loadContactsToEdit() {
