@@ -265,7 +265,7 @@ function renderEditTaskHTML () {
                     </div>
                 </div>
                 <div class="safe-edit-btn-div">
-                    <div>
+                    <div class="safe-edit-btn-innerDIV">
                         <button type="button" class="saveEditBtn" id="saveEditBtn">Ok<img src="../assets/icons/check.svg"></button>
                     </div>
                 </div>

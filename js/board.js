@@ -276,21 +276,17 @@ function renderTask() {
                     let contactsHTML = [];
 
                     if (Array.isArray(element.assignedTo)) {
-                        if (element.assignedTo.length <= 4) {
-                            // contactsHTML = element.assignedTo
-                            //     .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                            //     .join('');
-
+                        if (element.assignedTo.length <= 5) {
                             for (let i = 0; i < element.assignedTo.length; i++) {
                                 const initials = element.assignedTo[i];
                                 contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                             }
-                        } else if (element.assignedTo.length > 4) {
-                            for (let i = 0; i < 3; i++) {
+                        } else if (element.assignedTo.length > 5) {
+                            for (let i = 0; i < 4; i++) {
                                 const initials = element.assignedTo[i];
                                 contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                             }
-                            let UsersAmount = element.assignedTo.length - 3;
+                            let UsersAmount = element.assignedTo.length - 4;
                             contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
                         } else {
                             contactsHTML = '';
@@ -343,22 +339,17 @@ function renderInProgress(taskCounter, element) {
         let contactsHTML = [];
 
         if (Array.isArray(element.assignedTo)) {
-            if (element.assignedTo.length <= 4) {
-                // contactsHTML = element.assignedTo
-                //     .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                //     .join('');
-
-
+            if (element.assignedTo.length <= 5) {
                 for (let i = 0; i < element.assignedTo.length; i++) {
                     const initials = element.assignedTo[i];
                     contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
-            } else if (element.assignedTo.length > 4) {
-                for (let i = 0; i < 3; i++) {
+            } else if (element.assignedTo.length > 5) {
+                for (let i = 0; i < 4; i++) {
                     const initials = element.assignedTo[i];
                     contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
-                let UsersAmount = element.assignedTo.length - 3;
+                let UsersAmount = element.assignedTo.length - 4;
                 contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
             } else {
                 contactsHTML = '';
@@ -378,22 +369,17 @@ function renderAwaitFeedback(taskCounter, element) {
         let contactsHTML = [];
 
         if (Array.isArray(element.assignedTo)) {
-            if (element.assignedTo.length <= 4) {
-                // contactsHTML = element.assignedTo
-                //     .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                //     .join('');
-
-
+            if (element.assignedTo.length <= 5) {
                 for (let i = 0; i < element.assignedTo.length; i++) {
                     const initials = element.assignedTo[i];
                     contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
-            } else if (element.assignedTo.length > 4) {
-                for (let i = 0; i < 3; i++) {
+            } else if (element.assignedTo.length > 5) {
+                for (let i = 0; i < 4; i++) {
                     const initials = element.assignedTo[i];
                     contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
-                let UsersAmount = element.assignedTo.length - 3;
+                let UsersAmount = element.assignedTo.length - 4;
                 contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
             } else {
                 contactsHTML = '';
@@ -411,24 +397,18 @@ function renderDone(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
-
         if (Array.isArray(element.assignedTo)) {
-            if (element.assignedTo.length <= 4) {
-                // contactsHTML = element.assignedTo
-                //     .map(initials => `<div class="task-initials" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                //     .join('');
-
-
+            if (element.assignedTo.length <= 5) {
                 for (let i = 0; i < element.assignedTo.length; i++) {
                     const initials = element.assignedTo[i];
                     contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
-            } else if (element.assignedTo.length > 4) {
-                for (let i = 0; i < 3; i++) {
+            } else if (element.assignedTo.length > 5) {
+                for (let i = 0; i < 4; i++) {
                     const initials = element.assignedTo[i];
                     contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
                 }
-                let UsersAmount = element.assignedTo.length - 3;
+                let UsersAmount = element.assignedTo.length - 4;
                 contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
             } else {
                 contactsHTML = '';

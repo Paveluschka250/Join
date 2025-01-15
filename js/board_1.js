@@ -82,10 +82,10 @@ function loadCheckFieldStatus(taskCounter) {
 
 function getRandomColor() {
     const colors = [
-        '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FFD133', 
-        '#33FFF0', '#8E44AD', '#E74C3C', '#1ABC9C', '#F39C12', 
-        '#3498DB', '#9B59B6', '#2ECC71', '#E67E22', '#D35400', 
-        '#16A085', '#2980B9', '#C0392B', '#7D3C98', '#F4D03F', 
+        '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FFD133',
+        '#33FFF0', '#8E44AD', '#E74C3C', '#1ABC9C', '#F39C12',
+        '#3498DB', '#9B59B6', '#2ECC71', '#E67E22', '#D35400',
+        '#16A085', '#2980B9', '#C0392B', '#7D3C98', '#F4D03F',
         '#58D68D', '#5DADE2', '#AF7AC5', '#F5B041', '#73C6B6'
     ];
 
@@ -110,12 +110,12 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
-    let contactsHTML;
-    if(currentTask[7] != "undefined") {
-        contactsHTML = currentTask[7]
-        .split(",")
-        .map((initials, i) => `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${initials}</div><div class="full-names-overlay" id="name-${i}"></div></div>`)
-        .join('');
+    let contactsHTML;    
+    contactsHTML = '';
+    if (currentTask[4] != "undefined") {
+        for (let i = 0; i < currentTask[4].length; i++) {
+            contactsHTML += `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${currentTask[4][i]}</div><div class="full-names-overlay" id="name-${i}"></div></div>`;             
+        }
     } else {
         contactsHTML = `<p class="no-users-assigned">No Users assigned!</p>`;
     }
@@ -135,19 +135,44 @@ function renderOverlayTask(taskCounter, currentTask) {
         editTask(currentTask, taskCounter);
     });
     loadCheckFieldStatus(taskCounter, currentTask);
-    overlayTaskGetFullNames(taskCounter);
+    overlayTaskGetFullNames(taskCounter, currentTask);
 }
 
-function overlayTaskGetFullNames(taskCounter) {
+function overlayTaskGetFullNames(taskCounter, currentTask) {
     getKeysFromTasks();
     taskCounter--;
+    let userAmount = currentTask[4].length;
     if (tasks.toDo[keys[taskCounter]].fullNames) {
         let names = (tasks.toDo[keys[taskCounter]].fullNames);
-        for (let i = 0; i < names.length; i++) {
+        for (let i = 0; i < userAmount; i++) {
             const element = names[i];
             let initial = document.getElementById(`name-${i}`);
             initial.innerHTML = `${element}`;
         }
+    }
+    if(userAmount >= 4 && currentTask[4][4] && currentTask[4][4].includes('+')) {
+        let initial = document.getElementById(`name-${4}`);
+        initial.innerHTML = `<div id="more-users">weitere</div>`;
+        initial.addEventListener('click', function () {
+            showAllUsers(currentTask, taskCounter)
+        })
+    }
+}
+
+function showAllUsers(currentTask, taskCounter) {
+    let allUsers = document.getElementById('current-task');
+    allUsers.innerHTML = '';
+    let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
+    let div = document.createElement('div');
+    allUsers.appendChild(div);
+    for(i = 0; i < fullNames.length; i++){
+        let initials = createInitialsForEdit([fullNames[i]]);
+        div.innerHTML += `
+                <div class="all-users">
+                    <span><span class="all-initials" style="background-color: ${getRandomColor()}">${initials}</span><span class="all-full-names">${fullNames[i]}</span></span>
+                </div>
+            `
+    console.log(initials, fullNames[i]);
     }
 }
 

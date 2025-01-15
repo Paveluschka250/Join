@@ -100,74 +100,26 @@ function lowEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     btnIcon3.classList.add('priotity-btn-filter3');
 }
 
-// function loadContactsEdit() {
-//     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
-//     let assignedToSbEdit = document.getElementById('assigned-to-sb-edit');
-//     assignedToSbEdit.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
-//     for (let i = 0; i < namesArray.length; i++) {
-//         const option = document.createElement('option');
-//         option.value = namesArray[i];
-//         option.textContent = namesArray[i];
-//         option.setAttribute('id', `optionSbEdit-${i}`);
-//         assignedToSbEdit.appendChild(option);
-//     }
-//     assignedToSbEdit.addEventListener('change', function () {
-//         selectContactsSbEdit(assignedToSbEdit.value);
-//     });
-// }
-
-// function selectContactsSbEdit(selectedValue) {
-//     let selectedContacts = document.getElementById('selected-contacts-sb-edit');
-//     let assignedToSb = document.getElementById('assigned-to-sb-edit');
-//     if (selectedValue) {
-//         let splitName = selectedValue.split(" ");
-//         let initials;
-//         if (splitName.length > 1) {
-//             let firstNameInitial = splitName[0][0].toUpperCase();
-//             let secondNameInitial = splitName[1][0].toUpperCase();
-//             initials = `${firstNameInitial}${secondNameInitial}`;
-//         } else {
-//             initials = splitName[0][0].toUpperCase();
-//         }
-//         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-//             selectedContacts.innerHTML += `<div class="current-task-initials edit-initials" value="${selectedValue}" style="background-color: ${getRandomColor()}">${initials}</div>`;
-//         }
-//     }
-//     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
-//     if (optionToDisable && optionToDisable.disabled === false) {
-//         optionToDisable.disabled = true;
-//     }
-// }
-
 function toggleDropdown() {
     const dropdownMenu = document.getElementById('dropdown-menu');
-    // Wenn das Dropdown-Menü sichtbar ist, wird es geschlossen
     if (dropdownMenu.style.display === 'block') {
         dropdownMenu.style.display = 'none';
     } else {
-        // Andernfalls wird es angezeigt
         dropdownMenu.style.display = 'block';
     }
 }
 
 function handleUserSelection() {
     const selectElement = document.getElementById('user-select');
-
-    // Holen aller ausgewählten Optionen
     const selectedUsers = Array.from(selectElement.selectedOptions).map(option => option.value);
-
-    // Benutzer rendern (aber das Dropdown bleibt offen, wenn noch nicht geschlossen wurde)
     renderUsers(selectedUsers);
 }
 
-// Funktion zum Rendern der ausgewählten Benutzer
 function renderUsers(users) {
     const taskContainer = document.getElementById('added-users-container');
-    
-    // Überprüfen, ob die Benutzer bereits existieren
     users.forEach(user => {
         if (!document.querySelector(`.current-task-initials[value="${user}"]`)) {
-            let initials = createInitialsForEdit([user]); // Benutzername in Array übergeben
+            let initials = createInitialsForEdit([user]);
             taskContainer.innerHTML += `
                 <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
             `;
@@ -179,7 +131,6 @@ function loadContactsToEdit() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let userSelect = document.getElementById('user-select');
     for (let i = 0; i < namesArray.length; i++) {
-
         const option = document.createElement('option');
         option.value = namesArray[i];
         option.textContent = namesArray[i];
@@ -195,10 +146,7 @@ function createInitialsForEdit(user) {
             let firstNameInitial = splitName[0][0].toUpperCase();
             let secondNameInitial = splitName[1][0].toUpperCase();
             let initials = `${firstNameInitial}${secondNameInitial}`;
-            console.log(initials);
-            return initials;
-            
-            
+            return initials;            
         } else {
             let initials = splitName[0][0].toUpperCase();
             return initials;
