@@ -320,6 +320,7 @@ function renderToDo(taskCounter, element, toDoBlock) {
     let prioIconURL = getPrioIconURL(element);
     let contactsHTML = [];
     setContactsTasks(element, contactsHTML)
+    contactsHTML = contactsHTML.join('');
     toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
 }
 
@@ -331,6 +332,7 @@ function renderInProgress(taskCounter, element) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
         setContactsTasks(element, contactsHTML)
+        contactsHTML = contactsHTML.join('');
         inProgress.innerHTML += rederInProgress(element, taskCounter, prioIconURL, contactsHTML);
     }
 }
@@ -343,6 +345,7 @@ function renderAwaitFeedback(taskCounter, element) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
         setContactsTasks(element, contactsHTML);
+        contactsHTML = contactsHTML.join('');
         awaitFeedback.innerHTML += renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML)
     }
 }
@@ -364,7 +367,6 @@ function setContactsTasks(element, contactsHTML) {
         } else {
             contactsHTML = '';
         }
-        contactsHTML = contactsHTML.join('');
     }
 }
 
@@ -375,7 +377,8 @@ function renderDone(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
-        setContactsTasks(element, contactsHTML)
+        setContactsTasks(element, contactsHTML);
+        contactsHTML = contactsHTML.join('');
         done.innerHTML += renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML);
     }
 }
