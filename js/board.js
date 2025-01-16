@@ -98,14 +98,7 @@ function addSubTask() {
     let subTask = document.getElementById('subtasks');
     let contentDiv = document.getElementById('subtask-content');
     if (subTask.value !== '') {
-        contentDiv.innerHTML += `
-        <li>
-            <div onclick="deleteSubTask(this)" class="li-elemente-subtask li-elements-overlayTask">
-                <p>${subTask.value}<p/>
-                <button><img src="../assets/icons/delete.svg"></img></button>    
-            </div>
-        </li>
-    `;
+        contentDiv.innerHTML += addSubtaskContentHTML(subTask);
         subTask.value = '';
         closeNewSubtasksBtn();
     } else {
@@ -133,19 +126,25 @@ async function getFormData(event) {
     let assignedTo = [];
     let fullNames = [];
     selectedContactsDivs.forEach(function (div) {
-        assignedTo.push(div.textContent);
-        let value = div.getAttribute('value');
-        fullNames.push(value);
+        getInitialsAndFullNames(assignedTo, fullNames, div);
     });
 
-
     let subtaskList = document.querySelectorAll('#subtask-content li');
+    const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
+
+    let priority = '';
+    priority = setPriority(priority);
+   
+    await setFotmData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
+}
+
+function getSubtasks(subtaskList) {
     let subtasks = [];
     let subtasksChecked = [];
+    
     if (subtaskList.length > 0) {
         subtasks = Array.from(subtaskList).map(li => li.textContent);
         for (let i = 0; i < subtasks.length; i++) {
-            const element = subtasks[i];
             let subtask = { "id": `subtask${i}`, "checked": false };
             subtasksChecked.push(subtask);
         }
@@ -154,7 +153,10 @@ async function getFormData(event) {
         subtasksChecked = ['dummy'];
     }
 
-    let priority = '';
+    return { subtasks, subtasksChecked };
+}
+
+function setPriority(priority) {
     if (document.getElementById('prio1').classList.contains('prio1-color')) {
         priority = 'Urgent';
     } else if (document.getElementById('prio2').classList.contains('prio2-color')) {
@@ -162,7 +164,10 @@ async function getFormData(event) {
     } else if (document.getElementById('prio3').classList.contains('prio3-color')) {
         priority = 'Low';
     }
+    return priority;
+}
 
+async function setFotmData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames){
     let formData = {
         title,
         description,
@@ -177,6 +182,12 @@ async function getFormData(event) {
     };
     await postFormDataToFireBase(formData);
     await getTasks();
+}
+
+function getInitialsAndFullNames(assignedTo, fullNames, div) {
+    assignedTo.push(div.textContent);
+    let value = div.getAttribute('value');
+    fullNames.push(value);
 }
 
 async function postFormDataToFireBase(formData) {
@@ -253,13 +264,9 @@ function selectContactsSb(selectedValue) {
 }
 
 function renderTask() {
-    let inProgress = document.getElementById("inProgress");
-    let awaitFeedback = document.getElementById("awaitFeedback");
-    let done = document.getElementById("done");
     let toDoBlock = document.getElementById("to-do-block");
     if ("toDo" in (tasks || {})) {
         let toDo = tasks.toDo;
-
         if (toDo && Object.keys(toDo).length > 0) {
             inProgress.innerHTML = "";
             awaitFeedback.innerHTML = "";
@@ -270,49 +277,28 @@ function renderTask() {
             for (let key in toDo) {
                 const element = toDo[key];
                 taskCounter++;
-
-                if (element.taskCategory.category == "toDo") {
-                    let prioIconURL = getPrioIconURL(element);
-                    let contactsHTML = [];
-
-                    if (Array.isArray(element.assignedTo)) {
-                        if (element.assignedTo.length <= 5) {
-                            for (let i = 0; i < element.assignedTo.length; i++) {
-                                const initials = element.assignedTo[i];
-                                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                            }
-                        } else if (element.assignedTo.length > 5) {
-                            for (let i = 0; i < 4; i++) {
-                                const initials = element.assignedTo[i];
-                                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                            }
-                            let UsersAmount = element.assignedTo.length - 4;
-                            contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
-                        } else {
-                            contactsHTML = '';
-                        }
-                        contactsHTML = contactsHTML.join('');
-                    }
-                    toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
-                }
-
-                if (element.taskCategory.category == "inProgress") {
-                    renderInProgress(taskCounter, element);
-                }
-
-                if (element.taskCategory.category == "awaitFeedback") {
-                    renderAwaitFeedback(taskCounter, element);
-                }
-
-                if (element.taskCategory.category == "done") {
-                    renderDone(taskCounter, element);
-                }
-                taskStyle(taskCounter);
-                loadingspinner(taskCounter, element);
+                filterCategory(taskCounter, element, toDoBlock);
             }
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
+}
+
+function filterCategory(taskCounter, element, toDoBlock) {
+    if (element.taskCategory.category == "toDo") {
+        renderToDo(taskCounter, element, toDoBlock);
+    }
+    if (element.taskCategory.category == "inProgress") {
+        renderInProgress(taskCounter, element);
+    }
+    if (element.taskCategory.category == "awaitFeedback") {
+        renderAwaitFeedback(taskCounter, element);
+    }
+    if (element.taskCategory.category == "done") {
+        renderDone(taskCounter, element);
+    }
+    taskStyle(taskCounter);
+    loadingspinner(taskCounter, element);
 }
 
 function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
@@ -330,6 +316,13 @@ function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
     }
 }
 
+function renderToDo(taskCounter, element, toDoBlock) {
+    let prioIconURL = getPrioIconURL(element);
+    let contactsHTML = [];
+    setContactsTasks(element, contactsHTML)
+    toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
+}
+
 function renderInProgress(taskCounter, element) {
     let inProgress = document.getElementById("inProgress");
     let toDo = tasks.toDo;
@@ -337,25 +330,7 @@ function renderInProgress(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
-
-        if (Array.isArray(element.assignedTo)) {
-            if (element.assignedTo.length <= 5) {
-                for (let i = 0; i < element.assignedTo.length; i++) {
-                    const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                }
-            } else if (element.assignedTo.length > 5) {
-                for (let i = 0; i < 4; i++) {
-                    const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                }
-                let UsersAmount = element.assignedTo.length - 4;
-                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
-            } else {
-                contactsHTML = '';
-            }
-            contactsHTML = contactsHTML.join('');
-        }
+        setContactsTasks(element, contactsHTML)
         inProgress.innerHTML += rederInProgress(element, taskCounter, prioIconURL, contactsHTML);
     }
 }
@@ -367,26 +342,29 @@ function renderAwaitFeedback(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
-
-        if (Array.isArray(element.assignedTo)) {
-            if (element.assignedTo.length <= 5) {
-                for (let i = 0; i < element.assignedTo.length; i++) {
-                    const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                }
-            } else if (element.assignedTo.length > 5) {
-                for (let i = 0; i < 4; i++) {
-                    const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                }
-                let UsersAmount = element.assignedTo.length - 4;
-                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
-            } else {
-                contactsHTML = '';
-            }
-            contactsHTML = contactsHTML.join('');
-        }
+        setContactsTasks(element, contactsHTML);
         awaitFeedback.innerHTML += renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML)
+    }
+}
+
+function setContactsTasks(element, contactsHTML) {
+    if (Array.isArray(element.assignedTo)) {
+        if (element.assignedTo.length <= 5) {
+            for (let i = 0; i < element.assignedTo.length; i++) {
+                const initials = element.assignedTo[i];
+                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
+            }
+        } else if (element.assignedTo.length > 5) {
+            for (let i = 0; i < 4; i++) {
+                const initials = element.assignedTo[i];
+                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
+            }
+            let UsersAmount = element.assignedTo.length - 4;
+            contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
+        } else {
+            contactsHTML = '';
+        }
+        contactsHTML = contactsHTML.join('');
     }
 }
 
@@ -397,24 +375,7 @@ function renderDone(taskCounter, element) {
     if (toDo && Object.keys(toDo).length > 0) {
         let prioIconURL = getPrioIconURL(element);
         let contactsHTML = [];
-        if (Array.isArray(element.assignedTo)) {
-            if (element.assignedTo.length <= 5) {
-                for (let i = 0; i < element.assignedTo.length; i++) {
-                    const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                }
-            } else if (element.assignedTo.length > 5) {
-                for (let i = 0; i < 4; i++) {
-                    const initials = element.assignedTo[i];
-                    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-                }
-                let UsersAmount = element.assignedTo.length - 4;
-                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
-            } else {
-                contactsHTML = '';
-            }
-            contactsHTML = contactsHTML.join('');
-        }
+        setContactsTasks(element, contactsHTML)
         done.innerHTML += renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML);
     }
 }

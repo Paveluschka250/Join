@@ -351,3 +351,14 @@ function addSubTaskHTML(subTask) {
         </li>
     `
 }
+
+function addSubtaskContentHTML(subTask) {
+    return `
+        <li>
+            <div onclick="deleteSubTask(this)" class="li-elemente-subtask li-elements-overlayTask">
+                <p>${subTask.value}<p/>
+                <button><img src="../assets/icons/delete.svg"></img></button>    
+            </div>
+        </li>
+    `
+}
