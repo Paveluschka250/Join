@@ -182,6 +182,7 @@ async function setFotmData(taskCategory, title, description, dueDate, assignedTo
     };
     await postFormDataToFireBase(formData);
     await getTasks();
+    clearForm();
 }
 
 function getInitialsAndFullNames(assignedTo, fullNames, div) {
@@ -214,7 +215,6 @@ function clearForm() {
     document.getElementById('due-date').value = '';
     document.getElementById('selected-contacts-sb').innerHTML = '';
     document.getElementById('category').selectedIndex = 0;
-
     document.getElementById('subtask-content').innerHTML = '';
     document.querySelectorAll('.priority-btn-addTask').forEach(button => {
         button.classList.remove('prio1-color', 'prio2-color', 'prio3-color');
@@ -254,7 +254,7 @@ function selectContactsSb(selectedValue) {
             initials = splitName[0][0].toUpperCase();
         }
         if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-            selectedContacts.innerHTML += `<div value="${selectedValue}" class="contact-initials-sb">${initials}</div>`;
+            selectedContacts.innerHTML += `<div style="background-color: ${getRandomColor()}" value="${selectedValue}" class="contact-initials-sb">${initials}</div>`;
         }
     }
     let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);

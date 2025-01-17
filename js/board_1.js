@@ -152,10 +152,12 @@ function getCurrentSubtasksHTML(currentSubtasks, currentTask, taskCounter) {
 
 function getContactsHTML(currentTask, contactsHTML) {
     if (currentTask[4] != "undefined") {
+        contactsHTML = '';
         for (let i = 0; i < currentTask[4].length; i++) {
             contactsHTML += `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${currentTask[4][i]}</div><div class="full-names-overlay" id="name-${i}"></div></div>`;
         }
     } else {
+        contactsHTML = '';
         contactsHTML = `<p class="no-users-assigned">No Users assigned!</p>`;
     }
     return contactsHTML;
