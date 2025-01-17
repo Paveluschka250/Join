@@ -154,23 +154,6 @@ function createInitialsForEdit(user) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function editSubtasks(currentTask) {
     let subtasksEdit = currentTask[9];
     let list = document.getElementById('subtask-edit-list');
@@ -234,7 +217,6 @@ function addNewSubTaskEdit() {
     }
 }
 
-
 async function saveEditBtn(taskCounter) {
     taskCounter--;
     getKeysFromTasks();
@@ -245,14 +227,31 @@ async function saveEditBtn(taskCounter) {
 }
 
 async function getDataFromEdit(key) {
-    let currentStatus = tasks.toDo[key].taskCategory.category;
+    let { currentStatus, title, description, dueDate, category } = extractTaskInfo(key);
+    let { assignedTo, fullNames } = getAssignedContacts();
+    let { subtasks, subtasksChecked } = getSubtasksUnchanged(key);
+    let priority = getPriorityToEdit();
 
-    let taskCategory = { category: currentStatus };
+    let formData = {
+        title, description, dueDate, assignedTo, category,
+        subtasks, subtasksChecked, priority,
+        taskCategory: { category: currentStatus }, fullNames
+    };
+
+    editToFirebase(formData, key);
+    await getTasks();
+}
+
+function extractTaskInfo(key) {
+    let currentStatus = tasks.toDo[key].taskCategory.category;
     let title = document.getElementById('title-edit').value;
     let description = document.getElementById('description-edit').value;
     let dueDate = document.getElementById('due-date-edit').value;
     let category = document.getElementById('category-edit').value;
+    return { currentStatus, title, description, dueDate, category };
+}
 
+function getAssignedContacts() {
     let selectedContactsDivs = document.querySelectorAll('#added-users-container .current-task-initials');
     let assignedTo = [];
     let fullNames = [];
@@ -261,16 +260,19 @@ async function getDataFromEdit(key) {
         let value = div.getAttribute('value');
         fullNames.push(value);
     });
+    return { assignedTo, fullNames };
+}
 
+function getSubtasksUnchanged(key) {
     let subtasks = [];
     let subtasksChecked = [];
-
     let subtaskList = document.querySelectorAll('#subtask-edit-content p');
     if (subtaskList.length > 0) {
         subtasks = Array.from(subtaskList).map(li => li.textContent);
-
         for (let i = 0; i < subtasks.length; i++) {
-            let subtaskStatus = tasks.toDo[key].subtasksChecked[i] ? tasks.toDo[key].subtasksChecked[i].checked : false;
+            let subtaskStatus = tasks.toDo[key].subtasksChecked[i]
+                ? tasks.toDo[key].subtasksChecked[i].checked
+                : false;
             let subtask = { "id": `subtask${i}`, "checked": subtaskStatus };
             subtasksChecked.push(subtask);
         }
@@ -278,21 +280,7 @@ async function getDataFromEdit(key) {
         subtasks = ['dummy'];
         subtasksChecked = ['dummy'];
     }
-    let priority = getPriorityToEdit();
-    let formData = {
-        title,
-        description,
-        dueDate,
-        assignedTo,
-        category,
-        subtasks,
-        subtasksChecked,
-        priority,
-        taskCategory,
-        fullNames
-    };
-    editToFirebase(formData, key);
-    await getTasks();
+    return { subtasks, subtasksChecked };
 }
 
 function editToFirebase(formData, key) {

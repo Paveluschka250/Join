@@ -4,31 +4,37 @@ function loadingspinner(taskCounter, element) {
     if (element.subtasks != 'dummy') {
         let checkedSubtasks = 0;
         let allSubtasks = element.subtasks.length;
-        for (let i = 0; i < allSubtasks; i++) {
-            if (element.subtasksChecked[i].checked === true) {
-                checkedSubtasks++;
-            }
-        };
-        let progressPercentage = 100 / allSubtasks * checkedSubtasks;
-        progressBar.style.width = `${progressPercentage}%`;
-        loadingbarText.innerHTML = `
-        <p class="subtask-loadingbar-text">${checkedSubtasks}/${allSubtasks}</p>
-        <p class="subtask-loadingbar-text">Subtasks</p>
-    `
+        checkedSubtasks = forLoopCheckedSubtasks(allSubtasks, checkedSubtasks, element)
+        progressPercentage(allSubtasks, checkedSubtasks, loadingbarText, progressBar)
     }
     else {
         loadingbarText.innerHTML = '<p class="subtask-loadingbar-text">No Subtasks!</p>'
     }
 }
 
+function forLoopCheckedSubtasks(allSubtasks, checkedSubtasks, element) {
+    for (let i = 0; i < allSubtasks; i++) {
+        if (element.subtasksChecked[i].checked === true) {
+            checkedSubtasks++;
+        }
+    };
+    return checkedSubtasks;
+}
+
+function progressPercentage(allSubtasks, checkedSubtasks, loadingbarText, progressBar) {
+    let progressPercentage = 100 / allSubtasks * checkedSubtasks;
+    progressBar.style.width = `${progressPercentage}%`;
+    loadingbarText.innerHTML = `
+    <p class="subtask-loadingbar-text">${checkedSubtasks}/${allSubtasks}</p>
+    <p class="subtask-loadingbar-text">Subtasks</p>
+`
+}
+
 function saveCheckBoxes(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
     let allTasksKey = [];
-    for (let key in taskId) {
-        let element = taskId[key];
-        allTasksKey.push(element)
-    }
+    allTasksKey = getAllKeysForLoop(taskId, allTasksKey);
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
     let currentSubtaskAmount = currentTask.subtasks.length;
     let subtasksChecked = [];
@@ -48,6 +54,10 @@ async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
         checked: isChecked,
         id: `subtask${index}`
     }));
+    await fetchCheckFieldStatus(updatedSubtasks, url)
+}
+
+async function fetchCheckFieldStatus(updatedSubtasks, url) {
     try {
         await fetch(url, {
             method: "PUT",
@@ -64,10 +74,7 @@ function loadCheckFieldStatus(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
     let allTasksKey = [];
-    for (let key in taskId) {
-        let element = taskId[key];
-        allTasksKey.push(element)
-    }
+    allTasksKey = getAllKeysForLoop(taskId, allTasksKey);
     let currentTask = tasks.toDo[allTasksKey[taskCounter]];
     if (currentTask.subtasks && currentTask.subtasksChecked) {
         let currentSubtaskAmount = currentTask.subtasks.length;
@@ -78,6 +85,14 @@ function loadCheckFieldStatus(taskCounter) {
             }
         }
     }
+}
+
+function getAllKeysForLoop(taskId, allTasksKey) {
+    for (let key in taskId) {
+        let element = taskId[key];
+        allTasksKey.push(element)
+    }
+    return allTasksKey;
 }
 
 function getRandomColor() {
@@ -99,7 +114,6 @@ function showOverlayTask(taskCounter) {
     overlay.classList.remove('d-none');
     overlay.classList.add('overlay-show-task');
     extractTaskData(taskCounter);
-
     if (!currentTask.hasAttribute('data-listener-added')) {
         currentTask.addEventListener("click", function (event) {
             event.stopPropagation();
@@ -110,16 +124,20 @@ function showOverlayTask(taskCounter) {
 
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
-    let contactsHTML;    
-    contactsHTML = '';
-    if (currentTask[4] != "undefined") {
-        for (let i = 0; i < currentTask[4].length; i++) {
-            contactsHTML += `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${currentTask[4][i]}</div><div class="full-names-overlay" id="name-${i}"></div></div>`;             
-        }
-    } else {
-        contactsHTML = `<p class="no-users-assigned">No Users assigned!</p>`;
-    }
+    let contactsHTML;
+    contactsHTML = getContactsHTML(currentTask, contactsHTML)
     let currentSubtasks;
+    currentSubtasks = getCurrentSubtasksHTML(currentSubtasks, currentTask, taskCounter)
+    overlayContainer.innerHTML = '';
+    overlayContainer.innerHTML = renderOverlayTaskHTML(currentTask, taskCounter, contactsHTML, currentSubtasks);
+    document.getElementById('editTaskBtn').addEventListener('click', function () {
+        editTask(currentTask, taskCounter);
+    });
+    loadCheckFieldStatus(taskCounter, currentTask);
+    overlayTaskGetFullNames(taskCounter, currentTask);
+}
+
+function getCurrentSubtasksHTML(currentSubtasks, currentTask, taskCounter) {
     if (currentTask[9] != "dummy" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");
         currentSubtasks = currentSubtask
@@ -129,13 +147,18 @@ function renderOverlayTask(taskCounter, currentTask) {
     } else {
         currentSubtasks = 'No subtasks!';
     }
-    overlayContainer.innerHTML = '';
-    overlayContainer.innerHTML = renderOverlayTaskHTML(currentTask, taskCounter, contactsHTML, currentSubtasks);
-    document.getElementById('editTaskBtn').addEventListener('click', function () {
-        editTask(currentTask, taskCounter);
-    });
-    loadCheckFieldStatus(taskCounter, currentTask);
-    overlayTaskGetFullNames(taskCounter, currentTask);
+    return currentSubtasks;
+}
+
+function getContactsHTML(currentTask, contactsHTML) {
+    if (currentTask[4] != "undefined") {
+        for (let i = 0; i < currentTask[4].length; i++) {
+            contactsHTML += `<div class="initials-and-fullnames-container"><div class="current-task-initials" style="background-color: ${getRandomColor()}">${currentTask[4][i]}</div><div class="full-names-overlay" id="name-${i}"></div></div>`;
+        }
+    } else {
+        contactsHTML = `<p class="no-users-assigned">No Users assigned!</p>`;
+    }
+    return contactsHTML;
 }
 
 function overlayTaskGetFullNames(taskCounter, currentTask) {
@@ -150,7 +173,11 @@ function overlayTaskGetFullNames(taskCounter, currentTask) {
             initial.innerHTML = `${element}`;
         }
     }
-    if(userAmount >= 4 && currentTask[4][4] && currentTask[4][4].includes('+')) {
+    moreUsers(userAmount, currentTask, taskCounter);
+}
+
+function moreUsers(userAmount, currentTask, taskCounter) {
+    if (userAmount >= 4 && currentTask[4][4] && currentTask[4][4].includes('+')) {
         let initial = document.getElementById(`name-${4}`);
         initial.innerHTML = `<div id="more-users">weitere</div>`;
         initial.addEventListener('click', function () {
@@ -165,38 +192,50 @@ function showAllUsers(currentTask, taskCounter) {
     let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
     let div = document.createElement('div');
     allUsers.appendChild(div);
-    for(i = 0; i < fullNames.length; i++){
+    for (i = 0; i < fullNames.length; i++) {
         let initials = createInitialsForEdit([fullNames[i]]);
         div.innerHTML += `
                 <div class="all-users">
                     <span><span class="all-initials" style="background-color: ${getRandomColor()}">${initials}</span><span class="all-full-names">${fullNames[i]}</span></span>
                 </div>
             `
-    console.log(initials, fullNames[i]);
     }
 }
 
 function extractTaskData(taskCounter) {
-    const taskElement = document.getElementById(`to-do-content${taskCounter}`);
+    const taskElement = getTaskElement(taskCounter);
     if (!taskElement) {
         return null;
     }
-    const categoryElement = taskElement.querySelector(`#category-to-do${taskCounter}`);
-    const titleElement = taskElement.querySelector(`#title-task${taskCounter}`);
-    const descriptionElement = taskElement.querySelector(`#description-task${taskCounter}`);
-    const contactsContainer = taskElement.querySelector(`#contacts-task${taskCounter}`);
+    const category = extractTextContent(taskElement, `#category-to-do${taskCounter}`);
+    const title = extractTextContent(taskElement, `#title-task${taskCounter}`);
+    const description = extractTextContent(taskElement, `#description-task${taskCounter}`);
+    const dueDate = extractTextContent(taskElement, `#set-due-date${taskCounter}`);
+    const fullName = extractTextContent(taskElement, `#set-full-name${taskCounter}`);
+    const priority = extractTextContent(taskElement, `#set-priority${taskCounter}`);
+    const subtasks = extractTextContent(taskElement, `#set-subtasks${taskCounter}`);
+    const prioIcon = extractPrioIcon(taskElement);
+    const contactsHTML = extractContactsHTML(taskElement, `#contacts-task${taskCounter}`);
+    const currentTask = buildCurrentTask(taskCounter, category, title, description, contactsHTML, prioIcon, dueDate, fullName, priority, subtasks);
+    renderOverlayTask(taskCounter, currentTask);
+}
+
+function getTaskElement(taskCounter) {
+    return document.getElementById(`to-do-content${taskCounter}`);
+}
+
+function extractTextContent(taskElement, selector) {
+    const element = taskElement.querySelector(selector);
+    return element ? element.textContent.trim() : null;
+}
+
+function extractPrioIcon(taskElement) {
     const prioIconElement = taskElement.querySelector('.task-prio-icon');
-    const dueDateElement = taskElement.querySelector(`#set-due-date${taskCounter}`);
-    const fullNameElement = taskElement.querySelector(`#set-full-name${taskCounter}`);
-    const priorityElement = taskElement.querySelector(`#set-priority${taskCounter}`);
-    const subtasksElement = taskElement.querySelector(`#set-subtasks${taskCounter}`)
-    const category = categoryElement ? categoryElement.textContent.trim() : null;
-    const title = titleElement ? titleElement.textContent.trim() : null;
-    const description = descriptionElement ? descriptionElement.textContent.trim() : null;
-    const dueDate = dueDateElement ? dueDateElement.textContent.trim() : null;
-    const fullName = fullNameElement ? fullNameElement.textContent.trim() : null;
-    const priority = priorityElement ? priorityElement.textContent.trim() : null;
-    const subtasks = subtasksElement ? subtasksElement.textContent.trim() : null;
+    return prioIconElement ? prioIconElement.src : null;
+}
+
+function extractContactsHTML(taskElement, selector) {
+    const contactsContainer = taskElement.querySelector(selector);
     const contactsHTML = [];
     if (contactsContainer) {
         const contactDivs = contactsContainer.querySelectorAll('div');
@@ -204,10 +243,11 @@ function extractTaskData(taskCounter) {
             contactsHTML.push(contactDiv.innerHTML.trim());
         });
     }
-    const prioIcon = prioIconElement ? prioIconElement.src : null;
+    return contactsHTML;
+}
 
-    let currentTask = [];
-    currentTask.push(
+function buildCurrentTask(taskCounter, category, title, description, contactsHTML, prioIcon, dueDate, fullName, priority, subtasks) {
+    return [
         taskCounter,
         category,
         title,
@@ -219,8 +259,7 @@ function extractTaskData(taskCounter) {
         priority,
         subtasks,
         taskCounter
-    );
-    renderOverlayTask(taskCounter, currentTask);
+    ];
 }
 
 async function closeCurrentTask() {
@@ -238,18 +277,21 @@ async function deleteTask(taskId) {
     } else {
         return;
     }
+    await fetchDeleteTask(currentTask, taskId)
+    closeCurrentTask();
+}
+
+async function fetchDeleteTask(currentTask, taskId) {
     try {
         const response = await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${currentTask[taskId]}.json`, {
             method: 'DELETE',
         });
-
         if (response.ok) {
             await getTasks();
         }
     }
     catch (error) {
     }
-    closeCurrentTask();
 }
 
 function startDragging(id) {
@@ -265,7 +307,6 @@ async function moveTo(category) {
     try {
         let taskKey = Object.keys(tasks.toDo)[currentDraggedElement];
         tasks.toDo[taskKey].taskCategory = category;
-
         await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
             method: 'PUT',
             headers: {
@@ -279,40 +320,69 @@ async function moveTo(category) {
 }
 
 function filterTasks() {
-    const searchValue = document.getElementById('search-input').value.toLowerCase();
-    const suggestionsContainer = document.getElementById('suggestions');
-    suggestionsContainer.innerHTML = '';
+    const searchValue = getSearchInputValue();
+    const suggestionsContainer = clearSuggestions();
     if (searchValue) {
-        let hasMatches = false;
-        for (const taskKeys in tasks) {
-            for (const taskId in tasks[taskKeys]) {
-                const task = tasks[taskKeys][taskId];
-                const titleMatch = task.title.toLowerCase().includes(searchValue);
-                const descriptionMatch = task.description && task.description.toLowerCase().includes(searchValue);
-                if (titleMatch || descriptionMatch) {
-                    const suggestionItem = document.createElement('div');
-                    suggestionItem.className = 'suggestion-item';
-                    suggestionItem.innerHTML = `<strong>${task.title}</strong><br><small>${task.description}</small>`;
-                    suggestionItem.onclick = () => getTaskId(task, suggestionsContainer);
-                    suggestionsContainer.appendChild(suggestionItem);
-                    hasMatches = true;
-                }
-            }
-        }
+        const hasMatches = displayTaskSuggestions(searchValue, suggestionsContainer);
         if (!hasMatches) {
-            const noResults = document.createElement('div');
-            noResults.className = 'suggestion-item';
-            noResults.innerText = 'Keine Ergebnisse gefunden';
-            suggestionsContainer.appendChild(noResults);
+            displayNoResults(suggestionsContainer);
         }
         suggestionsContainer.style.display = 'block';
     } else {
         suggestionsContainer.style.display = 'none';
     }
+    addClickOutsideListener(suggestionsContainer);
+}
+
+function getSearchInputValue() {
+    return document.getElementById('search-input').value.toLowerCase();
+}
+
+function clearSuggestions() {
+    const suggestionsContainer = document.getElementById('suggestions');
+    suggestionsContainer.innerHTML = '';
+    return suggestionsContainer;
+}
+
+function displayTaskSuggestions(searchValue, suggestionsContainer) {
+    let hasMatches = false;
+    for (const taskKeys in tasks) {
+        for (const taskId in tasks[taskKeys]) {
+            const task = tasks[taskKeys][taskId];
+            if (taskMatchesSearch(task, searchValue)) {
+                createSuggestionItem(task, suggestionsContainer);
+                hasMatches = true;
+            }
+        }
+    }
+    return hasMatches;
+}
+
+function taskMatchesSearch(task, searchValue) {
+    const titleMatch = task.title.toLowerCase().includes(searchValue);
+    const descriptionMatch = task.description && task.description.toLowerCase().includes(searchValue);
+    return titleMatch || descriptionMatch;
+}
+
+function createSuggestionItem(task, suggestionsContainer) {
+    const suggestionItem = document.createElement('div');
+    suggestionItem.className = 'suggestion-item';
+    suggestionItem.innerHTML = `<strong>${task.title}</strong><br><small>${task.description}</small>`;
+    suggestionItem.onclick = () => getTaskId(task, suggestionsContainer);
+    suggestionsContainer.appendChild(suggestionItem);
+}
+
+function displayNoResults(suggestionsContainer) {
+    const noResults = document.createElement('div');
+    noResults.className = 'suggestion-item';
+    noResults.innerText = 'Keine Ergebnisse gefunden';
+    suggestionsContainer.appendChild(noResults);
+}
+
+function addClickOutsideListener(suggestionsContainer) {
     document.addEventListener('click', function (event) {
         const isClickInside = suggestionsContainer.contains(event.target) ||
             document.getElementById('search-input').contains(event.target);
-
         if (!isClickInside) {
             suggestionsContainer.style.display = 'none';
         }
