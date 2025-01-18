@@ -221,17 +221,51 @@ function getUsersToAssignedTo() {
   contactsDropdown.innerHTML = '';
 
   namesArray.forEach((name) => {
-    if (!isContactSelected(name)) {
-      const option = document.createElement('div');
-      option.className = 'option';
-      option.textContent = name;
-      option.onclick = (e) => {
-        e.stopPropagation();
-        selectContacts(name);
-      };
-      contactsDropdown.appendChild(option);
-    }
+    const isSelected = isContactSelected(name);
+    let initials = getInitials(name);
+    let backgroundColor = getRandomColor();
+    
+    contactsDropdown.innerHTML += `
+      <div class="option" onclick="event.stopPropagation(); toggleContactSelection('${name}', this)">
+        <div class="contact-option">
+          <div class="contact-circle" style="background-color: ${backgroundColor}">
+            ${initials}
+          </div>
+          <span>${name}</span>
+        </div>
+        <input type="checkbox" 
+               onclick="event.stopPropagation();"
+               ${isSelected ? 'checked' : ''}
+        >
+      </div>
+    `;
   });
+}
+
+function getInitials(name) {
+  let splitName = name.split(" ");
+  return splitName.length > 1
+    ? `${splitName[0][0].toUpperCase()}${splitName[1][0].toUpperCase()}`
+    : `${splitName[0][0].toUpperCase()}`;
+}
+
+function toggleContactSelection(name, optionDiv) {
+  const checkbox = optionDiv.querySelector('input[type="checkbox"]');
+  checkbox.checked = !checkbox.checked;
+  
+  if (checkbox.checked) {
+    selectContacts(name);
+  } else {
+    removeContact(name);
+  }
+}
+
+function removeContact(name) {
+  const selectedContacts = document.getElementById('selected-contacts');
+  const contactToRemove = selectedContacts.querySelector(`[value="${name}"]`);
+  if (contactToRemove) {
+    contactToRemove.remove();
+  }
 }
 
 function isContactSelected(name) {
@@ -253,11 +287,6 @@ function selectContacts(selectedValue) {
         ${initials}
       </div>`;
   }
-
-  document.getElementById('contacts-dropdown').style.display = 'none';
-
-  const arrow = document.querySelector('.custom-select[onclick*="contacts-dropdown"] .select-arrow');
-  if (arrow) arrow.style.transform = 'translateY(-50%) rotate(0deg)';
 }
 
 function toggleDropdown(dropdownId) {
@@ -284,9 +313,17 @@ function selectOption(selectId, value) {
 }
 
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.custom-select-wrapper')) {
-    document.querySelectorAll('.custom-select-dropdown').forEach(d => d.style.display = 'none');
-  }
+  const dropdowns = document.querySelectorAll('.custom-select-dropdown');
+  dropdowns.forEach(dropdown => {
+    const wrapper = dropdown.closest('.custom-select-wrapper');
+    if (!wrapper.contains(e.target)) {
+      dropdown.style.display = 'none';
+      const arrow = wrapper.querySelector('.select-arrow');
+      if (arrow) {
+        arrow.style.transform = 'translateY(-50%) rotate(0deg)';
+      }
+    }
+  });
 });
 
 function getRandomColor() {
@@ -302,4 +339,23 @@ function getRandomColor() {
   ];
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
+}
+
+function createContactOption(contact) {
+    return `
+        <div class="option" onclick="event.stopPropagation(); selectContact('${contact.id}')">
+            <span>${contact.name}</span>
+            <input type="checkbox" 
+                   id="contact-${contact.id}" 
+                   ${contact.selected ? 'checked' : ''}
+                   onclick="event.stopPropagation(); toggleContact('${contact.id}')"
+            >
+        </div>
+    `;
+}
+
+function toggleContact(contactId) {
+    const checkbox = document.getElementById(`contact-${contactId}`);
+    const isChecked = checkbox.checked;
+    // Hier die Logik für die Kontaktauswahl implementieren
 }
