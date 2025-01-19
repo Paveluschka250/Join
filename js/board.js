@@ -135,7 +135,7 @@ async function getFormData(event) {
     let priority = '';
     priority = setPriority(priority);
    
-    await setFotmData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
+    await setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
 }
 
 function getSubtasks(subtaskList) {
@@ -167,7 +167,7 @@ function setPriority(priority) {
     return priority;
 }
 
-async function setFotmData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames){
+async function setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames){
     let formData = {
         title,
         description,
