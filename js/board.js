@@ -122,7 +122,7 @@ async function getFormData(event) {
     let dueDate = document.getElementById('due-date').value;
     let category = document.getElementById('category').value;
 
-    let selectedContactsDivs = document.querySelectorAll('#selected-contacts-sb .contact-initials-sb');
+    let selectedContactsDivs = document.querySelectorAll('#added-users-container-add-task-on-board .current-task-initials');
     let assignedTo = [];
     let fullNames = [];
     selectedContactsDivs.forEach(function (div) {
@@ -209,58 +209,18 @@ async function postFormDataToFireBase(formData) {
     await getTasks();
 }
 
-function clearForm() {
+async function clearForm() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
     document.getElementById('due-date').value = '';
     document.getElementById('selected-contacts-sb').innerHTML = '';
+    document.getElementById('#added-users-container-add-task-on-board').innerHTML = '';
     document.getElementById('category').selectedIndex = 0;
     document.getElementById('subtask-content').innerHTML = '';
     document.querySelectorAll('.priority-btn-addTask').forEach(button => {
         button.classList.remove('prio1-color', 'prio2-color', 'prio3-color');
     });
     toggleHamburgerMenu();
-}
-
-function getUsersToAssignedTo() {
-    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
-    let assignedToSb = document.getElementById('assigned-to-sb');
-    assignedToSb.innerHTML = '';
-    assignedToSb.innerHTML = `<option value="" disabled selected hidden>Select contacts to assign</option>`;
-    for (let i = 0; i < namesArray.length; i++) {
-        const option = document.createElement('option');
-        option.value = namesArray[i];
-
-        option.textContent = namesArray[i];
-        option.setAttribute('id', `optionSb-${i}`);
-        assignedToSb.appendChild(option);
-    }
-    assignedToSb.addEventListener('change', function () {
-        selectContactsSb(assignedToSb.value);
-    });
-}
-
-function selectContactsSb(selectedValue) {
-    let selectedContacts = document.getElementById('selected-contacts-sb');
-    let assignedToSb = document.getElementById('assigned-to-sb');
-    if (selectedValue) {
-        let splitName = selectedValue.split(" ");
-        let initials;
-        if (splitName.length > 1) {
-            let firstNameInitial = splitName[0][0].toUpperCase();
-            let secondNameInitial = splitName[1][0].toUpperCase();
-            initials = `${firstNameInitial}${secondNameInitial}`;
-        } else {
-            initials = splitName[0][0].toUpperCase();
-        }
-        if (!Array.from(selectedContacts.children).some(div => div.textContent === initials)) {
-            selectedContacts.innerHTML += `<div style="background-color: ${getRandomColor()}" value="${selectedValue}" class="contact-initials-sb">${initials}</div>`;
-        }
-    }
-    let optionToDisable = assignedToSb.querySelector(`option[value="${selectedValue}"]`);
-    if (optionToDisable) {
-        optionToDisable.disabled = true;
-    }
 }
 
 function renderTask() {
@@ -282,6 +242,7 @@ function renderTask() {
         }
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
+    loadContactsToEditAddTaskOnBoard()
 }
 
 function filterCategory(taskCounter, element, toDoBlock) {
@@ -410,4 +371,71 @@ function taskStyle(taskCounter) {
         currentCategory.innerHTML = 'Ticket';
         currentCategory.style.color = 'white';
     }
+}
+
+function toggleDropdownAddTaskOnBoard() {
+    const dropdownMenu = document.getElementById('dropdown-menu-add-task-on-board');
+    if (dropdownMenu.style.display === 'block') {
+        dropdownMenu.style.display = 'none';
+    } else {
+        dropdownMenu.style.display = 'block';
+    }
+}
+
+function handleUserSelectionAddTaskOnBoard() {
+    const checkboxes = document.querySelectorAll('#user-select-add-task-on-board input[type="checkbox"]');
+    const selectedUsers = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+    renderUsersAddTaskOnBoard(selectedUsers);
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                renderUsersAddTaskOnBoard([checkbox.value]);
+            } else {
+                removeUserFromBoard(checkbox.value);
+            }
+        });
+    });
+}
+
+function renderUsersAddTaskOnBoard(users) {
+    const taskContainer = document.getElementById('added-users-container-add-task-on-board');
+    users.forEach(user => {
+        if (!document.querySelector(`.current-task-initials[value="${user}"]`)) {
+            let initials = createInitialsForEdit([user]);
+            taskContainer.innerHTML += `
+                <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
+            `;
+        }
+    });
+}
+
+function removeUserFromBoard(user) {
+    const taskContainer = document.getElementById('added-users-container-add-task-on-board');
+    const userDiv = document.querySelector(`.current-task-initials[value="${user}"]`);
+    if (userDiv) {
+        taskContainer.removeChild(userDiv);
+    }
+}
+
+function loadContactsToEditAddTaskOnBoard() {
+    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
+    let userSelect = document.getElementById('user-select-add-task-on-board');
+    userSelect.innerHTML = '';
+    for (let i = 0; i < namesArray.length; i++) {
+        const container = document.createElement('div');
+        container.classList.add('checkbox-container');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `checkbox-${i}`;
+        checkbox.value = namesArray[i];
+        const names = document.createElement('div');
+        names.htmlFor = `checkbox-${i}`;
+        names.textContent = namesArray[i];
+        container.appendChild(names);
+        container.appendChild(checkbox);
+        userSelect.appendChild(container);
+    }
+    handleUserSelectionAddTaskOnBoard();
 }

@@ -131,15 +131,38 @@
                             </div>
                         </div>
 
-                        <div class="form-group-addTask">
-                            <label for="assigned-to-sb"><b>Assigned to</b> (optional)</label>
-                            <select onclick="getUsersToAssignedTo()"
-                                class="only-bottom-border underline-select input-addTask cursor-pointer"
-                                id="assigned-to-sb" name="assigned-to-sb">
-                                <option value="">Select contacts to assign</option>
-                            </select>
-                            <div class="selected-contacts-sb" id="selected-contacts-sb"></div>
+
+
+
+
+
+
+
+                        <div class="dropdown">
+                            <div><b>Assigned to</b> (optional)</div>
+                            <button type="button" id="dropdown-button-add-task-on-board" onclick="toggleDropdownAddTaskOnBoard()">Select contacts to assign
+                            <img class="assigned-to-edit-icon" src="../assets/icons/add.svg"></button>
+                            <div id="dropdown-menu-add-task-on-board" class="dropdown-menu-add-task-on-board" style="display: none;">
+                                <div id="user-select-add-task-on-board" multiple onchange="handleUserSelectionAddTaskOnBoard()"> 
+                                </div>
+                            </div>
                         </div>
+                        <div id="added-users-container-add-task-on-board">
+                            <!-- Task und Benutzer werden hier angezeigt -->
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         <div class="form-group-addTask">
                             <label for="category"><b>Category</b></label>
