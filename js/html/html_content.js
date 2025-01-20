@@ -232,8 +232,8 @@ function renderEditTaskHTML () {
                     <button type="button" id="dropdown-button" onclick="toggleDropdown()">Select contacts to assign
                     <img class="assigned-to-edit-icon" src="../assets/icons/add.svg"></button>
                     <div id="dropdown-menu" class="dropdown-menu" style="display: none;">
-                        <select id="user-select" multiple onchange="handleUserSelection()"> 
-                        </select>
+                        <div id="user-select" multiple onchange="handleUserSelection()"> 
+                        </div>
                     </div>
                 </div>
                 <div id="added-users-container">

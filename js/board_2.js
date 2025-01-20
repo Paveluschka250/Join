@@ -18,7 +18,10 @@ function editCurrentTask(currentTask, taskCounter) {
     document.getElementById('due-date-edit').value = `${currentTask[6]}`;
     editPriorityBtn(currentTask);
     loadContactsToEdit();
-    editAssignedContacts(currentTask, taskCounter);
+    setTimeout(() => {
+        // Jetzt können wir die zugewiesenen Kontakte richtig bearbeiten
+        editAssignedContacts(currentTask, taskCounter);
+    }, 0);
 
     if (currentTask[1] !== 'Ticket') {
         document.getElementById('category-edit').value = `${currentTask[1]}`;
@@ -33,23 +36,38 @@ function editAssignedContacts(currentTask, taskCounter) {
     let contacts = currentTask[7].split(",");
     getKeysFromTasks();
     let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
+    
     if (contacts.length > 0 && fullNames) {
+        assignedContacts.innerHTML = '';
+        
         for (let i = 0; i < contacts.length; i++) {
             const element = contacts[i];
+            const fullName = fullNames[i];
+            
+            let initials = createInitialsForEdit([fullName]);
             assignedContacts.innerHTML += `
-                <div class="current-task-initials edit-initials" value="${fullNames[i]}" style="background-color: ${getRandomColor()}">${element}</div>
+                <div class="current-task-initials edit-initials" value="${fullName}" style="background-color: ${getRandomColor()}">${initials}</div>
             `;
+            
+            const checkbox = document.getElementById(`checkbox-${i}`);
+            console.log(checkbox.value)
+            if (checkbox && checkbox.value === fullName) {
+                checkbox.checked = true;
+            }
         }
     } else {
         assignedContacts.innerHTML = '';
     }
+    
     assignedContacts.addEventListener('click', function () {
         deleteUsersEdit(assignedContacts);
-    })
+    });
 }
 
 function deleteUsersEdit(assignedContacts) {
     assignedContacts.innerHTML = '';
+    const checkboxes = document.querySelectorAll('#user-select input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
 }
 
 function editPriorityBtn(currentTask) {
@@ -110,34 +128,59 @@ function toggleDropdown() {
 }
 
 function handleUserSelection() {
-    const selectElement = document.getElementById('user-select');
-    const selectedUsers = Array.from(selectElement.selectedOptions).map(option => option.value);
-    renderUsers(selectedUsers);
-}
+    const checkboxes = document.querySelectorAll('#user-select input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        const user = checkbox.value;
+        const taskContainer = document.getElementById('added-users-container');
+        const existingUserDiv = document.querySelector(`.current-task-initials[value="${user}"]`);
 
-function renderUsers(users) {
-    const taskContainer = document.getElementById('added-users-container');
-    users.forEach(user => {
-        if (!document.querySelector(`.current-task-initials[value="${user}"]`)) {
+        if (checkbox.checked && !existingUserDiv) {
             let initials = createInitialsForEdit([user]);
             taskContainer.innerHTML += `
                 <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
             `;
+        } else if (!checkbox.checked && existingUserDiv) {
+            existingUserDiv.remove();
         }
+    });
+}
+
+function renderUsers(users) {
+    const taskContainer = document.getElementById('added-users-container');
+    taskContainer.innerHTML = '';
+    users.forEach(user => {
+        let initials = createInitialsForEdit([user]);
+        taskContainer.innerHTML += `
+            <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
+        `;
     });
 }
 
 function loadContactsToEdit() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let userSelect = document.getElementById('user-select');
+    userSelect.innerHTML = '';
+
     for (let i = 0; i < namesArray.length; i++) {
-        const option = document.createElement('option');
-        option.value = namesArray[i];
-        option.textContent = namesArray[i];
-        option.setAttribute('id', `optionSbEdit-${i}1`);
-        userSelect.appendChild(option);
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-option';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `checkbox-${i}`;
+        checkbox.value = namesArray[i];
+        checkbox.addEventListener('change', handleUserSelection);
+
+        const name = document.createElement('div');
+        name.setAttribute('for', `checkbox-${i}`);
+        name.textContent = namesArray[i];
+
+        userDiv.appendChild(name);
+        userDiv.appendChild(checkbox);
+        userSelect.appendChild(userDiv);
     }
 }
+
 
 function createInitialsForEdit(user) {
     if (user) {

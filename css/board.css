@@ -889,8 +889,13 @@ line-height: 40px;
     z-index: 1000;
     width: 100%;
     border-radius: 8px;
-    height: 124px;
+    height: 300px;
     box-shadow: 2px 2px 2px 2px #6a6a6a;
+    overflow-y: scroll;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+    display: none;
 }
 
 #user-select {
@@ -917,7 +922,6 @@ line-height: 40px;
     margin-bottom: 12px;
 }
 
-/* Optional: Stil für den Button */
 #dropdown-button {
     width: 100%;
     height: 32px;
@@ -931,6 +935,18 @@ line-height: 40px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+}
+
+.user-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 0px 8px 4px
+}
+
+.user-option:hover {
+    background-color: #4589FF;
+    color: white;
 }
 
 #dropdown-button:hover {
@@ -1194,6 +1210,10 @@ line-height: 40px;
 
     .board-create-task-btn {
         justify-content: flex-end;
+    }
+    
+    .dropdown-menu-add-task-on-board{
+        width: 87%;
     }
 }
 
