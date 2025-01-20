@@ -49,11 +49,13 @@ function editAssignedContacts(currentTask, taskCounter) {
                 <div class="current-task-initials edit-initials" value="${fullName}" style="background-color: ${getRandomColor()}">${initials}</div>
             `;
             
-            const checkbox = document.getElementById(`checkbox-${i}`);
-            console.log(checkbox.value)
-            if (checkbox && checkbox.value === fullName) {
-                checkbox.checked = true;
-            }
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.value === fullName) {
+                    checkbox.checked = true;
+                }
+            });
         }
     } else {
         assignedContacts.innerHTML = '';

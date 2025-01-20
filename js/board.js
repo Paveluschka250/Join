@@ -181,7 +181,10 @@ async function setFormData(taskCategory, title, description, dueDate, assignedTo
         fullNames
     };
     await postFormDataToFireBase(formData);
-    await getTasks();
+    toggleHamburgerMenu();
+    setTimeout(async () => {
+        await getTasks();
+    }, 500);
     clearForm();
 }
 
@@ -205,8 +208,8 @@ async function postFormDataToFireBase(formData) {
         })
         .catch(error => {
         });
-    clearForm();
-    await getTasks();
+    // clearForm();
+    // await getTasks();
 }
 
 async function clearForm() {
