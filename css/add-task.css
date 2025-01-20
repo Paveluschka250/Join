@@ -408,8 +408,7 @@ main {
 }
 
 .scroll-input {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: visible;
   width: 440px;
 }
 
@@ -546,8 +545,23 @@ main {
   display: none;
   z-index: 1000;
   margin-top: 4px;
-  overflow: hidden;
   border: 1px solid #ccc;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#addtask-content .custom-select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+#addtask-content .custom-select-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+#addtask-content .custom-select-dropdown::-webkit-scrollbar-thumb {
+  background: #4589FF;
+  border-radius: 3px;
 }
 
 #addtask-content .custom-select-dropdown .option {
@@ -591,6 +605,7 @@ main {
     position: relative;
     background-color: transparent;
     transition: all 0.2s ease;
+    pointer-events: none;
 }
 
 .custom-select-dropdown .option:hover input[type="checkbox"]:not(:checked) {

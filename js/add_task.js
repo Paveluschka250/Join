@@ -234,7 +234,6 @@ function getUsersToAssignedTo() {
           <span>${name}</span>
         </div>
         <input type="checkbox" 
-               onclick="event.stopPropagation();"
                ${isSelected ? 'checked' : ''}
         >
       </div>
