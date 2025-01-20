@@ -297,7 +297,17 @@ function toggleDropdown(dropdownId) {
   }
 
   const isOpen = dropdown.style.display === 'block';
-  dropdown.style.display = isOpen ? 'none' : 'block';
+
+  if (isOpen) {
+    dropdown.style.animation = 'slideUp 0.3s ease-out';
+    dropdown.addEventListener('animationend', function() {
+      dropdown.style.display = 'none';
+      dropdown.style.animation = '';
+    }, {once: true});
+  } else {
+    dropdown.style.animation = 'slideDown 0.3s ease-out';
+    dropdown.style.display = 'block';
+  }
 
   if (arrow) {
     arrow.style.transform = isOpen
@@ -315,8 +325,13 @@ document.addEventListener('click', (e) => {
   const dropdowns = document.querySelectorAll('.custom-select-dropdown');
   dropdowns.forEach(dropdown => {
     const wrapper = dropdown.closest('.custom-select-wrapper');
-    if (!wrapper.contains(e.target)) {
-      dropdown.style.display = 'none';
+    if (!wrapper.contains(e.target) && dropdown.style.display === 'block') {
+      dropdown.style.animation = 'slideUp 0.3s ease-out';
+      dropdown.addEventListener('animationend', function() {
+        dropdown.style.display = 'none';
+        dropdown.style.animation = '';
+      }, {once: true});
+
       const arrow = wrapper.querySelector('.select-arrow');
       if (arrow) {
         arrow.style.transform = 'translateY(-50%) rotate(0deg)';
