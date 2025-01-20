@@ -122,77 +122,80 @@ function deleteSubTask(buttonElement) {
 
 function getTaskData(event) {
   event.preventDefault();
-
-  let title = document.getElementById('title').value;
-  let description = document.getElementById('description').value;
-  let dueDate = document.getElementById('due-date').value;
-  let category = document.getElementById('category-selected').value;
-  let taskCategory = { category: "toDo" };
-
-  let selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
-  let assignedTo = [];
-  let fullNames = [];
-  selectedContactsDivs.forEach(function (div) {
-    assignedTo.push(div.textContent);
-    let value = div.getAttribute('value');
-    fullNames.push(value);
-  });
-
-  let priority = '';
-  if (document.getElementById('priority1').classList.contains('prio1-color')) {
-    priority = 'Urgent';
-  } else if (document.getElementById('priority2').classList.contains('prio2-color')) {
-    priority = 'Medium';
-  } else if (document.getElementById('priority3').classList.contains('prio3-color')) {
-    priority = 'Low';
-  }
-
-  let subtasks = [];
-  let subtasksChecked = [];
-  let subtaskElements = document.querySelectorAll('#subtask-content li p');
-  if (subtaskElements.length > 0) {
-    subtaskElements.forEach(function (subtaskElement) {
-      subtasks.push(subtaskElement.textContent);
-    });
-
-    for (let i = 0; i < subtaskElements.length; i++) {
-      const element = subtaskElements[i];
-      let subtaskId = { "id": `subtask${i}`, "checked": false };
-      subtasksChecked.push(subtaskId);
-    }
-  } else {
-    subtasks = ['dummy'];
-    subtasksChecked = ['dummy'];
-  }
-
-
-  let taskData = {
-    title: title,
-    description: description,
-    dueDate: dueDate,
-    assignedTo: assignedTo,
-    category: category,
-    priority: priority,
-    subtasks: subtasks,
-    subtasksChecked: subtasksChecked,
-    taskCategory: taskCategory,
-    fullNames: fullNames
+  const taskData = {
+    ...collectBasicTaskInfo(),
+    ...collectAssignedContacts(),
+    priority: getPriorityLevel(),
+    ...collectSubtasks(),
+    taskCategory: { category: "toDo" }
   };
 
-  fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(taskData)
-  })
-    .then(response => response.json())
-    .then(data => {
-      resetFormFields();
-    })
-    .catch(error => {
+  saveTaskToDatabase(taskData);
+}
+
+function collectBasicTaskInfo() {
+  return {
+    title: document.getElementById('title').value,
+    description: document.getElementById('description').value,
+    dueDate: document.getElementById('due-date').value,
+    category: document.getElementById('category-selected').value
+  };
+}
+
+function collectAssignedContacts() {
+  const selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
+  const assignedTo = [];
+  const fullNames = [];
+  
+  selectedContactsDivs.forEach(div => {
+    assignedTo.push(div.textContent);
+    fullNames.push(div.getAttribute('value'));
+  });
+  
+  return { assignedTo, fullNames };
+}
+
+function getPriorityLevel() {
+  if (document.getElementById('priority1').classList.contains('prio1-color')) return 'Urgent';
+  if (document.getElementById('priority2').classList.contains('prio2-color')) return 'Medium';
+  if (document.getElementById('priority3').classList.contains('prio3-color')) return 'Low';
+  return '';
+}
+
+function collectSubtasks() {
+  const subtaskElements = document.querySelectorAll('#subtask-content li p');
+  
+  if (subtaskElements.length === 0) {
+    return {
+      subtasks: ['dummy'],
+      subtasksChecked: ['dummy']
+    };
+  }
+
+  const subtasks = Array.from(subtaskElements).map(element => element.textContent);
+  const subtasksChecked = Array.from(subtaskElements).map((_, index) => ({
+    id: `subtask${index}`,
+    checked: false
+  }));
+
+  return { subtasks, subtasksChecked };
+}
+
+async function saveTaskToDatabase(taskData) {
+  try {
+    const response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(taskData)
     });
-    window.location.href = './board.html';
+    
+    if (response.ok) {
+      resetFormFields();
+      window.location.href = './board.html';
+    }
+  } catch (error) {
+    console.error('Error saving task:', error);
+  }
 }
 
 function resetFormFields() {
