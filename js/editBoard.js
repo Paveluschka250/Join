@@ -22,13 +22,16 @@ function editCurrentTask(currentTask, taskCounter) {
         // Jetzt können wir die zugewiesenen Kontakte richtig bearbeiten
         editAssignedContacts(currentTask, taskCounter);
     }, 0);
+    categoryEdit(currentTask)
+    editSubtasks(currentTask)
+}
 
+function categoryEdit(currentTask) {
     if (currentTask[1] !== 'Ticket') {
         document.getElementById('category-edit').value = `${currentTask[1]}`;
     } else {
         document.getElementById('category-edit').value = '';
     }
-    editSubtasks(currentTask);
 }
 
 function editAssignedContacts(currentTask, taskCounter) {
@@ -36,21 +39,23 @@ function editAssignedContacts(currentTask, taskCounter) {
     let contacts = currentTask[7].split(",");
     getKeysFromTasks();
     let fullNames = tasks.toDo[keys[taskCounter]].fullNames;
-    
+    createInitialDiv(assignedContacts, fullNames, contacts);
+    assignedContacts.addEventListener('click', function () {
+        deleteUsersEdit(assignedContacts);
+    });
+}
+
+function createInitialDiv(assignedContacts, fullNames, contacts) {
     if (contacts.length > 0 && fullNames) {
         assignedContacts.innerHTML = '';
-        
         for (let i = 0; i < contacts.length; i++) {
             const element = contacts[i];
             const fullName = fullNames[i];
-            
             let initials = createInitialsForEdit([fullName]);
             assignedContacts.innerHTML += `
                 <div class="current-task-initials edit-initials" value="${fullName}" style="background-color: ${getRandomColor()}">${initials}</div>
             `;
-            
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
             checkboxes.forEach(checkbox => {
                 if (checkbox.value === fullName) {
                     checkbox.checked = true;
@@ -60,10 +65,6 @@ function editAssignedContacts(currentTask, taskCounter) {
     } else {
         assignedContacts.innerHTML = '';
     }
-    
-    assignedContacts.addEventListener('click', function () {
-        deleteUsersEdit(assignedContacts);
-    });
 }
 
 function deleteUsersEdit(assignedContacts) {
@@ -79,6 +80,10 @@ function editPriorityBtn(currentTask) {
     let red = document.getElementById('prio1-edit');
     let orange = document.getElementById('prio2-edit');
     let green = document.getElementById('prio3-edit');
+    filterEditPriorityButton(currentTask, red, orange, green, btnIcon1, btnIcon2, btnIcon3);
+}
+
+function filterEditPriorityButton(currentTask, red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     if (currentTask[8] === 'Urgent') {
         urgentEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3)
     } else if (currentTask[8] === 'Medium') {
@@ -162,21 +167,21 @@ function loadContactsToEdit() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let userSelect = document.getElementById('user-select');
     userSelect.innerHTML = '';
+    loadContactsToEditForLoop(namesArray, userSelect);
+}
 
+function loadContactsToEditForLoop(namesArray, userSelect) {
     for (let i = 0; i < namesArray.length; i++) {
         const userDiv = document.createElement('div');
         userDiv.className = 'user-option';
-
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = `checkbox-${i}`;
         checkbox.value = namesArray[i];
         checkbox.addEventListener('change', handleUserSelection);
-
         const name = document.createElement('div');
         name.setAttribute('for', `checkbox-${i}`);
         name.textContent = namesArray[i];
-
         userDiv.appendChild(name);
         userDiv.appendChild(checkbox);
         userSelect.appendChild(userDiv);
@@ -203,6 +208,10 @@ function editSubtasks(currentTask) {
     let subtasksEdit = currentTask[9];
     let list = document.getElementById('subtask-edit-list');
     list.innerHTML = '';
+    setSubtasksToEdit(subtasksEdit, list, currentTask)
+}
+
+function setSubtasksToEdit(subtasksEdit, list, currentTask) {
     if (!subtasksEdit || subtasksEdit === "dummy") {
         list.innerHTML = '';
         return;

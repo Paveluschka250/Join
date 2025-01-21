@@ -121,27 +121,57 @@ async function getFormData(event) {
     let description = document.getElementById('description').value;
     let dueDate = document.getElementById('due-date').value;
     let category = document.getElementById('category').value;
-
     let selectedContactsDivs = document.querySelectorAll('#added-users-container-add-task-on-board .current-task-initials');
     let assignedTo = [];
     let fullNames = [];
     selectedContactsDivs.forEach(function (div) {
         getInitialsAndFullNames(assignedTo, fullNames, div);
     });
-
     let subtaskList = document.querySelectorAll('#subtask-content li');
     const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
-
     let priority = '';
     priority = setPriority(priority);
-   
     await setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
 }
+
+// async function gatherFormInputs(event) {
+//     event.preventDefault();
+//     let taskCategory = { category: "toDo" };
+//     let title = document.getElementById('title').value;
+//     let description = document.getElementById('description').value;
+//     let dueDate = document.getElementById('due-date').value;
+//     let category = document.getElementById('category').value;
+
+//     let selectedContactsDivs = document.querySelectorAll('#added-users-container-add-task-on-board .current-task-initials');
+//     let assignedTo = [];
+//     let fullNames = [];
+//     selectedContactsDivs.forEach(function (div) {
+//         getInitialsAndFullNames(assignedTo, fullNames, div);
+//     });
+
+//     return { taskCategory, title, description, dueDate, category, assignedTo, fullNames };
+// }
+
+// async function getFormData(event) {
+//     const {
+//         taskCategory,
+//         title,
+//         description,
+//         dueDate,
+//         category,
+//         assignedTo,
+//         fullNames
+//     } = await gatherFormInputs(event);
+
+//     let subtaskList = document.querySelectorAll('#subtask-content li');
+//     const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
+//     let priority = setPriority('');
+//     await setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
+// }
 
 function getSubtasks(subtaskList) {
     let subtasks = [];
     let subtasksChecked = [];
-    
     if (subtaskList.length > 0) {
         subtasks = Array.from(subtaskList).map(li => li.textContent);
         for (let i = 0; i < subtasks.length; i++) {
@@ -152,7 +182,6 @@ function getSubtasks(subtaskList) {
         subtasks = ['dummy'];
         subtasksChecked = ['dummy'];
     }
-
     return { subtasks, subtasksChecked };
 }
 
@@ -181,6 +210,10 @@ async function setFormData(taskCategory, title, description, dueDate, assignedTo
         fullNames
     };
     await postFormDataToFireBase(formData);
+    await renderNewTask();
+}
+
+async function renderNewTask() {
     toggleHamburgerMenu();
     setTimeout(async () => {
         await getTasks();
@@ -208,8 +241,6 @@ async function postFormDataToFireBase(formData) {
         })
         .catch(error => {
         });
-    // clearForm();
-    // await getTasks();
 }
 
 async function clearForm() {
@@ -230,22 +261,25 @@ function renderTask() {
     let toDoBlock = document.getElementById("to-do-block");
     if ("toDo" in (tasks || {})) {
         let toDo = tasks.toDo;
-        if (toDo && Object.keys(toDo).length > 0) {
-            inProgress.innerHTML = "";
-            awaitFeedback.innerHTML = "";
-            done.innerHTML = "";
-            toDoBlock.innerHTML = "";
-
-            let taskCounter = 0;
-            for (let key in toDo) {
-                const element = toDo[key];
-                taskCounter++;
-                filterCategory(taskCounter, element, toDoBlock);
-            }
-        }
+        setTasks(toDo, toDoBlock);
     }
     checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
     loadContactsToEditAddTaskOnBoard()
+}
+
+function setTasks(toDo, toDoBlock) {
+    if (toDo && Object.keys(toDo).length > 0) {
+        inProgress.innerHTML = "";
+        awaitFeedback.innerHTML = "";
+        done.innerHTML = "";
+        toDoBlock.innerHTML = "";
+        let taskCounter = 0;
+        for (let key in toDo) {
+            const element = toDo[key];
+            taskCounter++;
+            filterCategory(taskCounter, element, toDoBlock);
+        }
+    }
 }
 
 function filterCategory(taskCounter, element, toDoBlock) {
@@ -318,13 +352,11 @@ function setContactsTasks(element, contactsHTML) {
     if (Array.isArray(element.assignedTo)) {
         if (element.assignedTo.length <= 5) {
             for (let i = 0; i < element.assignedTo.length; i++) {
-                const initials = element.assignedTo[i];
-                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                setInitials(element, i, contactsHTML)
             }
         } else if (element.assignedTo.length > 5) {
             for (let i = 0; i < 4; i++) {
-                const initials = element.assignedTo[i];
-                contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
+                setInitials(element, i, contactsHTML)
             }
             let UsersAmount = element.assignedTo.length - 4;
             contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
@@ -332,6 +364,11 @@ function setContactsTasks(element, contactsHTML) {
             contactsHTML = '';
         }
     }
+}
+
+function setInitials(element, i, contactsHTML) {
+    const initials = element.assignedTo[i];
+    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
 }
 
 function renderDone(taskCounter, element) {
@@ -426,6 +463,11 @@ function loadContactsToEditAddTaskOnBoard() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let userSelect = document.getElementById('user-select-add-task-on-board');
     userSelect.innerHTML = '';
+    createUserfieldCheckbox(namesArray, userSelect)
+    handleUserSelectionAddTaskOnBoard();
+}
+
+function createUserfieldCheckbox(namesArray, userSelect) {
     for (let i = 0; i < namesArray.length; i++) {
         const container = document.createElement('div');
         container.classList.add('checkbox-container');
@@ -440,5 +482,4 @@ function loadContactsToEditAddTaskOnBoard() {
         container.appendChild(checkbox);
         userSelect.appendChild(container);
     }
-    handleUserSelectionAddTaskOnBoard();
 }
