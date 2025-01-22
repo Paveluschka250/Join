@@ -1,5 +1,20 @@
+/**
+ * @fileoverview Funktionalität für das Hinzufügen von Tasks im Join Projekt
+ * @author ElStephano
+ * @copyright Join
+ * @version 1.0.0
+ * @license MIT
+ * @created 2025-01-22
+ */
+
+/** @type {Array} Speichert die Kontakte aus der Datenbank */
 let contacts = [];
 
+/**
+ * Lädt die Kontakte von der Firebase-Datenbank
+ * @async
+ * @returns {Promise<void>}
+ */
 async function getContacts() {
   let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
   let responseToJson = await response.json();
@@ -8,6 +23,10 @@ async function getContacts() {
 
 getContacts();
 
+/**
+ * Setzt die Priorität für eine Aufgabe basierend auf der Button-ID
+ * @param {string} id - Die ID des geklickten Prioritäts-Buttons
+ */
 function getPriority(id) {
   let buttonRed = document.getElementById('priority1');
   let buttonOrange = document.getElementById('priority2');
@@ -22,6 +41,13 @@ function getPriority(id) {
   }
 }
 
+/**
+ * Verwaltet die CSS-Klassen für die Prioritäts-Buttons
+ * @param {string} prioColor - Die zu verwendende Prioritätsfarben-Klasse
+ * @param {HTMLElement} red - Der rote Prioritäts-Button
+ * @param {HTMLElement} orange - Der orange Prioritäts-Button
+ * @param {HTMLElement} green - Der grüne Prioritäts-Button
+ */
 function containsClass(prioColor, red, orange, green) {
   let btnIcon1 = document.getElementById('priority-btn1');
   let btnIcon2 = document.getElementById('priority-btn2');
@@ -35,6 +61,15 @@ function containsClass(prioColor, red, orange, green) {
   }
 }
 
+/**
+ * Setzt die Farben für die höchste Priorität (Rot)
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ */
 function prioColor1(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
   red.classList.toggle('prio1-color');
   btnIcon1.classList.toggle('priotity-btn-filter1');
@@ -44,6 +79,15 @@ function prioColor1(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
   btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für die mittlere Priorität (Orange)
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ */
 function prioColor2(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
   red.classList.remove('prio1-color');
   btnIcon1.classList.remove('priotity-btn-filter1');
@@ -53,6 +97,15 @@ function prioColor2(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
   btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für die niedrigste Priorität (Grün)
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ */
 function prioColor3(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
   red.classList.remove('prio1-color');
   btnIcon1.classList.remove('priotity-btn-filter1');
@@ -62,16 +115,25 @@ function prioColor3(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
   btnIcon3.classList.toggle('priotity-btn-filter3');
 }
 
+/**
+ * Fügt ein neues Subtask-Eingabefeld hinzu
+ */
 function addNewSubTask() {
   document.getElementById('open-subtask').classList.add('d-none');
   document.getElementById('subtask-close-and-add').classList.remove('d-none');
 }
 
+/**
+ * Schließt das Subtask-Eingabefeld
+ */
 function closeNewSubtasksBtn() {
   document.getElementById('open-subtask').classList.remove('d-none');
   document.getElementById('subtask-close-and-add').classList.add('d-none');
 }
 
+/**
+ * Fügt eine neue Subtask zur Liste hinzu
+ */
 function addSubTask() {
   let subTask = document.getElementById('subtasks');
   let contentDiv = document.getElementById('subtask-content');
@@ -88,6 +150,11 @@ function addSubTask() {
   }
 }
 
+/**
+ * Bestätigt die Bearbeitung einer Subtask
+ * @param {HTMLElement} btn - Der Bestätigungs-Button
+ * @param {string} subtask - Der Text der Subtask
+ */
 function confirmEditSubtask(btn, subtask) {
   let currentSubtask = document.getElementById(`current-subtask-${subtask}`);
   let inputDiv = document.getElementById(`edit-${subtask}`);
@@ -102,6 +169,11 @@ function confirmEditSubtask(btn, subtask) {
   inputDiv.classList.toggle('li-elements-overlayTask');
 }
 
+/**
+ * Aktiviert den Bearbeitungsmodus für eine Subtask
+ * @param {HTMLElement} btn - Der Bearbeiten-Button
+ * @param {string} subtask - Der Text der Subtask
+ */
 function editSubtask(btn, subtask) {
   let currentSubtask = btn.closest('div');
   let inputDiv = document.getElementById(`edit-${subtask}`);
@@ -113,6 +185,10 @@ function editSubtask(btn, subtask) {
   inputDiv.classList.toggle('li-elements-overlayTask');
 }
 
+/**
+ * Löscht eine Subtask aus der Liste
+ * @param {HTMLElement} buttonElement - Der Löschen-Button
+ */
 function deleteSubTask(buttonElement) {
   let liElement = buttonElement.closest('li');
   if (liElement) {
@@ -120,6 +196,10 @@ function deleteSubTask(buttonElement) {
   }
 }
 
+/**
+ * Sammelt alle Aufgabendaten und speichert sie
+ * @param {Event} event - Das Submit-Event des Formulars
+ */
 function getTaskData(event) {
   event.preventDefault();
   const taskData = {
@@ -133,6 +213,10 @@ function getTaskData(event) {
   saveTaskToDatabase(taskData);
 }
 
+/**
+ * Sammelt die grundlegenden Aufgabeninformationen
+ * @returns {Object} Objekt mit title, description, dueDate und category
+ */
 function collectBasicTaskInfo() {
   return {
     title: document.getElementById('title').value,
@@ -142,6 +226,10 @@ function collectBasicTaskInfo() {
   };
 }
 
+/**
+ * Sammelt die zugewiesenen Kontakte
+ * @returns {Object} Objekt mit assignedTo und fullNames Arrays
+ */
 function collectAssignedContacts() {
   const selectedContactsDivs = document.querySelectorAll('#selected-contacts .contact-initials');
   const assignedTo = [];
@@ -155,6 +243,10 @@ function collectAssignedContacts() {
   return { assignedTo, fullNames };
 }
 
+/**
+ * Ermittelt die ausgewählte Prioritätsstufe
+ * @returns {string} Die ausgewählte Priorität ('Urgent', 'Medium', 'Low' oder '')
+ */
 function getPriorityLevel() {
   if (document.getElementById('priority1').classList.contains('prio1-color')) return 'Urgent';
   if (document.getElementById('priority2').classList.contains('prio2-color')) return 'Medium';
@@ -162,6 +254,10 @@ function getPriorityLevel() {
   return '';
 }
 
+/**
+ * Sammelt alle Subtasks und deren Status
+ * @returns {Object} Objekt mit subtasks Array und subtasksChecked Array
+ */
 function collectSubtasks() {
   const subtaskElements = document.querySelectorAll('#subtask-content li p');
   
@@ -181,6 +277,12 @@ function collectSubtasks() {
   return { subtasks, subtasksChecked };
 }
 
+/**
+ * Speichert die Aufgabe in der Firebase-Datenbank
+ * @async
+ * @param {Object} taskData - Die zu speichernden Aufgabendaten
+ * @returns {Promise<void>}
+ */
 async function saveTaskToDatabase(taskData) {
   try {
     const response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
@@ -244,6 +346,11 @@ function getUsersToAssignedTo() {
   });
 }
 
+/**
+ * Generiert die Initialen eines Namens
+ * @param {string} name - Der Name
+ * @returns {string} Die Initialen des Namens
+ */
 function getInitials(name) {
   let splitName = name.split(" ");
   return splitName.length > 1
@@ -251,6 +358,11 @@ function getInitials(name) {
     : `${splitName[0][0].toUpperCase()}`;
 }
 
+/**
+ * Schaltet die Auswahl eines Kontakts um
+ * @param {string} name - Der Name des Kontakts
+ * @param {HTMLElement} optionDiv - Das Option-Element
+ */
 function toggleContactSelection(name, optionDiv) {
   const checkbox = optionDiv.querySelector('input[type="checkbox"]');
   checkbox.checked = !checkbox.checked;
@@ -262,6 +374,10 @@ function toggleContactSelection(name, optionDiv) {
   }
 }
 
+/**
+ * Entfernt einen Kontakt aus der Auswahl
+ * @param {string} name - Der Name des Kontakts
+ */
 function removeContact(name) {
   const selectedContacts = document.getElementById('selected-contacts');
   const contactToRemove = selectedContacts.querySelector(`[value="${name}"]`);
@@ -270,11 +386,20 @@ function removeContact(name) {
   }
 }
 
+/**
+ * Prüft ob ein Kontakt bereits ausgewählt ist
+ * @param {string} name - Der Name des Kontakts
+ * @returns {boolean} True wenn der Kontakt ausgewählt ist
+ */
 function isContactSelected(name) {
   const selectedDivs = document.querySelectorAll('#selected-contacts .contact-initials');
   return Array.from(selectedDivs).some(div => div.getAttribute('value') === name);
 }
 
+/**
+ * Wählt einen Kontakt aus oder entfernt die Auswahl
+ * @param {string} selectedValue - Der ausgewählte Kontaktwert
+ */
 function selectContacts(selectedValue) {
   let selectedContacts = document.getElementById('selected-contacts');
 
@@ -291,6 +416,57 @@ function selectContacts(selectedValue) {
   }
 }
 
+/**
+ * Generiert eine zufällige Farbe im HEX-Format
+ * @returns {string} HEX-Farbcode
+ */
+function getRandomColor() {
+  const colors = [
+      '#FF5733',
+      '#33FF57',
+      '#3357FF',
+      '#FF33A8',
+      '#FFD133',
+      '#33FFF0',
+      '#8E44AD',
+      '#E74C3C'
+  ];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}
+
+/**
+ * Erstellt eine HTML-Option für einen Kontakt
+ * @param {Object} contact - Der Kontakt-Datensatz
+ * @returns {string} HTML-String für die Kontakt-Option
+ */
+function createContactOption(contact) {
+    return `
+        <div class="option" onclick="event.stopPropagation(); selectContact('${contact.id}')">
+            <span>${contact.name}</span>
+            <input type="checkbox" 
+                   id="contact-${contact.id}" 
+                   ${contact.selected ? 'checked' : ''}
+                   onclick="event.stopPropagation(); toggleContact('${contact.id}')"
+            >
+        </div>
+    `;
+}
+
+/**
+ * Schaltet die Auswahl eines Kontakts um
+ * @param {string} contactId - Die ID des Kontakts
+ */
+function toggleContact(contactId) {
+    const checkbox = document.getElementById(`contact-${contactId}`);
+    const isChecked = checkbox.checked;
+    // Hier die Logik für die Kontaktauswahl implementieren
+}
+
+/**
+ * Schaltet die Sichtbarkeit eines Dropdown-Menüs um
+ * @param {string} dropdownId - Die ID des Dropdown-Elements
+ */
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   const arrow = dropdown.parentElement.querySelector('.select-arrow');
@@ -319,6 +495,11 @@ function toggleDropdown(dropdownId) {
   }
 }
 
+/**
+ * Wählt eine Option aus einem Select-Element aus
+ * @param {string} selectId - Die ID des Select-Elements
+ * @param {string} value - Der auszuwählende Wert
+ */
 function selectOption(selectId, value) {
   document.getElementById(`${selectId}-selected`).textContent = value;
   document.getElementById(`${selectId}-dropdown`).style.display = 'none';
@@ -342,37 +523,3 @@ document.addEventListener('click', (e) => {
     }
   });
 });
-
-function getRandomColor() {
-  const colors = [
-      '#FF5733',
-      '#33FF57',
-      '#3357FF',
-      '#FF33A8',
-      '#FFD133',
-      '#33FFF0',
-      '#8E44AD',
-      '#E74C3C'
-  ];
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex];
-}
-
-function createContactOption(contact) {
-    return `
-        <div class="option" onclick="event.stopPropagation(); selectContact('${contact.id}')">
-            <span>${contact.name}</span>
-            <input type="checkbox" 
-                   id="contact-${contact.id}" 
-                   ${contact.selected ? 'checked' : ''}
-                   onclick="event.stopPropagation(); toggleContact('${contact.id}')"
-            >
-        </div>
-    `;
-}
-
-function toggleContact(contactId) {
-    const checkbox = document.getElementById(`contact-${contactId}`);
-    const isChecked = checkbox.checked;
-    // Hier die Logik für die Kontaktauswahl implementieren
-}

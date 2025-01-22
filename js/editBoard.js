@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Funktionalitäten zum Bearbeiten von Tasks im Board-View des Join Projekts
+ * @author ElStephano
+ * @copyright Join
+ * @version 1.0.0
+ * @created 2025-01-22
+ */
+
+/**
+ * Setzt die Farben für die niedrige Priorität (Grün) im Edit-Modus
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ */
 function prio3ColorEdit(red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon-edit');
     let btnIcon2 = document.getElementById('medium-prio-icon-edit');
@@ -11,6 +25,11 @@ function prio3ColorEdit(red, orange, green) {
     btnIcon3.classList.toggle('priotity-btn-filter3');
 }
 
+/**
+ * Lädt die Daten des aktuellen Tasks in das Bearbeitungsformular
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ * @param {number} taskCounter - Index des Tasks in der Task-Liste
+ */
 function editCurrentTask(currentTask, taskCounter) {
     taskCounter--;
     document.getElementById('title-edit').value = `${currentTask[2]}`;
@@ -26,6 +45,10 @@ function editCurrentTask(currentTask, taskCounter) {
     editSubtasks(currentTask)
 }
 
+/**
+ * Setzt die Kategorie im Bearbeitungsformular
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ */
 function categoryEdit(currentTask) {
     if (currentTask[1] !== 'Ticket') {
         document.getElementById('category-edit').value = `${currentTask[1]}`;
@@ -34,6 +57,11 @@ function categoryEdit(currentTask) {
     }
 }
 
+/**
+ * Lädt und zeigt die zugewiesenen Kontakte im Bearbeitungsmodus
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ * @param {number} taskCounter - Index des Tasks in der Task-Liste
+ */
 function editAssignedContacts(currentTask, taskCounter) {
     let assignedContacts = document.getElementById('added-users-container');
     let contacts = currentTask[7].split(",");
@@ -45,6 +73,12 @@ function editAssignedContacts(currentTask, taskCounter) {
     });
 }
 
+/**
+ * Erstellt die Initialen-Divs für zugewiesene Kontakte
+ * @param {HTMLElement} assignedContacts - Container für die zugewiesenen Kontakte
+ * @param {Array<string>} fullNames - Array mit den vollständigen Namen der Kontakte
+ * @param {Array<string>} contacts - Array mit den Kontakt-IDs
+ */
 function createInitialDiv(assignedContacts, fullNames, contacts) {
     if (contacts.length > 0 && fullNames) {
         assignedContacts.innerHTML = '';
@@ -67,12 +101,20 @@ function createInitialDiv(assignedContacts, fullNames, contacts) {
     }
 }
 
+/**
+ * Löscht alle zugewiesenen Benutzer im Bearbeitungsmodus
+ * @param {HTMLElement} assignedContacts - Container der zugewiesenen Kontakte
+ */
 function deleteUsersEdit(assignedContacts) {
     assignedContacts.innerHTML = '';
     const checkboxes = document.querySelectorAll('#user-select input[type="checkbox"]');
     checkboxes.forEach(checkbox => checkbox.checked = false);
 }
 
+/**
+ * Initialisiert die Prioritäts-Buttons im Bearbeitungsmodus
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ */
 function editPriorityBtn(currentTask) {
     let btnIcon1 = document.getElementById('high-prio-icon-edit');
     let btnIcon2 = document.getElementById('medium-prio-icon-edit');
@@ -83,6 +125,17 @@ function editPriorityBtn(currentTask) {
     filterEditPriorityButton(currentTask, red, orange, green, btnIcon1, btnIcon2, btnIcon3);
 }
 
+/**
+ * Setzt die entsprechende Prioritäts-Button-Farbe basierend auf der Task-Priorität
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ * @returns {Array} Gibt den currentTask zurück, wenn keine Priorität gesetzt ist
+ */
 function filterEditPriorityButton(currentTask, red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     if (currentTask[8] === 'Urgent') {
         urgentEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3)
@@ -95,6 +148,15 @@ function filterEditPriorityButton(currentTask, red, orange, green, btnIcon1, btn
     }
 }
 
+/**
+ * Setzt die Farben für höchste Priorität (Urgent)
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ */
 function urgentEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     red.classList.add('prio1-color');
     btnIcon1.classList.add('priotity-btn-filter1');
@@ -105,6 +167,15 @@ function urgentEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für mittlere Priorität (Medium)
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ */
 function mediumEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     red.classList.remove('prio1-color');
     btnIcon1.classList.remove('priotity-btn-filter1');
@@ -115,6 +186,15 @@ function mediumEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für niedrige Priorität (Low)
+ * @param {HTMLElement} red - Roter Prioritäts-Button
+ * @param {HTMLElement} orange - Oranger Prioritäts-Button
+ * @param {HTMLElement} green - Grüner Prioritäts-Button
+ * @param {HTMLElement} btnIcon1 - Icon des roten Buttons
+ * @param {HTMLElement} btnIcon2 - Icon des orangen Buttons
+ * @param {HTMLElement} btnIcon3 - Icon des grünen Buttons
+ */
 function lowEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     red.classList.remove('prio1-color');
     btnIcon1.classList.remove('priotity-btn-filter1');
@@ -125,6 +205,9 @@ function lowEdit(red, orange, green, btnIcon1, btnIcon2, btnIcon3) {
     btnIcon3.classList.add('priotity-btn-filter3');
 }
 
+/**
+ * Schaltet die Sichtbarkeit des Dropdown-Menüs um
+ */
 function toggleDropdown() {
     const dropdownMenu = document.getElementById('dropdown-menu');
     if (dropdownMenu.style.display === 'block') {
@@ -134,6 +217,9 @@ function toggleDropdown() {
     }
 }
 
+/**
+ * Verarbeitet die Benutzerauswahl und aktualisiert die UI
+ */
 function handleUserSelection() {
     const checkboxes = document.querySelectorAll('#user-select input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
@@ -152,6 +238,10 @@ function handleUserSelection() {
     });
 }
 
+/**
+ * Rendert die ausgewählten Benutzer in der UI
+ * @param {Array<string>} users - Array mit den Benutzernamen
+ */
 function renderUsers(users) {
     const taskContainer = document.getElementById('added-users-container');
     taskContainer.innerHTML = '';
@@ -163,6 +253,9 @@ function renderUsers(users) {
     });
 }
 
+/**
+ * Lädt die Kontakte für das Bearbeitungsformular
+ */
 function loadContactsToEdit() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let userSelect = document.getElementById('user-select');
@@ -170,6 +263,11 @@ function loadContactsToEdit() {
     loadContactsToEditForLoop(namesArray, userSelect);
 }
 
+/**
+ * Erstellt die Kontaktauswahl-UI im Bearbeitungsmodus
+ * @param {Array<string>} namesArray - Array mit den Namen der Kontakte
+ * @param {HTMLElement} userSelect - Container für die Benutzerauswahl
+ */
 function loadContactsToEditForLoop(namesArray, userSelect) {
     for (let i = 0; i < namesArray.length; i++) {
         const userDiv = document.createElement('div');
@@ -188,7 +286,11 @@ function loadContactsToEditForLoop(namesArray, userSelect) {
     }
 }
 
-
+/**
+ * Erstellt die Initialen aus einem Benutzernamen
+ * @param {Array<string>} user - Array mit dem Benutzernamen
+ * @returns {string} Die Initialen des Benutzers
+ */
 function createInitialsForEdit(user) {
     if (user) {
         let splitName = user[0].split(" ");
@@ -204,6 +306,10 @@ function createInitialsForEdit(user) {
     }
 }
 
+/**
+ * Lädt die Subtasks in das Bearbeitungsformular
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ */
 function editSubtasks(currentTask) {
     let subtasksEdit = currentTask[9];
     let list = document.getElementById('subtask-edit-list');
@@ -211,6 +317,12 @@ function editSubtasks(currentTask) {
     setSubtasksToEdit(subtasksEdit, list, currentTask)
 }
 
+/**
+ * Bereitet die Subtasks für die Bearbeitung vor
+ * @param {HTMLElement} subtasksEdit - Container für die Subtasks
+ * @param {HTMLElement} list - Liste der Subtasks
+ * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
+ */
 function setSubtasksToEdit(subtasksEdit, list, currentTask) {
     if (!subtasksEdit || subtasksEdit === "dummy") {
         list.innerHTML = '';
@@ -228,6 +340,10 @@ function setSubtasksToEdit(subtasksEdit, list, currentTask) {
     }
 }
 
+/**
+ * Bestätigt die Bearbeitung einer Subtask
+ * @param {number} i - Index der Subtask
+ */
 function confirmEditSubtask(i) {
     let inputValue = document.getElementById(`input-value${i}`).value;
     let subtask = document.getElementById(`current-subtask-to-edit${i}`);
@@ -238,6 +354,11 @@ function confirmEditSubtask(i) {
     input.classList.toggle('d-none');
 }
 
+/**
+ * Aktiviert den Bearbeitungsmodus für eine Subtask
+ * @param {number} i - Index der Subtask
+ * @param {string} content - Inhalt der Subtask
+ */
 function editCurrentSubtask(i, content) {
     let subtask = document.getElementById(`subtask${i}`);
     let input = document.getElementById(`subtask-edit-input${i}`);
@@ -247,6 +368,10 @@ function editCurrentSubtask(i, content) {
     inputValue.value = `${content}`;
 }
 
+/**
+ * Löscht eine Subtask im Bearbeitungsmodus
+ * @param {number} i - Index der zu löschenden Subtask
+ */
 function deleteSubtaskEdit(i) {
     let listItem = document.getElementById(`list-${i}`);
     if (listItem) {
@@ -254,6 +379,9 @@ function deleteSubtaskEdit(i) {
     }
 }
 
+/**
+ * Fügt eine neue Subtask im Bearbeitungsmodus hinzu
+ */
 function addNewSubTaskEdit() {
     let list = document.getElementById('subtask-edit-list');
     let subtask = document.getElementById('subtasks-edit').value;
@@ -271,16 +399,25 @@ function addNewSubTaskEdit() {
     }
 }
 
-async function saveEditBtn(taskCounter) {
+/**
+ * Speichert die Änderungen am Task
+ * @param {number} taskCounter - Index des Tasks
+ */
+function saveEditBtn(taskCounter) {
     taskCounter--;
     getKeysFromTasks();
     let currentTaskKey = keys[taskCounter];
-    await getDataFromEdit(currentTaskKey);
+    getDataFromEdit(currentTaskKey);
     closeCurrentTask();
-    await getTasks();
+    getTasks();
 }
 
-async function getDataFromEdit(key) {
+/**
+ * Sammelt alle bearbeiteten Daten des Tasks
+ * @param {string} key - Schlüssel des Tasks in der Datenbank
+ * @returns {Object} Die gesammelten Task-Daten
+ */
+function getDataFromEdit(key) {
     let { currentStatus, title, description, dueDate, category } = extractTaskInfo(key);
     let { assignedTo, fullNames } = getAssignedContacts();
     let { subtasks, subtasksChecked } = getSubtasksUnchanged(key);
@@ -293,9 +430,14 @@ async function getDataFromEdit(key) {
     };
 
     editToFirebase(formData, key);
-    await getTasks();
+    getTasks();
 }
 
+/**
+ * Extrahiert die grundlegenden Task-Informationen
+ * @param {string} key - Schlüssel des Tasks in der Datenbank
+ * @returns {Object} Die extrahierten Task-Informationen
+ */
 function extractTaskInfo(key) {
     let currentStatus = tasks.toDo[key].taskCategory.category;
     let title = document.getElementById('title-edit').value;
@@ -305,6 +447,10 @@ function extractTaskInfo(key) {
     return { currentStatus, title, description, dueDate, category };
 }
 
+/**
+ * Sammelt die zugewiesenen Kontakte im Bearbeitungsmodus
+ * @returns {Object} Objekt mit den zugewiesenen Kontakten
+ */
 function getAssignedContacts() {
     let selectedContactsDivs = document.querySelectorAll('#added-users-container .current-task-initials');
     let assignedTo = [];
@@ -317,6 +463,11 @@ function getAssignedContacts() {
     return { assignedTo, fullNames };
 }
 
+/**
+ * Holt die unveränderten Subtasks aus der Datenbank
+ * @param {string} key - Schlüssel des Tasks in der Datenbank
+ * @returns {Object} Die unveränderten Subtasks
+ */
 function getSubtasksUnchanged(key) {
     let subtasks = [];
     let subtasksChecked = [];
@@ -337,6 +488,11 @@ function getSubtasksUnchanged(key) {
     return { subtasks, subtasksChecked };
 }
 
+/**
+ * Speichert die bearbeiteten Daten in Firebase
+ * @param {Object} formData - Die zu speichernden Formulardaten
+ * @param {string} key - Schlüssel des Tasks in der Datenbank
+ */
 function editToFirebase(formData, key) {
     const firebaseURL = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${key}.json`;
     fetch(firebaseURL, {
@@ -356,6 +512,10 @@ function editToFirebase(formData, key) {
         });
 }
 
+/**
+ * Ermittelt die ausgewählte Priorität im Bearbeitungsmodus
+ * @returns {string} Die ausgewählte Priorität
+ */
 function getPriorityToEdit() {
     let priority = '';
     if (document.getElementById('prio1-edit').classList.contains('prio1-color')) {
@@ -368,6 +528,10 @@ function getPriorityToEdit() {
     return priority;
 }
 
+/**
+ * Schließt das Board-Overlay
+ * @param {Event} event - Das auslösende Event
+ */
 function overlayBoardClosed(event) {
     let content = document.getElementById('addtask-content');
     if (!content.contains(event.target)) {
@@ -381,6 +545,11 @@ document.getElementById('addtask-content').addEventListener('click', function (e
     event.stopPropagation();
 });
 
+/**
+ * Öffnet das Menü zum Verschieben eines Tasks
+ * @param {number} taskCounter - Index des Tasks
+ * @param {Event} event - Das auslösende Event
+ */
 function taskMoveToMenu(taskCounter, event) {
     if (event && event.type !== 'drag') {
         event.stopPropagation();
@@ -390,13 +559,19 @@ function taskMoveToMenu(taskCounter, event) {
     currentTask.innerHTML = taskMoveToMenuHTML(taskCounter);
 }
 
-async function moveToCategory(taskCounter, category, event) {
+/**
+ * Verschiebt einen Task in eine andere Kategorie
+ * @param {number} taskCounter - Index des Tasks
+ * @param {string} category - Zielkategorie
+ * @param {Event} event - Das auslösende Event
+ */
+function moveToCategory(taskCounter, category, event) {
     event.stopPropagation();
     taskCounter--;
     try {
         let taskKey = Object.keys(tasks.toDo)[taskCounter];
         tasks.toDo[taskKey].taskCategory = category;
-        await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
+        fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${taskKey}/taskCategory.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -405,10 +580,14 @@ async function moveToCategory(taskCounter, category, event) {
         });
     } catch (error) {
     }
-    await closeMoveTo(event);
+    closeMoveTo(event);
 }
 
-async function closeMoveTo(event) {
+/**
+ * Schließt das Verschieben-Menü
+ * @param {Event} event - Das auslösende Event
+ */
+function closeMoveTo(event) {
     event.stopPropagation();
-    await getTasks();
+    getTasks();
 }
