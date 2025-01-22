@@ -285,7 +285,7 @@ async function renderNewTask() {
  * Ermittelt die Initialen und Vollständigen Namen der zugewiesenen Benutzer
  * @param {Array} assignedTo - Zugewiesene Benutzer
  * @param {Array} fullNames - Vollständige Namen der zugewiesenen Benutzer
- * @param {HTMLElement} div - Das aktuelle Div-Element
+ * @param {HTMLElement} div - Das Element mit den Benutzerinformationen
  */
 function getInitialsAndFullNames(assignedTo, fullNames, div) {
     assignedTo.push(div.textContent);
@@ -295,7 +295,7 @@ function getInitialsAndFullNames(assignedTo, fullNames, div) {
 
 /**
  * Sendet die Formulardaten an Firebase
- * @param {Object} formData - Die Formulardaten
+ * @param {Object} formData - Die zu speichernden Formulardaten
  * @returns {Promise<void>}
  */
 async function postFormDataToFireBase(formData) {
@@ -315,7 +315,8 @@ async function postFormDataToFireBase(formData) {
 }
 
 /**
- * Löscht die Formulardaten
+ * Löscht alle Eingaben aus dem Formular
+ * @returns {Promise<void>}
  */
 async function clearForm() {
     document.getElementById('title').value = '';
@@ -332,7 +333,7 @@ async function clearForm() {
 }
 
 /**
- * Rendert die Tasks
+ * Rendert alle Tasks auf dem Board
  */
 function renderTask() {
     let toDoBlock = document.getElementById("to-do-block");
@@ -345,9 +346,9 @@ function renderTask() {
 }
 
 /**
- * Setzt die Tasks
- * @param {Object} toDo - Die Tasks
- * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ * Setzt die Tasks in die entsprechenden Bereiche
+ * @param {Object} toDo - Die Task-Daten
+ * @param {HTMLElement} toDoBlock - Der Container für ToDo-Tasks
  */
 function setTasks(toDo, toDoBlock) {
     if (toDo && Object.keys(toDo).length > 0) {
@@ -365,10 +366,10 @@ function setTasks(toDo, toDoBlock) {
 }
 
 /**
- * Filtert die Kategorien
- * @param {number} taskCounter - Die Anzahl der Tasks
- * @param {Object} element - Das aktuelle Task-Element
- * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ * Filtert und rendert Tasks nach ihrer Kategorie
+ * @param {number} taskCounter - Der Task-Index
+ * @param {Object} element - Das Task-Element
+ * @param {HTMLElement} toDoBlock - Der Container für ToDo-Tasks
  */
 function filterCategory(taskCounter, element, toDoBlock) {
     if (element.taskCategory.category == "toDo") {
@@ -388,11 +389,11 @@ function filterCategory(taskCounter, element, toDoBlock) {
 }
 
 /**
- * Prüft die Inhalte der Felder
- * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
- * @param {HTMLElement} inProgress - Das Block-Element für die Tasks im Status "In Progress"
- * @param {HTMLElement} awaitFeedback - Das Block-Element für die Tasks im Status "Await Feedback"
- * @param {HTMLElement} done - Das Block-Element für die Tasks im Status "Done"
+ * Prüft und aktualisiert die Anzeige leerer Bereiche
+ * @param {HTMLElement} toDoBlock - ToDo-Container
+ * @param {HTMLElement} inProgress - InProgress-Container
+ * @param {HTMLElement} awaitFeedback - AwaitFeedback-Container
+ * @param {HTMLElement} done - Done-Container
  */
 function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
     if (toDoBlock.innerHTML === "") {
@@ -410,10 +411,10 @@ function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
 }
 
 /**
- * Rendert die Tasks im Status "To Do"
- * @param {number} taskCounter - Die Anzahl der Tasks
- * @param {Object} element - Das aktuelle Task-Element
- * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ * Rendert einen Task im ToDo-Bereich
+ * @param {number} taskCounter - Der Task-Index
+ * @param {Object} element - Das Task-Element
+ * @param {HTMLElement} toDoBlock - Der Container für ToDo-Tasks
  */
 function renderToDo(taskCounter, element, toDoBlock) {
     let prioIconURL = getPrioIconURL(element);
@@ -424,9 +425,9 @@ function renderToDo(taskCounter, element, toDoBlock) {
 }
 
 /**
- * Rendert die Tasks im Status "In Progress"
- * @param {number} taskCounter - Die Anzahl der Tasks
- * @param {Object} element - Das aktuelle Task-Element
+ * Rendert einen Task im InProgress-Bereich
+ * @param {number} taskCounter - Der Task-Index
+ * @param {Object} element - Das Task-Element
  */
 function renderInProgress(taskCounter, element) {
     let inProgress = document.getElementById("inProgress");
@@ -442,9 +443,9 @@ function renderInProgress(taskCounter, element) {
 }
 
 /**
- * Rendert die Tasks im Status "Await Feedback"
- * @param {number} taskCounter - Die Anzahl der Tasks
- * @param {Object} element - Das aktuelle Task-Element
+ * Rendert einen Task im AwaitFeedback-Bereich
+ * @param {number} taskCounter - Der Task-Index
+ * @param {Object} element - Das Task-Element
  */
 function renderAwaitFeedback(taskCounter, element) {
     let awaitFeedback = document.getElementById("awaitFeedback");
@@ -460,9 +461,9 @@ function renderAwaitFeedback(taskCounter, element) {
 }
 
 /**
- * Rendert die Tasks im Status "Done"
- * @param {number} taskCounter - Die Anzahl der Tasks
- * @param {Object} element - Das aktuelle Task-Element
+ * Rendert einen Task im Done-Bereich
+ * @param {number} taskCounter - Der Task-Index
+ * @param {Object} element - Das Task-Element
  */
 function renderDone(taskCounter, element) {
     let done = document.getElementById("done");
@@ -479,8 +480,8 @@ function renderDone(taskCounter, element) {
 
 /**
  * Ermittelt die URL des Prioritäts-Icons
- * @param {Object} element - Das aktuelle Task-Element
- * @returns {string} Die URL des Prioritäts-Icons
+ * @param {Object} element - Das Task-Element
+ * @returns {string} Die URL des Icons
  */
 function getPrioIconURL(element) {
     let prioIconURL;
@@ -497,8 +498,8 @@ function getPrioIconURL(element) {
 }
 
 /**
- * Setzt den Stil der Tasks
- * @param {number} taskCounter - Die Anzahl der Tasks
+ * Setzt den Stil eines Tasks basierend auf seiner Kategorie
+ * @param {number} taskCounter - Der Task-Index
  */
 function taskStyle(taskCounter) {
     let currentCategory = document.getElementById(`category-to-do${taskCounter}`);
@@ -516,7 +517,7 @@ function taskStyle(taskCounter) {
 }
 
 /**
- * Schaltet das Dropdown-Menü um
+ * Schaltet das Dropdown-Menü für das Hinzufügen von Tasks um
  */
 function toggleDropdownAddTaskOnBoard() {
     const dropdownMenu = document.getElementById('dropdown-menu-add-task-on-board');
@@ -528,7 +529,7 @@ function toggleDropdownAddTaskOnBoard() {
 }
 
 /**
- * Verarbeitet die Auswahl der Benutzer
+ * Verarbeitet die Benutzerauswahl beim Hinzufügen eines Tasks
  */
 function handleUserSelectionAddTaskOnBoard() {
     const checkboxes = document.querySelectorAll('#user-select-add-task-on-board input[type="checkbox"]');
@@ -565,7 +566,7 @@ function renderUsersAddTaskOnBoard(users) {
 
 /**
  * Entfernt einen Benutzer vom Board
- * @param {string} user - Der Benutzer, der entfernt werden soll
+ * @param {string} user - Der zu entfernende Benutzer
  */
 function removeUserFromBoard(user) {
     const taskContainer = document.getElementById('added-users-container-add-task-on-board');
@@ -576,7 +577,7 @@ function removeUserFromBoard(user) {
 }
 
 /**
- * Lädt die Kontakte für die Bearbeitung und Hinzufügung von Tasks
+ * Lädt die Kontakte für die Bearbeitung des Boards
  */
 function loadContactsToEditAddTaskOnBoard() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
@@ -587,9 +588,9 @@ function loadContactsToEditAddTaskOnBoard() {
 }
 
 /**
- * Erstellt ein Checkbox-Feld für die Benutzerauswahl
- * @param {Array} namesArray - Die Namen der Benutzer
- * @param {HTMLElement} userSelect - Das Select-Element für die Benutzerauswahl
+ * Erstellt Checkbox-Felder für die Benutzerauswahl
+ * @param {Array} namesArray - Array mit Benutzernamen
+ * @param {HTMLElement} userSelect - Das Select-Element
  */
 function createUserfieldCheckbox(namesArray, userSelect) {
     for (let i = 0; i < namesArray.length; i++) {
