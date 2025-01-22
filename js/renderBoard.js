@@ -683,3 +683,135 @@ function getContactColor(name) {
     }
     return color;
 }
+
+/**
+ * Generiert das HTML für einen ToDo-Task
+ * @param {Object} element - Das Task-Element
+ * @param {number} taskCounter - Der Task-Index
+ * @param {string} prioIconURL - URL des Prioritäts-Icons
+ * @param {string} contactsHTML - HTML-String der Kontakte
+ * @returns {string} HTML-String des Tasks
+ */
+function renderToDoHTML(element, taskCounter, prioIconURL, contactsHTML) {
+    return `
+    <div draggable="true" ondragstart="startDragging(${taskCounter})" class="task-card cursor-pointer" onclick="openTaskOverlay(${taskCounter})">
+        <div class="category ${element.taskCategory.color}">${element.taskCategory.category}</div>
+        <div class="title">${element.title}</div>
+        <div class="description">${element.description}</div>
+        <div class="subtasks">
+            ${renderSubtasks(element)}
+        </div>
+        <div class="task-footer">
+            <div class="assigned-to">
+                ${contactsHTML}
+            </div>
+            <img class="prio-icon" src="${prioIconURL}">
+        </div>
+    </div>
+    `;
+}
+
+/**
+ * Generiert das HTML für einen InProgress-Task
+ * @param {Object} element - Das Task-Element
+ * @param {number} taskCounter - Der Task-Index
+ * @param {string} prioIconURL - URL des Prioritäts-Icons
+ * @param {string} contactsHTML - HTML-String der Kontakte
+ * @returns {string} HTML-String des Tasks
+ */
+function rederInProgress(element, taskCounter, prioIconURL, contactsHTML) {
+    return `
+    <div draggable="true" ondragstart="startDragging(${taskCounter})" class="task-card cursor-pointer" onclick="openTaskOverlay(${taskCounter})">
+        <div class="category ${element.taskCategory.color}">${element.taskCategory.category}</div>
+        <div class="title">${element.title}</div>
+        <div class="description">${element.description}</div>
+        <div class="subtasks">
+            ${renderSubtasks(element)}
+        </div>
+        <div class="task-footer">
+            <div class="assigned-to">
+                ${contactsHTML}
+            </div>
+            <img class="prio-icon" src="${prioIconURL}">
+        </div>
+    </div>
+    `;
+}
+
+/**
+ * Generiert das HTML für einen AwaitFeedback-Task
+ * @param {Object} element - Das Task-Element
+ * @param {number} taskCounter - Der Task-Index
+ * @param {string} prioIconURL - URL des Prioritäts-Icons
+ * @param {string} contactsHTML - HTML-String der Kontakte
+ * @returns {string} HTML-String des Tasks
+ */
+function renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML) {
+    return `
+    <div draggable="true" ondragstart="startDragging(${taskCounter})" class="task-card cursor-pointer" onclick="openTaskOverlay(${taskCounter})">
+        <div class="category ${element.taskCategory.color}">${element.taskCategory.category}</div>
+        <div class="title">${element.title}</div>
+        <div class="description">${element.description}</div>
+        <div class="subtasks">
+            ${renderSubtasks(element)}
+        </div>
+        <div class="task-footer">
+            <div class="assigned-to">
+                ${contactsHTML}
+            </div>
+            <img class="prio-icon" src="${prioIconURL}">
+        </div>
+    </div>
+    `;
+}
+
+/**
+ * Generiert das HTML für einen Done-Task
+ * @param {Object} element - Das Task-Element
+ * @param {number} taskCounter - Der Task-Index
+ * @param {string} prioIconURL - URL des Prioritäts-Icons
+ * @param {string} contactsHTML - HTML-String der Kontakte
+ * @returns {string} HTML-String des Tasks
+ */
+function renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML) {
+    return `
+    <div draggable="true" ondragstart="startDragging(${taskCounter})" class="task-card cursor-pointer" onclick="openTaskOverlay(${taskCounter})">
+        <div class="category ${element.taskCategory.color}">${element.taskCategory.category}</div>
+        <div class="title">${element.title}</div>
+        <div class="description">${element.description}</div>
+        <div class="subtasks">
+            ${renderSubtasks(element)}
+        </div>
+        <div class="task-footer">
+            <div class="assigned-to">
+                ${contactsHTML}
+            </div>
+            <img class="prio-icon" src="${prioIconURL}">
+        </div>
+    </div>
+    `;
+}
+
+/**
+ * Rendert die Subtasks eines Tasks
+ * @param {Object} element - Das Task-Element mit Subtasks
+ * @returns {string} HTML-String der Subtasks-Fortschrittsanzeige
+ */
+function renderSubtasks(element) {
+    if (!element.subtasks || element.subtasks.length === 0) {
+        return '';
+    }
+
+    const total = element.subtasks.length;
+    const completed = element.subtasksChecked.filter(status => status.checked).length;
+    const percentage = (completed / total) * 100;
+
+    return `
+    <div class="subtask-progress">
+        <div class="progress-bar">
+            <div class="progress" style="width: ${percentage}%"></div>
+        </div>
+        <span class="subtask-count">${completed}/${total} Subtasks</span>
+    </div>
+    `;
+}
