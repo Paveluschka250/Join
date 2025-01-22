@@ -1,13 +1,13 @@
 /**
- * @fileoverview Overlay-Board-Modul - Verwaltet die Task-Details und Overlay-Funktionalitäten
+ * @fileoverview Overlay-Modul für das Board - Verwaltet die Anzeige und Interaktion mit Task-Overlays
  * @author ElStephano
  * @version 1.0.0
  * @license MIT
  * @created 2025-01-22
  */
 
-// Globale Variablen für das Overlay-Board-Management
-let tasks = {};
+// Globale Variablen für das Overlay-Management
+// tasks wird bereits in renderBoard.js deklariert
 let currentDraggedElement = null;
 let keys = [];
 

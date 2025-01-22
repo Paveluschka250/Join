@@ -9,18 +9,31 @@
 // Globale Variablen für das Board-Management
 let tasks = [];
 let contactsForSidebar = [];
-let currentDraggedElement;
-let keys = [];
 
 /**
  * Lädt alle Tasks von Firebase und rendert sie
  * @returns {Promise<void>}
  */
 async function getTasks() {
-    let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
-    let responseToJson = await response.json();
-    tasks = responseToJson;
-    renderTask();
+    try {
+        console.log('Fetching tasks...');
+        let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        let responseToJson = await response.json();
+        console.log('Fetched tasks:', responseToJson);
+        
+        tasks = responseToJson;
+        console.log('Tasks assigned:', tasks);
+        
+        renderTask();
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
 }
 
 /**
@@ -419,9 +432,9 @@ function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
 function renderToDo(taskCounter, element, toDoBlock) {
     let prioIconURL = getPrioIconURL(element);
     let contactsHTML = [];
-    setContactsTasks(element, contactsHTML)
+    setContactsTasks(element, contactsHTML);
     contactsHTML = contactsHTML.join('');
-    toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
+    toDoBlock.innerHTML += renderToDoHTML(element, taskCounter, prioIconURL, contactsHTML);
 }
 
 /**
@@ -607,4 +620,66 @@ function createUserfieldCheckbox(namesArray, userSelect) {
         container.appendChild(checkbox);
         userSelect.appendChild(container);
     }
+}
+
+/**
+ * Fügt die Kontakte eines Tasks zum HTML-Array hinzu
+ * @param {Object} element - Das Task-Element mit den Kontakten
+ * @param {Array} contactsHTML - Array für die HTML-Strings der Kontakte
+ */
+function setContactsTasks(element, contactsHTML) {
+    if (element.assignedTo && element.assignedTo.length > 0) {
+        element.assignedTo.forEach((contact, index) => {
+            if (index < 3) { // Zeige maximal 3 Kontakte direkt an
+                contactsHTML.push(`
+                    <div class="contact-initials" style="background-color: ${getContactColor(contact)}">
+                        ${getInitials(contact)}
+                    </div>
+                `);
+            }
+        });
+        
+        // Wenn es mehr als 3 Kontakte gibt, zeige die Anzahl der weiteren Kontakte
+        if (element.assignedTo.length > 3) {
+            const remaining = element.assignedTo.length - 3;
+            contactsHTML.push(`
+                <div class="contact-initials more-contacts">
+                    +${remaining}
+                </div>
+            `);
+        }
+    }
+}
+
+/**
+ * Generiert Initialen aus einem Namen
+ * @param {string} name - Vollständiger Name
+ * @returns {string} Initialen
+ */
+function getInitials(name) {
+    return name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .join('');
+}
+
+/**
+ * Generiert eine zufällige Farbe für einen Kontakt
+ * @param {string} name - Name des Kontakts
+ * @returns {string} HEX-Farbcode
+ */
+function getContactColor(name) {
+    // Verwende den Namen als Seed für eine konsistente Farbe
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    
+    // Generiere einen HEX-Farbcode
+    let color = '#';
+    for (let i = 0; i < 3; i++) {
+        const value = (hash >> (i * 8)) & 0xFF;
+        color += ('00' + value.toString(16)).substr(-2);
+    }
+    return color;
 }
