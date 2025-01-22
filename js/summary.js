@@ -1,7 +1,9 @@
 /**
  * @fileoverview Dashboard-Übersichtsmodul für die Anzeige und Verwaltung von Task-Statistiken
- * @author ElStephano, yesser ben amor
+ * @author yesser ben amor
  * @version 2.0.0
+ * @license MIT
+ * @created 2025-01-17
  */
 
 /**

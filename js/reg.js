@@ -2,6 +2,8 @@
  * @fileoverview Registrierungsmodul für neue Benutzer mit Validierung und Datenbankanbindung
  * @author Yesser-Ben-Amor
  * @version 1.0.0
+ * @license MIT
+ * @created 2025-01-17
  */
 
 /**

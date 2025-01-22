@@ -1,3 +1,21 @@
+/**
+ * @fileoverview Overlay-Board-Modul - Verwaltet die Task-Details und Overlay-Funktionalitäten
+ * @author ElStephano
+ * @version 1.0.0
+ * @license MIT
+ * @created 2025-01-22
+ */
+
+// Globale Variablen für das Overlay-Board-Management
+let tasks = {};
+let currentDraggedElement = null;
+let keys = [];
+
+/**
+ * Aktualisiert und zeigt den Fortschrittsbalken für Subtasks eines Tasks
+ * @param {number} taskCounter - Index des Tasks
+ * @param {Object} element - Task-Objekt mit Subtask-Informationen
+ */
 function loadingspinner(taskCounter, element) {
     let progressBar = document.getElementById(`subtask-progress-bar-${taskCounter}`);
     let loadingbarText = document.getElementById(`subtasks-checked${taskCounter}`);
@@ -12,6 +30,13 @@ function loadingspinner(taskCounter, element) {
     }
 }
 
+/**
+ * Zählt die Anzahl der erledigten Subtasks
+ * @param {number} allSubtasks - Gesamtanzahl der Subtasks
+ * @param {number} checkedSubtasks - Aktuelle Anzahl erledigter Subtasks
+ * @param {Object} element - Task-Objekt mit Subtask-Informationen
+ * @returns {number} Aktualisierte Anzahl erledigter Subtasks
+ */
 function forLoopCheckedSubtasks(allSubtasks, checkedSubtasks, element) {
     for (let i = 0; i < allSubtasks; i++) {
         if (element.subtasksChecked[i].checked === true) {
@@ -21,6 +46,13 @@ function forLoopCheckedSubtasks(allSubtasks, checkedSubtasks, element) {
     return checkedSubtasks;
 }
 
+/**
+ * Berechnet und zeigt den Fortschritt der Subtasks in Prozent
+ * @param {number} allSubtasks - Gesamtanzahl der Subtasks
+ * @param {number} checkedSubtasks - Anzahl erledigter Subtasks
+ * @param {HTMLElement} loadingbarText - Element für den Fortschrittstext
+ * @param {HTMLElement} progressBar - Fortschrittsbalken-Element
+ */
 function progressPercentage(allSubtasks, checkedSubtasks, loadingbarText, progressBar) {
     let progressPercentage = 100 / allSubtasks * checkedSubtasks;
     progressBar.style.width = `${progressPercentage}%`;
@@ -30,6 +62,10 @@ function progressPercentage(allSubtasks, checkedSubtasks, loadingbarText, progre
 `
 }
 
+/**
+ * Speichert den Status der Checkbox-Elemente für einen Task
+ * @param {number} taskCounter - Index des Tasks
+ */
 function saveCheckBoxes(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
@@ -45,6 +81,12 @@ function saveCheckBoxes(taskCounter) {
     loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter);
 }
 
+/**
+ * Lädt den aktualisierten Checkbox-Status in Firebase
+ * @param {Array<boolean>} subtasksChecked - Array mit Checkbox-Status
+ * @param {number} taskCounter - Index des Tasks
+ * @returns {Promise<void>}
+ */
 async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
     const baseUrl = "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/";
     let taskKeys = Object.keys(tasks.toDo);
@@ -57,6 +99,13 @@ async function loadCheckfieldStatusToFirebase(subtasksChecked, taskCounter) {
     await fetchCheckFieldStatus(updatedSubtasks, url)
 }
 
+/**
+ * Sendet die Checkbox-Status-Aktualisierung an Firebase
+ * @param {Array<Object>} updatedSubtasks - Aktualisierte Subtask-Daten
+ * @param {string} url - Firebase-URL für die Aktualisierung
+ * @returns {Promise<void>}
+ * @throws {Error} Bei Fehlern während der Firebase-Kommunikation
+ */
 async function fetchCheckFieldStatus(updatedSubtasks, url) {
     try {
         await fetch(url, {
@@ -67,9 +116,15 @@ async function fetchCheckFieldStatus(updatedSubtasks, url) {
             body: JSON.stringify(updatedSubtasks)
         });
     } catch (error) {
+        console.error('Fehler bei der Firebase-Kommunikation:', error);
+        throw error;
     }
 }
 
+/**
+ * Lädt den gespeicherten Checkbox-Status für einen Task
+ * @param {number} taskCounter - Index des Tasks
+ */
 function loadCheckFieldStatus(taskCounter) {
     taskCounter--;
     let taskId = Object.keys(tasks.toDo);
@@ -87,6 +142,12 @@ function loadCheckFieldStatus(taskCounter) {
     }
 }
 
+/**
+ * Extrahiert alle Task-Keys aus einem Array
+ * @param {Array<string>} taskId - Array mit Task-IDs
+ * @param {Array<string>} allTasksKey - Array für die extrahierten Keys
+ * @returns {Array<string>} Array mit allen Task-Keys
+ */
 function getAllKeysForLoop(taskId, allTasksKey) {
     for (let key in taskId) {
         let element = taskId[key];
@@ -95,6 +156,10 @@ function getAllKeysForLoop(taskId, allTasksKey) {
     return allTasksKey;
 }
 
+/**
+ * Generiert eine zufällige Farbe aus einer vordefinierten Palette
+ * @returns {string} HEX-Farbcode
+ */
 function getRandomColor() {
     const colors = [
         '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FFD133',
@@ -108,6 +173,10 @@ function getRandomColor() {
     return colors[randomIndex];
 }
 
+/**
+ * Zeigt das Task-Overlay mit Details an
+ * @param {number} taskCounter - Index des Tasks
+ */
 function showOverlayTask(taskCounter) {
     const overlay = document.getElementById('overlay-show-task');
     const currentTask = document.getElementById('current-task');
@@ -122,6 +191,11 @@ function showOverlayTask(taskCounter) {
     }
 }
 
+/**
+ * Rendert den Inhalt des Task-Overlays
+ * @param {number} taskCounter - Index des Tasks
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ */
 function renderOverlayTask(taskCounter, currentTask) {
     let overlayContainer = document.getElementById('current-task');
     let contactsHTML;
@@ -137,6 +211,13 @@ function renderOverlayTask(taskCounter, currentTask) {
     overlayTaskGetFullNames(taskCounter, currentTask);
 }
 
+/**
+ * Generiert HTML für die Subtasks im Overlay
+ * @param {string} currentSubtasks - HTML-String für Subtasks
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ * @param {number} taskCounter - Index des Tasks
+ * @returns {string} HTML für die Subtasks
+ */
 function getCurrentSubtasksHTML(currentSubtasks, currentTask, taskCounter) {
     if (currentTask[9] != "dummy" && typeof currentTask[9] === 'string') {
         let currentSubtask = currentTask[9].split(",");
@@ -150,6 +231,12 @@ function getCurrentSubtasksHTML(currentSubtasks, currentTask, taskCounter) {
     return currentSubtasks;
 }
 
+/**
+ * Generiert HTML für die Kontakte im Overlay
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ * @param {string} contactsHTML - HTML-String für Kontakte
+ * @returns {string} HTML für die Kontakte
+ */
 function getContactsHTML(currentTask, contactsHTML) {
     if (currentTask[4] != "undefined") {
         contactsHTML = '';
@@ -163,6 +250,11 @@ function getContactsHTML(currentTask, contactsHTML) {
     return contactsHTML;
 }
 
+/**
+ * Lädt die Namen der Kontakte für das Task-Overlay
+ * @param {number} taskCounter - Index des Tasks
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ */
 function overlayTaskGetFullNames(taskCounter, currentTask) {
     getKeysFromTasks();
     taskCounter--;
@@ -178,6 +270,12 @@ function overlayTaskGetFullNames(taskCounter, currentTask) {
     moreUsers(userAmount, currentTask, taskCounter);
 }
 
+/**
+ * Zeigt weitere Kontakte an, wenn mehr als 4 Kontakte vorhanden sind
+ * @param {number} userAmount - Anzahl der Kontakte
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ * @param {number} taskCounter - Index des Tasks
+ */
 function moreUsers(userAmount, currentTask, taskCounter) {
     if (userAmount >= 4 && currentTask[4][4] && currentTask[4][4].includes('+')) {
         let initial = document.getElementById(`name-${4}`);
@@ -188,6 +286,11 @@ function moreUsers(userAmount, currentTask, taskCounter) {
     }
 }
 
+/**
+ * Zeigt alle Kontakte an, wenn auf "weitere" geklickt wird
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ * @param {number} taskCounter - Index des Tasks
+ */
 function showAllUsers(currentTask, taskCounter) {
     let allUsers = document.getElementById('current-task');
     allUsers.innerHTML = '';
@@ -204,6 +307,10 @@ function showAllUsers(currentTask, taskCounter) {
     }
 }
 
+/**
+ * Extrahiert die Daten des Tasks
+ * @param {number} taskCounter - Index des Tasks
+ */
 function extractTaskData(taskCounter) {
     const taskElement = getTaskElement(taskCounter);
     if (!taskElement) {
@@ -222,20 +329,42 @@ function extractTaskData(taskCounter) {
     renderOverlayTask(taskCounter, currentTask);
 }
 
+/**
+ * Gibt das Task-Element zurück
+ * @param {number} taskCounter - Index des Tasks
+ * @returns {HTMLElement} Task-Element
+ */
 function getTaskElement(taskCounter) {
     return document.getElementById(`to-do-content${taskCounter}`);
 }
 
+/**
+ * Extrahiert den Textinhalt eines Elements
+ * @param {HTMLElement} taskElement - Task-Element
+ * @param {string} selector - Selektor für das zu extrahierende Element
+ * @returns {string} Textinhalt des Elements
+ */
 function extractTextContent(taskElement, selector) {
     const element = taskElement.querySelector(selector);
     return element ? element.textContent.trim() : null;
 }
 
+/**
+ * Extrahiert das Prio-Icon
+ * @param {HTMLElement} taskElement - Task-Element
+ * @returns {string} Prio-Icon-URL
+ */
 function extractPrioIcon(taskElement) {
     const prioIconElement = taskElement.querySelector('.task-prio-icon');
     return prioIconElement ? prioIconElement.src : null;
 }
 
+/**
+ * Extrahiert die Kontakte-HTML
+ * @param {HTMLElement} taskElement - Task-Element
+ * @param {string} selector - Selektor für das zu extrahierende Element
+ * @returns {string} Kontakte-HTML
+ */
 function extractContactsHTML(taskElement, selector) {
     const contactsContainer = taskElement.querySelector(selector);
     const contactsHTML = [];
@@ -248,6 +377,20 @@ function extractContactsHTML(taskElement, selector) {
     return contactsHTML;
 }
 
+/**
+ * Erstellt das aktuelle Task-Objekt
+ * @param {number} taskCounter - Index des Tasks
+ * @param {string} category - Kategorie des Tasks
+ * @param {string} title - Titel des Tasks
+ * @param {string} description - Beschreibung des Tasks
+ * @param {string} contactsHTML - Kontakte-HTML
+ * @param {string} prioIcon - Prio-Icon-URL
+ * @param {string} dueDate - Fälligkeitsdatum des Tasks
+ * @param {string} fullName - Vollname des Tasks
+ * @param {string} priority - Priorität des Tasks
+ * @param {string} subtasks - Subtasks des Tasks
+ * @returns {Array} Aktuelles Task-Objekt
+ */
 function buildCurrentTask(taskCounter, category, title, description, contactsHTML, prioIcon, dueDate, fullName, priority, subtasks) {
     return [
         taskCounter,
@@ -264,6 +407,10 @@ function buildCurrentTask(taskCounter, category, title, description, contactsHTM
     ];
 }
 
+/**
+ * Schließt das aktuelle Task-Overlay
+ * @returns {Promise<void>}
+ */
 async function closeCurrentTask() {
     const overlay = document.getElementById('overlay-show-task');
     overlay.classList.remove('overlay-show-task');
@@ -271,6 +418,11 @@ async function closeCurrentTask() {
     await getTasks();
 }
 
+/**
+ * Löscht einen Task aus dem System
+ * @param {string} taskId - ID des zu löschenden Tasks
+ * @returns {Promise<void>}
+ */
 async function deleteTask(taskId) {
     taskId--;
     let currentTask = Object.keys(tasks.toDo);
@@ -283,6 +435,12 @@ async function deleteTask(taskId) {
     closeCurrentTask();
 }
 
+/**
+ * Sendet die Löschanfrage an Firebase
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ * @param {string} taskId - ID des zu löschenden Tasks
+ * @returns {Promise<void>}
+ */
 async function fetchDeleteTask(currentTask, taskId) {
     try {
         const response = await fetch(`https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${currentTask[taskId]}.json`, {
@@ -293,18 +451,32 @@ async function fetchDeleteTask(currentTask, taskId) {
         }
     }
     catch (error) {
+        console.error('Fehler bei der Firebase-Kommunikation:', error);
+        throw error;
     }
 }
 
+/**
+ * Startet den Drag-Vorgang für einen Task
+ * @param {string} id - ID des zu ziehenden Tasks
+ */
 function startDragging(id) {
     id--;
     currentDraggedElement = id;
 }
 
+/**
+ * Erlaubt das Droppen eines Tasks
+ * @param {Event} ev - Drop-Event
+ */
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
+/**
+ * Verschiebt einen Task in eine neue Kategorie
+ * @param {string} category - Zielkategorie für den Task
+ */
 async function moveTo(category) {
     try {
         let taskKey = Object.keys(tasks.toDo)[currentDraggedElement];
@@ -317,10 +489,15 @@ async function moveTo(category) {
             body: JSON.stringify({ category })
         });
     } catch (error) {
+        console.error('Fehler bei der Firebase-Kommunikation:', error);
+        throw error;
     }
     getTasks()
 }
 
+/**
+ * Filtert Tasks basierend auf der Sucheingabe
+ */
 function filterTasks() {
     const searchValue = getSearchInputValue();
     const suggestionsContainer = clearSuggestions();
@@ -336,16 +513,30 @@ function filterTasks() {
     addClickOutsideListener(suggestionsContainer);
 }
 
+/**
+ * Holt den Wert aus dem Sucheingabefeld
+ * @returns {string} Sucheingabe
+ */
 function getSearchInputValue() {
     return document.getElementById('search-input').value.toLowerCase();
 }
 
+/**
+ * Leert den Vorschlagscontainer
+ * @returns {HTMLElement} Vorschlagscontainer
+ */
 function clearSuggestions() {
     const suggestionsContainer = document.getElementById('suggestions');
     suggestionsContainer.innerHTML = '';
     return suggestionsContainer;
 }
 
+/**
+ * Zeigt Taskvorschläge basierend auf der Sucheingabe
+ * @param {string} searchValue - Sucheingabe
+ * @param {HTMLElement} suggestionsContainer - Container für Vorschläge
+ * @returns {boolean} True wenn Vorschläge gefunden wurden
+ */
 function displayTaskSuggestions(searchValue, suggestionsContainer) {
     let hasMatches = false;
     for (const taskKeys in tasks) {
@@ -360,12 +551,23 @@ function displayTaskSuggestions(searchValue, suggestionsContainer) {
     return hasMatches;
 }
 
+/**
+ * Prüft, ob ein Task zur Sucheingabe passt
+ * @param {Object} task - Task-Objekt
+ * @param {string} searchValue - Sucheingabe
+ * @returns {boolean} True wenn der Task passt
+ */
 function taskMatchesSearch(task, searchValue) {
     const titleMatch = task.title.toLowerCase().includes(searchValue);
     const descriptionMatch = task.description && task.description.toLowerCase().includes(searchValue);
     return titleMatch || descriptionMatch;
 }
 
+/**
+ * Erstellt ein Vorschlagselement für einen Task
+ * @param {Object} task - Task-Objekt
+ * @param {HTMLElement} suggestionsContainer - Container für Vorschläge
+ */
 function createSuggestionItem(task, suggestionsContainer) {
     const suggestionItem = document.createElement('div');
     suggestionItem.className = 'suggestion-item';
@@ -374,6 +576,10 @@ function createSuggestionItem(task, suggestionsContainer) {
     suggestionsContainer.appendChild(suggestionItem);
 }
 
+/**
+ * Zeigt "Keine Ergebnisse" an
+ * @param {HTMLElement} suggestionsContainer - Container für Vorschläge
+ */
 function displayNoResults(suggestionsContainer) {
     const noResults = document.createElement('div');
     noResults.className = 'suggestion-item';
@@ -381,6 +587,10 @@ function displayNoResults(suggestionsContainer) {
     suggestionsContainer.appendChild(noResults);
 }
 
+/**
+ * Fügt einen Klick-außerhalb Listener hinzu
+ * @param {HTMLElement} suggestionsContainer - Container für Vorschläge
+ */
 function addClickOutsideListener(suggestionsContainer) {
     document.addEventListener('click', function (event) {
         const isClickInside = suggestionsContainer.contains(event.target) ||
@@ -391,6 +601,11 @@ function addClickOutsideListener(suggestionsContainer) {
     });
 }
 
+/**
+ * Holt die Task-ID und zeigt den Task an
+ * @param {string} id - Task-ID
+ * @param {HTMLElement} suggestionsContainer - Container für Vorschläge
+ */
 function getTaskId(id, suggestionsContainer) {
     getKeysFromTasks();
     for (let i = 0; i < keys.length; i++) {
@@ -406,11 +621,19 @@ function getTaskId(id, suggestionsContainer) {
     }
 }
 
+/**
+ * Holt die Task-Keys aus dem globalen Tasks-Objekt
+ */
 function getKeysFromTasks() {
     let taskKeys = Object.keys(tasks.toDo);
     keys = taskKeys;
 }
 
+/**
+ * Öffnet den Task-Bearbeitungsmodus
+ * @param {Array} currentTask - Daten des aktuellen Tasks
+ * @param {number} taskCounter - Index des Tasks
+ */
 function editTask(currentTask, taskCounter) {
     renderEditTask();
     editCurrentTask(currentTask, taskCounter);
@@ -420,6 +643,9 @@ function editTask(currentTask, taskCounter) {
     loadContactsToEdit()
 }
 
+/**
+ * Rendert das Task-Bearbeitungsformular
+ */
 function renderEditTask() {
     let taskOverlay = document.getElementById("current-to-do");
     taskOverlay.innerHTML = '';
@@ -427,6 +653,10 @@ function renderEditTask() {
 
 }
 
+/**
+ * Holt die Priorität für die Bearbeitung
+ * @param {string} id - ID des Prioritätselements
+ */
 function getPriorityEdit(id) {
     let buttonRed = document.getElementById('prio1-edit');
     let buttonOrange = document.getElementById('prio2-edit');
@@ -441,6 +671,14 @@ function getPriorityEdit(id) {
     }
 }
 
+/**
+ * Prüft, ob ein Element eine bestimmte Klasse enthält
+ * @param {HTMLElement} prioColor - Prioritätselement
+ * @param {HTMLElement} red - Rotes Prioritätselement
+ * @param {HTMLElement} orange - Oranges Prioritätselement
+ * @param {HTMLElement} green - Grünes Prioritätselement
+ * @returns {boolean} True wenn die Klasse enthalten ist
+ */
 function containsClassEdit(prioColor, red, orange, green) {
     if (prioColor === 'prio1-color') {
         prio1ColorEdit(red, orange, green);
@@ -451,6 +689,12 @@ function containsClassEdit(prioColor, red, orange, green) {
     }
 }
 
+/**
+ * Setzt die Farben für hohe Priorität
+ * @param {HTMLElement} red - Rotes Prioritätselement
+ * @param {HTMLElement} orange - Oranges Prioritätselement
+ * @param {HTMLElement} green - Grünes Prioritätselement
+ */
 function prio1ColorEdit(red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon-edit');
     let btnIcon2 = document.getElementById('medium-prio-icon-edit');
@@ -464,6 +708,12 @@ function prio1ColorEdit(red, orange, green) {
     btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für mittlere Priorität
+ * @param {HTMLElement} red - Rotes Prioritätselement
+ * @param {HTMLElement} orange - Oranges Prioritätselement
+ * @param {HTMLElement} green - Grünes Prioritätselement
+ */
 function prio2ColorEdit(red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon-edit');
     let btnIcon2 = document.getElementById('medium-prio-icon-edit');

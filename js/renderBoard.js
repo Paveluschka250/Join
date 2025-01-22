@@ -1,8 +1,21 @@
+/**
+ * @fileoverview Board-Rendering-Modul - Verwaltet die Darstellung und Interaktion mit dem Kanban-Board
+ * @author ElStephano
+ * @version 1.0.0
+ * @license MIT
+ * @created 2025-01-22
+ */
+
+// Globale Variablen für das Board-Management
 let tasks = [];
 let contactsForSidebar = [];
 let currentDraggedElement;
 let keys = [];
 
+/**
+ * Lädt alle Tasks von Firebase und rendert sie
+ * @returns {Promise<void>}
+ */
 async function getTasks() {
     let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
     let responseToJson = await response.json();
@@ -10,6 +23,10 @@ async function getTasks() {
     renderTask();
 }
 
+/**
+ * Lädt Kontakte für die Sidebar von Firebase
+ * @returns {Promise<void>}
+ */
 async function getContactsForSidebar() {
     let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
     let responseToJson = await response.json();
@@ -19,11 +36,18 @@ async function getContactsForSidebar() {
 getContactsForSidebar();
 getTasks();
 
+/**
+ * Schaltet das Hamburger-Menü um
+ */
 function toggleHamburgerMenu() {
     document.getElementById("addtask-content").classList.toggle('hamburger-menu');
     document.getElementById('overlay-add-task-board').classList.toggle('hamburger-menu');
 }
 
+/**
+ * Setzt die Priorität eines Tasks
+ * @param {string} id - ID des Prioritäts-Buttons
+ */
 function getPriority(id) {
     let buttonRed = document.getElementById('prio1');
     let buttonOrange = document.getElementById('prio2');
@@ -38,6 +62,13 @@ function getPriority(id) {
     }
 }
 
+/**
+ * Prüft und setzt die Prioritäts-Klassen
+ * @param {string} prioColor - Name der Prioritäts-Farbe
+ * @param {HTMLElement} red - Rotes Prioritäts-Element
+ * @param {HTMLElement} orange - Oranges Prioritäts-Element
+ * @param {HTMLElement} green - Grünes Prioritäts-Element
+ */
 function containsClass(prioColor, red, orange, green) {
     if (prioColor === 'prio1-color') {
         prio1Color(red, orange, green);
@@ -48,6 +79,12 @@ function containsClass(prioColor, red, orange, green) {
     }
 }
 
+/**
+ * Setzt die Farben für hohe Priorität
+ * @param {HTMLElement} red - Rotes Prioritäts-Element
+ * @param {HTMLElement} orange - Oranges Prioritäts-Element
+ * @param {HTMLElement} green - Grünes Prioritäts-Element
+ */
 function prio1Color(red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon');
     let btnIcon2 = document.getElementById('medium-prio-icon');
@@ -60,6 +97,12 @@ function prio1Color(red, orange, green) {
     btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für mittlere Priorität
+ * @param {HTMLElement} red - Rotes Prioritäts-Element
+ * @param {HTMLElement} orange - Oranges Prioritäts-Element
+ * @param {HTMLElement} green - Grünes Prioritäts-Element
+ */
 function prio2Color(red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon');
     let btnIcon2 = document.getElementById('medium-prio-icon');
@@ -72,6 +115,12 @@ function prio2Color(red, orange, green) {
     btnIcon3.classList.remove('priotity-btn-filter3');
 }
 
+/**
+ * Setzt die Farben für niedrige Priorität
+ * @param {HTMLElement} red - Rotes Prioritäts-Element
+ * @param {HTMLElement} orange - Oranges Prioritäts-Element
+ * @param {HTMLElement} green - Grünes Prioritäts-Element
+ */
 function prio3Color(red, orange, green) {
     let btnIcon1 = document.getElementById('high-prio-icon');
     let btnIcon2 = document.getElementById('medium-prio-icon');
@@ -84,16 +133,25 @@ function prio3Color(red, orange, green) {
     btnIcon3.classList.toggle('priotity-btn-filter3');
 }
 
+/**
+ * Zeigt das Formular für neue Subtasks
+ */
 function addNewSubTask() {
     document.getElementById('add-subtask-btn-sb').classList.add('d-none');
     document.getElementById('subtask-buttons-sb').classList.remove('d-none');
 }
 
+/**
+ * Schließt das Formular für neue Subtasks
+ */
 function closeNewSubtasksBtn() {
     document.getElementById('add-subtask-btn-sb').classList.remove('d-none');
     document.getElementById('subtask-buttons-sb').classList.add('d-none');
 }
 
+/**
+ * Fügt einen neuen Subtask hinzu
+ */
 function addSubTask() {
     let subTask = document.getElementById('subtasks');
     let contentDiv = document.getElementById('subtask-content');
@@ -110,10 +168,19 @@ function addSubTask() {
     }
 }
 
+/**
+ * Löscht einen Subtask
+ * @param {HTMLElement} liElement - Das zu löschende Listenelement
+ */
 function deleteSubTask(liElement) {
     liElement.parentElement.remove();
 }
 
+/**
+ * Verarbeitet die Formulardaten eines neuen Tasks
+ * @param {Event} event - Das Submit-Event des Formulars
+ * @returns {Promise<void>}
+ */
 async function getFormData(event) {
     event.preventDefault();
     let taskCategory = { category: "toDo" };
@@ -134,41 +201,11 @@ async function getFormData(event) {
     await setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
 }
 
-// async function gatherFormInputs(event) {
-//     event.preventDefault();
-//     let taskCategory = { category: "toDo" };
-//     let title = document.getElementById('title').value;
-//     let description = document.getElementById('description').value;
-//     let dueDate = document.getElementById('due-date').value;
-//     let category = document.getElementById('category').value;
-
-//     let selectedContactsDivs = document.querySelectorAll('#added-users-container-add-task-on-board .current-task-initials');
-//     let assignedTo = [];
-//     let fullNames = [];
-//     selectedContactsDivs.forEach(function (div) {
-//         getInitialsAndFullNames(assignedTo, fullNames, div);
-//     });
-
-//     return { taskCategory, title, description, dueDate, category, assignedTo, fullNames };
-// }
-
-// async function getFormData(event) {
-//     const {
-//         taskCategory,
-//         title,
-//         description,
-//         dueDate,
-//         category,
-//         assignedTo,
-//         fullNames
-//     } = await gatherFormInputs(event);
-
-//     let subtaskList = document.querySelectorAll('#subtask-content li');
-//     const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
-//     let priority = setPriority('');
-//     await setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
-// }
-
+/**
+ * Verarbeitet die Subtask-Daten
+ * @param {NodeList} subtaskList - Liste der Subtask-Elemente
+ * @returns {{subtasks: Array<string>, subtasksChecked: Array<Object>}} Subtask-Daten
+ */
 function getSubtasks(subtaskList) {
     let subtasks = [];
     let subtasksChecked = [];
@@ -185,6 +222,11 @@ function getSubtasks(subtaskList) {
     return { subtasks, subtasksChecked };
 }
 
+/**
+ * Ermittelt die ausgewählte Priorität
+ * @param {string} priority - Aktuelle Priorität
+ * @returns {string} Ausgewählte Priorität
+ */
 function setPriority(priority) {
     if (document.getElementById('prio1').classList.contains('prio1-color')) {
         priority = 'Urgent';
@@ -196,7 +238,21 @@ function setPriority(priority) {
     return priority;
 }
 
-async function setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames){
+/**
+ * Speichert die Formulardaten eines Tasks
+ * @param {Object} taskCategory - Kategorie des Tasks
+ * @param {string} title - Titel des Tasks
+ * @param {string} description - Beschreibung des Tasks
+ * @param {string} dueDate - Fälligkeitsdatum
+ * @param {Array} assignedTo - Zugewiesene Benutzer
+ * @param {string} category - Kategorie
+ * @param {Array} subtasks - Subtasks
+ * @param {Array} subtasksChecked - Status der Subtasks
+ * @param {string} priority - Priorität
+ * @param {Array} fullNames - Vollständige Namen der zugewiesenen Benutzer
+ * @returns {Promise<void>}
+ */
+async function setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames) {
     let formData = {
         title,
         description,
@@ -213,6 +269,10 @@ async function setFormData(taskCategory, title, description, dueDate, assignedTo
     await renderNewTask();
 }
 
+/**
+ * Rendert einen neuen Task
+ * @returns {Promise<void>}
+ */
 async function renderNewTask() {
     toggleHamburgerMenu();
     setTimeout(async () => {
@@ -221,12 +281,23 @@ async function renderNewTask() {
     clearForm();
 }
 
+/**
+ * Ermittelt die Initialen und Vollständigen Namen der zugewiesenen Benutzer
+ * @param {Array} assignedTo - Zugewiesene Benutzer
+ * @param {Array} fullNames - Vollständige Namen der zugewiesenen Benutzer
+ * @param {HTMLElement} div - Das aktuelle Div-Element
+ */
 function getInitialsAndFullNames(assignedTo, fullNames, div) {
     assignedTo.push(div.textContent);
     let value = div.getAttribute('value');
     fullNames.push(value);
 }
 
+/**
+ * Sendet die Formulardaten an Firebase
+ * @param {Object} formData - Die Formulardaten
+ * @returns {Promise<void>}
+ */
 async function postFormDataToFireBase(formData) {
     fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
         method: 'POST',
@@ -243,6 +314,9 @@ async function postFormDataToFireBase(formData) {
         });
 }
 
+/**
+ * Löscht die Formulardaten
+ */
 async function clearForm() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
@@ -257,6 +331,9 @@ async function clearForm() {
     toggleHamburgerMenu();
 }
 
+/**
+ * Rendert die Tasks
+ */
 function renderTask() {
     let toDoBlock = document.getElementById("to-do-block");
     if ("toDo" in (tasks || {})) {
@@ -267,6 +344,11 @@ function renderTask() {
     loadContactsToEditAddTaskOnBoard()
 }
 
+/**
+ * Setzt die Tasks
+ * @param {Object} toDo - Die Tasks
+ * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ */
 function setTasks(toDo, toDoBlock) {
     if (toDo && Object.keys(toDo).length > 0) {
         inProgress.innerHTML = "";
@@ -282,6 +364,12 @@ function setTasks(toDo, toDoBlock) {
     }
 }
 
+/**
+ * Filtert die Kategorien
+ * @param {number} taskCounter - Die Anzahl der Tasks
+ * @param {Object} element - Das aktuelle Task-Element
+ * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ */
 function filterCategory(taskCounter, element, toDoBlock) {
     if (element.taskCategory.category == "toDo") {
         renderToDo(taskCounter, element, toDoBlock);
@@ -299,6 +387,13 @@ function filterCategory(taskCounter, element, toDoBlock) {
     loadingspinner(taskCounter, element);
 }
 
+/**
+ * Prüft die Inhalte der Felder
+ * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ * @param {HTMLElement} inProgress - Das Block-Element für die Tasks im Status "In Progress"
+ * @param {HTMLElement} awaitFeedback - Das Block-Element für die Tasks im Status "Await Feedback"
+ * @param {HTMLElement} done - Das Block-Element für die Tasks im Status "Done"
+ */
 function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
     if (toDoBlock.innerHTML === "") {
         toDoBlock.innerHTML = '<div class="board-content" id="to-do">No tasks To do</div>';
@@ -314,6 +409,12 @@ function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
     }
 }
 
+/**
+ * Rendert die Tasks im Status "To Do"
+ * @param {number} taskCounter - Die Anzahl der Tasks
+ * @param {Object} element - Das aktuelle Task-Element
+ * @param {HTMLElement} toDoBlock - Das Block-Element für die Tasks
+ */
 function renderToDo(taskCounter, element, toDoBlock) {
     let prioIconURL = getPrioIconURL(element);
     let contactsHTML = [];
@@ -322,6 +423,11 @@ function renderToDo(taskCounter, element, toDoBlock) {
     toDoBlock.innerHTML += renderTaskHTML(element, taskCounter, prioIconURL, contactsHTML);
 }
 
+/**
+ * Rendert die Tasks im Status "In Progress"
+ * @param {number} taskCounter - Die Anzahl der Tasks
+ * @param {Object} element - Das aktuelle Task-Element
+ */
 function renderInProgress(taskCounter, element) {
     let inProgress = document.getElementById("inProgress");
     let toDo = tasks.toDo;
@@ -335,6 +441,11 @@ function renderInProgress(taskCounter, element) {
     }
 }
 
+/**
+ * Rendert die Tasks im Status "Await Feedback"
+ * @param {number} taskCounter - Die Anzahl der Tasks
+ * @param {Object} element - Das aktuelle Task-Element
+ */
 function renderAwaitFeedback(taskCounter, element) {
     let awaitFeedback = document.getElementById("awaitFeedback");
     let toDo = tasks.toDo;
@@ -348,29 +459,11 @@ function renderAwaitFeedback(taskCounter, element) {
     }
 }
 
-function setContactsTasks(element, contactsHTML) {
-    if (Array.isArray(element.assignedTo)) {
-        if (element.assignedTo.length <= 5) {
-            for (let i = 0; i < element.assignedTo.length; i++) {
-                setInitials(element, i, contactsHTML)
-            }
-        } else if (element.assignedTo.length > 5) {
-            for (let i = 0; i < 4; i++) {
-                setInitials(element, i, contactsHTML)
-            }
-            let UsersAmount = element.assignedTo.length - 4;
-            contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`)
-        } else {
-            contactsHTML = '';
-        }
-    }
-}
-
-function setInitials(element, i, contactsHTML) {
-    const initials = element.assignedTo[i];
-    contactsHTML.push(`<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`)
-}
-
+/**
+ * Rendert die Tasks im Status "Done"
+ * @param {number} taskCounter - Die Anzahl der Tasks
+ * @param {Object} element - Das aktuelle Task-Element
+ */
 function renderDone(taskCounter, element) {
     let done = document.getElementById("done");
     let toDo = tasks.toDo;
@@ -384,6 +477,11 @@ function renderDone(taskCounter, element) {
     }
 }
 
+/**
+ * Ermittelt die URL des Prioritäts-Icons
+ * @param {Object} element - Das aktuelle Task-Element
+ * @returns {string} Die URL des Prioritäts-Icons
+ */
 function getPrioIconURL(element) {
     let prioIconURL;
     if (element.priority === 'Urgent') {
@@ -398,6 +496,10 @@ function getPrioIconURL(element) {
     return prioIconURL;
 }
 
+/**
+ * Setzt den Stil der Tasks
+ * @param {number} taskCounter - Die Anzahl der Tasks
+ */
 function taskStyle(taskCounter) {
     let currentCategory = document.getElementById(`category-to-do${taskCounter}`);
     if (currentCategory.textContent === 'Technical Task') {
@@ -413,6 +515,9 @@ function taskStyle(taskCounter) {
     }
 }
 
+/**
+ * Schaltet das Dropdown-Menü um
+ */
 function toggleDropdownAddTaskOnBoard() {
     const dropdownMenu = document.getElementById('dropdown-menu-add-task-on-board');
     if (dropdownMenu.style.display === 'block') {
@@ -422,6 +527,9 @@ function toggleDropdownAddTaskOnBoard() {
     }
 }
 
+/**
+ * Verarbeitet die Auswahl der Benutzer
+ */
 function handleUserSelectionAddTaskOnBoard() {
     const checkboxes = document.querySelectorAll('#user-select-add-task-on-board input[type="checkbox"]');
     const selectedUsers = Array.from(checkboxes)
@@ -429,7 +537,7 @@ function handleUserSelectionAddTaskOnBoard() {
         .map(checkbox => checkbox.value);
     renderUsersAddTaskOnBoard(selectedUsers);
     checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
+        checkbox.addEventListener('change', function () {
             if (checkbox.checked) {
                 renderUsersAddTaskOnBoard([checkbox.value]);
             } else {
@@ -439,6 +547,10 @@ function handleUserSelectionAddTaskOnBoard() {
     });
 }
 
+/**
+ * Rendert die ausgewählten Benutzer
+ * @param {Array} users - Die ausgewählten Benutzer
+ */
 function renderUsersAddTaskOnBoard(users) {
     const taskContainer = document.getElementById('added-users-container-add-task-on-board');
     users.forEach(user => {
@@ -451,6 +563,10 @@ function renderUsersAddTaskOnBoard(users) {
     });
 }
 
+/**
+ * Entfernt einen Benutzer vom Board
+ * @param {string} user - Der Benutzer, der entfernt werden soll
+ */
 function removeUserFromBoard(user) {
     const taskContainer = document.getElementById('added-users-container-add-task-on-board');
     const userDiv = document.querySelector(`.current-task-initials[value="${user}"]`);
@@ -459,6 +575,9 @@ function removeUserFromBoard(user) {
     }
 }
 
+/**
+ * Lädt die Kontakte für die Bearbeitung und Hinzufügung von Tasks
+ */
 function loadContactsToEditAddTaskOnBoard() {
     const namesArray = Object.values(contactsForSidebar).map(item => item.name);
     let userSelect = document.getElementById('user-select-add-task-on-board');
@@ -467,6 +586,11 @@ function loadContactsToEditAddTaskOnBoard() {
     handleUserSelectionAddTaskOnBoard();
 }
 
+/**
+ * Erstellt ein Checkbox-Feld für die Benutzerauswahl
+ * @param {Array} namesArray - Die Namen der Benutzer
+ * @param {HTMLElement} userSelect - Das Select-Element für die Benutzerauswahl
+ */
 function createUserfieldCheckbox(namesArray, userSelect) {
     for (let i = 0; i < namesArray.length; i++) {
         const container = document.createElement('div');
