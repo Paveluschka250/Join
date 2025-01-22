@@ -1,3 +1,4 @@
+// Lädt den Header-Bereich der Seite und initialisiert zugehörige Funktionen
 async function loadHeader() {
   try {
     const response = await fetch("../patials/header_login.html");
@@ -20,6 +21,7 @@ async function loadHeader() {
   }
 }
 
+// Entfernt bestimmte Elemente auf den Rechtsseiten (Datenschutz & Impressum)
 function adjustHeaderForLegalPages() {
   const currentPage = window.location.pathname.split("/").pop();
   if (
@@ -35,6 +37,7 @@ function adjustHeaderForLegalPages() {
 
 loadHeader();
 
+// Lädt die Seitenleiste und initialisiert die zugehörigen Buttons
 async function loadSidebar() {
   try {
     const response = await fetch("../patials/sidebar_login.html");
@@ -51,6 +54,7 @@ async function loadSidebar() {
   }
 }
 
+// Markiert den aktiven Button in der Seitenleiste basierend auf der aktuellen Seite
 function setActiveSidebarButtons() {
   const currentPage = window.location.pathname.split("/").pop();
   const buttons = document.querySelectorAll(".sidebar-button");
@@ -62,6 +66,7 @@ function setActiveSidebarButtons() {
   });
 }
 
+// Markiert den aktiven Link im Footer basierend auf der aktuellen Seite
 function setActiveFooterLinks() {
   const currentPage = window.location.pathname.split("/").pop();
   const footerLinks = document.querySelectorAll(".footer-text");
@@ -74,6 +79,7 @@ function setActiveFooterLinks() {
 }
 loadSidebar();
 
+// Initialisiert das Overlay-Menü und fügt alle notwendigen Event-Listener hinzu
 function initializeOverlay() {
   const overlay = document.getElementById("overlay");
   if (!overlay) {
@@ -86,6 +92,7 @@ function initializeOverlay() {
   addEventListenersToOverlayContentLinks(overlay);
 }
 
+// Fügt Event-Listener für das Öffnen des Overlays hinzu
 function addEventListenersToTriggerOverlay(overlay) {
   document.querySelectorAll("#trigger-overlay").forEach(function (element) {
     element.addEventListener("click", function (event) {
@@ -99,6 +106,7 @@ function addEventListenersToTriggerOverlay(overlay) {
   });
 }
 
+// Fügt Event-Listener zum Schließen des Overlays beim Klick außerhalb hinzu
 function addEventListenersToOverlay(overlay) {
   overlay.addEventListener("click", function (event) {
     const overlayContent = document.querySelector(".overlay-content");
@@ -108,6 +116,7 @@ function addEventListenersToOverlay(overlay) {
   });
 }
 
+// Verhindert das Schließen des Overlays beim Klick auf den Inhalt
 function addEventListenersToOverlayContent(overlay) {
   document
     .querySelector(".overlay-content")
@@ -116,6 +125,7 @@ function addEventListenersToOverlayContent(overlay) {
     });
 }
 
+// Fügt Event-Listener für Links innerhalb des Overlays hinzu
 function addEventListenersToOverlayContentLinks(overlay) {
   document.querySelectorAll(".overlay-content a").forEach((link) => {
     link.addEventListener("click", function () {
@@ -124,10 +134,12 @@ function addEventListenersToOverlayContentLinks(overlay) {
   });
 }
 
+// Steuert die Sichtbarkeit des Overlays
 function toggleOverlay(show, overlay) {
   overlay.style.display = show ? "block" : "none";
 }
 
+// Lädt die Initialen des Benutzers in den User-Circle
 function loadUserInitials() {
   const userCircle = document.getElementById("userCircle");
   const initialsElement = userCircle.querySelector("h4");
@@ -135,6 +147,7 @@ function loadUserInitials() {
   initialsElement.textContent = userInitials;
 }
 
+// Hilfsfunktion zum Laden von HTML-Inhalten
 async function includeHTML() {
   if (elem.getAttribute("id") == "header") {
     await loadHTML(file, elem);
@@ -142,11 +155,13 @@ async function includeHTML() {
   }
 }
 
+// Führt den Logout durch und leitet zur Startseite weiter
 function logout() {
   localStorage.removeItem("userInitials");
   window.location.href = "../index.html";
 }
 
+// Event-Listener für den Logout-Link im Overlay
 document.addEventListener("DOMContentLoaded", function () {
   const logoutLink = document.querySelector(
     '.overlay-content a[href="../index.html"]'
