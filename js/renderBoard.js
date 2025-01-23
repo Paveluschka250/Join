@@ -7,14 +7,24 @@
  */
 
 // Globale Variablen für das Board-Management
+<<<<<<< HEAD
 let tasks = [];
 let contactsForSidebar = [];
+=======
+const boardState = {
+  tasks: [],
+  contactsForSidebar: [],
+  currentDraggedElement: null,
+  keys: [],
+};
+>>>>>>> 5024991fb40b0ddbe5ad0e860582e68277090546
 
 /**
  * Lädt alle Tasks von Firebase und rendert sie
  * @returns {Promise<void>}
  */
 async function getTasks() {
+<<<<<<< HEAD
     try {
         console.log('Fetching tasks...');
         let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
@@ -34,6 +44,14 @@ async function getTasks() {
     } catch (error) {
         console.error('Error fetching tasks:', error);
     }
+=======
+  let response = await fetch(
+    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
+  );
+  let responseToJson = await response.json();
+  tasks = responseToJson;
+  renderTask();
+>>>>>>> 5024991fb40b0ddbe5ad0e860582e68277090546
 }
 
 /**
@@ -41,9 +59,11 @@ async function getTasks() {
  * @returns {Promise<void>}
  */
 async function getContactsForSidebar() {
-    let response = await fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-    let responseToJson = await response.json();
-    contactsForSidebar = responseToJson;
+  let response = await fetch(
+    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
+  );
+  let responseToJson = await response.json();
+  contactsForSidebar = responseToJson;
 }
 
 getContactsForSidebar();
@@ -53,8 +73,10 @@ getTasks();
  * Schaltet das Hamburger-Menü um
  */
 function toggleHamburgerMenu() {
-    document.getElementById("addtask-content").classList.toggle('hamburger-menu');
-    document.getElementById('overlay-add-task-board').classList.toggle('hamburger-menu');
+  document.getElementById("addtask-content").classList.toggle("hamburger-menu");
+  document
+    .getElementById("overlay-add-task-board")
+    .classList.toggle("hamburger-menu");
 }
 
 /**
@@ -62,17 +84,17 @@ function toggleHamburgerMenu() {
  * @param {string} id - ID des Prioritäts-Buttons
  */
 function getPriority(id) {
-    let buttonRed = document.getElementById('prio1');
-    let buttonOrange = document.getElementById('prio2');
-    let buttonGreen = document.getElementById('prio3');
+  let buttonRed = document.getElementById("prio1");
+  let buttonOrange = document.getElementById("prio2");
+  let buttonGreen = document.getElementById("prio3");
 
-    if (id == 'prio1') {
-        containsClass('prio1-color', buttonRed, buttonOrange, buttonGreen);
-    } else if (id == 'prio2') {
-        containsClass('prio2-color', buttonRed, buttonOrange, buttonGreen);
-    } else if (id == 'prio3') {
-        containsClass('prio3-color', buttonRed, buttonOrange, buttonGreen);
-    }
+  if (id == "prio1") {
+    containsClass("prio1-color", buttonRed, buttonOrange, buttonGreen);
+  } else if (id == "prio2") {
+    containsClass("prio2-color", buttonRed, buttonOrange, buttonGreen);
+  } else if (id == "prio3") {
+    containsClass("prio3-color", buttonRed, buttonOrange, buttonGreen);
+  }
 }
 
 /**
@@ -83,13 +105,13 @@ function getPriority(id) {
  * @param {HTMLElement} green - Grünes Prioritäts-Element
  */
 function containsClass(prioColor, red, orange, green) {
-    if (prioColor === 'prio1-color') {
-        prio1Color(red, orange, green);
-    } else if (prioColor === 'prio2-color') {
-        prio2Color(red, orange, green);
-    } else if (prioColor === 'prio3-color') {
-        prio3Color(red, orange, green);
-    }
+  if (prioColor === "prio1-color") {
+    prio1Color(red, orange, green);
+  } else if (prioColor === "prio2-color") {
+    prio2Color(red, orange, green);
+  } else if (prioColor === "prio3-color") {
+    prio3Color(red, orange, green);
+  }
 }
 
 /**
@@ -99,15 +121,15 @@ function containsClass(prioColor, red, orange, green) {
  * @param {HTMLElement} green - Grünes Prioritäts-Element
  */
 function prio1Color(red, orange, green) {
-    let btnIcon1 = document.getElementById('high-prio-icon');
-    let btnIcon2 = document.getElementById('medium-prio-icon');
-    let btnIcon3 = document.getElementById('low-prio-icon');
-    red.classList.toggle('prio1-color');
-    btnIcon1.classList.toggle('priotity-btn-filter1');
-    orange.classList.remove('prio2-color');
-    btnIcon2.classList.remove('priotity-btn-filter2');
-    green.classList.remove('prio3-color');
-    btnIcon3.classList.remove('priotity-btn-filter3');
+  let btnIcon1 = document.getElementById("high-prio-icon");
+  let btnIcon2 = document.getElementById("medium-prio-icon");
+  let btnIcon3 = document.getElementById("low-prio-icon");
+  red.classList.toggle("prio1-color");
+  btnIcon1.classList.toggle("priotity-btn-filter1");
+  orange.classList.remove("prio2-color");
+  btnIcon2.classList.remove("priotity-btn-filter2");
+  green.classList.remove("prio3-color");
+  btnIcon3.classList.remove("priotity-btn-filter3");
 }
 
 /**
@@ -117,15 +139,15 @@ function prio1Color(red, orange, green) {
  * @param {HTMLElement} green - Grünes Prioritäts-Element
  */
 function prio2Color(red, orange, green) {
-    let btnIcon1 = document.getElementById('high-prio-icon');
-    let btnIcon2 = document.getElementById('medium-prio-icon');
-    let btnIcon3 = document.getElementById('low-prio-icon');
-    red.classList.remove('prio1-color');
-    btnIcon1.classList.remove('priotity-btn-filter1');
-    orange.classList.toggle('prio2-color');
-    btnIcon2.classList.toggle('priotity-btn-filter2');
-    green.classList.remove('prio3-color');
-    btnIcon3.classList.remove('priotity-btn-filter3');
+  let btnIcon1 = document.getElementById("high-prio-icon");
+  let btnIcon2 = document.getElementById("medium-prio-icon");
+  let btnIcon3 = document.getElementById("low-prio-icon");
+  red.classList.remove("prio1-color");
+  btnIcon1.classList.remove("priotity-btn-filter1");
+  orange.classList.toggle("prio2-color");
+  btnIcon2.classList.toggle("priotity-btn-filter2");
+  green.classList.remove("prio3-color");
+  btnIcon3.classList.remove("priotity-btn-filter3");
 }
 
 /**
@@ -135,50 +157,50 @@ function prio2Color(red, orange, green) {
  * @param {HTMLElement} green - Grünes Prioritäts-Element
  */
 function prio3Color(red, orange, green) {
-    let btnIcon1 = document.getElementById('high-prio-icon');
-    let btnIcon2 = document.getElementById('medium-prio-icon');
-    let btnIcon3 = document.getElementById('low-prio-icon');
-    red.classList.remove('prio1-color');
-    btnIcon1.classList.remove('priotity-btn-filter1');
-    orange.classList.remove('prio2-color');
-    btnIcon2.classList.remove('priotity-btn-filter2');
-    green.classList.toggle('prio3-color');
-    btnIcon3.classList.toggle('priotity-btn-filter3');
+  let btnIcon1 = document.getElementById("high-prio-icon");
+  let btnIcon2 = document.getElementById("medium-prio-icon");
+  let btnIcon3 = document.getElementById("low-prio-icon");
+  red.classList.remove("prio1-color");
+  btnIcon1.classList.remove("priotity-btn-filter1");
+  orange.classList.remove("prio2-color");
+  btnIcon2.classList.remove("priotity-btn-filter2");
+  green.classList.toggle("prio3-color");
+  btnIcon3.classList.toggle("priotity-btn-filter3");
 }
 
 /**
  * Zeigt das Formular für neue Subtasks
  */
 function addNewSubTask() {
-    document.getElementById('add-subtask-btn-sb').classList.add('d-none');
-    document.getElementById('subtask-buttons-sb').classList.remove('d-none');
+  document.getElementById("add-subtask-btn-sb").classList.add("d-none");
+  document.getElementById("subtask-buttons-sb").classList.remove("d-none");
 }
 
 /**
  * Schließt das Formular für neue Subtasks
  */
 function closeNewSubtasksBtn() {
-    document.getElementById('add-subtask-btn-sb').classList.remove('d-none');
-    document.getElementById('subtask-buttons-sb').classList.add('d-none');
+  document.getElementById("add-subtask-btn-sb").classList.remove("d-none");
+  document.getElementById("subtask-buttons-sb").classList.add("d-none");
 }
 
 /**
  * Fügt einen neuen Subtask hinzu
  */
 function addSubTask() {
-    let subTask = document.getElementById('subtasks');
-    let contentDiv = document.getElementById('subtask-content');
-    if (subTask.value !== '') {
-        contentDiv.innerHTML += addSubtaskContentHTML(subTask);
-        subTask.value = '';
-        closeNewSubtasksBtn();
-    } else {
-        let subtaskError = document.getElementById('subtask-error');
-        subtaskError.style.display = 'flex';
-        setTimeout(function () {
-            subtaskError.style.display = "none";
-        }, 3000);
-    }
+  let subTask = document.getElementById("subtasks");
+  let contentDiv = document.getElementById("subtask-content");
+  if (subTask.value !== "") {
+    contentDiv.innerHTML += addSubtaskContentHTML(subTask);
+    subTask.value = "";
+    closeNewSubtasksBtn();
+  } else {
+    let subtaskError = document.getElementById("subtask-error");
+    subtaskError.style.display = "flex";
+    setTimeout(function () {
+      subtaskError.style.display = "none";
+    }, 3000);
+  }
 }
 
 /**
@@ -186,7 +208,7 @@ function addSubTask() {
  * @param {HTMLElement} liElement - Das zu löschende Listenelement
  */
 function deleteSubTask(liElement) {
-    liElement.parentElement.remove();
+  liElement.parentElement.remove();
 }
 
 /**
@@ -195,23 +217,36 @@ function deleteSubTask(liElement) {
  * @returns {Promise<void>}
  */
 async function getFormData(event) {
-    event.preventDefault();
-    let taskCategory = { category: "toDo" };
-    let title = document.getElementById('title').value;
-    let description = document.getElementById('description').value;
-    let dueDate = document.getElementById('due-date').value;
-    let category = document.getElementById('category').value;
-    let selectedContactsDivs = document.querySelectorAll('#added-users-container-add-task-on-board .current-task-initials');
-    let assignedTo = [];
-    let fullNames = [];
-    selectedContactsDivs.forEach(function (div) {
-        getInitialsAndFullNames(assignedTo, fullNames, div);
-    });
-    let subtaskList = document.querySelectorAll('#subtask-content li');
-    const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
-    let priority = '';
-    priority = setPriority(priority);
-    await setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames);
+  event.preventDefault();
+  let taskCategory = { category: "toDo" };
+  let title = document.getElementById("title").value;
+  let description = document.getElementById("description").value;
+  let dueDate = document.getElementById("due-date").value;
+  let category = document.getElementById("category").value;
+  let selectedContactsDivs = document.querySelectorAll(
+    "#added-users-container-add-task-on-board .current-task-initials"
+  );
+  let assignedTo = [];
+  let fullNames = [];
+  selectedContactsDivs.forEach(function (div) {
+    getInitialsAndFullNames(assignedTo, fullNames, div);
+  });
+  let subtaskList = document.querySelectorAll("#subtask-content li");
+  const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
+  let priority = "";
+  priority = setPriority(priority);
+  await setFormData(
+    taskCategory,
+    title,
+    description,
+    dueDate,
+    assignedTo,
+    category,
+    subtasks,
+    subtasksChecked,
+    priority,
+    fullNames
+  );
 }
 
 /**
@@ -220,19 +255,19 @@ async function getFormData(event) {
  * @returns {{subtasks: Array<string>, subtasksChecked: Array<Object>}} Subtask-Daten
  */
 function getSubtasks(subtaskList) {
-    let subtasks = [];
-    let subtasksChecked = [];
-    if (subtaskList.length > 0) {
-        subtasks = Array.from(subtaskList).map(li => li.textContent);
-        for (let i = 0; i < subtasks.length; i++) {
-            let subtask = { "id": `subtask${i}`, "checked": false };
-            subtasksChecked.push(subtask);
-        }
-    } else {
-        subtasks = ['dummy'];
-        subtasksChecked = ['dummy'];
+  let subtasks = [];
+  let subtasksChecked = [];
+  if (subtaskList.length > 0) {
+    subtasks = Array.from(subtaskList).map((li) => li.textContent);
+    for (let i = 0; i < subtasks.length; i++) {
+      let subtask = { id: `subtask${i}`, checked: false };
+      subtasksChecked.push(subtask);
     }
-    return { subtasks, subtasksChecked };
+  } else {
+    subtasks = ["dummy"];
+    subtasksChecked = ["dummy"];
+  }
+  return { subtasks, subtasksChecked };
 }
 
 /**
@@ -241,14 +276,18 @@ function getSubtasks(subtaskList) {
  * @returns {string} Ausgewählte Priorität
  */
 function setPriority(priority) {
-    if (document.getElementById('prio1').classList.contains('prio1-color')) {
-        priority = 'Urgent';
-    } else if (document.getElementById('prio2').classList.contains('prio2-color')) {
-        priority = 'Medium';
-    } else if (document.getElementById('prio3').classList.contains('prio3-color')) {
-        priority = 'Low';
-    }
-    return priority;
+  if (document.getElementById("prio1").classList.contains("prio1-color")) {
+    priority = "Urgent";
+  } else if (
+    document.getElementById("prio2").classList.contains("prio2-color")
+  ) {
+    priority = "Medium";
+  } else if (
+    document.getElementById("prio3").classList.contains("prio3-color")
+  ) {
+    priority = "Low";
+  }
+  return priority;
 }
 
 /**
@@ -265,21 +304,32 @@ function setPriority(priority) {
  * @param {Array} fullNames - Vollständige Namen der zugewiesenen Benutzer
  * @returns {Promise<void>}
  */
-async function setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames) {
-    let formData = {
-        title,
-        description,
-        dueDate,
-        assignedTo,
-        category,
-        subtasks,
-        subtasksChecked,
-        priority,
-        taskCategory,
-        fullNames
-    };
-    await postFormDataToFireBase(formData);
-    await renderNewTask();
+async function setFormData(
+  taskCategory,
+  title,
+  description,
+  dueDate,
+  assignedTo,
+  category,
+  subtasks,
+  subtasksChecked,
+  priority,
+  fullNames
+) {
+  let formData = {
+    title,
+    description,
+    dueDate,
+    assignedTo,
+    category,
+    subtasks,
+    subtasksChecked,
+    priority,
+    taskCategory,
+    fullNames,
+  };
+  await postFormDataToFireBase(formData);
+  await renderNewTask();
 }
 
 /**
@@ -287,11 +337,11 @@ async function setFormData(taskCategory, title, description, dueDate, assignedTo
  * @returns {Promise<void>}
  */
 async function renderNewTask() {
-    toggleHamburgerMenu();
-    setTimeout(async () => {
-        await getTasks();
-    }, 500);
-    clearForm();
+  toggleHamburgerMenu();
+  setTimeout(async () => {
+    await getTasks();
+  }, 500);
+  clearForm();
 }
 
 /**
@@ -301,9 +351,9 @@ async function renderNewTask() {
  * @param {HTMLElement} div - Das Element mit den Benutzerinformationen
  */
 function getInitialsAndFullNames(assignedTo, fullNames, div) {
-    assignedTo.push(div.textContent);
-    let value = div.getAttribute('value');
-    fullNames.push(value);
+  assignedTo.push(div.textContent);
+  let value = div.getAttribute("value");
+  fullNames.push(value);
 }
 
 /**
@@ -312,19 +362,19 @@ function getInitialsAndFullNames(assignedTo, fullNames, div) {
  * @returns {Promise<void>}
  */
 async function postFormDataToFireBase(formData) {
-    fetch('https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-
-        })
-        .catch(error => {
-        });
+  fetch(
+    "https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo.json",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {})
+    .catch((error) => {});
 }
 
 /**
@@ -332,30 +382,32 @@ async function postFormDataToFireBase(formData) {
  * @returns {Promise<void>}
  */
 async function clearForm() {
-    document.getElementById('title').value = '';
-    document.getElementById('description').value = '';
-    document.getElementById('due-date').value = '';
-    document.getElementById('selected-contacts-sb').innerHTML = '';
-    document.getElementById('#added-users-container-add-task-on-board').innerHTML = '';
-    document.getElementById('category').selectedIndex = 0;
-    document.getElementById('subtask-content').innerHTML = '';
-    document.querySelectorAll('.priority-btn-addTask').forEach(button => {
-        button.classList.remove('prio1-color', 'prio2-color', 'prio3-color');
-    });
-    toggleHamburgerMenu();
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("due-date").value = "";
+  document.getElementById("selected-contacts-sb").innerHTML = "";
+  document.getElementById(
+    "#added-users-container-add-task-on-board"
+  ).innerHTML = "";
+  document.getElementById("category").selectedIndex = 0;
+  document.getElementById("subtask-content").innerHTML = "";
+  document.querySelectorAll(".priority-btn-addTask").forEach((button) => {
+    button.classList.remove("prio1-color", "prio2-color", "prio3-color");
+  });
+  toggleHamburgerMenu();
 }
 
 /**
  * Rendert alle Tasks auf dem Board
  */
 function renderTask() {
-    let toDoBlock = document.getElementById("to-do-block");
-    if ("toDo" in (tasks || {})) {
-        let toDo = tasks.toDo;
-        setTasks(toDo, toDoBlock);
-    }
-    checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
-    loadContactsToEditAddTaskOnBoard()
+  let toDoBlock = document.getElementById("to-do-block");
+  if ("toDo" in (tasks || {})) {
+    let toDo = tasks.toDo;
+    setTasks(toDo, toDoBlock);
+  }
+  checkContentFields(toDoBlock, inProgress, awaitFeedback, done);
+  loadContactsToEditAddTaskOnBoard();
 }
 
 /**
@@ -364,18 +416,18 @@ function renderTask() {
  * @param {HTMLElement} toDoBlock - Der Container für ToDo-Tasks
  */
 function setTasks(toDo, toDoBlock) {
-    if (toDo && Object.keys(toDo).length > 0) {
-        inProgress.innerHTML = "";
-        awaitFeedback.innerHTML = "";
-        done.innerHTML = "";
-        toDoBlock.innerHTML = "";
-        let taskCounter = 0;
-        for (let key in toDo) {
-            const element = toDo[key];
-            taskCounter++;
-            filterCategory(taskCounter, element, toDoBlock);
-        }
+  if (toDo && Object.keys(toDo).length > 0) {
+    inProgress.innerHTML = "";
+    awaitFeedback.innerHTML = "";
+    done.innerHTML = "";
+    toDoBlock.innerHTML = "";
+    let taskCounter = 0;
+    for (let key in toDo) {
+      const element = toDo[key];
+      taskCounter++;
+      filterCategory(taskCounter, element, toDoBlock);
     }
+  }
 }
 
 /**
@@ -385,20 +437,20 @@ function setTasks(toDo, toDoBlock) {
  * @param {HTMLElement} toDoBlock - Der Container für ToDo-Tasks
  */
 function filterCategory(taskCounter, element, toDoBlock) {
-    if (element.taskCategory.category == "toDo") {
-        renderToDo(taskCounter, element, toDoBlock);
-    }
-    if (element.taskCategory.category == "inProgress") {
-        renderInProgress(taskCounter, element);
-    }
-    if (element.taskCategory.category == "awaitFeedback") {
-        renderAwaitFeedback(taskCounter, element);
-    }
-    if (element.taskCategory.category == "done") {
-        renderDone(taskCounter, element);
-    }
-    taskStyle(taskCounter);
-    loadingspinner(taskCounter, element);
+  if (element.taskCategory.category == "toDo") {
+    renderToDo(taskCounter, element, toDoBlock);
+  }
+  if (element.taskCategory.category == "inProgress") {
+    renderInProgress(taskCounter, element);
+  }
+  if (element.taskCategory.category == "awaitFeedback") {
+    renderAwaitFeedback(taskCounter, element);
+  }
+  if (element.taskCategory.category == "done") {
+    renderDone(taskCounter, element);
+  }
+  taskStyle(taskCounter);
+  loadingspinner(taskCounter, element);
 }
 
 /**
@@ -409,18 +461,22 @@ function filterCategory(taskCounter, element, toDoBlock) {
  * @param {HTMLElement} done - Done-Container
  */
 function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
-    if (toDoBlock.innerHTML === "") {
-        toDoBlock.innerHTML = '<div class="board-content" id="to-do">No tasks To do</div>';
-    }
-    if (inProgress.innerHTML === "") {
-        inProgress.innerHTML = '<div class="board-content" id="in-progress-content">No tasks To do</div>';
-    }
-    if (awaitFeedback.innerHTML === "") {
-        awaitFeedback.innerHTML = '<div class="board-content" id="await-feedback-content">No tasks To do</div>';
-    }
-    if (done.innerHTML === "") {
-        done.innerHTML = '<div class="board-content" id="done-content">No tasks To do</div>';
-    }
+  if (toDoBlock.innerHTML === "") {
+    toDoBlock.innerHTML =
+      '<div class="board-content" id="to-do">No tasks To do</div>';
+  }
+  if (inProgress.innerHTML === "") {
+    inProgress.innerHTML =
+      '<div class="board-content" id="in-progress-content">No tasks To do</div>';
+  }
+  if (awaitFeedback.innerHTML === "") {
+    awaitFeedback.innerHTML =
+      '<div class="board-content" id="await-feedback-content">No tasks To do</div>';
+  }
+  if (done.innerHTML === "") {
+    done.innerHTML =
+      '<div class="board-content" id="done-content">No tasks To do</div>';
+  }
 }
 
 /**
@@ -430,11 +486,24 @@ function checkContentFields(toDoBlock, inProgress, awaitFeedback, done) {
  * @param {HTMLElement} toDoBlock - Der Container für ToDo-Tasks
  */
 function renderToDo(taskCounter, element, toDoBlock) {
+<<<<<<< HEAD
     let prioIconURL = getPrioIconURL(element);
     let contactsHTML = [];
     setContactsTasks(element, contactsHTML);
     contactsHTML = contactsHTML.join('');
     toDoBlock.innerHTML += renderToDoHTML(element, taskCounter, prioIconURL, contactsHTML);
+=======
+  let prioIconURL = getPrioIconURL(element);
+  let contactsHTML = [];
+  setContactsTasks(element, contactsHTML);
+  contactsHTML = contactsHTML.join("");
+  toDoBlock.innerHTML += renderTaskHTML(
+    element,
+    taskCounter,
+    prioIconURL,
+    contactsHTML
+  );
+>>>>>>> 5024991fb40b0ddbe5ad0e860582e68277090546
 }
 
 /**
@@ -443,16 +512,21 @@ function renderToDo(taskCounter, element, toDoBlock) {
  * @param {Object} element - Das Task-Element
  */
 function renderInProgress(taskCounter, element) {
-    let inProgress = document.getElementById("inProgress");
-    let toDo = tasks.toDo;
+  let inProgress = document.getElementById("inProgress");
+  let toDo = tasks.toDo;
 
-    if (toDo && Object.keys(toDo).length > 0) {
-        let prioIconURL = getPrioIconURL(element);
-        let contactsHTML = [];
-        setContactsTasks(element, contactsHTML)
-        contactsHTML = contactsHTML.join('');
-        inProgress.innerHTML += rederInProgress(element, taskCounter, prioIconURL, contactsHTML);
-    }
+  if (toDo && Object.keys(toDo).length > 0) {
+    let prioIconURL = getPrioIconURL(element);
+    let contactsHTML = [];
+    setContactsTasks(element, contactsHTML);
+    contactsHTML = contactsHTML.join("");
+    inProgress.innerHTML += rederInProgress(
+      element,
+      taskCounter,
+      prioIconURL,
+      contactsHTML
+    );
+  }
 }
 
 /**
@@ -461,16 +535,21 @@ function renderInProgress(taskCounter, element) {
  * @param {Object} element - Das Task-Element
  */
 function renderAwaitFeedback(taskCounter, element) {
-    let awaitFeedback = document.getElementById("awaitFeedback");
-    let toDo = tasks.toDo;
+  let awaitFeedback = document.getElementById("awaitFeedback");
+  let toDo = tasks.toDo;
 
-    if (toDo && Object.keys(toDo).length > 0) {
-        let prioIconURL = getPrioIconURL(element);
-        let contactsHTML = [];
-        setContactsTasks(element, contactsHTML);
-        contactsHTML = contactsHTML.join('');
-        awaitFeedback.innerHTML += renderAwaitFeedbackHTML(element, taskCounter, prioIconURL, contactsHTML)
-    }
+  if (toDo && Object.keys(toDo).length > 0) {
+    let prioIconURL = getPrioIconURL(element);
+    let contactsHTML = [];
+    setContactsTasks(element, contactsHTML);
+    contactsHTML = contactsHTML.join("");
+    awaitFeedback.innerHTML += renderAwaitFeedbackHTML(
+      element,
+      taskCounter,
+      prioIconURL,
+      contactsHTML
+    );
+  }
 }
 
 /**
@@ -479,16 +558,21 @@ function renderAwaitFeedback(taskCounter, element) {
  * @param {Object} element - Das Task-Element
  */
 function renderDone(taskCounter, element) {
-    let done = document.getElementById("done");
-    let toDo = tasks.toDo;
+  let done = document.getElementById("done");
+  let toDo = tasks.toDo;
 
-    if (toDo && Object.keys(toDo).length > 0) {
-        let prioIconURL = getPrioIconURL(element);
-        let contactsHTML = [];
-        setContactsTasks(element, contactsHTML);
-        contactsHTML = contactsHTML.join('');
-        done.innerHTML += renderDoneHTML(element, taskCounter, prioIconURL, contactsHTML);
-    }
+  if (toDo && Object.keys(toDo).length > 0) {
+    let prioIconURL = getPrioIconURL(element);
+    let contactsHTML = [];
+    setContactsTasks(element, contactsHTML);
+    contactsHTML = contactsHTML.join("");
+    done.innerHTML += renderDoneHTML(
+      element,
+      taskCounter,
+      prioIconURL,
+      contactsHTML
+    );
+  }
 }
 
 /**
@@ -497,17 +581,17 @@ function renderDone(taskCounter, element) {
  * @returns {string} Die URL des Icons
  */
 function getPrioIconURL(element) {
-    let prioIconURL;
-    if (element.priority === 'Urgent') {
-        prioIconURL = '../assets/icons/PriorityUrgentRed.png';
-    } else if (element.priority === 'Medium') {
-        prioIconURL = '../assets/icons/PriorityMediumOrange.png';
-    } else if (element.priority === 'Low') {
-        prioIconURL = '../assets/icons/PriorityLowGreen.png';
-    } else {
-        prioIconURL = '../assets/icons/minus.png';
-    }
-    return prioIconURL;
+  let prioIconURL;
+  if (element.priority === "Urgent") {
+    prioIconURL = "../assets/icons/PriorityUrgentRed.png";
+  } else if (element.priority === "Medium") {
+    prioIconURL = "../assets/icons/PriorityMediumOrange.png";
+  } else if (element.priority === "Low") {
+    prioIconURL = "../assets/icons/PriorityLowGreen.png";
+  } else {
+    prioIconURL = "../assets/icons/minus.png";
+  }
+  return prioIconURL;
 }
 
 /**
@@ -515,50 +599,54 @@ function getPrioIconURL(element) {
  * @param {number} taskCounter - Der Task-Index
  */
 function taskStyle(taskCounter) {
-    let currentCategory = document.getElementById(`category-to-do${taskCounter}`);
-    if (currentCategory.textContent === 'Technical Task') {
-        currentCategory.style.backgroundColor = '#0038ff';
-        currentCategory.style.color = 'white';
-    } else if (currentCategory.textContent === 'User Story') {
-        currentCategory.style.backgroundColor = '#ff7a00';
-        currentCategory.style.color = 'white';
-    } else {
-        currentCategory.style.backgroundColor = 'lightblue';
-        currentCategory.innerHTML = 'Ticket';
-        currentCategory.style.color = 'white';
-    }
+  let currentCategory = document.getElementById(`category-to-do${taskCounter}`);
+  if (currentCategory.textContent === "Technical Task") {
+    currentCategory.style.backgroundColor = "#0038ff";
+    currentCategory.style.color = "white";
+  } else if (currentCategory.textContent === "User Story") {
+    currentCategory.style.backgroundColor = "#ff7a00";
+    currentCategory.style.color = "white";
+  } else {
+    currentCategory.style.backgroundColor = "lightblue";
+    currentCategory.innerHTML = "Ticket";
+    currentCategory.style.color = "white";
+  }
 }
 
 /**
  * Schaltet das Dropdown-Menü für das Hinzufügen von Tasks um
  */
 function toggleDropdownAddTaskOnBoard() {
-    const dropdownMenu = document.getElementById('dropdown-menu-add-task-on-board');
-    if (dropdownMenu.style.display === 'block') {
-        dropdownMenu.style.display = 'none';
-    } else {
-        dropdownMenu.style.display = 'block';
-    }
+  const dropdownMenu = document.getElementById(
+    "dropdown-menu-add-task-on-board"
+  );
+  if (dropdownMenu.style.display === "block") {
+    dropdownMenu.style.display = "none";
+  } else {
+    dropdownMenu.style.display = "block";
+  }
 }
 
 /**
  * Verarbeitet die Benutzerauswahl beim Hinzufügen eines Tasks
  */
 function handleUserSelectionAddTaskOnBoard() {
-    const checkboxes = document.querySelectorAll('#user-select-add-task-on-board input[type="checkbox"]');
-    const selectedUsers = Array.from(checkboxes)
-        .filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value);
-    renderUsersAddTaskOnBoard(selectedUsers);
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            if (checkbox.checked) {
-                renderUsersAddTaskOnBoard([checkbox.value]);
-            } else {
-                removeUserFromBoard(checkbox.value);
-            }
-        });
+  const checkboxes = document.querySelectorAll(
+    '#user-select-add-task-on-board input[type="checkbox"]'
+  );
+  const selectedUsers = Array.from(checkboxes)
+    .filter((checkbox) => checkbox.checked)
+    .map((checkbox) => checkbox.value);
+  renderUsersAddTaskOnBoard(selectedUsers);
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      if (checkbox.checked) {
+        renderUsersAddTaskOnBoard([checkbox.value]);
+      } else {
+        removeUserFromBoard(checkbox.value);
+      }
     });
+  });
 }
 
 /**
@@ -566,15 +654,17 @@ function handleUserSelectionAddTaskOnBoard() {
  * @param {Array} users - Die ausgewählten Benutzer
  */
 function renderUsersAddTaskOnBoard(users) {
-    const taskContainer = document.getElementById('added-users-container-add-task-on-board');
-    users.forEach(user => {
-        if (!document.querySelector(`.current-task-initials[value="${user}"]`)) {
-            let initials = createInitialsForEdit([user]);
-            taskContainer.innerHTML += `
+  const taskContainer = document.getElementById(
+    "added-users-container-add-task-on-board"
+  );
+  users.forEach((user) => {
+    if (!document.querySelector(`.current-task-initials[value="${user}"]`)) {
+      let initials = createInitialsForEdit([user]);
+      taskContainer.innerHTML += `
                 <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
             `;
-        }
-    });
+    }
+  });
 }
 
 /**
@@ -582,22 +672,26 @@ function renderUsersAddTaskOnBoard(users) {
  * @param {string} user - Der zu entfernende Benutzer
  */
 function removeUserFromBoard(user) {
-    const taskContainer = document.getElementById('added-users-container-add-task-on-board');
-    const userDiv = document.querySelector(`.current-task-initials[value="${user}"]`);
-    if (userDiv) {
-        taskContainer.removeChild(userDiv);
-    }
+  const taskContainer = document.getElementById(
+    "added-users-container-add-task-on-board"
+  );
+  const userDiv = document.querySelector(
+    `.current-task-initials[value="${user}"]`
+  );
+  if (userDiv) {
+    taskContainer.removeChild(userDiv);
+  }
 }
 
 /**
  * Lädt die Kontakte für die Bearbeitung des Boards
  */
 function loadContactsToEditAddTaskOnBoard() {
-    const namesArray = Object.values(contactsForSidebar).map(item => item.name);
-    let userSelect = document.getElementById('user-select-add-task-on-board');
-    userSelect.innerHTML = '';
-    createUserfieldCheckbox(namesArray, userSelect)
-    handleUserSelectionAddTaskOnBoard();
+  const namesArray = Object.values(contactsForSidebar).map((item) => item.name);
+  let userSelect = document.getElementById("user-select-add-task-on-board");
+  userSelect.innerHTML = "";
+  createUserfieldCheckbox(namesArray, userSelect);
+  handleUserSelectionAddTaskOnBoard();
 }
 
 /**
@@ -606,20 +700,40 @@ function loadContactsToEditAddTaskOnBoard() {
  * @param {HTMLElement} userSelect - Das Select-Element
  */
 function createUserfieldCheckbox(namesArray, userSelect) {
-    for (let i = 0; i < namesArray.length; i++) {
-        const container = document.createElement('div');
-        container.classList.add('checkbox-container');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `checkbox-${i}`;
-        checkbox.value = namesArray[i];
-        const names = document.createElement('div');
-        names.htmlFor = `checkbox-${i}`;
-        names.textContent = namesArray[i];
-        container.appendChild(names);
-        container.appendChild(checkbox);
-        userSelect.appendChild(container);
+  for (let i = 0; i < namesArray.length; i++) {
+    const container = document.createElement("div");
+    container.classList.add("checkbox-container");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `checkbox-${i}`;
+    checkbox.value = namesArray[i];
+    const names = document.createElement("div");
+    names.htmlFor = `checkbox-${i}`;
+    names.textContent = namesArray[i];
+    container.appendChild(names);
+    container.appendChild(checkbox);
+    userSelect.appendChild(container);
+  }
+}
+
+function setContactsTasks(element, contactsHTML) {
+  if (Array.isArray(element.assignedTo)) {
+    if (element.assignedTo.length <= 5) {
+      for (let i = 0; i < element.assignedTo.length; i++) {
+        setInitials(element, i, contactsHTML);
+      }
+    } else if (element.assignedTo.length > 5) {
+      for (let i = 0; i < 4; i++) {
+        setInitials(element, i, contactsHTML);
+      }
+      let UsersAmount = element.assignedTo.length - 4;
+      contactsHTML.push(
+        `<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">+${UsersAmount}</div>`
+      );
+    } else {
+      contactsHTML = "";
     }
+<<<<<<< HEAD
 }
 
 /**
@@ -815,3 +929,13 @@ function renderSubtasks(element) {
     </div>
     `;
 }
+=======
+  }
+}
+function setInitials(element, i, contactsHTML) {
+  const initials = element.assignedTo[i];
+  contactsHTML.push(
+    `<div class="task-initials margin-right" style="background-color: ${getRandomColor()}">${initials}</div>`
+  );
+}
+>>>>>>> 5024991fb40b0ddbe5ad0e860582e68277090546
