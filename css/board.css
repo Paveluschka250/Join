@@ -228,7 +228,7 @@ body {
 .title-task {
     font-size: 16px;
     color: #4589FF;
-    height: 39px;
+    height: 30px;
     margin-top: 20px;
     margin-bottom: 8px;
     word-break: break-word;
@@ -535,6 +535,7 @@ line-height: 40px;
 .editTaskContainer {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .titleEdit {
@@ -717,6 +718,11 @@ line-height: 40px;
     height: 100%;
     position:relative;
     flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.current-to-do-content form {
+    height: 100%;
 }
 
 .prio2-icon-color {
@@ -1043,6 +1049,11 @@ line-height: 40px;
     margin-right: 10px;
 }
 
+.safe-edit-btn-innerDIV {
+    position:relative;
+    width: 100%;
+}
+
 @media(max-width: 800px) {
     .move-to-container button {
         margin-right: 8px;
@@ -1060,9 +1071,9 @@ line-height: 40px;
         font-size: 16px !important;
     }
 
-    /* .title-task {
+    .title-task {
         font-size: 12px;
-    } */
+    }
 
     .description-task {
         font-size: 10px;
@@ -1199,7 +1210,7 @@ line-height: 40px;
     .buttons-row button {
         font-size: 12px !important;
         min-width: 30% !important;
-        justify-content: center !important;
+        justify-content: space-between !important;
     }
 
     .board-create-task {
