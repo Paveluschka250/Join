@@ -362,6 +362,24 @@ function createOverlayBackground() {
 /**
  * Zeigt das Bearbeiten/Löschen-Overlay an
  */
+function closeEditContactsOverlay() {
+  const overlay = document.getElementById("edit-contact-overlay");
+  overlay.classList.remove("active");
+  overlay.classList.add("inactive");
+  const background = document.querySelector(".overlay-background");
+  if (background) {
+    background.classList.remove("active");
+    background.removeEventListener("click", closeEditContactsOverlay);
+    setTimeout(() => {
+      background.remove();
+    }, 300);
+  }
+  currentEditingContact = null;
+}
+
+/**
+ * Zeigt das Overlay zum Bearbeiten oder Löschen eines Kontakts an.
+ */
 function showEditDeleteOverlay() {
   const overlay = document.querySelector(".edit-delete-overlay");
   overlay.classList.add("active");
