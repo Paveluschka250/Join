@@ -259,8 +259,16 @@ function getPriorityLevel() {
  * @returns {Object} Objekt mit subtasks Array und subtasksChecked Array
  */
 function collectSubtasks() {
-  const subtaskElements = document.querySelectorAll('#subtask-content li p');
-  
+  const subtaskElements = []
+  const listItems = document.querySelectorAll('#subtask-content li');
+  listItems.forEach(li => {
+      const firstP = li.querySelector('p');
+      if (firstP) {
+          console.log(firstP);
+          subtaskElements.push(firstP);
+      }
+  });
+
   if (subtaskElements.length === 0) {
     return {
       subtasks: ['dummy'],
