@@ -159,9 +159,7 @@ function confirmEditSubtask(btn, subtask) {
   let currentSubtask = document.getElementById(`current-subtask-${subtask}`);
   let inputDiv = document.getElementById(`edit-${subtask}`);
   let subtaskContent = btn.closest('li').querySelector('p');
-
   let input = document.getElementById(`input-edit-${subtask}`).value;
-  console.log(input)
   subtaskContent.innerHTML = input;
   currentSubtask.classList.remove('d-none');
   currentSubtask.classList.toggle('li-elements-overlayTask');
@@ -178,7 +176,9 @@ function editSubtask(btn, subtask) {
   let currentSubtask = btn.closest('div');
   let inputDiv = document.getElementById(`edit-${subtask}`);
   let input = document.getElementById(`input-edit-${subtask}`);
-  input.value = `${subtask}`;
+  let newInput = document.getElementById(`current-subtask-${subtask}`)
+  let editCurrentSubtask = newInput.querySelectorAll("p")[0].innerHTML
+  input.value = `${editCurrentSubtask}`;
   currentSubtask.classList.add('d-none');
   currentSubtask.classList.toggle('li-elements-overlayTask');
   inputDiv.classList.remove('d-none');
