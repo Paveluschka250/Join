@@ -196,35 +196,49 @@ function deleteSubTask(liElement) {
  */
 async function getFormData(event) {
   event.preventDefault();
-  let taskCategory = { category: "toDo" };
-  let title = document.getElementById("title").value;
-  let description = document.getElementById("description").value;
-  let dueDate = document.getElementById("due-date").value;
-  let category = document.getElementById("category").value;
-  let selectedContactsDivs = document.querySelectorAll(
-    "#added-users-container-add-task-on-board .current-task-initials"
-  );
-  let assignedTo = [];
-  let fullNames = [];
-  selectedContactsDivs.forEach(function (div) {
-    getInitialsAndFullNames(assignedTo, fullNames, div);
-  });
-  let subtaskList = document.querySelectorAll("#subtask-content li");
-  const { subtasks, subtasksChecked } = getSubtasks(subtaskList);
-  let priority = "";
-  priority = setPriority(priority);
+  const formData = getFormDataFields();
+  const { assignedTo, fullNames } = getAssignedContactsBoard();
+  const { subtasks, subtasksChecked } = getSubtasksData();
+  const priority = setPriority("");
   await setFormData(
-    taskCategory,
-    title,
-    description,
-    dueDate,
+    formData.taskCategory,
+    formData.title,
+    formData.description,
+    formData.dueDate,
     assignedTo,
-    category,
+    formData.category,
     subtasks,
     subtasksChecked,
     priority,
     fullNames
   );
+}
+
+function getFormDataFields() {
+  return {
+    taskCategory: { category: "toDo" },
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    dueDate: document.getElementById("due-date").value,
+    category: document.getElementById("category").value
+  };
+}
+
+function getAssignedContactsBoard() {
+  let assignedTo = [];
+  let fullNames = [];
+  let selectedContactsDivs = document.querySelectorAll("#added-users-container-add-task-on-board .current-task-initials");
+
+  selectedContactsDivs.forEach(function (div) {
+    getInitialsAndFullNames(assignedTo, fullNames, div);
+  });
+
+  return { assignedTo, fullNames };
+}
+
+function getSubtasksData() {
+  let subtaskList = document.querySelectorAll("#subtask-content li");
+  return getSubtasks(subtaskList);
 }
 
 /**
