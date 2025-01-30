@@ -73,18 +73,19 @@ function getSubtasksUnchanged(key) {
     let subtaskList = document.querySelectorAll('#subtask-edit-content p');
     if (subtaskList.length > 0) {
         subtasks = Array.from(subtaskList).map(li => li.textContent);
-        for (let i = 0; i < subtasks.length; i++) {
-            let subtaskStatus = tasks.toDo[key].subtasksChecked[i]
-                ? tasks.toDo[key].subtasksChecked[i].checked
-                : false;
-            let subtask = { "id": `subtask${i}`, "checked": subtaskStatus };
-            subtasksChecked.push(subtask);
-        }
+        subtasksChecked = subtasks.map((_, i) => getSubtaskStatus(key, i));
     } else {
         subtasks = ['dummy'];
         subtasksChecked = ['dummy'];
     }
     return { subtasks, subtasksChecked };
+}
+
+function getSubtaskStatus(key, index) {
+    let subtaskStatus = tasks.toDo[key].subtasksChecked[index]
+        ? tasks.toDo[key].subtasksChecked[index].checked
+        : false;
+    return { "id": `subtask${index}`, "checked": subtaskStatus };
 }
 
 /**

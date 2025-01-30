@@ -82,22 +82,26 @@ function editAssignedContacts(currentTask, taskCounter) {
 function createInitialDiv(assignedContacts, fullNames, contacts) {
     if (contacts.length > 0 && fullNames) {
         assignedContacts.innerHTML = '';
-        for (let i = 0; i < contacts.length; i++) {
-            const element = contacts[i];
-            const fullName = fullNames[i];
-            let initials = createInitialsForEdit([fullName]);
-            assignedContacts.innerHTML += `
-                <div class="current-task-initials edit-initials" value="${fullName}" style="background-color: ${getRandomColor()}">${initials}</div>
-            `;
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                if (checkbox.value === fullName) {
-                    checkbox.checked = true;
-                }
-            });
-        }
+        forLoopCreateInitialDiv(assignedContacts, fullNames, contacts)
     } else {
         assignedContacts.innerHTML = '';
+    }
+}
+
+function  forLoopCreateInitialDiv(assignedContacts, fullNames, contacts) {
+    for (let i = 0; i < contacts.length; i++) {
+        const element = contacts[i];
+        const fullName = fullNames[i];
+        let initials = createInitialsForEdit([fullName]);
+        assignedContacts.innerHTML += `
+            <div class="current-task-initials edit-initials" value="${fullName}" style="background-color: ${getRandomColor()}">${initials}</div>
+        `;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value === fullName) {
+                checkbox.checked = true;
+            }
+        });
     }
 }
 
@@ -226,12 +230,9 @@ function handleUserSelection() {
         const user = checkbox.value;
         const taskContainer = document.getElementById('added-users-container');
         const existingUserDiv = document.querySelector(`.current-task-initials[value="${user}"]`);
-
         if (checkbox.checked && !existingUserDiv) {
             let initials = createInitialsForEdit([user]);
-            taskContainer.innerHTML += `
-                <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
-            `;
+            taskContainer.innerHTML += handleUserSelectionHTML(user, initials)
         } else if (!checkbox.checked && existingUserDiv) {
             existingUserDiv.remove();
         }
@@ -323,6 +324,7 @@ function editSubtasks(currentTask) {
  * @param {HTMLElement} list - Liste der Subtasks
  * @param {Array} currentTask - Array mit den Daten des aktuellen Tasks
  */
+
 function setSubtasksToEdit(subtasksEdit, list, currentTask) {
     if (!subtasksEdit || subtasksEdit === "dummy") {
         list.innerHTML = '';
@@ -331,6 +333,10 @@ function setSubtasksToEdit(subtasksEdit, list, currentTask) {
     if (typeof subtasksEdit === "string") {
         subtasksEdit = subtasksEdit.split(',').map(s => s.trim()).filter(Boolean);
     }
+    forLoopForEditSubtaskContent(subtasksEdit, list)
+}
+
+function forLoopForEditSubtaskContent(subtasksEdit, list) {
     if (Array.isArray(subtasksEdit) && subtasksEdit.length > 0) {
         subtasksEdit.forEach((subtask, i) => {
             list.innerHTML += editSubtasksHTML(subtask, i);
@@ -360,12 +366,13 @@ function confirmEditSubtask(i) {
  * @param {string} content - Inhalt der Subtask
  */
 function editCurrentSubtask(i, content) {
+    let getSubtask = document.getElementById(`current-subtask-to-edit${i}`).innerHTML;
     let subtask = document.getElementById(`subtask${i}`);
     let input = document.getElementById(`subtask-edit-input${i}`);
     let inputValue = document.getElementById(`input-value${i}`);
     subtask.classList.toggle('d-none');
     input.classList.toggle('d-none');
-    inputValue.value = `${content}`;
+    inputValue.value = `${getSubtask}`;
 }
 
 /**

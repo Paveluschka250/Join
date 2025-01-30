@@ -259,30 +259,46 @@ function getPriorityLevel() {
  * @returns {Object} Objekt mit subtasks Array und subtasksChecked Array
  */
 function collectSubtasks() {
-  const subtaskElements = []
-  const listItems = document.querySelectorAll('#subtask-content li');
-  listItems.forEach(li => {
-      const firstP = li.querySelector('p');
-      if (firstP) {
-          console.log(firstP);
-          subtaskElements.push(firstP);
-      }
-  });
+  const subtaskElements = getSubtaskElements();
 
   if (subtaskElements.length === 0) {
-    return {
-      subtasks: ['dummy'],
-      subtasksChecked: ['dummy']
-    };
+    return getDefaultSubtasks();
   }
 
-  const subtasks = Array.from(subtaskElements).map(element => element.textContent);
-  const subtasksChecked = Array.from(subtaskElements).map((_, index) => ({
+  const subtasks = extractSubtaskTexts(subtaskElements);
+  const subtasksChecked = generateSubtaskCheckStates(subtaskElements);
+
+  return { subtasks, subtasksChecked };
+}
+
+function getSubtaskElements() {
+  const subtaskElements = [];
+  const listItems = document.querySelectorAll('#subtask-content li');
+  listItems.forEach(li => {
+    const firstP = li.querySelector('p');
+    if (firstP) {
+      subtaskElements.push(firstP);
+    }
+  });
+  return subtaskElements;
+}
+
+function getDefaultSubtasks() {
+  return {
+    subtasks: ['dummy'],
+    subtasksChecked: ['dummy']
+  };
+}
+
+function extractSubtaskTexts(subtaskElements) {
+  return Array.from(subtaskElements).map(element => element.textContent);
+}
+
+function generateSubtaskCheckStates(subtaskElements) {
+  return Array.from(subtaskElements).map((_, index) => ({
     id: `subtask${index}`,
     checked: false
   }));
-
-  return { subtasks, subtasksChecked };
 }
 
 /**
@@ -316,6 +332,11 @@ function resetFormFields() {
   document.getElementById('selected-contacts').innerHTML = '';
   let subtaskContent = document.getElementById('subtask-content');
   subtaskContent.innerHTML = '';
+  resetButtons()
+  closeNewSubtasksBtn();
+}
+
+function resetButtons() {
   let buttonRed = document.getElementById('priority1');
   let buttonOrange = document.getElementById('priority2');
   let buttonGreen = document.getElementById('priority3');
@@ -325,7 +346,6 @@ function resetFormFields() {
   document.getElementById('priority-btn1').classList.remove('priotity-btn-filter1');
   document.getElementById('priority-btn2').classList.remove('priotity-btn-filter2');
   document.getElementById('priority-btn3').classList.remove('priotity-btn-filter3');
-  closeNewSubtasksBtn();
 }
 
 function getUsersToAssignedTo() {
@@ -338,19 +358,7 @@ function getUsersToAssignedTo() {
     let initials = getInitials(name);
     let backgroundColor = getRandomColor();
     
-    contactsDropdown.innerHTML += `
-      <div class="option" onclick="event.stopPropagation(); toggleContactSelection('${name}', this)">
-        <div class="contact-option">
-          <div class="contact-circle" style="background-color: ${backgroundColor}">
-            ${initials}
-          </div>
-          <span>${name}</span>
-        </div>
-        <input type="checkbox" 
-               ${isSelected ? 'checked' : ''}
-        >
-      </div>
-    `;
+    contactsDropdown.innerHTML += getUserToAssignedToHTML(name, initials, backgroundColor, isSelected)
   });
 }
 

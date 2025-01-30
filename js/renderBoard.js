@@ -282,18 +282,7 @@ function setPriority(priority) {
  * @param {Array} fullNames - Vollständige Namen der zugewiesenen Benutzer
  * @returns {Promise<void>}
  */
-async function setFormData(
-  taskCategory,
-  title,
-  description,
-  dueDate,
-  assignedTo,
-  category,
-  subtasks,
-  subtasksChecked,
-  priority,
-  fullNames
-) {
+async function setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames) {
   let formData = {
     title,
     description,
@@ -359,20 +348,18 @@ async function postFormDataToFireBase(formData) {
  * Löscht alle Eingaben aus dem Formular
  * @returns {Promise<void>}
  */
-async function clearForm() {
+function clearForm() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
   document.getElementById("due-date").value = "";
-  document.getElementById("selected-contacts-sb").innerHTML = "";
   document.getElementById(
-    "#added-users-container-add-task-on-board"
+    "added-users-container-add-task-on-board"
   ).innerHTML = "";
   document.getElementById("category").selectedIndex = 0;
   document.getElementById("subtask-content").innerHTML = "";
   document.querySelectorAll(".priority-btn-addTask").forEach((button) => {
     button.classList.remove("prio1-color", "prio2-color", "prio3-color");
   });
-  toggleHamburgerMenu();
 }
 
 /**

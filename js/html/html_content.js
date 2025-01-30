@@ -362,3 +362,25 @@ function addSubtaskContentHTML(subTask) {
         </li>
     `
 }
+
+function handleUserSelectionHTML(user, initials) {
+    return  `
+        <div class="current-task-initials edit-initials" value="${user}" style="background-color: ${getRandomColor()}">${initials}</div>
+    `
+}
+
+function getUserToAssignedToHTML(name, initials, backgroundColor, isSelected) {
+    return `
+        <div class="option" onclick="event.stopPropagation(); toggleContactSelection('${name}', this)">
+            <div class="contact-option">
+                <div class="contact-circle" style="background-color: ${backgroundColor}">
+                    ${initials}
+                </div>
+                <span>${name}</span>
+            </div>
+            <input type="checkbox" 
+                ${isSelected ? 'checked' : ''}
+            >
+        </div>
+    `
+}
