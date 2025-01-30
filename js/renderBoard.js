@@ -18,7 +18,6 @@ const boardState = {
   keys: [],
 };
 
-
 /**
  * Lädt alle Tasks von Firebase und rendert sie
  * @returns {Promise<void>}
@@ -214,20 +213,30 @@ async function getFormData(event) {
   );
 }
 
+/**
+ * Holt die Eingabewerte aus dem Formular für einen neuen Task
+ * @returns {Object} Ein Objekt mit den Werten für die Kategorie, den Titel, die Beschreibung, das Fälligkeitsdatum und die Kategorie des Tasks
+ */
 function getFormDataFields() {
   return {
     taskCategory: { category: "toDo" },
     title: document.getElementById("title").value,
     description: document.getElementById("description").value,
     dueDate: document.getElementById("due-date").value,
-    category: document.getElementById("category").value
+    category: document.getElementById("category").value,
   };
 }
 
+/**
+ * Ermittelt die zugewiesenen Kontakte für das Board
+ * @returns {{assignedTo: Array<string>, fullNames: Array<string>}} Ein Objekt mit den zugewiesenen Kontakten und den vollständigen Namen
+ */
 function getAssignedContactsBoard() {
   let assignedTo = [];
   let fullNames = [];
-  let selectedContactsDivs = document.querySelectorAll("#added-users-container-add-task-on-board .current-task-initials");
+  let selectedContactsDivs = document.querySelectorAll(
+    "#added-users-container-add-task-on-board .current-task-initials"
+  );
 
   selectedContactsDivs.forEach(function (div) {
     getInitialsAndFullNames(assignedTo, fullNames, div);
@@ -236,6 +245,7 @@ function getAssignedContactsBoard() {
   return { assignedTo, fullNames };
 }
 
+// Diese Funktion holt die Subtask-Daten
 function getSubtasksData() {
   let subtaskList = document.querySelectorAll("#subtask-content li");
   return getSubtasks(subtaskList);
@@ -296,7 +306,18 @@ function setPriority(priority) {
  * @param {Array} fullNames - Vollständige Namen der zugewiesenen Benutzer
  * @returns {Promise<void>}
  */
-async function setFormData(taskCategory, title, description, dueDate, assignedTo, category, subtasks, subtasksChecked, priority, fullNames) {
+async function setFormData(
+  taskCategory,
+  title,
+  description,
+  dueDate,
+  assignedTo,
+  category,
+  subtasks,
+  subtasksChecked,
+  priority,
+  fullNames
+) {
   let formData = {
     title,
     description,
@@ -366,9 +387,8 @@ function clearForm() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
   document.getElementById("due-date").value = "";
-  document.getElementById(
-    "added-users-container-add-task-on-board"
-  ).innerHTML = "";
+  document.getElementById("added-users-container-add-task-on-board").innerHTML =
+    "";
   document.getElementById("category").selectedIndex = 0;
   document.getElementById("subtask-content").innerHTML = "";
   document.querySelectorAll(".priority-btn-addTask").forEach((button) => {
