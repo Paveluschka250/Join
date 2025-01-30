@@ -271,6 +271,7 @@ function collectSubtasks() {
   return { subtasks, subtasksChecked };
 }
 
+// Diese Funktion sammelt alle Subtask-Elemente aus dem HTML-Dokument.
 function getSubtaskElements() {
   const subtaskElements = [];
   const listItems = document.querySelectorAll('#subtask-content li');
@@ -283,6 +284,7 @@ function getSubtaskElements() {
   return subtaskElements;
 }
 
+// Diese Funktion gibt ein Standard-Objekt zurück, wenn keine Subtasks vorhanden sind.
 function getDefaultSubtasks() {
   return {
     subtasks: ['dummy'],
@@ -290,10 +292,12 @@ function getDefaultSubtasks() {
   };
 }
 
+// Diese Funktion extrahiert den Text aus den Subtask-Elementen.
 function extractSubtaskTexts(subtaskElements) {
   return Array.from(subtaskElements).map(element => element.textContent);
 }
 
+// Diese Funktion generiert den Status für die Subtasks.
 function generateSubtaskCheckStates(subtaskElements) {
   return Array.from(subtaskElements).map((_, index) => ({
     id: `subtask${index}`,
@@ -324,6 +328,7 @@ async function saveTaskToDatabase(taskData) {
   }
 }
 
+// Diese Funktion setzt die Formularfelder zurück.
 function resetFormFields() {
   document.getElementById('title').value = '';
   document.getElementById('description').value = '';
@@ -336,6 +341,7 @@ function resetFormFields() {
   closeNewSubtasksBtn();
 }
 
+// Diese Funktion setzt die Buttons zurück.
 function resetButtons() {
   let buttonRed = document.getElementById('priority1');
   let buttonOrange = document.getElementById('priority2');
@@ -348,6 +354,7 @@ function resetButtons() {
   document.getElementById('priority-btn3').classList.remove('priotity-btn-filter3');
 }
 
+// Diese Funktion holt die zugewiesenen Benutzer.
 function getUsersToAssignedTo() {
   const namesArray = Object.values(contacts).map(item => item.name);
   let contactsDropdown = document.getElementById('contacts-dropdown');
