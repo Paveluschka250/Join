@@ -81,6 +81,12 @@ function getSubtasksUnchanged(key) {
     return { subtasks, subtasksChecked };
 }
 
+/**
+ * Ermittelt den Status eines Subtasks
+ * @param key - Schlüssel des Tasks in der Datenbank
+ * @param index - Index des Subtasks
+ * @returns {Object} Objekt mit der ID und dem Status des Subtasks
+ */
 function getSubtaskStatus(key, index) {
     let subtaskStatus = tasks.toDo[key].subtasksChecked[index]
         ? tasks.toDo[key].subtasksChecked[index].checked

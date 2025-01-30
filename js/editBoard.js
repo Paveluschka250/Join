@@ -88,6 +88,12 @@ function createInitialDiv(assignedContacts, fullNames, contacts) {
     }
 }
 
+/**
+ * Erstellt die Initialen-Divs für zugewiesene Kontakte mittels einer Schleife
+ * @param {HTMLElement} assignedContacts - Container für die zugewiesenen Kontakte
+ * @param {Array<string>} fullNames - Array mit den vollständigen Namen der Kontakte
+ * @param {Array<string>} contacts - Array mit den Kontakt-IDs
+ */
 function  forLoopCreateInitialDiv(assignedContacts, fullNames, contacts) {
     for (let i = 0; i < contacts.length; i++) {
         const element = contacts[i];
@@ -336,6 +342,11 @@ function setSubtasksToEdit(subtasksEdit, list, currentTask) {
     forLoopForEditSubtaskContent(subtasksEdit, list)
 }
 
+/**
+ * Schleife zum Bearbeiten des Subtask-Inhalts
+ * @param {Array} subtasksEdit - Array mit den zu bearbeitenden Subtasks
+ * @param {HTMLElement} list - Liste der Subtasks
+ */
 function forLoopForEditSubtaskContent(subtasksEdit, list) {
     if (Array.isArray(subtasksEdit) && subtasksEdit.length > 0) {
         subtasksEdit.forEach((subtask, i) => {
