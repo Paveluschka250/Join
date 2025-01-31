@@ -363,12 +363,20 @@ function forLoopForEditSubtaskContent(subtasksEdit, list) {
  */
 function confirmEditSubtask(i) {
     let inputValue = document.getElementById(`input-value${i}`).value;
+    if (inputValue !== "") {
     let subtask = document.getElementById(`current-subtask-to-edit${i}`);
     let subtaskContent = document.getElementById(`subtask${i}`);
     let input = document.getElementById(`subtask-edit-input${i}`);
     subtask.innerHTML = `${inputValue}`;
     subtaskContent.classList.toggle('d-none');
     input.classList.toggle('d-none');
+    } else {
+        let subtaskError = document.getElementById('subtask-error-edit');
+        subtaskError.style.display = 'flex';
+        setTimeout(function () {
+            subtaskError.style.display = "none";
+        }, 3000);
+    }
 }
 
 /**

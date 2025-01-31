@@ -160,11 +160,23 @@ function confirmEditSubtask(btn, subtask) {
   let inputDiv = document.getElementById(`edit-${subtask}`);
   let subtaskContent = btn.closest('li').querySelector('p');
   let input = document.getElementById(`input-edit-${subtask}`).value;
-  subtaskContent.innerHTML = input;
-  currentSubtask.classList.remove('d-none');
-  currentSubtask.classList.toggle('li-elements-overlayTask');
-  inputDiv.classList.add('d-none');
-  inputDiv.classList.toggle('li-elements-overlayTask');
+  getSubtaskInput(inputDiv, currentSubtask, subtaskContent, input)
+}
+
+function getSubtaskInput(inputDiv, currentSubtask, subtaskContent, input) {
+  if(input !== "") {
+    subtaskContent.innerHTML = input;
+    currentSubtask.classList.remove('d-none');
+    currentSubtask.classList.toggle('li-elements-overlayTask');
+    inputDiv.classList.add('d-none');
+    inputDiv.classList.toggle('li-elements-overlayTask');
+    } else {
+      let subtaskError = document.getElementById('subtask-error-add-task');
+      subtaskError.style.display = 'flex';
+      setTimeout(function () {
+        subtaskError.style.display = "none";
+      }, 3000);
+    }
 }
 
 /**
