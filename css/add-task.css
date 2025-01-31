@@ -678,7 +678,7 @@ main {
 .added-subtasks {
   margin-top: 0;
   margin-bottom: 0;
-  max-height: 140px;
+  max-height: 100px;
   overflow-y: auto;
   padding-right: 8px;
 }
