@@ -339,3 +339,13 @@
 .contact-item.active .contact-details .email {
   color: white !important;
 }
+
+#contacts-content .contacts-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+#contacts-content .contacts-container::-webkit-scrollbar-thumb {
+  background: #4589ff;
+  border-radius: 4px;
+}
