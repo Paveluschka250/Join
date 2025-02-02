@@ -2,13 +2,13 @@
  * Speichert die Änderungen am Task
  * @param {number} taskCounter - Index des Tasks
  */
-function saveEditBtn(taskCounter) {
+async function saveEditBtn(taskCounter) {
     taskCounter--;
     getKeysFromTasks();
     let currentTaskKey = keys[taskCounter];
-    getDataFromEdit(currentTaskKey);
+    await getDataFromEdit(currentTaskKey);
     closeCurrentTask();
-    getTasks();
+    await getTasks();
 }
 
 /**
@@ -16,7 +16,7 @@ function saveEditBtn(taskCounter) {
  * @param {string} key - Schlüssel des Tasks in der Datenbank
  * @returns {Object} Die gesammelten Task-Daten
  */
-function getDataFromEdit(key) {
+async function getDataFromEdit(key) {
     let { currentStatus, title, description, dueDate, category } = extractTaskInfo(key);
     let { assignedTo, fullNames } = getAssignedContacts();
     let { subtasks, subtasksChecked } = getSubtasksUnchanged(key);
@@ -28,7 +28,7 @@ function getDataFromEdit(key) {
         taskCategory: { category: currentStatus }, fullNames
     };
 
-    editToFirebase(formData, key);
+    await editToFirebase(formData, key);
     getTasks();
 }
 
@@ -99,9 +99,9 @@ function getSubtaskStatus(key, index) {
  * @param {Object} formData - Die zu speichernden Formulardaten
  * @param {string} key - Schlüssel des Tasks in der Datenbank
  */
-function editToFirebase(formData, key) {
+async function editToFirebase(formData, key) {
     const firebaseURL = `https://yesserdb-a0a02-default-rtdb.europe-west1.firebasedatabase.app/tasks/toDo/${key}.json`;
-    fetch(firebaseURL, {
+    await fetch(firebaseURL, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
