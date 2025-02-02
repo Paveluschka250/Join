@@ -1,7 +1,28 @@
+@media (max-width: 1140px) {
+  .task-box,
+  .sec-Part {
+    padding: 14px;
+  }
+  .task-box span,
+  .sec-Part span,
+  h6 {
+    font-size: 18px;
+  }
+  #tasks-length h1 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 32px;
+  }
+  .task-inner h1 {
+    font-size: 32px;
+  }
+}
 @media (max-width: 1024px) {
   #summary-content {
     height: calc(100vh - 100px - 76px);
-    padding: 0;
+    padding: 20px;
   }
 
   .overlay-content a.help {
@@ -125,7 +146,6 @@
     width: 100%;
     padding: 20px 20px;
     box-sizing: border-box;
-
   }
 
   .sec-Part {
