@@ -307,6 +307,7 @@ body {
     padding: 8px;
     margin: 8px 16px 4px 8px;
     color: white;
+    box-shadow: grey 2px 2px 2px;
 }
 
 .edit-initials {
@@ -329,7 +330,7 @@ body {
 #current-to-do {
     display: flex;
     flex-direction: column;
-    height: 95%;
+    height: 94%;
 }
 
 .all-users {
@@ -357,6 +358,7 @@ line-height: 40px;
     color: white;
     border-radius: 4px;
     padding: 4px;
+    box-shadow: grey 2px 2px 2px;
 }
 
 .current-title-task {
@@ -468,6 +470,7 @@ line-height: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: -16px;
 }
 
 /* loading-bar */
@@ -663,7 +666,23 @@ line-height: 40px;
 #subtask-edit-list {
     position: relative;
     margin-bottom: 48px;
+    overflow-y: scroll;
+    max-height: 150px;
 }
+
+#subtask-edit-list::-webkit-scrollbar {
+    width: 5px; /* Etwas breiter für bessere Sichtbarkeit */
+}
+
+#subtask-edit-list::-webkit-scrollbar-thumb {
+    background-color: #4589FF; /* Farbe der Scrollleiste */
+    border-radius: 10px; /* Abgerundete Ecken */
+}
+
+#subtask-edit-list::-webkit-scrollbar-track {
+    background: transparent; /* Unsichtbare Hintergrundspur */
+}
+
 
 .li-elements-overlayTask {
     display: flex !important;
@@ -758,7 +777,7 @@ line-height: 40px;
 }
 
 .subtask-container-overlay-board {
-    margin-top: 16px;
+    margin-top: 28px;
     margin-bottom: 48px;
 }
 
@@ -776,6 +795,7 @@ line-height: 40px;
     flex-direction: row !important;
     justify-content: space-between;
     margin-bottom: 8px;
+    margin-right: 8px;
 }
 
 .li-element-subtasks p {
@@ -1053,6 +1073,25 @@ line-height: 40px;
     position:relative;
     width: 100%;
 }
+
+.subtask-container-overlay-board ul{
+    overflow-y: scroll;
+    max-height: 140px;
+}
+
+.subtask-container-overlay-board ul::-webkit-scrollbar {
+    width: 5px;
+}
+
+.subtask-container-overlay-board ul::-webkit-scrollbar-thumb {
+    background-color: #4589FF;
+    border-radius: 10px;
+}
+
+.subtask-container-overlay-board ul::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 
 @media(max-width: 800px) {
     .move-to-container button {
