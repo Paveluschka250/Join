@@ -132,7 +132,7 @@ body::-webkit-scrollbar {
 .task-btn-div {
   position: absolute;
   right: 5px;
-  bottom: 5px;
+  bottom: 10px;
 }
 
 .task-btn-div img {
@@ -163,6 +163,7 @@ body::-webkit-scrollbar {
 .task-btn-div button {
   border: none;
   background-color: white;
+  display: flex;
 }
 
 #addtask-content .underline-addTask {
@@ -175,7 +176,8 @@ body::-webkit-scrollbar {
 
 #addtask-content .underline-addTask::placeholder {
   color: #cacaca;
-  font-size: 20px;
+  font-size: 16px;
+  vertical-align: middle;
 }
 
 #addtask-content .input-addTask {
@@ -185,9 +187,15 @@ body::-webkit-scrollbar {
   border-radius: 8px;
 }
 
+#subtask-close-and-add{
+  display: flex;
+  align-items: center;
+}
+
 #addtask-content .input-addTask::placeholder {
   color: #cacaca;
   font-size: 14px;
+  vertical-align: center;
 }
 #addtask-content textarea {
   resize: none;
@@ -474,6 +482,11 @@ body::-webkit-scrollbar {
 
 .initials-position {
   margin-right: -12px;
+}
+
+#subtasks{
+  display:flex;
+  align-items: center;
 }
 
 /* Neue Media Query für Bildschirme bis 1024px */
