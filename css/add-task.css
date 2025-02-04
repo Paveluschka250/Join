@@ -30,6 +30,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
 }
 
 #addtask-content .select-wrapper {
@@ -298,11 +299,10 @@ body::-webkit-scrollbar {
 
 #addtask-content .form-actions-addTask {
   display: flex;
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  width: 240px;
-  justify-content: space-between;
+  position: static;
+  width: 100%;
+  justify-content: center;
+  gap: 8px;
   align-items: center;
 }
 
